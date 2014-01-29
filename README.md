@@ -1,7 +1,9 @@
 Gold Tree Emulator
-Test
-Test
-Test
-Test
-Test
 ==================
+Welcome to bla bla bla
+Welcome to bla bla bla
+.........
+==================
+......
+==================
+....
