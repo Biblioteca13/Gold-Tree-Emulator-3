@@ -17,8 +17,6 @@ ALTER TABLE `users` ADD `last_loggedin` VARCHAR(50) NOT NULL DEFAULT '0';
 ALTER TABLE `users` ADD `vipha_last` DOUBLE NOT NULL DEFAULT '0';
 ALTER TABLE `users` ADD `viphal_last` DOUBLE NOT NULL DEFAULT '0';
 
-UPDATE user_stats SET AchievementScore = 0;
-
 ALTER TABLE `user_stats` ADD `fireworks` INT(10) NOT NULL DEFAULT '0';
 ALTER TABLE `user_stats` ADD `RegularVisitor` INT(10) NOT NULL DEFAULT '0';
 ALTER TABLE `user_stats` ADD `FootballGoalScorer` INT(10) NOT NULL DEFAULT '0';
@@ -192,5 +190,7 @@ CREATE TABLE IF NOT EXISTS `items_rooms_songs` (
   KEY `itemid` (`itemid`),
   KEY `roomid` (`roomid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+UPDATE user_stats SET AchievementScore = 0;
 
 TRUNCATE user_achievements;
