@@ -427,7 +427,7 @@ namespace GoldTree.Net
 						@class = GoldTree.GetGame().GetClientManager().method_2(uint_2);
 						using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 						{
-							dataRow = class2.ReadDataRow("SELECT look,gender,motto,mutant_penalty,block_newfriends FROM users WHERE UserId = '" + @class.GetHabbo().Id + "' LIMIT 1");
+							dataRow = class2.ReadDataRow("SELECT look,gender,motto,mutant_penalty,block_newfriends FROM users WHERE id = '" + @class.GetHabbo().Id + "' LIMIT 1");
 						}
 						@class.GetHabbo().Figure = (string)dataRow["look"];
 						@class.GetHabbo().Gender = dataRow["gender"].ToString().ToLower();
@@ -516,7 +516,7 @@ namespace GoldTree.Net
 						int int_3 = 0;
 						using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 						{
-							int_3 = (int)class2.ReadDataRow("SELECT credits FROM users WHERE UserId = '" + @class.GetHabbo().Id + "' LIMIT 1")[0];
+							int_3 = (int)class2.ReadDataRow("SELECT credits FROM users WHERE id = '" + @class.GetHabbo().Id + "' LIMIT 1")[0];
 						}
 						@class.GetHabbo().Credits = int_3;
 						@class.GetHabbo().method_13(false);
@@ -530,7 +530,7 @@ namespace GoldTree.Net
 						int int_4 = 0;
 						using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 						{
-							int_4 = (int)class2.ReadDataRow("SELECT activity_points FROM users WHERE UserId = '" + @class.GetHabbo().Id + "' LIMIT 1")[0];
+							int_4 = (int)class2.ReadDataRow("SELECT activity_points FROM users WHERE id = '" + @class.GetHabbo().Id + "' LIMIT 1")[0];
 						}
 						@class.GetHabbo().ActivityPoints = int_4;
 						@class.GetHabbo().method_15(false);
