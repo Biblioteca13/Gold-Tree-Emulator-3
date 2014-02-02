@@ -1153,8 +1153,9 @@ namespace GoldTree.HabboHotel.Users
 
         public void CheckHappyHourAchievements()
         {
+            CultureInfo FI = new CultureInfo("fi-FI");
             string s = DateTime.Now.ToString("HH:mm:ss");
-            DateTime dt = DateTime.ParseExact(s, "HH:mm:ss", CultureInfo.InvariantCulture);
+            DateTime dt = DateTime.ParseExact(s, "HH:mm:ss", FI);
             var time = dt.TimeOfDay;
             if (DateTime.Now.DayOfWeek == DayOfWeek.Monday || DateTime.Now.DayOfWeek == DayOfWeek.Tuesday || DateTime.Now.DayOfWeek == DayOfWeek.Wednesday || DateTime.Now.DayOfWeek == DayOfWeek.Thursday || DateTime.Now.DayOfWeek == DayOfWeek.Friday)
             {

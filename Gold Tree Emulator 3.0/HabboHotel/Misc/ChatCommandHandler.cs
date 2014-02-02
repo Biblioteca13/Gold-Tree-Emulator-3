@@ -289,6 +289,9 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 catch (FormatException)
                                 {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("OOPS! Something went wrong when trying format ban length! Report this and your date format!");
+                                    Console.ForegroundColor = ConsoleColor.Gray;
                                 }
 
                                 banlenght = banlenght.Replace("m", "");
@@ -304,6 +307,9 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 catch (FormatException)
                                 {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("OOPS! Something went wrong when trying format ban length! Report this and your date format!");
+                                    Console.ForegroundColor = ConsoleColor.Gray;
                                 }
 
                                 if (Params[2].Contains("m"))
