@@ -21,6 +21,7 @@ namespace GoldTree.HabboHotel.Pathfinding
         internal double GetState(int x, int y)
         {
             double result;
+            
             if (x >= this.mMaxX || x < 0)
             {
                 result = 0.0;
@@ -33,15 +34,25 @@ namespace GoldTree.HabboHotel.Pathfinding
                 }
                 else
                 {
-                    result = this.mMap[x, y];
+                    if (this.double_2[x, y] > this.mMap[x, y] && this.double_1[x, y] == 0.0)
+                    {
+                        result = this.double_2[x, y];
+                    }
+                    else
+                    {
+                        if (this.double_1[x, y] == 0.0)
+                        {
+                            result = this.mMap[x, y];
+                        }
+                        else
+                        {
+                            result = this.double_1[x, y];
+                        }
+                    }
                 }
             }
+            
             return result;
-        }
-
-        internal double GetMapHeight(int X, int Y)
-        {
-            return this.double_2[X, Y];
         }
     }
 }
