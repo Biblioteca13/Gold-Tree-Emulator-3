@@ -631,11 +631,15 @@ namespace GoldTree.HabboHotel.Rooms
             {
                 foreach (RoomItem current in this.list_14)
                 {
-                    if (current.GetBaseItem().InteractionType.ToLower() == "wf_trg_attime" && current.WiredAtTimeTimer >= Convert.ToDouble(current.string_2))
+                    double WiredCounterMax;
+                    if (Double.TryParse(current.string_2, out WiredCounterMax))
                     {
-                        this.method_21(null, current, "AtTime");
-                        current.WiredAtTimeTimer = 0;
-                        current.WiredAtTimeNeedReset = true;
+                        if (current.GetBaseItem().InteractionType.ToLower() == "wf_trg_attime" && current.WiredAtTimeTimer >= WiredCounterMax)
+                        {
+                            this.method_21(null, current, "AtTime");
+                            current.WiredAtTimeTimer = 0;
+                            current.WiredAtTimeNeedReset = true;
+                        }
                     }
                 }
             }
@@ -1655,10 +1659,14 @@ namespace GoldTree.HabboHotel.Rooms
                                                     current2.ExtraData = "1";
                                                     current2.UpdateState(false, true);
                                                     current2.ReqUpdate(1);
-                                                    if (current2.WiredCounter >= Convert.ToDouble(current2.string_2))
+                                                    double WiredCounterMax;
+                                                    if (Double.TryParse(current2.string_2, out WiredCounterMax))
                                                     {
-                                                        num2++;
-                                                        break;
+                                                        if (current2.WiredCounter >= WiredCounterMax)
+                                                        {
+                                                            num2++;
+                                                            break;
+                                                        }
                                                     }
                                                 }
                                                 else if (text == "wf_cnd_time_less_than")
@@ -1667,10 +1675,14 @@ namespace GoldTree.HabboHotel.Rooms
                                                     current2.ExtraData = "1";
                                                     current2.UpdateState(false, true);
                                                     current2.ReqUpdate(1);
-                                                    if (current2.WiredCounter <= Convert.ToDouble(current2.string_2))
+                                                    double WiredCounterMax;
+                                                    if (Double.TryParse(current2.string_2, out WiredCounterMax))
                                                     {
-                                                        num2++;
-                                                        break;
+                                                        if (current2.WiredCounter <= WiredCounterMax)
+                                                        {
+                                                            num2++;
+                                                            break;
+                                                        }
                                                     }
                                                 }
                                                 else
@@ -2220,7 +2232,7 @@ namespace GoldTree.HabboHotel.Rooms
                                                             }
                                                         }
                                                     }
-                                                    if (this.method_37(gstruct1_.x, gstruct1_.y, true, true, true, false, false, true) && class3.GetBaseItem().InteractionType != "wf_trg_timer")
+                                                    if (this.method_37(gstruct1_.x, gstruct1_.y, true, true, true, false, false, true, true) && class3.GetBaseItem().InteractionType != "wf_trg_timer")
                                                     {
                                                         this.method_41(class3, gstruct1_, current2.uint_0, this.GetTopItemHeight(gstruct1_.x, gstruct1_.y));
                                                     }
@@ -3703,7 +3715,7 @@ namespace GoldTree.HabboHotel.Rooms
                                         list.Add(current.uint_0);
                                     }
                                 }
-                                if (class2 != null && (!flag2 || !flag3) && this.method_37(gStruct1_.x, gStruct1_.y, false, true, false, true, true, false) && !list2.Contains(class2.uint_0) && !class2.bool_6)
+                                if (class2 != null && (!flag2 || !flag3) && this.method_37(gStruct1_.x, gStruct1_.y, false, true, false, true, true, false, false) && !list2.Contains(class2.uint_0) && !class2.bool_6)
                                 {
                                     if (this.double_2[gStruct1_.x, gStruct1_.y] > 0.0)
                                     {
@@ -3772,7 +3784,7 @@ namespace GoldTree.HabboHotel.Rooms
             }
             return result;
         }
-        public bool method_37(int int_17, int int_18, bool bool_13, bool bool_14, bool bool_15, bool bool_16, bool bool_17, bool IsNotSeat)
+        public bool method_37(int int_17, int int_18, bool bool_13, bool bool_14, bool bool_15, bool bool_16, bool bool_17, bool IsNotSeat, bool IsNotBed)
         {
             bool result;
             if (!this.method_92(int_17, int_18))
@@ -3869,6 +3881,18 @@ namespace GoldTree.HabboHotel.Rooms
                                         foreach (RoomItem current in list)
                                         {
                                             if (current.GetBaseItem().IsSeat)
+                                            {
+                                                result = false;
+                                                return result;
+                                            }
+                                        }
+                                    }
+
+                                    if (IsNotBed)
+                                    {
+                                        foreach (RoomItem current in list)
+                                        {
+                                            if (current.GetBaseItem().InteractionType.ToLower() == "bed")
                                             {
                                                 result = false;
                                                 return result;

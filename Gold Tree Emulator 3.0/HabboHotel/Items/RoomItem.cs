@@ -1090,9 +1090,17 @@ namespace GoldTree.HabboHotel.Items
                         case "wf_cnd_time_more_than":
                             if (!this.WiredNeedReset)
                             {
-                                if (this.WiredCounter >= Convert.ToDouble(this.string_2))
+                                double WiredCounterMax;
+                                if (Double.TryParse(this.string_2, out WiredCounterMax))
                                 {
-                                    this.WiredNeedReset = true;
+                                    if (this.WiredCounter >= WiredCounterMax)
+                                    {
+                                        this.WiredNeedReset = true;
+                                    }
+                                }
+                                else
+                                {
+                                    this.string_2 = "0";
                                 }
                                 this.WiredCounter += 0.5;
                                 this.ReqUpdate(1);
@@ -1105,9 +1113,17 @@ namespace GoldTree.HabboHotel.Items
                         case "wf_cnd_time_less_than":
                             if (!this.WiredNeedReset)
                             {
-                                if (this.WiredCounter >= Convert.ToDouble(this.string_2))
+                                double WiredCounterMax;
+                                if (Double.TryParse(this.string_2, out WiredCounterMax))
                                 {
-                                    this.WiredNeedReset = true;
+                                    if (this.WiredCounter >= WiredCounterMax)
+                                    {
+                                        this.WiredNeedReset = true;
+                                    }
+                                }
+                                else
+                                {
+                                    this.string_2 = "0";
                                 }
                                 this.WiredCounter += 0.5;
                                 this.ReqUpdate(1);

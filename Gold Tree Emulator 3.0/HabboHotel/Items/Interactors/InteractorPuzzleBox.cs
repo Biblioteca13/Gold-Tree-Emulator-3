@@ -65,7 +65,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 							}
 						}
 					}
-					if (@class.method_37(num, num2, true, true, true, true, false, false))
+					if (@class.method_37(num, num2, true, true, true, true, false, false, false))
 					{
 						List<RoomItem> list_ = new List<RoomItem>();
 						list_ = @class.method_93(num, num2);
