@@ -26,7 +26,7 @@ namespace GoldTree.Net
 			this.socket_0 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			IPEndPoint localEP = new IPEndPoint(IPAddress.Parse(GoldTree.GetConfig().data["game.tcp.bindip"]), int_2);
 			this.socket_0.Bind(localEP);
-			this.socket_0.Listen(1000);
+            this.socket_0.Listen((int)SocketOptionName.MaxConnections);
 			this.asyncCallback_0 = new AsyncCallback(this.method_4);
 			this.class113_0 = class113_1;
             AntiDDosSystem.SetupTcpAuthorization(20000);

@@ -123,21 +123,29 @@ namespace GoldTree.Net
 			}
 		}
 		private void WaitForData()
-		{
-            if (!this.bool_0 && !LicenseTools.bool_16)
-            //if (!this.bool_0)
-			{
-				try
-				{
+        {
+            if (!this.bool_0)
+            {
+                try
+                {
                     base.BeginReceive(this.mDataBuffer, 0, 1024, SocketFlags.None, this.mDataReceivedCallback, this);
-				}
-				catch (Exception e)
-				{
-                    Console.WriteLine(e);
-					this.method_1();
-				}
-			}
-		}
+                }
+                catch (SocketException)
+                {
+                    this.Shutdown(SocketShutdown.Both);
+                    this.Close();
+                    this.Dispose();
+                    GoldTree.GetGame().GetClientManager().method_9(this.uint_0);
+                }
+                catch (Exception)
+                {
+                    this.Shutdown(SocketShutdown.Both);
+                    this.Close();
+                    this.Dispose();
+                    GoldTree.GetGame().GetClientManager().method_9(this.uint_0);
+                }
+            }
+        }
 		private void DataReceived(IAsyncResult iasyncResult_0)
 		{
 			if (!this.bool_0)
