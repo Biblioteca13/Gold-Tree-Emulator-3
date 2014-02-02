@@ -1250,8 +1250,9 @@ namespace GoldTree.HabboHotel.Users
 
         public void CheckRegularVisitorAchievements()
         {
+            CultureInfo FI = new CultureInfo("fi-FI");
             string LastLoggedIn = UnixTimeStampToDateTime(Convert.ToDouble(Session.GetHabbo().last_loggedin)).ToString("dd-MM-yyyy");
-            DateTime lastloggedin = Convert.ToDateTime(LastLoggedIn);
+            DateTime lastloggedin = DateTime.ParseExact(LastLoggedIn, "dd-MM-yyyy", FI);
             DateTime yesterday = DateTime.Now.AddDays(-1);
 
             if (lastloggedin.ToString("dd-MM-yyyy") == yesterday.ToString("dd-MM-yyyy"))
