@@ -426,6 +426,7 @@ namespace GoldTree.HabboHotel.GameClients
 					}
 					catch (Exception ex)
 					{
+						if (ex.GetType() == typeof(IndexOutOfRangeException)) return;
                         Logging.LogException("Error: " + ex.ToString());
 						this.method_12();
 					}
