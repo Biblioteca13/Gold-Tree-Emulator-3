@@ -11,7 +11,7 @@ namespace GoldTree.HabboHotel.Pathfinding
             for (int i = 0; i < 8; i++)
             {
                 SquarePoint squarePoint = pInfo.Pos(i);
-                if (squarePoint.InUse && squarePoint.CanWalk && ((Height.GetState(squarePoint.X, squarePoint.Y) - state) <= 2.0 + Height.GetMapHeight(pInfo.Point.X, pInfo.Point.Y) || UserOverride || HeightOverride))
+                if (squarePoint.InUse && squarePoint.CanWalk && ((Height.GetState(squarePoint.X, squarePoint.Y) - state) <= 2.0 || UserOverride || HeightOverride))
                 {
                     double getDistance = squarePoint.GetDistance;
                     if (num > getDistance)
