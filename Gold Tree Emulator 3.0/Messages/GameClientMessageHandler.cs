@@ -80,7 +80,7 @@ namespace GoldTree.Messages
 			this.method_7();
 			if (GoldTree.GetGame().GetRoomManager().method_12(uint_0) != null)
 			{
-                if (this.Session.GetHabbo().InRoom)
+                if (this.Session.GetHabbo() != null && this.Session.GetHabbo().InRoom)
 				{
 					Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(this.Session.GetHabbo().CurrentRoomId);
 					if (@class != null)
