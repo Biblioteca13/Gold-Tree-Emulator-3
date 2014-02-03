@@ -4,10 +4,10 @@ using GoldTree.Messages;
 using GoldTree.Storage;
 using System.Threading;
 using GoldTree.HabboHotel.Items;
-using System.Threading.Tasks;
 using GoldTree.HabboHotel.Users;
 using GoldTree.HabboHotel.SoundMachine;
 using GoldTree.HabboHotel.Rooms;
+using System.Threading.Tasks;
 namespace GoldTree.Communication.Messages.SoundMachine
 {
     internal sealed class GetNowPlayingMessageEvent : Interface
