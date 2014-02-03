@@ -22,6 +22,7 @@ using GoldTree.HabboHotel.Users;
 using GoldTree.HabboHotel.SoundMachine;
 using GoldTree.Source.HabboHotel.SoundMachine;
 using GoldTree.HabboHotel.Rooms.Games;
+using System.Globalization;
 namespace GoldTree.HabboHotel.Rooms
 {
     internal sealed class Room
@@ -631,15 +632,11 @@ namespace GoldTree.HabboHotel.Rooms
             {
                 foreach (RoomItem current in this.list_14)
                 {
-                    double WiredCounterMax;
-                    if (Double.TryParse(current.string_2, out WiredCounterMax))
+                    if (current.GetBaseItem().InteractionType.ToLower() == "wf_trg_attime" && current.WiredAtTimeTimer >= double.Parse(current.string_2, CultureInfo.CurrentCulture))
                     {
-                        if (current.GetBaseItem().InteractionType.ToLower() == "wf_trg_attime" && current.WiredAtTimeTimer >= WiredCounterMax)
-                        {
-                            this.method_21(null, current, "AtTime");
-                            current.WiredAtTimeTimer = 0;
-                            current.WiredAtTimeNeedReset = true;
-                        }
+                        this.method_21(null, current, "AtTime");
+                        current.WiredAtTimeTimer = 0;
+                        current.WiredAtTimeNeedReset = true;
                     }
                 }
             }
@@ -1659,14 +1656,10 @@ namespace GoldTree.HabboHotel.Rooms
                                                     current2.ExtraData = "1";
                                                     current2.UpdateState(false, true);
                                                     current2.ReqUpdate(1);
-                                                    double WiredCounterMax;
-                                                    if (Double.TryParse(current2.string_2, out WiredCounterMax))
+                                                    if (current2.WiredCounter >= double.Parse(current2.string_2, CultureInfo.CurrentCulture))
                                                     {
-                                                        if (current2.WiredCounter >= WiredCounterMax)
-                                                        {
-                                                            num2++;
-                                                            break;
-                                                        }
+                                                        num2++;
+                                                        break;
                                                     }
                                                 }
                                                 else if (text == "wf_cnd_time_less_than")
@@ -1675,14 +1668,10 @@ namespace GoldTree.HabboHotel.Rooms
                                                     current2.ExtraData = "1";
                                                     current2.UpdateState(false, true);
                                                     current2.ReqUpdate(1);
-                                                    double WiredCounterMax;
-                                                    if (Double.TryParse(current2.string_2, out WiredCounterMax))
+                                                    if (current2.WiredCounter <= double.Parse(current2.string_2, CultureInfo.CurrentCulture))
                                                     {
-                                                        if (current2.WiredCounter <= WiredCounterMax)
-                                                        {
-                                                            num2++;
-                                                            break;
-                                                        }
+                                                        num2++;
+                                                        break;
                                                     }
                                                 }
                                                 else

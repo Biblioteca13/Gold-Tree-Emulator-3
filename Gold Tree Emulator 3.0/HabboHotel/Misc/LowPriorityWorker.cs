@@ -39,7 +39,7 @@ namespace GoldTree.HabboHotel.Misc
                             DateTime shutdown_server_time = Convert.ToDateTime(GoldTree.GetConfig().data["shutdown-server"]);
                             var time = shutdown_server_time.TimeOfDay.TotalSeconds;
                             string s = DateTime.Now.ToString("HH:mm:ss");
-                            DateTime dt2 = DateTime.ParseExact(s, "HH:mm:ss", CultureInfo.InvariantCulture);
+                            DateTime dt2 = DateTime.ParseExact(s, "HH:mm:ss", CultureInfo.CurrentCulture);
                             var time2 = dt2.TimeOfDay.TotalSeconds;
                             try
                             {
