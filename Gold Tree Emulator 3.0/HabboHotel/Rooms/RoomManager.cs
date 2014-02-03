@@ -373,9 +373,10 @@ namespace GoldTree.HabboHotel.Rooms
 					this.class25_0.Add(@class.Id, @class);
 				}
 			}
-			catch
+			catch (Exception ex)
 			{
 				Logging.WriteLine("Error while loading room " + uint_0 + ", we crashed out..");
+                Logging.LogRoomError(ex.ToString());
 				result = null;
 				return result;
 			}

@@ -253,5 +253,28 @@ namespace GoldTree.Core
             }
             Logging.WriteLine(DateTime.Now + ": " + logText);
         }
+        internal static void LogRoomError(string logText)
+        {
+            try
+            {
+                FileStream fileStream = new FileStream("roomexceptions.err", FileMode.Append, FileAccess.Write);
+                byte[] bytes = Encoding.ASCII.GetBytes(string.Concat(new object[]
+				{
+					DateTime.Now,
+					": ",
+					logText,
+					"\r\n\r\n"
+				}));
+                fileStream.Write(bytes, 0, bytes.Length);
+                fileStream.Close();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Logging.WriteLine("Room error saved");
+                Console.ForegroundColor = ConsoleColor.Gray;
+            }
+            catch (Exception)
+            {
+                Logging.WriteLine(DateTime.Now + ": " + logText);
+            }
+        }
 	}
 }
