@@ -1,0 +1,8 @@
+3.2.2014 21:41:51: Error in thread Server status update task: 
+System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
+   kohteessa GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0()
+
+3.2.2014 22:49:11: Error in thread Server status update task: 
+System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
+   kohteessa GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0()
+

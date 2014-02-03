@@ -1153,9 +1153,8 @@ namespace GoldTree.HabboHotel.Users
 
         public void CheckHappyHourAchievements()
         {
-            CultureInfo FI = new CultureInfo("fi-FI");
             string s = DateTime.Now.ToString("HH:mm:ss");
-            DateTime dt = DateTime.ParseExact(s, "HH:mm:ss", FI);
+            DateTime dt = DateTime.ParseExact(s, "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.NoCurrentDateDefault);
             var time = dt.TimeOfDay;
             if (DateTime.Now.DayOfWeek == DayOfWeek.Monday || DateTime.Now.DayOfWeek == DayOfWeek.Tuesday || DateTime.Now.DayOfWeek == DayOfWeek.Wednesday || DateTime.Now.DayOfWeek == DayOfWeek.Thursday || DateTime.Now.DayOfWeek == DayOfWeek.Friday)
             {
@@ -1192,12 +1191,24 @@ namespace GoldTree.HabboHotel.Users
 
         public void CheckTrueHabboAchievements()
         {
-            CultureInfo FI = new CultureInfo("fi-FI");
-            string AccountCreated = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().DataCadastro.ToString().Replace(',', '.'), FI)).ToString("dd-MM-yyyy");
-            string AccountCreated2 = UnixTimeStampToDateTime2(double.Parse(Session.GetHabbo().DataCadastro.ToString().Replace(',', '.'), FI)).ToString("dd-MM-yyyy");
+            //DateTime AccountCreated = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().DataCadastro));
+            //DateTime AccountCreated2 = UnixTimeStampToDateTime2(double.Parse(Session.GetHabbo().DataCadastro));
+
+            double dAccountCreated;
+            DateTime AccountCreated;
+
+            if (double.TryParse(Session.GetHabbo().DataCadastro, out dAccountCreated))
+            {
+                AccountCreated = UnixTimeStampToDateTime(dAccountCreated);
+            }
+            else
+            {
+                if (!DateTime.TryParseExact(Session.GetHabbo().DataCadastro, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.NoCurrentDateDefault, out AccountCreated))
+                    return;
+            }
+
             //string[] dataC = Session.GetHabbo().DataCadastro.Split('-');
             //string[] dataC = AccountCreated.Split('.');
-
             var hoje = DateTime.Now.ToString("dd-MM-yyyy");
             string[] Hoje = hoje.Split('-');
 
@@ -1218,7 +1229,7 @@ namespace GoldTree.HabboHotel.Users
                 case "Dec": { Mes = "12"; break; }
             }*/
 
-            DateTime dataCadastro = DateTime.Parse(AccountCreated2, FI);
+            DateTime dataCadastro = Convert.ToDateTime(AccountCreated);
             DateTime data_hoje = new DateTime(int.Parse(Hoje[2]), int.Parse(Hoje[1]), int.Parse(Hoje[0]));
 
             TimeSpan dif = data_hoje.Subtract(dataCadastro);
@@ -1250,12 +1261,10 @@ namespace GoldTree.HabboHotel.Users
 
         public void CheckRegularVisitorAchievements()
         {
-            CultureInfo FI = new CultureInfo("fi-FI");
-            string LastLoggedIn = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().last_loggedin.Replace(',', '.'), FI)).ToString("dd-MM-yyyy");
-            DateTime lastloggedin = DateTime.ParseExact(LastLoggedIn, "dd-MM-yyyy", FI);
+            DateTime LastLoggedIn = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().last_loggedin));
             DateTime yesterday = DateTime.Now.AddDays(-1);
 
-            if (lastloggedin.ToString("dd-MM-yyyy") == yesterday.ToString("dd-MM-yyyy"))
+            if (LastLoggedIn.ToString("dd-MM-yyyy") == yesterday.ToString("dd-MM-yyyy"))
             {
                 using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                 {
@@ -1267,7 +1276,7 @@ namespace GoldTree.HabboHotel.Users
                     dbClient.ExecuteQuery("UPDATE user_stats SET DailyRespectPoints = @daily_respect_points, DailyPetRespectPoints = @daily_pet_respect_points WHERE id = @sessionid");
                 }
             }
-            else if (lastloggedin.ToString("dd-MM-yyyy") == DateTime.Now.ToString("dd-MM-yyyy"))
+            else if (LastLoggedIn.ToString("dd-MM-yyyy") == DateTime.Now.ToString("dd-MM-yyyy"))
             {
 
             }
