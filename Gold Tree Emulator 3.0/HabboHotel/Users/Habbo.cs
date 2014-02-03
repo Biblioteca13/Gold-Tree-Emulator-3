@@ -1193,8 +1193,8 @@ namespace GoldTree.HabboHotel.Users
         public void CheckTrueHabboAchievements()
         {
             CultureInfo FI = new CultureInfo("fi-FI");
-            string AccountCreated = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().DataCadastro)).ToString("dd-MM-yyyy");
-            string AccountCreated2 = UnixTimeStampToDateTime2(double.Parse(Session.GetHabbo().DataCadastro)).ToString("dd-MM-yyyy");
+            string AccountCreated = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().DataCadastro, FI)).ToString("dd-MM-yyyy");
+            string AccountCreated2 = UnixTimeStampToDateTime2(double.Parse(Session.GetHabbo().DataCadastro, FI)).ToString("dd-MM-yyyy");
             //string[] dataC = Session.GetHabbo().DataCadastro.Split('-');
             //string[] dataC = AccountCreated.Split('.');
 
@@ -1251,7 +1251,7 @@ namespace GoldTree.HabboHotel.Users
         public void CheckRegularVisitorAchievements()
         {
             CultureInfo FI = new CultureInfo("fi-FI");
-            string LastLoggedIn = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().last_loggedin)).ToString("dd-MM-yyyy");
+            string LastLoggedIn = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().last_loggedin, FI)).ToString("dd-MM-yyyy");
             DateTime lastloggedin = DateTime.ParseExact(LastLoggedIn, "dd-MM-yyyy", FI);
             DateTime yesterday = DateTime.Now.AddDays(-1);
 

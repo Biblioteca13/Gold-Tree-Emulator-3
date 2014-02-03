@@ -12,6 +12,7 @@ using GoldTree.Storage;
 using GoldTree.HabboHotel.SoundMachine;
 using GoldTree.HabboHotel.Rooms.Games;
 using GoldTree.Util;
+using System.Globalization;
 namespace GoldTree.HabboHotel.Items
 {
 	internal sealed class RoomItem
@@ -1098,17 +1099,10 @@ namespace GoldTree.HabboHotel.Items
                         case "wf_cnd_time_more_than":
                             if (!this.WiredNeedReset)
                             {
-                                double WiredCounterMax;
-                                if (Double.TryParse(this.string_2, out WiredCounterMax))
+                                CultureInfo FI = new CultureInfo("fi-FI");
+                                if (this.WiredCounter >= double.Parse(this.string_2, FI))
                                 {
-                                    if (this.WiredCounter >= WiredCounterMax)
-                                    {
-                                        this.WiredNeedReset = true;
-                                    }
-                                }
-                                else
-                                {
-                                    this.string_2 = "0";
+                                    this.WiredNeedReset = true;
                                 }
                                 this.WiredCounter += 0.5;
                                 this.ReqUpdate(1);
@@ -1121,17 +1115,10 @@ namespace GoldTree.HabboHotel.Items
                         case "wf_cnd_time_less_than":
                             if (!this.WiredNeedReset)
                             {
-                                double WiredCounterMax;
-                                if (Double.TryParse(this.string_2, out WiredCounterMax))
+                                CultureInfo FI = new CultureInfo("fi-FI");
+                                if (this.WiredCounter >= double.Parse(this.string_2, FI))
                                 {
-                                    if (this.WiredCounter >= WiredCounterMax)
-                                    {
-                                        this.WiredNeedReset = true;
-                                    }
-                                }
-                                else
-                                {
-                                    this.string_2 = "0";
+                                    this.WiredNeedReset = true;
                                 }
                                 this.WiredCounter += 0.5;
                                 this.ReqUpdate(1);
