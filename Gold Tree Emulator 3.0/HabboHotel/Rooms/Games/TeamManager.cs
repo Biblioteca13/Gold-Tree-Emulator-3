@@ -182,6 +182,7 @@ namespace GoldTree.HabboHotel.Rooms.Games
                 }
             }
 
+            user.game = Game.None;
             user.team = Team.None;
         }
     }

@@ -53,6 +53,7 @@ namespace GoldTree.HabboHotel.Rooms
 		public int int_14;
 		public Dictionary<string, string> Statusses;
         internal Team team;
+        internal Rooms.Games.Game game;
         public int DanceId;
 		public int int_16;
 		public bool bool_10;

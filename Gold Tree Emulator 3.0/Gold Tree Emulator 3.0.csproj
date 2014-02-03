@@ -396,6 +396,7 @@
     <Compile Include="HabboHotel\Rooms\AffectedTile.cs" />
     <Compile Include="HabboHotel\Rooms\Games\Freeze.cs" />
     <Compile Include="HabboHotel\Rooms\Games\FreezePowerUp.cs" />
+    <Compile Include="HabboHotel\Rooms\Games\Game.cs" />
     <Compile Include="HabboHotel\Rooms\Games\GameManager.cs" />
     <Compile Include="HabboHotel\Rooms\Games\Team.cs" />
     <Compile Include="HabboHotel\Rooms\Games\TeamManager.cs" />
@@ -496,7 +497,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.None" BuildVersion_StartDate="2013/10/21" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_StartDate="2013/10/21" BuildVersion_BuildVersioningStyle="None.None.Increment.None" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,36 @@
+3.2.2014 0:16:10: Error in thread Server status update task: 
+System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
+   kohteessa GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0()
+
+3.2.2014 0:19:40: Error in thread Server status update task: 
+System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
+   kohteessa GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0()
+
+3.2.2014 16:12:35: Error in thread Server status update task: 
+System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
+   kohteessa GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0()
+
+3.2.2014 16:24:51: Error in thread Server status update task: 
+System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
+   kohteessa GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0()
+
+3.2.2014 16:50:21: Error in thread Server status update task: 
+System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
+   kohteessa GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0()
+
+3.2.2014 16:57:26: Error in thread Server status update task: 
+System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
+   kohteessa GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0()
+
+3.2.2014 17:51:02: Error in thread Server status update task: 
+System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
+   kohteessa GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0()
+
+3.2.2014 18:16:51: Error in thread Navigator cache task: 
+System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
+   kohteessa GoldTree.HabboHotel.Navigators.NavigatorCache.method_0()
+
+3.2.2014 19:35:54: Error in thread Server status update task: 
+System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
+   kohteessa GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0()
+

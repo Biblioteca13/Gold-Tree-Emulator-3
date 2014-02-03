@@ -992,9 +992,18 @@ namespace GoldTree.HabboHotel.Items
                                                 this.dictionary_1.Remove(class4);
                                                 class4.GetClient().GetHabbo().method_24().method_2(0, true);
 
-                                                if (class4.team != Team.None)
+                                                if (class4.team != Team.None && class4.game == Rooms.Games.Game.Freeze)
                                                 {
                                                     int FreezeEffect = ((int)class4.team) + 39;
+                                                    if (class4.GetClient().GetHabbo().method_24().int_0 != FreezeEffect)
+                                                    {
+                                                        class4.GetClient().GetHabbo().method_24().method_2(FreezeEffect, true);
+                                                    }
+                                                }
+
+                                                else if (class4.team != Team.None && class4.game == Rooms.Games.Game.BattleBanzai)
+                                                {
+                                                    int FreezeEffect = ((int)class4.team) + 32;
                                                     if (class4.GetClient().GetHabbo().method_24().int_0 != FreezeEffect)
                                                     {
                                                         class4.GetClient().GetHabbo().method_24().method_2(FreezeEffect, true);
@@ -1055,7 +1064,6 @@ namespace GoldTree.HabboHotel.Items
                                 {
                                     this.ExtraData = "0";
                                     this.method_8().frzTimer = false;
-                                    this.method_8().method_89(0, this, true);
                                     this.method_8().GetFreeze().StopGame();
                                 }
                                 this.UpdateState(true, true);

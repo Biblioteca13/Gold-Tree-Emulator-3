@@ -2159,7 +2159,24 @@ namespace GoldTree.HabboHotel.Rooms
                                     current2.ReqUpdate(1);
                                     if (RoomUser_1 != null && current2.string_2.Length > 0)
                                     {
-                                        this.method_88(RoomUser_1.int_14 + 2, Convert.ToInt32(current2.string_2), current2);
+                                        int team = 0;
+                                        if (RoomUser_1.team == Team.Yellow)
+                                        {
+                                            team = 12;
+                                        }
+                                        else if (RoomUser_1.team == Team.Red)
+                                        {
+                                            team = 3;
+                                        }
+                                        else if (RoomUser_1.team == Team.Green)
+                                        {
+                                            team = 6;
+                                        }
+                                        else if (RoomUser_1.team == Team.Blue)
+                                        {
+                                            team = 9;
+                                        }
+                                        this.method_88(team, Convert.ToInt32(current2.string_2), current2);
                                         flag2 = true;
                                     }
                                     break;
@@ -6457,6 +6474,7 @@ namespace GoldTree.HabboHotel.Rooms
                                         {
                                             if (User.team == Team.None)
                                             {
+                                                User.game = Rooms.Games.Game.Freeze;
                                                 User.team = Item.team;
                                                 roomTeamManager.AddUser(User);
                                                 int FreezeEffect = ((int)Item.team) + 39;
@@ -6551,6 +6569,7 @@ namespace GoldTree.HabboHotel.Rooms
                                                 {
                                                     if (User.team == Team.None)
                                                     {
+                                                        User.game = Rooms.Games.Game.BattleBanzai;
                                                         User.team = Item.team;
                                                         roomTeamManager.AddUser(User);
                                                         int FreezeEffect = ((int)Item.team) + 32;
@@ -6572,7 +6591,7 @@ namespace GoldTree.HabboHotel.Rooms
                                         {
                                             this.method_91(Item, User);
                                         }
-                                        if (Item.GetBaseItem().InteractionType.ToLower() == "bb_patch" && User.team != Team.None && User.bool_6 && Item.ExtraData != "14" && Item.ExtraData != "5" && Item.ExtraData != "8" && Item.ExtraData != "11" && Item.ExtraData != "1")
+                                        if (Item.GetBaseItem().InteractionType.ToLower() == "bb_patch" && User.team != Team.None && User.game == Rooms.Games.Game.BattleBanzai && User.bool_6 && Item.ExtraData != "14" && Item.ExtraData != "5" && Item.ExtraData != "8" && Item.ExtraData != "11" && Item.ExtraData != "1")
                                         {
                                             if (Item.ExtraData == "0" || Item.ExtraData == "")
                                             {
@@ -6668,7 +6687,25 @@ namespace GoldTree.HabboHotel.Rooms
                                                 User.GetClient().GetHabbo().CheckBattleBanzaiTilesLockedAchievements();
                                             }
 
-                                            this.method_89(User.int_14 + 2, Item, false);
+                                            int team = 0;
+                                            if (User.team == Team.Yellow)
+                                            {
+                                                team = 14;
+                                            }
+                                            else if (User.team == Team.Red)
+                                            {
+                                                team = 5;
+                                            }
+                                            else if (User.team == Team.Green)
+                                            {
+                                                team = 8;
+                                            }
+                                            else if (User.team == Team.Blue)
+                                            {
+                                                team = 11;
+                                            }
+
+                                            this.method_89(team, Item, false);
                                             Item.UpdateState(true, true);
                                         }
                                     }
@@ -6879,6 +6916,7 @@ namespace GoldTree.HabboHotel.Rooms
         }
         public void method_89(int int_17, RoomItem RoomItem_0, bool bool_13)
         {
+            Console.WriteLine(int_17);
             if (int_17 == 5)
             {
                 this.int_9++;
