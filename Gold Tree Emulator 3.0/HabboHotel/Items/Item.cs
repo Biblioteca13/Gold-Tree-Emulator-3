@@ -76,7 +76,7 @@ namespace GoldTree.HabboHotel.Items
             for (int i = 0; i < array.Length; i++)
             {
                 string height = array[i];
-                this.Height_Adjustable.Add(double.Parse(height, NumberStyles.Number, CultureInfo.CurrentCulture));
+                this.Height_Adjustable.Add(double.Parse(height, NumberStyles.Number, CultureInfo.InvariantCulture));
             }
 		}
 	}

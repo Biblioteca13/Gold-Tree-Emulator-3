@@ -632,7 +632,7 @@ namespace GoldTree.HabboHotel.Rooms
             {
                 foreach (RoomItem current in this.list_14)
                 {
-                    if (current.GetBaseItem().InteractionType.ToLower() == "wf_trg_attime" && current.WiredAtTimeTimer >= double.Parse(current.string_2, CultureInfo.CurrentCulture))
+                    if (current.GetBaseItem().InteractionType.ToLower() == "wf_trg_attime" && current.WiredAtTimeTimer >= double.Parse(current.string_2, CultureInfo.InvariantCulture))
                     {
                         this.method_21(null, current, "AtTime");
                         current.WiredAtTimeTimer = 0;
@@ -1656,7 +1656,7 @@ namespace GoldTree.HabboHotel.Rooms
                                                     current2.ExtraData = "1";
                                                     current2.UpdateState(false, true);
                                                     current2.ReqUpdate(1);
-                                                    if (current2.WiredCounter >= double.Parse(current2.string_2, CultureInfo.CurrentCulture))
+                                                    if (current2.WiredCounter >= double.Parse(current2.string_2, CultureInfo.InvariantCulture))
                                                     {
                                                         num2++;
                                                         break;
@@ -1668,7 +1668,7 @@ namespace GoldTree.HabboHotel.Rooms
                                                     current2.ExtraData = "1";
                                                     current2.UpdateState(false, true);
                                                     current2.ReqUpdate(1);
-                                                    if (current2.WiredCounter <= double.Parse(current2.string_2, CultureInfo.CurrentCulture))
+                                                    if (current2.WiredCounter <= double.Parse(current2.string_2, CultureInfo.InvariantCulture))
                                                     {
                                                         num2++;
                                                         break;

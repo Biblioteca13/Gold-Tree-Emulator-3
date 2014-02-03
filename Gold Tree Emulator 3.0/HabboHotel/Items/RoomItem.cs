@@ -1099,7 +1099,7 @@ namespace GoldTree.HabboHotel.Items
                         case "wf_cnd_time_more_than":
                             if (!this.WiredNeedReset)
                             {
-                                if (this.WiredCounter >= double.Parse(this.string_2, CultureInfo.CurrentCulture))
+                                if (this.WiredCounter >= double.Parse(this.string_2, CultureInfo.InvariantCulture))
                                 {
                                     this.WiredNeedReset = true;
                                 }
@@ -1114,7 +1114,7 @@ namespace GoldTree.HabboHotel.Items
                         case "wf_cnd_time_less_than":
                             if (!this.WiredNeedReset)
                             {
-                                if (this.WiredCounter >= double.Parse(this.string_2, CultureInfo.CurrentCulture))
+                                if (this.WiredCounter >= double.Parse(this.string_2, CultureInfo.InvariantCulture))
                                 {
                                     this.WiredNeedReset = true;
                                 }

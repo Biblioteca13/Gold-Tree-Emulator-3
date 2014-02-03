@@ -1154,7 +1154,7 @@ namespace GoldTree.HabboHotel.Users
         public void CheckHappyHourAchievements()
         {
             string s = DateTime.Now.ToString("HH:mm:ss");
-            DateTime dt = DateTime.ParseExact(s, "HH:mm:ss", CultureInfo.CurrentCulture);
+            DateTime dt = DateTime.ParseExact(s, "HH:mm:ss", CultureInfo.InvariantCulture);
             var time = dt.TimeOfDay;
             if (DateTime.Now.DayOfWeek == DayOfWeek.Monday || DateTime.Now.DayOfWeek == DayOfWeek.Tuesday || DateTime.Now.DayOfWeek == DayOfWeek.Wednesday || DateTime.Now.DayOfWeek == DayOfWeek.Thursday || DateTime.Now.DayOfWeek == DayOfWeek.Friday)
             {
@@ -1191,8 +1191,8 @@ namespace GoldTree.HabboHotel.Users
 
         public void CheckTrueHabboAchievements()
         {
-            string AccountCreated = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().DataCadastro, CultureInfo.CurrentCulture)).ToString("dd-MM-yyyy");
-            string AccountCreated2 = UnixTimeStampToDateTime2(double.Parse(Session.GetHabbo().DataCadastro, CultureInfo.CurrentCulture)).ToString("dd-MM-yyyy");
+            string AccountCreated = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().DataCadastro, CultureInfo.InvariantCulture)).ToString("dd-MM-yyyy");
+            string AccountCreated2 = UnixTimeStampToDateTime2(double.Parse(Session.GetHabbo().DataCadastro, CultureInfo.InvariantCulture)).ToString("dd-MM-yyyy");
             //string[] dataC = Session.GetHabbo().DataCadastro.Split('-');
             //string[] dataC = AccountCreated.Split('.');
 
@@ -1216,7 +1216,7 @@ namespace GoldTree.HabboHotel.Users
                 case "Dec": { Mes = "12"; break; }
             }*/
 
-            DateTime dataCadastro = DateTime.Parse(AccountCreated2, CultureInfo.CurrentCulture);
+            DateTime dataCadastro = DateTime.Parse(AccountCreated2, CultureInfo.InvariantCulture);
             DateTime data_hoje = new DateTime(int.Parse(Hoje[2]), int.Parse(Hoje[1]), int.Parse(Hoje[0]));
 
             TimeSpan dif = data_hoje.Subtract(dataCadastro);
@@ -1248,8 +1248,8 @@ namespace GoldTree.HabboHotel.Users
 
         public void CheckRegularVisitorAchievements()
         {
-            string LastLoggedIn = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().last_loggedin, CultureInfo.CurrentCulture)).ToString("dd-MM-yyyy");
-            DateTime lastloggedin = DateTime.ParseExact(LastLoggedIn, "dd-MM-yyyy", CultureInfo.CurrentCulture);
+            string LastLoggedIn = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().last_loggedin, CultureInfo.InvariantCulture)).ToString("dd-MM-yyyy");
+            DateTime lastloggedin = DateTime.ParseExact(LastLoggedIn, "dd-MM-yyyy", CultureInfo.InvariantCulture);
             DateTime yesterday = DateTime.Now.AddDays(-1);
 
             if (lastloggedin.ToString("dd-MM-yyyy") == yesterday.ToString("dd-MM-yyyy"))

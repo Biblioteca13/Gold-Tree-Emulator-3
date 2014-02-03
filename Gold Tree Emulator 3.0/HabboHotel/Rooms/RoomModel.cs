@@ -117,7 +117,7 @@ namespace GoldTree.HabboHotel.Rooms
 		public bool method_0(string string_3, NumberStyles numberStyles_0)
 		{
 			double num;
-			return double.TryParse(string_3, numberStyles_0, CultureInfo.CurrentCulture, out num);
+			return double.TryParse(string_3, numberStyles_0, CultureInfo.InvariantCulture, out num);
 		}
 		public ServerMessage method_1()
 		{
