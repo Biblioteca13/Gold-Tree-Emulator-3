@@ -6916,7 +6916,6 @@ namespace GoldTree.HabboHotel.Rooms
         }
         public void method_89(int int_17, RoomItem RoomItem_0, bool bool_13)
         {
-            Console.WriteLine(int_17);
             if (int_17 == 5)
             {
                 this.int_9++;
