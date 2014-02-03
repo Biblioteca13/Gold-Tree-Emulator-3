@@ -44,8 +44,15 @@ namespace GoldTree.Communication.Messages.Navigator
                 {
                     using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                     {
-                        OwnerID = dbClient.ReadInt32("SELECT id FROM users WHERE username = '" + Owner + "'");
-                        dbClient.ExecuteQuery("UPDATE user_stats SET staff_picks = staff_picks + 1 WHERE id = '" + OwnerID + "' LIMIT 1");
+                        try
+                        {
+                            OwnerID = dbClient.ReadInt32("SELECT id FROM users WHERE username = '" + Owner + "'");
+                            dbClient.ExecuteQuery("UPDATE user_stats SET staff_picks = staff_picks + 1 WHERE id = '" + OwnerID + "' LIMIT 1");
+                        }
+                        catch (Exception)
+                        {
+                            Session.SendNotif("Room owner is not in database!");
+                        }
                     }
                 }
 
