@@ -80,6 +80,7 @@ namespace GoldTree.HabboHotel.Users.Badges
 			Message.AppendInt32(1);
 			Message.AppendUInt(GoldTree.GetGame().GetAchievementManager().method_0(string_0));
 			Session.SendMessage(Message);
+            Session.SendMessage(Session.GetHabbo().method_22().method_7());
 		}
 		public void method_3(string string_0, int int_0, bool bool_0)
 		{
