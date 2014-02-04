@@ -2098,14 +2098,17 @@ namespace GoldTree.HabboHotel.Rooms
                                     if (GetPlayerSession != null)
                                     {
                                         Room class2 = RoomUser_1.GetClient().GetHabbo().CurrentRoom;
-                                        class2.method_47(GetPlayerSession, true, false);
-                                        if (current2.string_2.Length > 0)
+                                        if (!(class2.Owner == GetPlayerSession.GetHabbo().Username && GetPlayerSession.GetHabbo().HasFuse("acc_unkickable")))
                                         {
-                                            GetPlayerSession.SendNotif(current2.string_2);
-                                        }
-                                        else
-                                        {
-                                            GetPlayerSession.SendNotif("Wired: Potki käyttäjä wired-tavara on potkinut sinut huoneesta!");
+                                            class2.method_47(GetPlayerSession, true, false);
+                                            if (current2.string_2.Length > 0)
+                                            {
+                                                GetPlayerSession.SendNotif(current2.string_2);
+                                            }
+                                            else
+                                            {
+                                                GetPlayerSession.SendNotif("Wired: Potki käyttäjä wired-tavara on potkinut sinut huoneesta!");
+                                            }
                                         }
                                         flag2 = true;
                                     }
