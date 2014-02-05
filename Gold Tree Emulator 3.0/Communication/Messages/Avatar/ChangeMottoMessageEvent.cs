@@ -19,9 +19,9 @@ namespace GoldTree.Communication.Messages.Avatar
 					@class.AddParamWithValue("motto", text);
 					@class.ExecuteQuery("UPDATE users SET motto = @motto WHERE Id = '" + Session.GetHabbo().Id + "' LIMIT 1");
 				}
-				if (Session.GetHabbo().CurrentQuestId == 17u)
+                if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "CHANGEMOTTO")
 				{
-                    GoldTree.GetGame().GetQuestManager().ProgressUserQuest(17u, Session);
+                    GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 				}
 				ServerMessage Message = new ServerMessage(484u);
 				Message.AppendInt32(-1);

@@ -102,9 +102,9 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
                                 }
                             }
                         IL_32C:
-                            if (Session.GetHabbo().CurrentQuestId == 14u)
+                            if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "PLACEITEM")
                             {
-                                GoldTree.GetGame().GetQuestManager().ProgressUserQuest(14u, Session);
+                                GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
                             }
                         }
                     }

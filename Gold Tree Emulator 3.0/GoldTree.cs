@@ -39,7 +39,7 @@ namespace GoldTree
         {
             get
             {
-                return "Gold Tree Emulator v3.17.0 (Build " + build + ")";
+                return "Gold Tree Emulator v3.18.0 (Build " + build + ")";
             }
         }
         internal static Game Class3_0

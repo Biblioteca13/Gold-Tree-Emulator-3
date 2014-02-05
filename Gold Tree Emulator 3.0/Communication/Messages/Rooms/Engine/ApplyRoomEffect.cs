@@ -43,18 +43,18 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 							else
 							{
 								@class.Wallpaper = class2.string_0;
-								if (Session.GetHabbo().CurrentQuestId == 11u)
+                                if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "PLACEWALLPAPER")
 								{
-                                    GoldTree.GetGame().GetQuestManager().ProgressUserQuest(11u, Session);
+                                    GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 								}
 							}
 						}
 						else
 						{
 							@class.Floor = class2.string_0;
-							if (Session.GetHabbo().CurrentQuestId == 13u)
+                            if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "PLACEFLOOR")
 							{
-                                GoldTree.GetGame().GetQuestManager().ProgressUserQuest(13u, Session);
+                                GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 							}
 						}
 					}

@@ -19,9 +19,9 @@ namespace GoldTree.Communication.Messages.Rooms.Avatar
 					ServerMessage Message = new ServerMessage(481u);
 					Message.AppendInt32(class2.VirtualId);
 					@class.SendMessage(Message, null);
-					if (Session.GetHabbo().CurrentQuestId == 8u)
+                    if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "WAVE")
 					{
-                        GoldTree.GetGame().GetQuestManager().ProgressUserQuest(8u, Session);
+                        GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 					}
 				}
 			}

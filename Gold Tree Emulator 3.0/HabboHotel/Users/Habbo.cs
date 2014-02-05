@@ -109,6 +109,7 @@ namespace GoldTree.HabboHotel.Users
         public double vipha_last;
         public double viphal_last;
         public bool FriendStreamEnabled;
+        public int QuestsCustom1Progress;
 
         public bool InRoom
 		{
@@ -602,9 +603,9 @@ namespace GoldTree.HabboHotel.Users
 				}
 			}
 			this.CurrentRoomId = RoomId;
-			if (this.CurrentRoom.Owner != this.Username && this.CurrentQuestId == 15u)
+            if (this.CurrentRoom.Owner != this.Username && GoldTree.GetGame().GetQuestManager().GetQuestAction(this.CurrentQuestId) == "ENTEROTHERSROOM")
 			{
-                GoldTree.GetGame().GetQuestManager().ProgressUserQuest(15u, this.method_19());
+                GoldTree.GetGame().GetQuestManager().ProgressUserQuest(this.CurrentQuestId, this.method_19());
 			}
 			this.class105_0.method_5(false);
 		}

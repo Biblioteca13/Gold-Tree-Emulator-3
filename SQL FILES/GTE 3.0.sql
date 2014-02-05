@@ -12429,6 +12429,7 @@ CREATE TABLE IF NOT EXISTS `user_stats` (
   `lev_social` int(10) NOT NULL DEFAULT '0',
   `lev_identity` int(10) NOT NULL DEFAULT '0',
   `lev_explore` int(10) NOT NULL DEFAULT '0',
+  `lev_custom1` int(10) NOT NULL DEFAULT '0',
   `groupid` int(11) NOT NULL DEFAULT '0',
   `fireworks` int(10) NOT NULL DEFAULT '0',
   `RegularVisitor` int(10) NOT NULL DEFAULT '0',

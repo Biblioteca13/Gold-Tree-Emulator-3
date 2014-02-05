@@ -17,6 +17,7 @@ ALTER TABLE `users` ADD `last_loggedin` VARCHAR(50) NOT NULL DEFAULT '0';
 ALTER TABLE `users` ADD `vipha_last` DOUBLE NOT NULL DEFAULT '0';
 ALTER TABLE `users` ADD `viphal_last` DOUBLE NOT NULL DEFAULT '0';
 ALTER TABLE  `users` ADD  `friend_stream_enabled` ENUM(  '0',  '1' ) NOT NULL DEFAULT  '0';
+ALTER TABLE  `user_stats` ADD  `lev_custom1` INT( 10 ) NOT NULL DEFAULT  '0' AFTER  `lev_explore` ;
 
 ALTER TABLE `user_stats` ADD `fireworks` INT(10) NOT NULL DEFAULT '0';
 ALTER TABLE `user_stats` ADD `RegularVisitor` INT(10) NOT NULL DEFAULT '0';

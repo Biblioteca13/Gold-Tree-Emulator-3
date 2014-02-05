@@ -9,9 +9,9 @@ namespace GoldTree.Communication.Messages.Messenger
 		{
 			if (Session.GetHabbo().GetMessenger() != null)
 			{
-				if (Session.GetHabbo().CurrentQuestId == 4u)
+                if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "REQUEST_FRIEND")
 				{
-                    GoldTree.GetGame().GetQuestManager().ProgressUserQuest(4u, Session);
+                    GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 				}
 				Session.GetHabbo().GetMessenger().method_16(Event.PopFixedString());
 			}

@@ -14,9 +14,9 @@ namespace GoldTree.Communication.Messages.Register
             string text2 = GoldTree.FilterString(Event.PopFixedString());
             if (AntiMutant.ValidateLook(text2, text))
             {
-                if (Session.GetHabbo().CurrentQuestId == 2u)
+                if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "CHANGE_FIGURE")
                 {
-                    GoldTree.GetGame().GetQuestManager().ProgressUserQuest(2u, Session);
+                    GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
                 }
                 Session.GetHabbo().Figure = text2;
                 Session.GetHabbo().Gender = text.ToLower();

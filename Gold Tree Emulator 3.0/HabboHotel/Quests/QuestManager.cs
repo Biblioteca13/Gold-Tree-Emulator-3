@@ -11,6 +11,7 @@ namespace GoldTree.HabboHotel.Quests
 	internal sealed class QuestManager
 	{
 		public List<Quest> Quests;
+        public int QuestsCount;
 		public QuestManager()
 		{
 			this.Quests = new List<Quest>();
@@ -20,9 +21,11 @@ namespace GoldTree.HabboHotel.Quests
             Logging.smethod_0("Loading Quests..");
 			this.Quests.Clear();
 			DataTable dataTable = null;
+            DataTable dataTable2 = null;
 			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 			{
 				dataTable = @class.ReadDataTable("SELECT Id,type,action,needofcount,level_num,pixel_reward FROM quests WHERE enabled = '1' ORDER by level_num");
+                dataTable2 = @class.ReadDataTable("SELECT COUNT(*) as count FROM quests GROUP BY type ORDER BY count DESC;");
 			}
 			if (dataTable != null)
 			{
@@ -34,8 +37,15 @@ namespace GoldTree.HabboHotel.Quests
 						this.Quests.Add(class2);
 					}
 				}
-				Logging.WriteLine("completed!");
+				//Logging.WriteLine("completed!");
 			}
+
+            if (dataTable2 != null)
+            {
+                QuestsCount = dataTable2.Rows.Count;
+
+                Logging.WriteLine("completed!");
+            }
 		}
 		public void ProgressUserQuest(uint uint_0, GameClient Session)
 		{
@@ -86,10 +96,17 @@ namespace GoldTree.HabboHotel.Quests
 					{
 						if (!(text2 == "identity"))
 						{
-							if (text2 == "explore")
-							{
-								int_ = Session.GetHabbo().int_9;
-							}
+                            if (!(text2 == "explore"))
+                            {
+                                if (text2 == "custom1")
+                                {
+                                    int_ = Session.GetHabbo().QuestsCustom1Progress;
+                                }
+                            }
+                            else
+                            {
+                                int_ = Session.GetHabbo().int_9;
+                            }
 						}
 						else
 						{
@@ -114,7 +131,7 @@ namespace GoldTree.HabboHotel.Quests
 		public ServerMessage method_5(GameClient Session)
 		{
 			ServerMessage Message = new ServerMessage(800u);
-			Message.AppendInt32(4);
+            Message.AppendInt32(QuestsCount);
 			this.method_9(Session, Message);
 			Message.AppendInt32(1);
 			return Message;
@@ -197,10 +214,17 @@ namespace GoldTree.HabboHotel.Quests
 					{
 						if (!(text == "social"))
 						{
-							if (text == "explore")
-							{
-								Session.GetHabbo().int_9++;
-							}
+                            if (!(text == "explore"))
+                            {
+                                if (text == "custom1")
+                                {
+                                    Session.GetHabbo().QuestsCustom1Progress++;
+                                }
+                            }
+                            else
+                            {
+                                Session.GetHabbo().int_9++;
+                            }
 						}
 						else
 						{
@@ -234,10 +258,12 @@ namespace GoldTree.HabboHotel.Quests
 			bool flag2 = false;
 			bool flag3 = false;
 			bool flag4 = false;
+            bool flag5 = false;
 			int num = 0;
 			int num2 = 0;
 			int num3 = 0;
 			int num4 = 0;
+            int num5 = 0;
 			foreach (Quest current in this.Quests)
 			{
 				if (current.QuestId() == Session.GetHabbo().CurrentQuestId)
@@ -252,10 +278,17 @@ namespace GoldTree.HabboHotel.Quests
 							{
 								if (!(text == "identity"))
 								{
-									if (text == "explore")
-									{
-										flag4 = true;
-									}
+                                    if (!(text == "explore"))
+                                    {
+                                        if (text == "custom1")
+                                        {
+                                            flag5 = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        flag4 = true;
+                                    }
 								}
 								else
 								{
@@ -289,6 +322,10 @@ namespace GoldTree.HabboHotel.Quests
 				{
 					num4 = current.Level;
 				}
+                if (current.Type.ToLower() == "custom1" && num5 < Session.GetHabbo().QuestsCustom1Progress)
+                {
+                    num4 = current.Level;
+                }
 				if (current.Type.ToLower() == "room_builder" && !flag2 && current.Level == this.GetHighestLevelForType("room_builder") && Session.GetHabbo().int_6 == this.GetHighestLevelForType("room_builder"))
 				{
 					current.Serialize(Message5_0, Session, false);
@@ -309,6 +346,11 @@ namespace GoldTree.HabboHotel.Quests
 					current.Serialize(Message5_0, Session, false);
 					flag4 = true;
 				}
+                if (current.Type.ToLower() == "custom1" && !flag5 && current.Level == this.GetHighestLevelForType("custom1") && Session.GetHabbo().QuestsCustom1Progress == this.GetHighestLevelForType("custom1"))
+                {
+                    current.Serialize(Message5_0, Session, false);
+                    flag5 = true;
+                }
 				if (current.Type.ToLower() == "room_builder" && !flag2 && current.Level == Session.GetHabbo().int_6 + 1)
 				{
 					current.Serialize(Message5_0, Session, false);
@@ -329,8 +371,13 @@ namespace GoldTree.HabboHotel.Quests
 					current.Serialize(Message5_0, Session, false);
 					flag4 = true;
 				}
+                if (current.Type.ToLower() == "custom1" && !flag4 && current.Level == Session.GetHabbo().QuestsCustom1Progress + 1)
+                {
+                    current.Serialize(Message5_0, Session, false);
+                    flag5 = true;
+                }
 			}
-			if (!flag2 || !flag || !flag3 || !flag4)
+			if (!flag2 || !flag || !flag3 || !flag4 || !flag5)
 			{
 				foreach (Quest current in this.Quests)
 				{
@@ -354,8 +401,28 @@ namespace GoldTree.HabboHotel.Quests
 						current.Serialize(Message5_0, Session, false);
 						flag4 = true;
 					}
+                    if (current.Type.ToLower() == "custom1" && !flag4 && current.Level == num5)
+                    {
+                        current.Serialize(Message5_0, Session, false);
+                        flag4 = true;
+                    }
 				}
 			}
 		}
+
+        public string GetQuestAction(uint id)
+        {
+            string result;
+            foreach (Quest current in this.Quests)
+            {
+                if (current.QuestId() == id)
+                {
+                    result = current.Action;
+                    return result;
+                }
+            }
+            result = null;
+            return result;
+        }
 	}
 }

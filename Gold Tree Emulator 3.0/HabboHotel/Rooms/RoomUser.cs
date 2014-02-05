@@ -280,9 +280,9 @@ namespace GoldTree.HabboHotel.Rooms
 						if (!this.IsBot)
 						{
 							this.method_17().method_7(this, string_1, bool_13);
-							if (Session.GetHabbo().CurrentQuestId == 3u)
+                            if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "CHAT_WITH_SOMEONE")
 							{
-                                GoldTree.GetGame().GetQuestManager().ProgressUserQuest(3u, Session);
+                                GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 							}
 						}
                         if (LicenseTools.Boolean_4 && !this.IsBot && !this.GetClient().GetHabbo().isJuniori)
