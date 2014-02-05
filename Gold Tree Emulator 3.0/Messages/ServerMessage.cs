@@ -88,6 +88,16 @@ namespace GoldTree.Messages
 		{
 			this.AppendBytes(WireEncoding.EncodeInt32(i));
 		}
+        public void AppendInt32WithBreak(int i)
+        {
+            this.AppendBytes(WireEncoding.EncodeInt32(i));
+            this.AppendByte(2);
+        }
+        public void AppendInt32WithBreak(int i, byte BreakChar)
+        {
+            this.AppendBytes(WireEncoding.EncodeInt32(i));
+            this.AppendByte(BreakChar);
+        }
 		public void AppendRawInt32(int i)
 		{
 			this.AppendString(i.ToString(), Encoding.ASCII);

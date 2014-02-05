@@ -82,7 +82,8 @@ namespace GoldTree.Communication
 			this.RequestHandlers.Add(39, new RequestBuddyMessageEvent());
 			this.RequestHandlers.Add(33, new SendMsgMessageEvent());
 			this.RequestHandlers.Add(34, new SendRoomInviteMessageEvent());
-			this.RequestHandlers.Add(501, new SetEventStreamingAllowedEvent());
+            this.RequestHandlers.Add(500, new GetEventStreamComposer());
+            this.RequestHandlers.Add(501, new SetEventStreamingAllowedComposer());
 			this.RequestHandlers.Add(490, new FindNewFriendsMessageEvent());
 		}
 		public void Navigator()

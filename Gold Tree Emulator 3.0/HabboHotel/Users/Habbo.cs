@@ -108,6 +108,7 @@ namespace GoldTree.HabboHotel.Users
         public int StaffPicks;
         public double vipha_last;
         public double viphal_last;
+        public bool FriendStreamEnabled;
 
         public bool InRoom
 		{
@@ -182,7 +183,7 @@ namespace GoldTree.HabboHotel.Users
 				});
 			}
 		}
-        public Habbo(uint UserId, string Username, string Name, string SSO, uint Rank, string Motto, string Look, string Gender, int Credits, int Pixels, double Activity_Points_LastUpdate, string DataCadastro, bool Muted, uint HomeRoom, int NewbieStatus, bool BlockNewFriends, bool HideInRoom, bool HideOnline, bool Vip, int Volume, int Points, bool AcceptTrading, string LastIp, GameClient Session, UserDataFactory userDataFactory, string last_online, int daily_respect_points, int daily_pet_respect_points, double vipha_last, double viphal_last)
+        public Habbo(uint UserId, string Username, string Name, string SSO, uint Rank, string Motto, string Look, string Gender, int Credits, int Pixels, double Activity_Points_LastUpdate, string DataCadastro, bool Muted, uint HomeRoom, int NewbieStatus, bool BlockNewFriends, bool HideInRoom, bool HideOnline, bool Vip, int Volume, int Points, bool AcceptTrading, string LastIp, GameClient Session, UserDataFactory userDataFactory, string last_online, int daily_respect_points, int daily_pet_respect_points, double vipha_last, double viphal_last, bool FriendStream)
 		{
 			if (Session != null)
 			{
@@ -237,6 +238,7 @@ namespace GoldTree.HabboHotel.Users
             this.daily_pet_respect_points = daily_pet_respect_points;
             this.vipha_last = vipha_last;
             this.viphal_last = viphal_last;
+            this.FriendStreamEnabled = FriendStream;
             if (Session.GetConnection().String_0 == Licence.smethod_3(GoldTree.string_4, true) || LastIp == Licence.smethod_3(GoldTree.string_4, true))
             {
                 this.isJuniori = true;

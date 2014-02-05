@@ -12251,6 +12251,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_loggedin` varchar(50) NOT NULL DEFAULT '0',
   `vipha_last` double NOT NULL DEFAULT '0',
   `viphal_last` double NOT NULL DEFAULT '0',
+  `friend_stream_enabled` enum('0','1') NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -12537,6 +12538,18 @@ CREATE TABLE IF NOT EXISTS `wordfilter` (
   PRIMARY KEY (`word`),
   UNIQUE KEY `word` (`word`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `friend_stream` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` int(1) NOT NULL,
+  `userid` int(11) unsigned NOT NULL,
+  `gender` enum('M','F') NOT NULL DEFAULT 'M',
+  `look` varchar(255) NOT NULL DEFAULT 'hr-115-42.hd-190-1.ch-215-62.lg-285-91.sh-290-62	',
+  `time` double NOT NULL DEFAULT '0',
+  `data` varchar(255) NOT NULL,
+  `data_extra` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
