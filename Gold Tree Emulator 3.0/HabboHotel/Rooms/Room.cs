@@ -5648,7 +5648,7 @@ namespace GoldTree.HabboHotel.Rooms
                     result = false;
                     return result;
                 }
-                if (this.method_97(int_17, int_18) && !RoomItem_0.GetBaseItem().Walkable)
+                if ((!bool_15 || !RoomItem_0.GetBaseItem().Walkable) && this.method_97(int_17, int_18))
                 {
                     result = false;
                     return result;
@@ -6766,7 +6766,9 @@ namespace GoldTree.HabboHotel.Rooms
                                         int num6 = current.Int32_0;
                                         int num7 = current.Int32_1;
                                         current.ExtraData = "11";
-                                        current.LastPlayerHitFootball = User.GetClient().GetHabbo().Username;
+                                        if (User != null && User.GetClient() != null && User.GetClient().GetHabbo() != null)
+                                            current.LastPlayerHitFootball = User.GetClient().GetHabbo().Username;
+
                                         if (User.int_8 == 4)
                                         {
                                             num7++;

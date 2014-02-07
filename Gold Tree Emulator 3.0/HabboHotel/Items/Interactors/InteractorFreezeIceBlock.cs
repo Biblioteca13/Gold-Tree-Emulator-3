@@ -89,14 +89,14 @@ namespace GoldTree.HabboHotel.Items.Interactors
                                                     {
                                                         if (User.FreezeRange >= i)
                                                         {
-                                                            /*Thread.Sleep(200);
+                                                            Thread.Sleep(200);
                                                             foreach (RoomItem Item3 in Item.method_8().GetFreeze().freezeTiles.Values)
                                                             {
                                                                 if (Item3.Int32_0 == Item.Int32_0 && Item3.Int32_1 == Item.Int32_1 + i && !pX) { pX = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
                                                                 if (Item3.Int32_0 == Item.Int32_0 && Item3.Int32_1 == Item.Int32_1 - i && !pY) { pY = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
                                                                 if (Item3.Int32_0 == Item.Int32_0 + i && Item3.Int32_1 == Item.Int32_1 && !nX) { nX = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
                                                                 if (Item3.Int32_0 == Item.Int32_0 - i && Item3.Int32_1 == Item.Int32_1 && !nY) { nY = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
-                                                            }*/
+                                                            }
                                                         }
                                                     }
                                                 }
