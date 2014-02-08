@@ -7,7 +7,10 @@ namespace GoldTree.Communication.Messages.Catalog
 	{
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
-			Session.SendMessage(GoldTree.GetGame().GetCatalog().method_18(Session.GetHabbo().Rank));
+            if (Session != null && Session.GetHabbo() != null)
+            {
+                Session.SendMessage(GoldTree.GetGame().GetCatalog().method_18(Session.GetHabbo().Rank));
+            }
 		}
 	}
 }
