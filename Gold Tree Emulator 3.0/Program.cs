@@ -29,10 +29,6 @@ namespace GoldTree
             try
             {
                 GoldTree @class = new GoldTree();
-                if (Licence.smethod_0(false))
-                {
-                    return;
-                }
                 @class.Initialize();
                 Program.bool_0 = true;
             }

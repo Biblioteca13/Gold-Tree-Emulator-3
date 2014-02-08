@@ -443,7 +443,6 @@
     <Compile Include="HabboHotel\Users\Subscriptions\SubscriptionManager.cs" />
     <Compile Include="HabboHotel\Users\UserDataManagement\UserDataFactory.cs" />
     <Compile Include="HabboHotel\Users\UserDataManagement\UserDataNotFoundException.cs" />
-    <Compile Include="Licence.cs" />
     <Compile Include="GoldTree.cs" />
     <Compile Include="GoldTreeEnvironment.cs" />
     <Compile Include="Program.cs" />
@@ -497,7 +496,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_StartDate="2013/10/21" BuildVersion_BuildVersioningStyle="None.None.Increment.None" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.None" BuildVersion_StartDate="2013/10/21" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

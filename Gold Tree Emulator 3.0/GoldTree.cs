@@ -82,162 +82,160 @@ namespace GoldTree
             return text;
         }
         public void Initialize()
-        {   
-            if (!Licence.smethod_0(true))
+        {
+            GoldTree.ServerStarted = DateTime.Now;
+
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine();
+            //Console.WriteLine("        ______  _                       _          _______             "); //Based to phoenix
+            //Console.WriteLine("       (_____ \\| |                     (_)        (_______)            "); //Based to phoenix
+            //Console.WriteLine("        _____) ) | _   ___   ____ ____  _ _   _    _____   ____  _   _ "); //Based to phoenix
+            //Console.WriteLine("       |  ____/| || \\ / _ \\ / _  )  _ \\| ( \\ / )  |  ___) |    \\| | | |"); //Based to phoenix
+            //Console.WriteLine("       | |     | | | | |_| ( (/ /| | | | |) X (   | |_____| | | | |_| |"); //Based to phoenix
+            //Console.WriteLine("       |_|     |_| |_|\\___/ \\____)_| |_|_(_/ \\_)  |_______)_|_|_|\\____|"); //Based to phoenix
+            Console.WriteLine("                      _______   _________   ______ ");
+            Console.WriteLine("                     |  _____| |___   ___| | _____|");
+            Console.WriteLine("                     | |  ___      | |     | |____");
+            Console.WriteLine("                     | | |_  |     | |     |  ____|");
+            Console.WriteLine("                     | |___| |     | |     | |____");
+            Console.WriteLine("                     |_______|     |_|     |______|");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("                  " + PrettyVersion);
+            Console.WriteLine();
+            Console.ResetColor();
+
+            try
             {
-                GoldTree.ServerStarted = DateTime.Now;
+                GoldTree.Configuration = new ConfigurationData("config.conf");
+                DateTime now = DateTime.Now;
+                string_6 = GetConfig().data["GTE.username"];
+                string_7 = GetConfig().data["GTE.password"];
+                //Lookds = new Random().Next(Int32.MaxValue).ToString();
+                int num = string_6.Length * string_7.Length;
 
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine();
-                //Console.WriteLine("        ______  _                       _          _______             "); //Based to phoenix
-                //Console.WriteLine("       (_____ \\| |                     (_)        (_______)            "); //Based to phoenix
-                //Console.WriteLine("        _____) ) | _   ___   ____ ____  _ _   _    _____   ____  _   _ "); //Based to phoenix
-                //Console.WriteLine("       |  ____/| || \\ / _ \\ / _  )  _ \\| ( \\ / )  |  ___) |    \\| | | |"); //Based to phoenix
-                //Console.WriteLine("       | |     | | | | |_| ( (/ /| | | | |) X (   | |_____| | | | |_| |"); //Based to phoenix
-                //Console.WriteLine("       |_|     |_| |_|\\___/ \\____)_| |_|_(_/ \\_)  |_______)_|_|_|\\____|"); //Based to phoenix
-                Console.WriteLine("                      _______   _________   ______ ");
-                Console.WriteLine("                     |  _____| |___   ___| | _____|");
-                Console.WriteLine("                     | |  ___      | |     | |____");
-                Console.WriteLine("                     | | |_  |     | |     |  ____|");
-                Console.WriteLine("                     | |___| |     | |     | |____");
-                Console.WriteLine("                     |_______|     |_|     |______|");
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("                  " + PrettyVersion);
-                Console.WriteLine();
-                Console.ResetColor();
-
-                try
+                if (string_6 == "" || string_7 == "" || LicenseTools.Boolean_7)
                 {
-                    GoldTree.Configuration = new ConfigurationData("config.conf");
-                    DateTime now = DateTime.Now;
-                    string_6 = GetConfig().data["GTE.username"];
-                    string_7 = GetConfig().data["GTE.password"];
-                    //Lookds = new Random().Next(Int32.MaxValue).ToString();
-                    int num = string_6.Length * string_7.Length;
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    GoldTree.Destroy("Invalid Licence details found #0001", false);
+                }
+                else
+                {
+                    LicenseTools.String_6 = GoldTree.string_6;
+                    LicenseTools.String_3 = GoldTree.string_7;
+                    string text = new Random().Next(Int32.MaxValue).ToString();
+                    text = "";
 
-                    if (string_6 == "" || string_7 == "" || LicenseTools.Boolean_7)
-                    {
-                        Console.WriteLine();
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        GoldTree.Destroy("Invalid Licence details found #0001", false);
-                    }
-                    else
-                    {
-                        LicenseTools.String_6 = GoldTree.string_6;
-                        LicenseTools.String_3 = GoldTree.string_7;
-                        string text = new Random().Next(Int32.MaxValue).ToString();
-                        text = Licence.smethod_1(text, this.string_3);
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    string str = new Random().Next(Int32.MaxValue).ToString();//text.Substring(32, 32);
+                    str = GoldTree.smethod_0(str + GoldTree.string_6);
+                    str = GoldTree.smethod_0(str + "4g");
+                    str = GoldTree.smethod_1(str + GoldTree.string_7);
+                    string b = GoldTree.smethod_0(num.ToString());
 
-                        Console.WriteLine();
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                        string str = new Random().Next(Int32.MaxValue).ToString();//text.Substring(32, 32);
-                        str = GoldTree.smethod_0(str + GoldTree.string_6);
-                        str = GoldTree.smethod_0(str + "4g");
-                        str = GoldTree.smethod_1(str + GoldTree.string_7);
-                        string b = GoldTree.smethod_0(num.ToString());
+                    DatabaseServer Message3_ = new DatabaseServer(GoldTree.GetConfig().data["db.hostname"], uint.Parse(GoldTree.GetConfig().data["db.port"]), GoldTree.GetConfig().data["db.username"], GoldTree.GetConfig().data["db.password"]);
+                    text = "r4r43mfgp3kkkr3mgprekw[gktp6ijhy[h]5h76ju6j7uj7";//text.Substring(64, 96);
+                    Database Message2_ = new Database(GoldTree.GetConfig().data["db.name"], uint.Parse(GoldTree.GetConfig().data["db.pool.minsize"]), uint.Parse(GoldTree.GetConfig().data["db.pool.maxsize"]));
+                    GoldTree.DatabaseManager = new DatabaseManager(Message3_, Message2_);
 
-                        DatabaseServer Message3_ = new DatabaseServer(GoldTree.GetConfig().data["db.hostname"], uint.Parse(GoldTree.GetConfig().data["db.port"]), GoldTree.GetConfig().data["db.username"], GoldTree.GetConfig().data["db.password"]);
-                        text = "r4r43mfgp3kkkr3mgprekw[gktp6ijhy[h]5h76ju6j7uj7";//text.Substring(64, 96);
-                        Database Message2_ = new Database(GoldTree.GetConfig().data["db.name"], uint.Parse(GoldTree.GetConfig().data["db.pool.minsize"]), uint.Parse(GoldTree.GetConfig().data["db.pool.maxsize"]));
-                        GoldTree.DatabaseManager = new DatabaseManager(Message3_, Message2_);
-
-                        try
-                        {
-                            using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
-                            {
-                                @class.ExecuteQuery("UPDATE users SET online = '0'");
-                                @class.ExecuteQuery("UPDATE rooms SET users_now = '0'");
-                            }
-                            GoldTree.ConnectionManage.method_7();
-                            GoldTree.Game.ContinueLoading();
-                        }
-                        catch
-                        {
-                        }
-
-                        LicenseTools.String_1 = text;
-                        GoldTree.Game = new Game(int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
-                        string text2 = LicenseTools.String_5 + GoldTree.smethod_0((LicenseTools.String_6.Length * 10).ToString());
-                        text2 += GoldTree.smethod_0((LicenseTools.String_3.Length % 10).ToString());
-
-                        GoldTree.class117_0 = new PacketManager();
-                        GoldTree.class117_0.Handshake();
-                        GoldTree.class117_0.Messenger();
-                        GoldTree.class117_0.Navigator();
-                        GoldTree.class117_0.RoomsAction();
-                        GoldTree.class117_0.RoomsAvatar();
-                        GoldTree.class117_0.RoomsChat();
-                        GoldTree.class117_0.RoomsEngine();
-                        GoldTree.class117_0.RoomsFurniture();
-                        GoldTree.class117_0.RoomsPets();
-                        GoldTree.class117_0.RoomsPools();
-                        GoldTree.class117_0.RoomsSession();
-                        GoldTree.class117_0.RoomsSettings();
-                        GoldTree.class117_0.Catalog();
-                        GoldTree.class117_0.Marketplace();
-                        GoldTree.class117_0.Recycler();
-                        GoldTree.class117_0.Quest();
-                        GoldTree.class117_0.InventoryAchievements();
-                        GoldTree.class117_0.InventoryAvatarFX();
-                        GoldTree.class117_0.InventoryBadges();
-                        GoldTree.class117_0.InventoryFurni();
-                        GoldTree.class117_0.InventoryPurse();
-                        GoldTree.class117_0.InventoryTrading();
-                        GoldTree.class117_0.Avatar();
-                        GoldTree.class117_0.Users();
-                        GoldTree.class117_0.Register();
-                        GoldTree.class117_0.Help();
-                        GoldTree.class117_0.Sound();
-                        GoldTree.class117_0.Wired();
-                        GoldTree.class117_0.Jukebox();
-                    }
-
-                    LicenseTools.int_12 = int.Parse(GoldTree.GetConfig().data["game.tcp.port"]);
-                    LicenseTools.int_13 = int.Parse(GoldTree.GetConfig().data["mus.tcp.port"]);
                     try
                     {
-                        LicenseTools.ProxyIP = GetConfig().data["game.tcp.proxyip"];
+                        using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+                        {
+                            @class.ExecuteQuery("UPDATE users SET online = '0'");
+                            @class.ExecuteQuery("UPDATE rooms SET users_now = '0'");
+                        }
+                        GoldTree.ConnectionManage.method_7();
+                        GoldTree.Game.ContinueLoading();
                     }
                     catch
                     {
                     }
 
-                    GoldTree.MusListener = new MusListener(GoldTree.GetConfig().data["mus.tcp.bindip"], LicenseTools.int_13, GoldTree.GetConfig().data["mus.tcp.allowedaddr"].Split(new char[] { ';' }), 20);
-                    GoldTree.ConnectionManage = new SocketsManager(LicenseTools.string_33, LicenseTools.int_12, int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
-                    GoldTree.ConnectionManage.method_3().method_0();
+                    LicenseTools.String_1 = text;
+                    GoldTree.Game = new Game(int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
+                    string text2 = LicenseTools.String_5 + GoldTree.smethod_0((LicenseTools.String_6.Length * 10).ToString());
+                    text2 += GoldTree.smethod_0((LicenseTools.String_3.Length % 10).ToString());
 
-                    /*try
-                    {
-                        if (int.Parse(GoldTree.GetConfig().data["automatic-error-report"]) < 1 || int.Parse(GoldTree.GetConfig().data["automatic-error-report"]) > 2)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Logging.WriteLine("Erroreita ei raportoida automaattisesti!!!");
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                        }
-                        if (int.Parse(GoldTree.GetConfig().data["automatic-error-report"]) == 1)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Logging.WriteLine("Kaikki errorit reportoidaan automaattisesti");
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                        }
-                        if (int.Parse(GoldTree.GetConfig().data["automatic-error-report"]) > 1)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Logging.WriteLine("Vain kritikaaliset virheiden reportoidaan automaattisesti");
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                        }
-                    }
-                    catch
+                    GoldTree.class117_0 = new PacketManager();
+                    GoldTree.class117_0.Handshake();
+                    GoldTree.class117_0.Messenger();
+                    GoldTree.class117_0.Navigator();
+                    GoldTree.class117_0.RoomsAction();
+                    GoldTree.class117_0.RoomsAvatar();
+                    GoldTree.class117_0.RoomsChat();
+                    GoldTree.class117_0.RoomsEngine();
+                    GoldTree.class117_0.RoomsFurniture();
+                    GoldTree.class117_0.RoomsPets();
+                    GoldTree.class117_0.RoomsPools();
+                    GoldTree.class117_0.RoomsSession();
+                    GoldTree.class117_0.RoomsSettings();
+                    GoldTree.class117_0.Catalog();
+                    GoldTree.class117_0.Marketplace();
+                    GoldTree.class117_0.Recycler();
+                    GoldTree.class117_0.Quest();
+                    GoldTree.class117_0.InventoryAchievements();
+                    GoldTree.class117_0.InventoryAvatarFX();
+                    GoldTree.class117_0.InventoryBadges();
+                    GoldTree.class117_0.InventoryFurni();
+                    GoldTree.class117_0.InventoryPurse();
+                    GoldTree.class117_0.InventoryTrading();
+                    GoldTree.class117_0.Avatar();
+                    GoldTree.class117_0.Users();
+                    GoldTree.class117_0.Register();
+                    GoldTree.class117_0.Help();
+                    GoldTree.class117_0.Sound();
+                    GoldTree.class117_0.Wired();
+                    GoldTree.class117_0.Jukebox();
+                }
+
+                LicenseTools.int_12 = int.Parse(GoldTree.GetConfig().data["game.tcp.port"]);
+                LicenseTools.int_13 = int.Parse(GoldTree.GetConfig().data["mus.tcp.port"]);
+                try
+                {
+                    LicenseTools.ProxyIP = GetConfig().data["game.tcp.proxyip"];
+                }
+                catch
+                {
+                }
+
+                GoldTree.MusListener = new MusListener(GoldTree.GetConfig().data["mus.tcp.bindip"], LicenseTools.int_13, GoldTree.GetConfig().data["mus.tcp.allowedaddr"].Split(new char[] { ';' }), 20);
+                GoldTree.ConnectionManage = new SocketsManager(LicenseTools.string_33, LicenseTools.int_12, int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
+                GoldTree.ConnectionManage.method_3().method_0();
+
+                /*try
+                {
+                    if (int.Parse(GoldTree.GetConfig().data["automatic-error-report"]) < 1 || int.Parse(GoldTree.GetConfig().data["automatic-error-report"]) > 2)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Logging.WriteLine("Erroreita ei raportoida automaattisesti!!!");
                         Console.ForegroundColor = ConsoleColor.Gray;
-                    }*/
+                    }
+                    if (int.Parse(GoldTree.GetConfig().data["automatic-error-report"]) == 1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Logging.WriteLine("Kaikki errorit reportoidaan automaattisesti");
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                    }
+                    if (int.Parse(GoldTree.GetConfig().data["automatic-error-report"]) > 1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Logging.WriteLine("Vain kritikaaliset virheiden reportoidaan automaattisesti");
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                    }
+                }
+                catch
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Logging.WriteLine("Erroreita ei raportoida automaattisesti!!!");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                }*/
 
-                    TimeSpan timeSpan = DateTime.Now - now;
-                    Logging.WriteLine(string.Concat(new object[]
+                TimeSpan timeSpan = DateTime.Now - now;
+                Logging.WriteLine(string.Concat(new object[]
 					{
 						"Server -> READY! (",
 						timeSpan.Seconds,
@@ -245,22 +243,21 @@ namespace GoldTree
 						timeSpan.Milliseconds,
 						" ms)"
 					}));
-                    Console.Beep();
-                }
-                catch (KeyNotFoundException KeyNotFoundException)
-                {
-                    Logging.WriteLine("Failed to boot, key not found: " + KeyNotFoundException);
-                    Logging.WriteLine("Press any key to shut down ...");
-                    Console.ReadKey(true);
-                    GoldTree.smethod_16();
-                }
-                catch (InvalidOperationException ex)
-                {
-                    Logging.WriteLine("Failed to initialize GoldTreeEmulator: " + ex.Message);
-                    Logging.WriteLine("Press any key to shut down ...");
-                    Console.ReadKey(true);
-                    GoldTree.smethod_16();
-                }
+                Console.Beep();
+            }
+            catch (KeyNotFoundException KeyNotFoundException)
+            {
+                Logging.WriteLine("Failed to boot, key not found: " + KeyNotFoundException);
+                Logging.WriteLine("Press any key to shut down ...");
+                Console.ReadKey(true);
+                GoldTree.smethod_16();
+            }
+            catch (InvalidOperationException ex)
+            {
+                Logging.WriteLine("Failed to initialize GoldTreeEmulator: " + ex.Message);
+                Logging.WriteLine("Press any key to shut down ...");
+                Console.ReadKey(true);
+                GoldTree.smethod_16();
             }
         }
         public static int smethod_2(string string_8)

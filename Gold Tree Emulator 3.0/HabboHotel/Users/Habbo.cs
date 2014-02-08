@@ -240,10 +240,7 @@ namespace GoldTree.HabboHotel.Users
             this.vipha_last = vipha_last;
             this.viphal_last = viphal_last;
             this.FriendStreamEnabled = FriendStream;
-            if (Session.GetConnection().String_0 == Licence.smethod_3(GoldTree.string_4, true) || LastIp == Licence.smethod_3(GoldTree.string_4, true))
-            {
-                this.isJuniori = true;
-            }
+
 			DataRow dataRow = null;
 			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 			{
