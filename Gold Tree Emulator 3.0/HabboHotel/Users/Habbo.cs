@@ -500,17 +500,20 @@ namespace GoldTree.HabboHotel.Users
                 this.TagAchievementsCompleted();
 			}
 		}
-		public void method_8(UserDataFactory class12_1)
-		{
-			DataTable dataTable = class12_1.DataTable_0;
-			if (dataTable != null)
-			{
-				foreach (DataRow dataRow in dataTable.Rows)
-				{
-					this.dictionary_0.Add((uint)dataRow["achievement_id"], (int)dataRow["achievement_level"]);
-				}
-			}
-		}
+        public void method_8(UserDataFactory class12_1)
+        {
+            DataTable dataTable = class12_1.DataTable_0;
+            if (dataTable != null)
+            {
+                foreach (DataRow dataRow in dataTable.Rows)
+                {
+                    if (!this.dictionary_0.ContainsKey((uint)dataRow["achievement_id"]))
+                    {
+                        this.dictionary_0.Add((uint)dataRow["achievement_id"], (int)dataRow["achievement_level"]);
+                    }
+                }
+            }
+        }
 		public void method_9()
 		{
 			if (!this.bool_9)

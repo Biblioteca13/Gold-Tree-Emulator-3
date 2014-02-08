@@ -25,10 +25,15 @@ namespace GoldTree.HabboHotel.Items.Interactors
             Item.UpdateState(true, true);
         }
 
-        public override void OnTrigger(GameClient Session, RoomItem Item, int Request, bool UserHasRights)
+        public async override void OnTrigger(GameClient Session, RoomItem Item, int Request, bool UserHasRights)
         {
             Room @class = Item.method_8();
             RoomUser User = @class.GetRoomUserByHabbo(Session.GetHabbo().Id);
+
+            if (string.IsNullOrEmpty(Item.ExtraData))
+            {
+                return;
+            }
 
             if (User.Freezed == false)
             {
@@ -40,6 +45,101 @@ namespace GoldTree.HabboHotel.Items.Interactors
                         {
                             if (Item.Int32_1 == User.int_4 || Item.Int32_1 - 1 == User.int_4 || Item.Int32_1 + 1 == User.int_4)
                             {
+                                if (User.FreezeBalls > 0)
+                                {
+                                    foreach (RoomItem Item2 in Item.method_8().GetFreeze().freezeTiles.Values)
+                                    {
+                                        if (Item2.Int32_0 == Item.Int32_0 && Item2.Int32_1 == Item.Int32_1 && (Item2.ExtraData == "11200" || string.IsNullOrEmpty(Item2.ExtraData)))
+                                        {
+                                            Rooms.Games.FreezePowerUp BallType = User.freezePowerUp;
+                                            User.freezePowerUp = Rooms.Games.FreezePowerUp.None;
+
+                                            bool pX, pY, pD1, pD2, nX, nY, nD1, nD2;
+                                            pX = false; pY = false; pD1 = false; pD2 = false; nX = false; nY = false; nD1 = false; nD2 = false;
+
+                                            if (BallType == Rooms.Games.FreezePowerUp.OrangeSnowball)
+                                            {
+                                                User.FreezeBalls -= 1;
+                                                Item2.ExtraData = "6000";
+                                                Item2.UpdateState(false, true);
+                                                await Task.Delay(2000);
+                                                BreakIceBlock(Item2, Item2);
+                                                FreezeUser(Item2, Item2);
+                                            }
+                                            else
+                                            {
+                                                User.FreezeBalls -= 1;
+                                                Item2.ExtraData = "1000";
+                                                Item2.UpdateState(false, true);
+                                                await Task.Delay(2000);
+                                                BreakIceBlock(Item2, Item2);
+                                                FreezeUser(Item2, Item2);
+                                            }
+
+                                            if (BallType == Rooms.Games.FreezePowerUp.None)
+                                            {
+                                                for (int i = 1; i < 20; i++)
+                                                {
+                                                    if (User.FreezeRange >= i)
+                                                    {
+                                                        await Task.Delay(200);
+                                                        foreach (RoomItem Item3 in Item.method_8().GetFreeze().freezeTiles.Values)
+                                                        {
+                                                            if (Item3.Int32_0 == Item.Int32_0 && Item3.Int32_1 == Item.Int32_1 + i && !pX) { pX = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 && Item3.Int32_1 == Item.Int32_1 - i && !pY) { pY = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 + i && Item3.Int32_1 == Item.Int32_1 && !nX) { nX = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 - i && Item3.Int32_1 == Item.Int32_1 && !nY) { nY = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            else if (BallType == Rooms.Games.FreezePowerUp.GreenArrow)
+                                            {
+                                                for (int i = 1; i < 20; i++)
+                                                {
+                                                    if (User.FreezeRange >= i)
+                                                    {
+                                                        await Task.Delay(200);
+                                                        foreach (RoomItem Item3 in Item.method_8().GetFreeze().freezeTiles.Values)
+                                                        {
+                                                            if (Item3.Int32_0 == Item.Int32_0 + i && Item3.Int32_1 == Item.Int32_1 + i && !pD1) { pD1 = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 + i && Item3.Int32_1 == Item.Int32_1 - i && !nD1) { nD1 = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 - i && Item3.Int32_1 == Item.Int32_1 + i && !pD2) { pD2 = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 - i && Item3.Int32_1 == Item.Int32_1 - i && !nD2) { nD2 = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            else if (BallType == Rooms.Games.FreezePowerUp.OrangeSnowball)
+                                            {
+                                                for (int i = 1; i < 20; i++)
+                                                {
+                                                    if (User.FreezeRange >= i)
+                                                    {
+                                                        await Task.Delay(200);
+                                                        foreach (RoomItem Item3 in Item.method_8().GetFreeze().freezeTiles.Values)
+                                                        {
+                                                            if (Item3.Int32_0 == Item.Int32_0 && Item3.Int32_1 == Item.Int32_1 + i && !pX) { pX = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 && Item3.Int32_1 == Item.Int32_1 - i && !pY) { pY = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 + i && Item3.Int32_1 == Item.Int32_1 && !nX) { nX = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 - i && Item3.Int32_1 == Item.Int32_1 && !nY) { nY = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 + i && Item3.Int32_1 == Item.Int32_1 + i && !pD1) { pD1 = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 + i && Item3.Int32_1 == Item.Int32_1 - i && !nD1) { nD1 = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 - i && Item3.Int32_1 == Item.Int32_1 + i && !pD2) { pD2 = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                            if (Item3.Int32_0 == Item.Int32_0 - i && Item3.Int32_1 == Item.Int32_1 - i && !nD2) { nD2 = BreakIceBlock(Item, Item3); FreezeUser(Item, Item3); }
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            BallType = Rooms.Games.FreezePowerUp.None;
+                                            User.FreezeBalls += 1;
+                                        }
+                                    }
+                                }
+
                                 /*int progress = 0;
                                 System.Timers.Timer t1 = new System.Timers.Timer();
                                 Rooms.Games.FreezePowerUp FreezePowerUp = User.freezePowerUp;
@@ -48,7 +148,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
                                 t1.Interval = 200;
                                 t1.Start();*/
 
-                                ThreadPool.QueueUserWorkItem(o =>
+                                /*ThreadPool.QueueUserWorkItem(o =>
                                 {
                                     //System.Diagnostics.Stopwatch Stopwatch = new System.Diagnostics.Stopwatch();
                                     //Stopwatch.Start();
@@ -146,7 +246,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
                                             }
                                         }
                                     }
-                                });
+                                });*/
                             }
                         }
                     }
@@ -188,17 +288,14 @@ namespace GoldTree.HabboHotel.Items.Interactors
                     {
                         if (User2.int_3 == Item2.Int32_0 && User2.int_4 == Item2.Int32_1)
                         {
-                            ThreadPool.QueueUserWorkItem(o =>
-                            {
-                                Item.method_8().GetFreeze().FreezeUser(User2);
-                            });
+                            Item.method_8().GetFreeze().FreezeUser(User2);
                         }
                     }
                 }
             }
         }
 
-        // TRYED TIMERS MAKE FREEZE LAG(?) FREE 
+        // TIMER
 
         /*public async void ThrowBomb(System.Timers.Timer timer, RoomUser User, RoomItem Item, Rooms.Games.FreezePowerUp freezePowerUp, int progress)
         {
@@ -213,8 +310,6 @@ namespace GoldTree.HabboHotel.Items.Interactors
                     {
                         bool pX, pY, pD1, pD2, nX, nY, nD1, nD2, freezecontinue;
                         pX = false; pY = false; pD1 = false; pD2 = false; nX = false; nY = false; nD1 = false; nD2 = false;
-
-                        Console.WriteLine(progress);
 
                         if (progress < 1)
                         {
@@ -232,7 +327,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
                             }
                             break;
                         }
-                        else if (progress > 8)
+                        else if (progress == 10)
                         {
                             freezecontinue = true;
                             if (freezePowerUp == Rooms.Games.FreezePowerUp.OrangeSnowball)
@@ -315,6 +410,12 @@ namespace GoldTree.HabboHotel.Items.Interactors
                             freezePowerUp = Rooms.Games.FreezePowerUp.None;
                             User.FreezeBalls += 1;
                             timer.Stop();
+                            timer.Dispose();
+                        }
+                        else if (progress > 10)
+                        {
+                            timer.Stop();
+                            timer.Dispose();
                         }
                     }
                 }

@@ -16,12 +16,14 @@ namespace GoldTree.Communication.Messages.Rooms.Polls
         {
             Room Room = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
             int AnswerId = Event.PopWiredInt32();
-            int QuestionId = Room.CurrentPollId;
+            //int QuestionId = Room.CurrentPollId;  <--- no needed?
 
-            using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
+            Room.InfobusAnswers.Add(AnswerId);
+
+            /*using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
             {
                 dbClient.ExecuteQuery("INSERT INTO `infobus_results` (`question_id`, `answer_id`) VALUES ('" + QuestionId + "', '" + AnswerId + "')");
-            }
+            }*/
         }
     }
 }

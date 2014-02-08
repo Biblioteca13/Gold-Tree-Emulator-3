@@ -2690,13 +2690,7 @@ namespace GoldTree.HabboHotel.Misc
                                                             using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                                             {
                                                                 Question = dbClient.ReadString("SELECT question FROM infobus_questions WHERE id = '" + QuestionId + "' LIMIT 1");
-                                                            }
-
-
-                                                            using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
-                                                            {
                                                                 Data = dbClient.ReadDataTable("SELECT * FROM infobus_answers WHERE question_id = '" + QuestionId + "'");
-
                                                             }
 
                                                             ServerMessage InfobusQuestion = new ServerMessage(79);

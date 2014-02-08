@@ -115,6 +115,7 @@ namespace GoldTree.HabboHotel.Rooms
         internal TeamManager TeamManager;
         private GameManager game;
         private Freeze freeze;
+        public List<int> InfobusAnswers;
         public bool Boolean_0
         {
             get
@@ -382,6 +383,7 @@ namespace GoldTree.HabboHotel.Rooms
                 this.method_25();
                 this.method_22();
                 this.LoadMusic();
+                this.InfobusAnswers = new List<int>();
             }
         }
         public void method_0()
@@ -4181,16 +4183,10 @@ namespace GoldTree.HabboHotel.Rooms
             using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
             {
                 Question = dbClient.ReadString("SELECT question FROM infobus_questions WHERE id = '" + QuestionId + "' LIMIT 1");
-            }
-
-
-            using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
-            {
                 Data = dbClient.ReadDataTable("SELECT * FROM infobus_answers WHERE question_id = '" + QuestionId + "'");
-
             }
 
-            ServerMessage InfobusQuestion = new ServerMessage(80);
+            /*ServerMessage InfobusQuestion = new ServerMessage(80);
             InfobusQuestion.AppendStringWithBreak(Question);
             InfobusQuestion.AppendInt32(Data.Rows.Count);
             if (Data != null)
@@ -4218,7 +4214,26 @@ namespace GoldTree.HabboHotel.Rooms
             using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
             {
                 dbClient.ExecuteQuery("DELETE FROM infobus_results WHERE question_id = '" + QuestionId + "'");
+            }*/
+
+            ServerMessage InfobusQuestion = new ServerMessage(80);
+            InfobusQuestion.AppendStringWithBreak(Question);
+            InfobusQuestion.AppendInt32(Data.Rows.Count);
+            if (Data != null)
+            {
+                foreach (DataRow Row in Data.Rows)
+                {
+                    int ResultCount = Room.InfobusAnswers.Where(number => number == (int)Row["id"]).Count();
+                    InfobusQuestion.AppendInt32((int)Row["id"]);
+                    InfobusQuestion.AppendStringWithBreak((string)Row["answer_text"]);
+                    InfobusQuestion.AppendInt32(ResultCount);
+                }
             }
+            int AnswerUserCount = Room.InfobusAnswers.Count;
+            InfobusQuestion.AppendInt32(AnswerUserCount);
+            Room.SendMessage(InfobusQuestion, null);
+
+            Room.InfobusAnswers.Clear();
         }
 
         public void method_47(GameClient Session, bool bool_13, bool bool_14)
@@ -5429,6 +5444,12 @@ namespace GoldTree.HabboHotel.Rooms
                         this.list_2.Clear();
                     }
                     this.list_2 = null;
+                    this.musicController = null;
+                    if (this.InfobusAnswers != null)
+                    {
+                        this.InfobusAnswers.Clear();
+                    }
+                    this.InfobusAnswers = null;
                 }
             }
         }

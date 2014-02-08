@@ -29,7 +29,10 @@ namespace GoldTree.Communication.Messages.Messenger
 					}
 					else
 					{
-						Session.GetHabbo().GetMessenger().method_18(num, text);
+                        if (Session != null && Session.GetHabbo() != null)
+                        {
+                            Session.GetHabbo().GetMessenger().method_18(num, text);
+                        }
 					}
 				}
 			}
