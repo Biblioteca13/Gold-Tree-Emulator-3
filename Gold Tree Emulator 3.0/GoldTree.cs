@@ -247,23 +247,19 @@ namespace GoldTree
 					}));
                     Console.Beep();
                 }
-                catch (KeyNotFoundException)
+                catch (KeyNotFoundException KeyNotFoundException)
                 {
-                    Logging.WriteLine("Failed to boot, key not found.");
+                    Logging.WriteLine("Failed to boot, key not found: " + KeyNotFoundException);
                     Logging.WriteLine("Press any key to shut down ...");
                     Console.ReadKey(true);
                     GoldTree.smethod_16();
                 }
                 catch (InvalidOperationException ex)
                 {
-                    if (ex.Message.Contains("goldtree"))
-                        Logging.WriteLine("Failed to initialize GoldTreeEmulator");
-                    else
-                        Logging.WriteLine("Failed to initialize GoldTreeEmulator: " + ex.Message);
+                    Logging.WriteLine("Failed to initialize GoldTreeEmulator: " + ex.Message);
                     Logging.WriteLine("Press any key to shut down ...");
                     Console.ReadKey(true);
                     GoldTree.smethod_16();
-
                 }
             }
         }
@@ -409,7 +405,10 @@ namespace GoldTree
             LicenseTools.bool_16 = true;
             try
             {
-                GoldTree.smethod_10().Clear();
+                if (smethod_10() != null)
+                {
+                    GoldTree.smethod_10().Clear();
+                }
             }
             catch
             {
@@ -439,7 +438,6 @@ namespace GoldTree
                 }
                 catch
                 {
-
                 }
                 try
                 {
@@ -458,21 +456,33 @@ namespace GoldTree
                 GoldTree.bool_1 = true;
                 try
                 {
-                    GoldTree.Game.GetRoomManager().method_4();
+                    if (GoldTree.Game != null && GoldTree.Game.GetRoomManager() == null)
+                    {
+                        GoldTree.Game.GetRoomManager().method_4();
+                    }
                 }
                 catch
                 {
                 }
                 try
                 {
-                    GoldTree.smethod_14().method_3().method_1();
-                    GoldTree.GetGame().GetClientManager().CloseAll();
+                    if (GoldTree.smethod_14() != null)
+                    {
+                        GoldTree.smethod_14().method_3().method_1();
+                        GoldTree.GetGame().GetClientManager().CloseAll();
+                    }
                 }
                 catch
                 {
                 }
-                GoldTree.ConnectionManage.method_7();
-                GoldTree.Game.ContinueLoading();
+                if (ConnectionManage != null)
+                {
+                    GoldTree.ConnectionManage.method_7();
+                }
+                if (GoldTree.Game != null)
+                {
+                    GoldTree.Game.ContinueLoading();
+                }
                 Console.WriteLine(string_8);
             }
             if (ExitWhenDone)
