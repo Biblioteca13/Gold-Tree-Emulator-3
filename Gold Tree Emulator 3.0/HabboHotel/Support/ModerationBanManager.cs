@@ -40,11 +40,11 @@ namespace GoldTree.HabboHotel.Support
 			{
 				if (!current.Expired)
 				{
-                    if (Session.GetHabbo() != null && current.Type == ModerationBanType.IP && Session.GetConnection().String_0 == current.Variable)
+                    if (Session != null && Session.GetHabbo() != null && current.Type == ModerationBanType.IP && Session.GetConnection().String_0 == current.Variable)
 					{
 						throw new ModerationBanException(current.ReasonMessage);
 					}
-					if (Session.GetHabbo() != null && (current.Type == ModerationBanType.USERNAME && Session.GetHabbo().Username.ToLower() == current.Variable.ToLower()))
+					if (Session != null && Session.GetHabbo() != null && (current.Type == ModerationBanType.USERNAME && Session.GetHabbo().Username.ToLower() == current.Variable.ToLower()))
 					{
 						throw new ModerationBanException(current.ReasonMessage);
 					}
