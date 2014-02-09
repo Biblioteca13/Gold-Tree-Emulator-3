@@ -35,9 +35,11 @@ namespace GoldTree.Communication.Messages.Rooms.Polls
             {
                 AnswerText = Event.PopFixedString();
             }
+
             using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
             {
-                dbClient.ExecuteQuery("INSERT INTO `room_poll_results` (`poll_id`, `question_id`, `answer_text`, `user_id`) VALUES ('" + PollId +"', '" + QuestionId + "', '" + AnswerText + "', '" + Session.GetHabbo().Id + "')");
+                dbClient.AddParamWithValue("answer", AnswerText);
+                dbClient.ExecuteQuery("INSERT INTO `room_poll_results` (`poll_id`, `question_id`, `answer_text`, `user_id`) VALUES ('" + PollId + "', '" + QuestionId + "', @answer, '" + Session.GetHabbo().Id + "')");
             }
         }
     }
