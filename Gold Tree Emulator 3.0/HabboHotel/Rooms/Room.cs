@@ -3778,7 +3778,7 @@ namespace GoldTree.HabboHotel.Rooms
                 else
                 {
                     List<RoomItem> list = this.method_93(int_17, int_18);
-                    if (list.Count > 1)
+                    if (list != null && list.Count > 1)
                     {
                         foreach (RoomItem current in list)
                         {
@@ -3824,7 +3824,7 @@ namespace GoldTree.HabboHotel.Rooms
                             if (bool_14)
                             {
                                 List<RoomItem> list = this.method_93(int_17, int_18);
-                                if (list.Count > 0)
+                                if (list != null && list.Count > 0)
                                 {
                                     if (!bool_15 && !bool_16 && !bool_17 && !IsNotSeat)
                                     {
@@ -4458,7 +4458,7 @@ namespace GoldTree.HabboHotel.Rooms
             for (int i = 0; i < this.RoomUser_0.Length; i++)
             {
                 RoomUser @class = this.RoomUser_0[i];
-                if (@class != null && !@class.IsBot && @class.GetClient().GetHabbo() != null && @class.GetClient().GetHabbo().Username.ToLower() == string_10.ToLower())
+                if (@class != null && !@class.IsBot && @class.GetClient() != null && @class.GetClient().GetHabbo() != null && @class.GetClient().GetHabbo().Username.ToLower() == string_10.ToLower())
                 {
                     result = @class;
                     return result;
@@ -7397,11 +7397,14 @@ namespace GoldTree.HabboHotel.Rooms
             RoomItem Item = null;
             foreach (RoomItem @class in this.Hashtable_0.Values)
             {
-                if (@class.Int32_0 == X && @class.Int32_1 == Y)
+                if (@class != null)
                 {
-                    if (this.double_1[X, Y] == @class.Double_1)
+                    if (@class.Int32_0 == X && @class.Int32_1 == Y)
                     {
-                        Item = @class;
+                        if (this.double_1[X, Y] == @class.Double_1)
+                        {
+                            Item = @class;
+                        }
                     }
                 }
             }

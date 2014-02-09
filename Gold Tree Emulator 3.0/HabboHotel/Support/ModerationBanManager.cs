@@ -40,7 +40,7 @@ namespace GoldTree.HabboHotel.Support
 			{
 				if (!current.Expired)
 				{
-					if (current.Type == ModerationBanType.IP && Session.GetConnection().String_0 == current.Variable)
+                    if (Session.GetHabbo() != null && current.Type == ModerationBanType.IP && Session.GetConnection().String_0 == current.Variable)
 					{
 						throw new ModerationBanException(current.ReasonMessage);
 					}
