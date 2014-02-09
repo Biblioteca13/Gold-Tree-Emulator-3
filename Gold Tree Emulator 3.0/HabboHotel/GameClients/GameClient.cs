@@ -136,7 +136,7 @@ namespace GoldTree.HabboHotel.GameClients
 				return;
 			}
 			ServerMessage Message2 = new ServerMessage(2u);
-			if (this != null && this.GetHabbo() != null && this.GetHabbo().Vip || LicenseTools.Boolean_3)
+			if (this != null && this.GetHabbo() != null && (this.GetHabbo().Vip || LicenseTools.Boolean_3))
 			{
 				Message2.AppendInt32(2);
 			}
