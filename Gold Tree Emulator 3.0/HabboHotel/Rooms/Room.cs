@@ -2760,11 +2760,6 @@ namespace GoldTree.HabboHotel.Rooms
                         }
                     }
 
-                    if (class2.GetBaseItem().InteractionType.ToLower() == "jukebox")
-                    {
-                        RoomMusicController roomMusicController = class2.method_8().GetRoomMusicController();
-                        roomMusicController.LinkRoomOutputItemIfNotAlreadyExits(class2);
-                    }
                     string text = class2.GetBaseItem().InteractionType.ToLower();
                     switch (text)
                     {
@@ -2904,6 +2899,10 @@ namespace GoldTree.HabboHotel.Rooms
                             {
                                 this.list_16.Add(class2);
                             }
+                            break;
+                        case "jukebox":
+                            RoomMusicController roomMusicController = this.GetRoomMusicController();
+                            roomMusicController.LinkRoomOutputItemIfNotAlreadyExits(class2);
                             break;
                         case "freeze_tile":
                             this.GetFreeze().AddFreezeTile(class2);
@@ -5444,6 +5443,10 @@ namespace GoldTree.HabboHotel.Rooms
                         this.list_2.Clear();
                     }
                     this.list_2 = null;
+                    if (this.musicController != null)
+                    {
+                        this.musicController.UnLinkRoomOutputItem();
+                    }
                     this.musicController = null;
                     if (this.InfobusAnswers != null)
                     {

@@ -191,8 +191,11 @@ namespace GoldTree.HabboHotel.SoundMachine
             this.mIsPlaying = false;
             this.mSongQueuePosition = -1;
             mBroadcastNeeded = true;
-            this.mRoomOutputItem.ExtraData = "0";
-            this.mRoomOutputItem.UpdateState(true, true);
+            if (this.mRoomOutputItem != null)
+            {
+                this.mRoomOutputItem.ExtraData = "0";
+                this.mRoomOutputItem.UpdateState(true, true);
+            }
         }
 
         public SortedDictionary<int, SongInstance> Playlist

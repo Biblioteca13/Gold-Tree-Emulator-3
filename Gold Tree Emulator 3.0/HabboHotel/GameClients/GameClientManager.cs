@@ -89,7 +89,7 @@ namespace GoldTree.HabboHotel.GameClients
 		public GameClient GetClientByHabbo(string string_0)
 		{
 			GameClient result;
-			if (this.Session == null || this.hashtable_1 == null)
+			if (this.Session == null || this.hashtable_1 == null || string.IsNullOrEmpty(string_0))
 			{
 				result = null;
 			}

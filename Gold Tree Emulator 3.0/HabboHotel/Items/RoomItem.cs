@@ -442,6 +442,10 @@ namespace GoldTree.HabboHotel.Items
                     case "bb_yellow_gate":
                         this.team = Team.Yellow;
                         break;
+                    case "jukebox":
+                        RoomMusicController roomMusicController = this.method_8().GetRoomMusicController();
+                        roomMusicController.LinkRoomOutputItemIfNotAlreadyExits(this);
+                        break;
                 }
             }
 
