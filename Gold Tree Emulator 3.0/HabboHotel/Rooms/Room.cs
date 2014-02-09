@@ -6604,7 +6604,7 @@ namespace GoldTree.HabboHotel.Rooms
                                         {
                                             this.method_91(Item, User);
                                         }
-                                        if (Item.GetBaseItem().InteractionType.ToLower() == "bb_patch" && User.team != Team.None && User.game == Rooms.Games.Game.BattleBanzai && User.bool_6 && Item.ExtraData != "14" && Item.ExtraData != "5" && Item.ExtraData != "8" && Item.ExtraData != "11" && Item.ExtraData != "1")
+                                        if (Item.GetBaseItem().InteractionType.ToLower() == "bb_patch" && this.GetTopItem(Item.Int32_0, Item.Int32_1) == Item && User.team != Team.None && User.game == Rooms.Games.Game.BattleBanzai && User.bool_6 && Item.ExtraData != "14" && Item.ExtraData != "5" && Item.ExtraData != "8" && Item.ExtraData != "11" && Item.ExtraData != "1")
                                         {
                                             if (Item.ExtraData == "0" || Item.ExtraData == "")
                                             {
@@ -7392,14 +7392,12 @@ namespace GoldTree.HabboHotel.Rooms
         private RoomItem GetTopItem(int X, int Y)
         {
             RoomItem Item = null;
-            double Height = 0.0;
             foreach (RoomItem @class in this.Hashtable_0.Values)
             {
                 if (@class.Int32_0 == X && @class.Int32_1 == Y)
                 {
-                    if (@class.Double_0 + Height >= Height)
+                    if (this.double_1[X, Y] == @class.Double_1)
                     {
-                        Height = @class.Double_0;
                         Item = @class;
                     }
                 }
