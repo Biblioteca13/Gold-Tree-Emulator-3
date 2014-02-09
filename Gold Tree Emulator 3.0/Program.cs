@@ -17,8 +17,17 @@ namespace GoldTree
         }
         private static bool bool_0 = false;
         private static EventHandler delegate0_0;
+        static ConsoleKeyInfo ConsoleKeyInfo;
         [DllImport("Kernel32")]
         private static extern bool SetConsoleCtrlHandler(Program.EventHandler handler, bool add);
+        [DllImport("user32.dll")]
+        public static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+        [DllImport("kernel32.dll", ExactSpelling = true)]
+        public static extern IntPtr GetConsoleWindow();
+        public const int MF_BYCOMMAND = 0x00000000;
+        public const int SC_CLOSE = 0xF060;
         [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.ControlAppDomain)]
         public static void Main(string[] args)
         {
@@ -31,6 +40,16 @@ namespace GoldTree
                 GoldTree @class = new GoldTree();
                 @class.Initialize();
                 Program.bool_0 = true;
+                DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_BYCOMMAND);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine();
+                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE BUTTON ~~~");
+                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE BUTTON ~~~");
+                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE BUTTON ~~~");
+                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE BUTTON ~~~");
+                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE BUTTON ~~~");
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Gray;
             }
             catch (Exception ex)
             {
@@ -38,7 +57,9 @@ namespace GoldTree
             }
             while (true)
             {
-                Console.ReadKey();
+                ConsoleKeyInfo = Console.ReadKey();
+                if (ConsoleKeyInfo.Key == ConsoleKey.Escape)
+                    smethod_1(CtrlType.CTRL_CLOSE_EVENT);
             }
         }
         private static void smethod_0(object sender, UnhandledExceptionEventArgs e)
@@ -49,6 +70,7 @@ namespace GoldTree
         }
         private static bool smethod_1(CtrlType enum0_0)
         {
+            DeleteMenu(GetSystemMenu(GetConsoleWindow(), true), SC_CLOSE, MF_BYCOMMAND);
             if (Program.bool_0)
             {
                 Logging.smethod_7();

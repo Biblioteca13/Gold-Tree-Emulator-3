@@ -399,10 +399,11 @@ namespace GoldTree
         }
         internal static void Destroy(string string_8, bool ExitWhenDone)
         {
+            Program.DeleteMenu(Program.GetSystemMenu(Program.GetConsoleWindow(), true), Program.SC_CLOSE, Program.MF_BYCOMMAND);
             LicenseTools.bool_16 = true;
             try
             {
-                if (smethod_10() != null)
+                if (GoldTree.smethod_10() != null)
                 {
                     GoldTree.smethod_10().Clear();
                 }
@@ -453,8 +454,9 @@ namespace GoldTree
                 GoldTree.bool_1 = true;
                 try
                 {
-                    if (GoldTree.Game != null && GoldTree.Game.GetRoomManager() == null)
+                    if (GoldTree.Game != null && GoldTree.Game.GetRoomManager() != null)
                     {
+                        GoldTree.Game.GetRoomManager().UnloadAllRooms();
                         GoldTree.Game.GetRoomManager().method_4();
                     }
                 }

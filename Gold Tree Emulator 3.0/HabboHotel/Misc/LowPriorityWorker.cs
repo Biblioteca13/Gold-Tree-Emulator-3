@@ -127,6 +127,7 @@ namespace GoldTree.HabboHotel.Misc
                 }
                 catch (Exception ex)
                 {
+                    Program.DeleteMenu(Program.GetSystemMenu(Program.GetConsoleWindow(), true), Program.SC_CLOSE, Program.MF_BYCOMMAND);
                     Logging.LogThreadException(ex.ToString(), "Server status update task");
                 }
                 Thread.Sleep(5000);

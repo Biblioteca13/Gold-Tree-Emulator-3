@@ -87,7 +87,10 @@ namespace GoldTree.Net
 				{
                     this.Message1_0[i].Shutdown(SocketShutdown.Both);
                     this.Message1_0[i].Close();
-					this.Message1_0[i].Dispose();
+                    if (this.Message1_0[i] != null)
+                    {
+                        this.Message1_0[i].Dispose();
+                    }
 				}
 			}
 		}

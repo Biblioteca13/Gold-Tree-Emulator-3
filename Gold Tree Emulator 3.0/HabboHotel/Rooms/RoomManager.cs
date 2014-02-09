@@ -510,5 +510,19 @@ namespace GoldTree.HabboHotel.Rooms
 			}
 			return dictionary;
 		}
+        internal void UnloadAllRooms()
+        {
+            using (Class26 class26_ = this.class25_0.Class26_0)
+            {
+                foreach (Room @class in class26_.Values)
+                {
+                    if (@class != null)
+                    {
+                        GoldTree.GetGame().GetRoomManager().method_16(@class);
+                        Console.WriteLine(@class.Id);
+                    }
+                }
+            }
+        }
 	}
 }

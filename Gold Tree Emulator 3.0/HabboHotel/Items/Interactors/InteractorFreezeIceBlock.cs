@@ -27,6 +27,11 @@ namespace GoldTree.HabboHotel.Items.Interactors
 
         public async override void OnTrigger(GameClient Session, RoomItem Item, int Request, bool UserHasRights)
         {
+            if (Session == null || Session.GetHabbo() == null)
+            {
+                return;
+            }
+
             Room @class = Item.method_8();
             RoomUser User = @class.GetRoomUserByHabbo(Session.GetHabbo().Id);
 
