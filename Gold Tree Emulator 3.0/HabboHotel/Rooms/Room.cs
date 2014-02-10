@@ -6433,7 +6433,7 @@ namespace GoldTree.HabboHotel.Rooms
                                             }
                                             catch
                                             {
-                                                //num3 = ;
+                                                num3 = Item.GetBaseItem().Height;
                                             }
                                             if (!User.Statusses.ContainsKey("lay"))
                                             {
@@ -6791,7 +6791,9 @@ namespace GoldTree.HabboHotel.Rooms
                                         int num7 = current.Int32_1;
                                         current.ExtraData = "11";
                                         if (User != null && User.GetClient() != null && User.GetClient().GetHabbo() != null)
+                                        {
                                             current.LastPlayerHitFootball = User.GetClient().GetHabbo().Username;
+                                        }
 
                                         if (User.int_8 == 4)
                                         {

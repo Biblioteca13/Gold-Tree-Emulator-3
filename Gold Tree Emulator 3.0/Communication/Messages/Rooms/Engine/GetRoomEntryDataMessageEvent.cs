@@ -172,6 +172,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 							}
 							if (class2 != null && Session != null && Session.GetHabbo().CurrentRoom != null)
 							{
+                                Session.GetHabbo().method_24().method_2(0, true);
 								class2.method_8(Session.GetHabbo().CurrentRoom.GetRoomUserByHabbo(Session.GetHabbo().Id));
 							}
 							if (class2.Achievement > 0u)
