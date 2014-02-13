@@ -10,8 +10,10 @@ namespace GoldTree.Communication.Messages.Wired
         public void Handle(GameClient Session, ClientMessage Event)
         {
             Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
+            if (@class != null)
+            {
             RoomItem class2 = @class.method_28(Event.PopWiredUInt());
-            if (@class != null && class2 != null)
+            if (class2 != null)
             {
                 string text = class2.GetBaseItem().InteractionType.ToLower();
                 if (text != null)
@@ -95,6 +97,7 @@ namespace GoldTree.Communication.Messages.Wired
                 }
                 class2.UpdateState(true, false);
             }
+        }
         }
     }
 }
