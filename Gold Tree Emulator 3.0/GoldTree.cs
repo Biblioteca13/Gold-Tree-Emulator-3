@@ -35,6 +35,14 @@ namespace GoldTree
         public static string string_7;
         private static bool bool_1 = false;
 
+        public static int Build
+        {
+            get
+            {
+                return Build;
+            }
+        }
+
         public static string PrettyVersion
         {
             get
@@ -42,6 +50,7 @@ namespace GoldTree
                 return "Gold Tree Emulator v3.18.0 (Build " + build + ")";
             }
         }
+
         internal static Game Class3_0
         {
             get

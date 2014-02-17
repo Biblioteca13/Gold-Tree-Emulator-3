@@ -2,6 +2,8 @@
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using GoldTree.Core;
+using System.Net;
+using System.IO;
 namespace GoldTree
 {
     internal class Program
@@ -35,6 +37,12 @@ namespace GoldTree
             currentDomain.UnhandledException += new UnhandledExceptionEventHandler(Program.smethod_0);
             Program.delegate0_0 = (Program.EventHandler)Delegate.Combine(Program.delegate0_0, new Program.EventHandler(Program.smethod_1));
             Program.SetConsoleCtrlHandler(Program.delegate0_0, true);
+
+            if (DownloadNewVersion())
+            {
+                return;
+            }
+
             try
             {
                 GoldTree @class = new GoldTree();
@@ -43,11 +51,11 @@ namespace GoldTree
                 DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_BYCOMMAND);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine();
-                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE BUTTON ~~~");
-                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE BUTTON ~~~");
-                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE BUTTON ~~~");
-                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE BUTTON ~~~");
-                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE BUTTON ~~~");
+                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE (Esc) BUTTON ~~~");
+                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE (Esc) BUTTON ~~~");
+                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE (Esc) BUTTON ~~~");
+                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE (Esc) BUTTON ~~~");
+                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE (Esc) BUTTON ~~~");
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
@@ -79,6 +87,64 @@ namespace GoldTree
                 GoldTree.Destroy("", true);
             }
             return true;
+        }
+
+        private static bool DownloadNewVersion()
+        {
+            try
+            {
+                if (int.Parse(GoldTree.GetConfig().data["disable.autoupdate"]) == 0)
+                {
+                    WebClient client = new WebClient();
+                    Stream stream = client.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/possibleautoupdate.txt");
+                    StreamReader reader = new StreamReader(stream);
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        if (line.Contains(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build.ToString()))
+                        {
+                            WebClient client2 = new WebClient();
+                            Stream stream2 = client2.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/currentbuild.txt");
+                            StreamReader reader2 = new StreamReader(stream2);
+                            String content2 = reader2.ReadLine();
+                            if (int.Parse(content2) > System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build)
+                            {
+                                if (int.Parse(GoldTree.GetConfig().data["autoupdate"]) == 0)
+                                {
+                                    Console.WriteLine("New version available! Download new version? [Y/N]");
+                                    ConsoleKeyInfo = Console.ReadKey();
+                                    if (ConsoleKeyInfo.Key == ConsoleKey.Y)
+                                    {
+                                        client2.DownloadFile("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/Gold%20Tree%20Emulator%203.0/bin/Debug/Gold%20Tree%20Emulator%203.0.exe", Environment.CurrentDirectory + @"\" + content2 + ".exe");
+                                        System.Diagnostics.Process.Start(Environment.CurrentDirectory + @"\" + content2 + ".exe");
+                                        return true;
+                                    }
+                                    else if (ConsoleKeyInfo.Key == ConsoleKey.N)
+                                    {
+                                        return false;
+                                    }
+                                    else
+                                    {
+                                        DownloadNewVersion();
+                                    }
+                                }
+                                else
+                                {
+                                    client2.DownloadFile("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/Gold%20Tree%20Emulator%203.0/bin/Debug/Gold%20Tree%20Emulator%203.0.exe", Environment.CurrentDirectory + @"\" + content2 + ".exe");
+                                    System.Diagnostics.Process.Start(Environment.CurrentDirectory + @"\" + content2 + ".exe");
+                                    return true;
+                                }
+
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
