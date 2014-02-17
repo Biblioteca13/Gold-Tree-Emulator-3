@@ -73,14 +73,17 @@ namespace GoldTree.HabboHotel.Users.Badges
 		}
 		public void method_2(GameClient Session, string string_0, bool bool_0)
 		{
-			this.method_3(string_0, 0, bool_0);
-			ServerMessage Message = new ServerMessage(832u);
-			Message.AppendInt32(1);
-			Message.AppendInt32(4);
-			Message.AppendInt32(1);
-			Message.AppendUInt(GoldTree.GetGame().GetAchievementManager().method_0(string_0));
-			Session.SendMessage(Message);
-            Session.SendMessage(Session.GetHabbo().method_22().method_7());
+            if (Session != null && Session.GetHabbo() != null)
+            {
+                this.method_3(string_0, 0, bool_0);
+                ServerMessage Message = new ServerMessage(832u);
+                Message.AppendInt32(1);
+                Message.AppendInt32(4);
+                Message.AppendInt32(1);
+                Message.AppendUInt(GoldTree.GetGame().GetAchievementManager().method_0(string_0));
+                Session.SendMessage(Message);
+                Session.SendMessage(Session.GetHabbo().method_22().method_7());
+            }
 		}
 		public void method_3(string string_0, int int_0, bool bool_0)
 		{

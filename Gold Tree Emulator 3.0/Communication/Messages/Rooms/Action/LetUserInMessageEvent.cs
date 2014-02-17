@@ -14,7 +14,7 @@ namespace GoldTree.Communication.Messages.Rooms.Action
 				string string_ = Event.PopFixedString();
 				byte[] array = Event.ReadBytes(1);
 				GameClient class2 = GoldTree.GetGame().GetClientManager().GetClientByHabbo(string_);
-				if (class2 != null && class2.GetHabbo().bool_6 && class2.GetHabbo().uint_2 == Session.GetHabbo().CurrentRoomId)
+				if (class2 != null && class2.GetHabbo() != null && class2.GetHabbo().bool_6 && class2.GetHabbo().uint_2 == Session.GetHabbo().CurrentRoomId)
 				{
 					if (array[0] == Convert.ToByte(65))
 					{

@@ -279,7 +279,10 @@ namespace GoldTree.HabboHotel.Users.Inventory
 
                 if (item.method_1().InteractionType == "musicdisc")
                 {
-                    this.discs.Add(item.uint_0, item);
+                    if (this.discs.ContainsKey(item.uint_0))
+                    {
+                        this.discs.Add(item.uint_0, item);
+                    }
                 }
 
 				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())

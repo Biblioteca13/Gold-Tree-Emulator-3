@@ -10,6 +10,12 @@ namespace GoldTree.Communication.Messages.Catalog
 			int int_ = Event.PopWiredInt32();
 			uint uint_ = Event.PopWiredUInt();
 			string string_ = Event.PopFixedString();
+
+            if (Session == null || Session.GetHabbo() == null)
+            {
+                return;
+            }
+
 			if (Session.GetHabbo().int_24 > 1)
 			{
 				int num = 0;
