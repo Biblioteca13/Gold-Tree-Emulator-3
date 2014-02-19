@@ -32,13 +32,24 @@ namespace GoldTree.HabboHotel.Items.Interactors
                 return;
             }
 
-            Room @class = Item.method_8();
-            RoomUser User = @class.GetRoomUserByHabbo(Session.GetHabbo().Id);
-
             if (!(Item.ExtraData == "11200" || string.IsNullOrEmpty(Item.ExtraData)))
             {
                 return;
             }
+
+            if (Item == null || Item.method_8() == null)
+            {
+                return;
+            }
+
+            Room @class = Item.method_8();
+
+            if (@class == null)
+            {
+                return;
+            }
+
+            RoomUser User = @class.GetRoomUserByHabbo(Session.GetHabbo().Id);
 
             if (User.Freezed == false)
             {

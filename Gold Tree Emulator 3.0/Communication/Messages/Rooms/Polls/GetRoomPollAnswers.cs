@@ -36,6 +36,11 @@ namespace GoldTree.Communication.Messages.Rooms.Polls
                 AnswerText = Event.PopFixedString();
             }
 
+            if (string.IsNullOrEmpty(AnswerText))
+            {
+                return;
+            }
+
             using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
             {
                 dbClient.AddParamWithValue("answer", AnswerText);
