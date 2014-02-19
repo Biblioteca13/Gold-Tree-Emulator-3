@@ -30,7 +30,8 @@ namespace GoldTree.Communication.Messages.SoundMachine
                             SongItem diskItem = new SongItem(item);
                             if (roomMusicController.AddDisk(diskItem) >= 0)
                             {
-                                diskItem.SaveToDatabase((int)currentRoom.Id);
+                                //diskItem.SaveToDatabase((int)currentRoom.Id); // <-- old
+                                diskItem.SaveToDatabase((int)roomMusicController.LinkedItemId); // <-- new
                                 Session.GetHabbo().method_23().method_12((uint)num, 0u, true);
                                 Session.GetHabbo().method_23().method_9(true);
                                 Session.SendMessage(JukeboxDiscksComposer.Compose(roomMusicController.PlaylistCapacity, roomMusicController.Playlist.Values.ToList<SongInstance>()));

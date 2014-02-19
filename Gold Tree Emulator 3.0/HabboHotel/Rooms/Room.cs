@@ -289,11 +289,23 @@ namespace GoldTree.HabboHotel.Rooms
         internal void LoadMusic()
         {
             DataTable table;
+            DataTable table2;
             using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
             {
-                table = @class.ReadDataTable("SELECT * FROM items_rooms_songs WHERE roomid = '" + uint_0 + "'");
+                table = @class.ReadDataTable("SELECT * FROM items_rooms_songs WHERE roomid = '" + uint_0 + "'"); // <-- old
+                table2 = @class.ReadDataTable("SELECT * FROM items_jukebox_songs WHERE jukeboxid = '" + this.GetRoomMusicController().LinkedItemId + "'"); // <-- new
             }
+
             foreach (DataRow row in table.Rows)
+            {
+                int songID = (int)row["songid"];
+                uint num2 = (uint)row["itemid"];
+                int baseItem = (int)row["baseitem"];
+                SongItem diskItem = new SongItem((int)num2, songID, baseItem);
+                this.GetRoomMusicController().AddDisk(diskItem);
+            }
+
+            foreach (DataRow row in table2.Rows)
             {
                 int songID = (int)row["songid"];
                 uint num2 = (uint)row["itemid"];

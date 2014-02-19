@@ -31,16 +31,19 @@ namespace GoldTree.Source.HabboHotel.SoundMachine
         {
             using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
             {
-                @class.ExecuteQuery("DELETE FROM items_rooms_songs WHERE itemid = " + itemID);
+                @class.ExecuteQuery("DELETE FROM items_rooms_songs WHERE itemid = " + itemID); // <-- old
+                @class.ExecuteQuery("DELETE FROM items_jukebox_songs WHERE itemid = " + itemID); // <-- new
                 //@class.ExecuteQuery(string.Concat(new object[] { "INSERT INTO items (id, base_item) VALUES ('", itemID, "','", baseItem.UInt32_0, "')" }));
             }
         }
 
-        public void SaveToDatabase(int roomID)
+        //public void SaveToDatabase(int roomID) // <-- old
+        public void SaveToDatabase(int JukeboxID) // <-- new
         {
             using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
             {
-                @class.ExecuteQuery(string.Concat(new object[] { "INSERT INTO items_rooms_songs VALUES (", itemID, ",", roomID, ",", this.songID, ",", this.baseItem.UInt32_0, ")" }));
+                //@class.ExecuteQuery(string.Concat(new object[] { "INSERT INTO items_rooms_songs VALUES (", itemID, ",", roomID, ",", this.songID, ",", this.baseItem.UInt32_0, ")" })); // <-- old
+                @class.ExecuteQuery(string.Concat(new object[] { "INSERT INTO items_jukebox_songs VALUES (", itemID, ",", JukeboxID, ",", this.songID, ",", this.baseItem.UInt32_0, ")" })); // <-- new
                //@class.ExecuteQuery("DELETE FROM items WHERE id = '" + itemID + "'");
             }
         }

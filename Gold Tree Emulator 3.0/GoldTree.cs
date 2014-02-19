@@ -47,7 +47,7 @@ namespace GoldTree
         {
             get
             {
-                return "Gold Tree Emulator v3.18.0 (Build " + build + ")";
+                return "Gold Tree Emulator v3.18.1 (Build " + build + ")";
             }
         }
 

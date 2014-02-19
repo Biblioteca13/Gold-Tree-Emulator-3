@@ -16,10 +16,13 @@ namespace GoldTree.HabboHotel.Items.Interactors
         {
             RoomMusicController roomMusicController = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId).GetRoomMusicController();
             roomMusicController.LinkRoomOutputItemIfNotAlreadyExits(Item);
+            roomMusicController.Stop();
+            Session.GetHabbo().CurrentRoom.LoadMusic();
         }
         public override void OnRemove(GameClient Session, RoomItem Item)
         {
             RoomMusicController roomMusicController = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId).GetRoomMusicController();
+            roomMusicController.Stop();
             roomMusicController.UnLinkRoomOutputItem();
             Item.UpdateState(true, true);
         }
