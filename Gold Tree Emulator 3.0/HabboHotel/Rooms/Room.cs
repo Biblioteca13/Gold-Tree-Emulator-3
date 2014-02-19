@@ -302,6 +302,8 @@ namespace GoldTree.HabboHotel.Rooms
                 uint num2 = (uint)row["itemid"];
                 int baseItem = (int)row["baseitem"];
                 SongItem diskItem = new SongItem((int)num2, songID, baseItem);
+                diskItem.RemoveFromDatabase();
+                diskItem.SaveToDatabase(this.GetRoomMusicController().LinkedItemId);
                 this.GetRoomMusicController().AddDisk(diskItem);
             }
 

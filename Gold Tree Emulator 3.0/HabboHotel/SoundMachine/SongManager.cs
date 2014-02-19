@@ -13,7 +13,14 @@ namespace GoldTree.HabboHotel.SoundMachine
 
         public static SongData GetSong(int SongId)
         {
-            return songs[SongId];
+            if (songs.ContainsKey(SongId))
+            {
+                return songs[SongId];
+            }
+            else
+            {
+                return new SongData(-1, "Error", "Error", "", 0);
+            }
         }
 
         public static SongData GetSongFromDataRow(DataRow dRow)

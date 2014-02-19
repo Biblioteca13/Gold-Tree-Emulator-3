@@ -621,7 +621,7 @@ namespace GoldTree.HabboHotel.GameClients
 		{
 			GameClient @class = this.GetClientByHabbo(string_0);
 			uint result;
-			if (@class != null)
+			if (@class != null && @class.GetHabbo() != null)
 			{
 				result = @class.GetHabbo().Id;
 			}

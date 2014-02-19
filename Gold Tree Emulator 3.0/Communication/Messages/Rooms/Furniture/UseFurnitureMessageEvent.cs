@@ -23,43 +23,43 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
 							bool_ = true;
 						}
 						class2.Class69_0.OnTrigger(Session, class2, Event.PopWiredInt32(), bool_);
-                        if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "SWITCHSTATE")
+                        if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "SWITCHSTATE")
 						{
                             GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 						}
 						else
 						{
-                            if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "FINDLIFEGUARDTOWER" && class2.GetBaseItem().Name == "bw_lgchair")
+                            if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "FINDLIFEGUARDTOWER" && class2.GetBaseItem().Name == "bw_lgchair")
 							{
                                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 							}
 							else
 							{
-                                if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "FINDSURFBOARD" && class2.GetBaseItem().Name.Contains("bw_sboard"))
+                                if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "FINDSURFBOARD" && class2.GetBaseItem().Name.Contains("bw_sboard"))
 								{
                                     GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 								}
 								else
 								{
-                                    if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "FINDBEETLE" && class2.GetBaseItem().Name.Contains("bw_van"))
+                                    if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "FINDBEETLE" && class2.GetBaseItem().Name.Contains("bw_van"))
 									{
                                         GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 									}
 									else
 									{
-                                        if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "FINDNEONFLOOR" && class2.GetBaseItem().Name.Contains("party_floor"))
+                                        if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "FINDNEONFLOOR" && class2.GetBaseItem().Name.Contains("party_floor"))
 										{
                                             GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 										}
 										else
 										{
-                                            if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "FINDDISCOBALL" && class2.GetBaseItem().Name.Contains("party_ball"))
+                                            if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "FINDDISCOBALL" && class2.GetBaseItem().Name.Contains("party_ball"))
 											{
                                                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 											}
 											else
 											{
-                                                if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "FINDJUKEBOX" && class2.GetBaseItem().Name.Contains("jukebox"))
+                                                if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "FINDJUKEBOX" && class2.GetBaseItem().Name.Contains("jukebox"))
                                                 {
                                                     GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
                                                 }

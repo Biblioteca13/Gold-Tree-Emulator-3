@@ -24,7 +24,7 @@ namespace GoldTree.Communication.Messages.Inventory.Badges
 				{
 					return;
 				}
-                if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "WEARBADGE")
+                if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "WEARBADGE")
 				{
                     GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 				}

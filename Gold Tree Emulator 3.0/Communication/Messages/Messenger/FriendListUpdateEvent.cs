@@ -7,7 +7,7 @@ namespace GoldTree.Communication.Messages.Messenger
 	{
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
-			if (Session.GetHabbo().GetMessenger() != null)
+			if (Session != null && Session.GetHabbo() != null && Session.GetHabbo().GetMessenger() != null)
 			{
 				Session.SendMessage(Session.GetHabbo().GetMessenger().SerializeUpdates());
 			}

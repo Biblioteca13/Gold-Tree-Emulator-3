@@ -983,7 +983,7 @@ namespace GoldTree.HabboHotel.Items
                                         {
                                             if (this.dictionary_1[class4] > 0)
                                             {
-                                                if (this.dictionary_1[class4] == 10 && !class4.IsBot)
+                                                if (this.dictionary_1[class4] == 10 && !class4.IsBot && class4 != null && class4.GetClient() != null && class4.GetClient().GetHabbo() != null)
                                                 {
                                                     class4.GetClient().GetHabbo().method_24().method_2(4, true);
                                                 }

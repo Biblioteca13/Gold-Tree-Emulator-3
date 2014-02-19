@@ -29,7 +29,7 @@ namespace GoldTree.Communication.Messages.Rooms.Avatar
                     serverMessage.AppendInt32(roomUserByHabbo.VirtualId);
                     serverMessage.AppendInt32(num);
                     room.SendMessage(serverMessage, null);
-                    if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "DANCE")
+                    if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "DANCE")
                     {
                         GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
                     }

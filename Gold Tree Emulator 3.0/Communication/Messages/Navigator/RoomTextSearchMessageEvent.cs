@@ -9,7 +9,7 @@ namespace GoldTree.Communication.Messages.Navigator
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
 			string text = Event.PopFixedString();
-			if (text != GoldTree.smethod_0(Session.GetHabbo().Username))
+			if (Session != null && Session.GetHabbo() != null && text != GoldTree.smethod_0(Session.GetHabbo().Username))
 			{
 				Session.SendMessage(GoldTree.GetGame().GetNavigator().method_10(text));
 			}

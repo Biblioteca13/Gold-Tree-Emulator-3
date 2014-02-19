@@ -43,7 +43,7 @@ namespace GoldTree.Communication.Messages.Messenger
 				@class = current;
 				break;
 				IL_83:
-				arg_A2_0 = (Session.GetHabbo().CurrentRoom == null || Session.GetHabbo().CurrentRoom == current);
+				arg_A2_0 = (Session == null ||Session.GetHabbo() == null || Session.GetHabbo().CurrentRoom == null || Session.GetHabbo().CurrentRoom == current);
 				goto IL_A2;
 			}
 			if (@class == null)

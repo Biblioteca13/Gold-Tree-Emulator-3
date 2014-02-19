@@ -416,7 +416,10 @@ namespace GoldTree.HabboHotel.Rooms
 				{
 					@class.method_1(dataRow_0);
 				}
-				this.hashtable_0.Add(uint_0, @class);
+                if (!this.hashtable_0.ContainsKey(uint_0))
+                {
+                    this.hashtable_0.Add(uint_0, @class);
+                }
 				result = @class;
 			}
 			return result;

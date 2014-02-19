@@ -19,19 +19,19 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 					int num2 = Event.PopWiredInt32();
 					int num3 = Event.PopWiredInt32();
 					Event.PopWiredInt32();
-                    if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "MOVE_ITEM" && (num != class2.Int32_0 || num2 != class2.Int32_1))
+                    if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "MOVE_ITEM" && (num != class2.Int32_0 || num2 != class2.Int32_1))
 					{
                         GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 					}
 					else
 					{
-                        if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "ROTATE_ITEM" && num3 != class2.int_3)
+                        if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "ROTATE_ITEM" && num3 != class2.int_3)
 						{
                             GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 						}
 						else
 						{
-                            if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "STACKITEM" && class2.Double_0 > 0.0)
+                            if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "STACKITEM" && class2.Double_0 > 0.0)
 							{
                                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 							}

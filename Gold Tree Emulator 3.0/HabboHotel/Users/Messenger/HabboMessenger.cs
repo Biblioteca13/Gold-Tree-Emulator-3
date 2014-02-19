@@ -397,10 +397,13 @@ namespace GoldTree.HabboHotel.Users.Messenger
 		}
 		internal void method_20(int int_0, uint uint_1)
 		{
-			ServerMessage Message = new ServerMessage(261u);
-			Message.AppendInt32(int_0);
-			Message.AppendUInt(uint_1);
-			this.method_25().SendMessage(Message);
+            if (this != null)
+            {
+                ServerMessage Message = new ServerMessage(261u);
+                Message.AppendInt32(int_0);
+                Message.AppendUInt(uint_1);
+                this.method_25().SendMessage(Message);
+            }
 		}
 		internal ServerMessage method_21()
 		{

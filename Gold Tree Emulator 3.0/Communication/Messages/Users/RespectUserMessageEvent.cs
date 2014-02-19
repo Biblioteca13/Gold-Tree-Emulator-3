@@ -30,7 +30,7 @@ namespace GoldTree.Communication.Messages.Users
 					@class.SendMessage(Message, null);
                     Session.GetHabbo().CheckRespectGivedAchievements();
                     class2.GetClient().GetHabbo().CheckRespectReceivedAchievements();
-                    if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "GIVE_RESPECT")
+                    if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "GIVE_RESPECT")
 					{
                         GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 					}

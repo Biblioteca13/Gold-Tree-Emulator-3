@@ -603,7 +603,7 @@ namespace GoldTree.HabboHotel.Users
 				}
 			}
 			this.CurrentRoomId = RoomId;
-            if (this.CurrentRoom.Owner != this.Username && GoldTree.GetGame().GetQuestManager().GetQuestAction(this.CurrentQuestId) == "ENTEROTHERSROOM")
+            if (this.CurrentQuestId > 0 && this.CurrentRoom.Owner != this.Username && GoldTree.GetGame().GetQuestManager().GetQuestAction(this.CurrentQuestId) == "ENTEROTHERSROOM")
 			{
                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(this.CurrentQuestId, this.method_19());
 			}

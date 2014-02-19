@@ -9,7 +9,7 @@ namespace GoldTree.Communication.Messages.Messenger
 		{
 			uint num = Event.PopWiredUInt();
 			string text = GoldTree.FilterString(Event.PopFixedString());
-			if (Session.GetHabbo().GetMessenger() != null)
+			if (Session != null && Session.GetHabbo() != null && Session.GetHabbo().GetMessenger() != null)
 			{
 				if (num == 0u && Session.GetHabbo().HasFuse("cmd_sa"))
 				{

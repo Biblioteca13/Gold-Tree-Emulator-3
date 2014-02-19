@@ -7,7 +7,10 @@ namespace GoldTree.Communication.Messages.Navigator
 	{
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
-			Session.GetConnection().SendData(GoldTree.GetGame().GetNavigator().SerializeNavigator(Session, Event.PopFixedInt32()));
+            if (Session != null && Session.GetConnection() != null)
+            {
+                Session.GetConnection().SendData(GoldTree.GetGame().GetNavigator().SerializeNavigator(Session, Event.PopFixedInt32()));
+            }
 		}
 	}
 }

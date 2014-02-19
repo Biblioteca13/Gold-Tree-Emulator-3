@@ -12,7 +12,7 @@ namespace GoldTree.Communication.Messages.Users
 			if (@class != null)
 			{
 				RoomUser class2 = @class.GetRoomUserByHabbo(Event.PopWiredUInt());
-				if (class2 != null && !class2.IsBot)
+				if (class2 != null && class2.GetClient() != null && class2.GetClient().GetHabbo() != null && !class2.IsBot)
 				{
 					ServerMessage Message = new ServerMessage(350u);
 					Message.AppendUInt(class2.GetClient().GetHabbo().Id);

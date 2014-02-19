@@ -116,7 +116,7 @@ namespace GoldTree.HabboHotel.Users.Inventory
 					if (class2 != null && (class2.byte_1 <= 0 || int_1 == -1 || bool_0) && (class2.class34_1 == null || int_1 == 77 || int_1 == -1))
 					{
 						this.int_0 = int_1;
-                        if (class2.GetClient() != null && GoldTree.GetGame().GetQuestManager().GetQuestAction(class2.GetClient().GetHabbo().CurrentQuestId) == "SWIM" && (this.int_0 == 28 || this.int_0 == 29 || this.int_0 == 30 || this.int_0 == 37))
+                        if (class2.GetClient() != null && class2.GetClient().GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(class2.GetClient().GetHabbo().CurrentQuestId) == "SWIM" && (this.int_0 == 28 || this.int_0 == 29 || this.int_0 == 30 || this.int_0 == 37))
 						{
                             GoldTree.GetGame().GetQuestManager().ProgressUserQuest(class2.GetClient().GetHabbo().CurrentQuestId, class2.GetClient());
 						}

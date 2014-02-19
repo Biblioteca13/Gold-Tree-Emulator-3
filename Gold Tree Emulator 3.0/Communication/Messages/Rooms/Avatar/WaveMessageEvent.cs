@@ -19,7 +19,7 @@ namespace GoldTree.Communication.Messages.Rooms.Avatar
 					ServerMessage Message = new ServerMessage(481u);
 					Message.AppendInt32(class2.VirtualId);
 					@class.SendMessage(Message, null);
-                    if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "WAVE")
+                    if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "WAVE")
 					{
                         GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 					}

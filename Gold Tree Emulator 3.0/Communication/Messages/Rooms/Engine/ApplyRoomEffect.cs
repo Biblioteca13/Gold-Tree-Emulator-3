@@ -43,7 +43,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 							else
 							{
 								@class.Wallpaper = class2.string_0;
-                                if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "PLACEWALLPAPER")
+                                if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "PLACEWALLPAPER")
 								{
                                     GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 								}
@@ -52,7 +52,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 						else
 						{
 							@class.Floor = class2.string_0;
-                            if (GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "PLACEFLOOR")
+                            if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "PLACEFLOOR")
 							{
                                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 							}

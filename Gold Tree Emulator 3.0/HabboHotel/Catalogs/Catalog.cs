@@ -579,6 +579,7 @@ namespace GoldTree.HabboHotel.Catalogs
 						{
 							Message.AppendInt32(3);
                             Session.GetHabbo().NewPetsBuyed++;
+                            Session.GetHabbo().CheckPetCountAchievements();
 						}
 						else
 						{
@@ -595,7 +596,6 @@ namespace GoldTree.HabboHotel.Catalogs
 						Message.AppendUInt(num);
 						Session.SendMessage(Message);
 						i++;
-                        Session.GetHabbo().CheckPetCountAchievements();
 						continue;
 						IL_4CF:
                         Session.GetHabbo().method_23().method_11(num, Item.UInt32_0, string_0, bool_0);
