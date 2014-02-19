@@ -2456,6 +2456,10 @@ namespace GoldTree.HabboHotel.Rooms
                             {
                                 this.double_2[@class.Int32_0, @class.Int32_1] = @class.Double_1;
                             }
+                            if (@class.GetBaseItem().HeightOverride)
+                            {
+                                this.HeightOverride[@class.Int32_0, @class.Int32_1] = true;
+                            }
                             if (@class.GetBaseItem().Height > 0.0 || @class.GetBaseItem().EffectF != 0 || @class.GetBaseItem().EffectM != 0 || @class.GetBaseItem().IsSeat || !(@class.GetBaseItem().InteractionType.ToLower() != "bed"))
                             {
                                 if (this.double_0[@class.Int32_0, @class.Int32_1] <= @class.Double_0)
@@ -2481,13 +2485,6 @@ namespace GoldTree.HabboHotel.Rooms
                                         if (this.byte_1[@class.Int32_0, @class.Int32_1] != 0)
                                         {
                                             this.byte_1[@class.Int32_0, @class.Int32_1] = 0;
-                                        }
-                                    }
-                                    if (@class.GetBaseItem().HeightOverride)
-                                    {
-                                        if (this.HeightOverride[@class.Int32_0, @class.Int32_1] == false)
-                                        {
-                                            this.HeightOverride[@class.Int32_0, @class.Int32_1] = true;
                                         }
                                     }
                                     if (@class.GetBaseItem().Walkable)
@@ -2540,6 +2537,10 @@ namespace GoldTree.HabboHotel.Rooms
                                     if (@class.GetBaseItem().IsSeat)
                                     {
                                         this.double_2[current.Int32_0, current.Int32_1] = @class.Double_1;
+                                    }
+                                    if (@class.GetBaseItem().HeightOverride)
+                                    {
+                                        this.HeightOverride[current.Int32_0, current.Int32_1] = true;
                                     }
                                     if (this.double_0[current.Int32_0, current.Int32_1] <= @class.Double_0)
                                     {
@@ -3401,7 +3402,7 @@ namespace GoldTree.HabboHotel.Rooms
                                     if (class3.bool_6 && !class3.bool_5 && class3.class34_1 == null)
                                     {
                                         num = 10;
-                                        SquarePoint @struct = DreamPathfinder.GetNextStep(class3.int_3, class3.int_4, class3.int_10, class3.int_11, this.byte_0, this.double_1, this.class28_0.double_1, this.double_2, this.class28_0.int_4, this.class28_0.int_5, class3.bool_1, this.bool_5, this.HeightOverride[class3.int_10, class3.int_11]);
+                                        SquarePoint @struct = DreamPathfinder.GetNextStep(class3.int_3, class3.int_4, class3.int_10, class3.int_11, this.byte_0, this.double_1, this.class28_0.double_1, this.double_2, this.class28_0.int_4, this.class28_0.int_5, class3.bool_1, this.bool_5, this.HeightOverride);
                                         num = 11;
                                         if (@struct.X != class3.int_3 || @struct.Y != class3.int_4)
                                         {

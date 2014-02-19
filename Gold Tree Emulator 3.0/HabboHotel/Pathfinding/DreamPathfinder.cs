@@ -3,7 +3,7 @@ namespace GoldTree.HabboHotel.Pathfinding
 {
     internal sealed class DreamPathfinder
     {
-        private static SquarePoint GetClosetSqare(SquareInformation pInfo, HeightInfo Height, bool bool_0, bool UserOverride, bool HeightOverride)
+        private static SquarePoint GetClosetSqare(SquareInformation pInfo, HeightInfo Height, bool bool_0, bool UserOverride, bool[,] iHeightOverride)
         {
             double num = pInfo.Point.GetDistance;
             SquarePoint result = pInfo.Point;
@@ -11,7 +11,7 @@ namespace GoldTree.HabboHotel.Pathfinding
             for (int i = 0; i < 8; i++)
             {
                 SquarePoint squarePoint = pInfo.Pos(i);
-                if (squarePoint.InUse && squarePoint.CanWalk && ((Height.GetState(squarePoint.X, squarePoint.Y) - state) <= 2.0 || UserOverride || HeightOverride))
+                if (squarePoint.InUse && squarePoint.CanWalk && ((Height.GetState(squarePoint.X, squarePoint.Y) - state) <= 2.0 || UserOverride || iHeightOverride[squarePoint.X, squarePoint.Y]))
                 {
                     double getDistance = squarePoint.GetDistance;
                     if (num > getDistance)
@@ -29,7 +29,7 @@ namespace GoldTree.HabboHotel.Pathfinding
             return Math.Sqrt(Math.Pow((double)(x1 - x2), 2.0) + Math.Pow((double)(y1 - y2), 2.0));
         }
 
-        internal static SquarePoint GetNextStep(int pUserX, int pUserY, int pUserTargetX, int pUserTargetY, byte[,] pGameMap, double[,] pHeight, double[,] double_1, double[,] double_2, int MaxX, int MaxY, bool pUserOverride, bool pDiagonal, bool iHeightOverride)
+        internal static SquarePoint GetNextStep(int pUserX, int pUserY, int pUserTargetX, int pUserTargetY, byte[,] pGameMap, double[,] pHeight, double[,] double_1, double[,] double_2, int MaxX, int MaxY, bool pUserOverride, bool pDiagonal, bool[,] iHeightOverride)
         {
             ModelInfo pMap = new ModelInfo(MaxX, MaxY, pGameMap);
             SquarePoint squarePoint = new SquarePoint(pUserTargetX, pUserTargetY, pUserTargetX, pUserTargetY, pMap.GetState(pUserTargetX, pUserTargetY), pUserOverride);
