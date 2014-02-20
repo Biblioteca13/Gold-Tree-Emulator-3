@@ -495,50 +495,52 @@ namespace GoldTree.HabboHotel.Catalogs
 		{
 			return string_0.Length >= 1 && string_0.Length <= 16 && GoldTree.smethod_9(string_0) && !(string_0 != ChatCommandHandler.smethod_4(string_0));
 		}
-		public void method_9(GameClient Session, Item Item, int int_0, string string_0, bool bool_0, uint uint_1)
-		{
-			string text = Item.Type.ToString();
-			if (text != null)
-			{
-				if (text == "i" || text == "s")
-				{
-					int i = 0;
-					while (i < int_0)
-					{
-						uint num;
-						if (!bool_0 && uint_1 > 0u)
-						{
-							num = uint_1;
-						}
-						else
-						{
-							num = this.method_14();
-						}
-						text = Item.InteractionType.ToLower();
-						if (text == null)
-						{
-							goto IL_4CF;
-						}
-						if (!(text == "pet"))
-						{
-							if (!(text == "teleport"))
-							{
-								if (!(text == "dimmer"))
-								{
-									goto IL_4CF;
-								}
-								using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
-								{
-									@class.ExecuteQuery("INSERT INTO room_items_moodlight (item_id,enabled,current_preset,preset_one,preset_two,preset_three) VALUES ('" + num + "','0','1','#000000,255,0','#000000,255,0','#000000,255,0')");
-								}
-								Session.GetHabbo().method_23().method_11(num, Item.UInt32_0, string_0, bool_0);
-							}
-							else
-							{
-								uint num2 = this.method_14();
-								using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
-								{
-									@class.ExecuteQuery(string.Concat(new object[]
+        public void method_9(GameClient Session, Item Item, int int_0, string string_0, bool bool_0, uint uint_1)
+        {
+            if (Session != null && Session.GetHabbo() != null)
+            {
+                string text = Item.Type.ToString();
+                if (text != null)
+                {
+                    if (text == "i" || text == "s")
+                    {
+                        int i = 0;
+                        while (i < int_0)
+                        {
+                            uint num;
+                            if (!bool_0 && uint_1 > 0u)
+                            {
+                                num = uint_1;
+                            }
+                            else
+                            {
+                                num = this.method_14();
+                            }
+                            text = Item.InteractionType.ToLower();
+                            if (text == null)
+                            {
+                                goto IL_4CF;
+                            }
+                            if (!(text == "pet"))
+                            {
+                                if (!(text == "teleport"))
+                                {
+                                    if (!(text == "dimmer"))
+                                    {
+                                        goto IL_4CF;
+                                    }
+                                    using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+                                    {
+                                        @class.ExecuteQuery("INSERT INTO room_items_moodlight (item_id,enabled,current_preset,preset_one,preset_two,preset_three) VALUES ('" + num + "','0','1','#000000,255,0','#000000,255,0','#000000,255,0')");
+                                    }
+                                    Session.GetHabbo().method_23().method_11(num, Item.UInt32_0, string_0, bool_0);
+                                }
+                                else
+                                {
+                                    uint num2 = this.method_14();
+                                    using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+                                    {
+                                        @class.ExecuteQuery(string.Concat(new object[]
 									{
 										"INSERT INTO tele_links (tele_one_id,tele_two_id) VALUES ('",
 										num,
@@ -546,7 +548,7 @@ namespace GoldTree.HabboHotel.Catalogs
 										num2,
 										"')"
 									}));
-									@class.ExecuteQuery(string.Concat(new object[]
+                                        @class.ExecuteQuery(string.Concat(new object[]
 									{
 										"INSERT INTO tele_links (tele_one_id,tele_two_id) VALUES ('",
 										num2,
@@ -554,146 +556,147 @@ namespace GoldTree.HabboHotel.Catalogs
 										num,
 										"')"
 									}));
-								}
-								Session.GetHabbo().method_23().method_11(num2, Item.UInt32_0, "0", bool_0);
-								Session.GetHabbo().method_23().method_11(num, Item.UInt32_0, "0", bool_0);
-							}
-						}
-						else
-						{
-							string[] array = string_0.Split(new char[]
+                                    }
+                                    Session.GetHabbo().method_23().method_11(num2, Item.UInt32_0, "0", bool_0);
+                                    Session.GetHabbo().method_23().method_11(num, Item.UInt32_0, "0", bool_0);
+                                }
+                            }
+                            else
+                            {
+                                string[] array = string_0.Split(new char[]
 							{
 								'\n'
 							});
-							Pet class15_ = this.method_11(Session.GetHabbo().Id, array[0], Convert.ToInt32(Item.Name.Split(new char[]
+                                Pet class15_ = this.method_11(Session.GetHabbo().Id, array[0], Convert.ToInt32(Item.Name.Split(new char[]
 							{
 								't'
 							})[1]), array[1], array[2]);
-							Session.GetHabbo().method_23().method_7(class15_);
-							Session.GetHabbo().method_23().method_11(num, 320u, "0", bool_0);
-						}
-						IL_4EA:
-						ServerMessage Message = new ServerMessage(832u);
-						Message.AppendInt32(1);
-						if (Item.InteractionType.ToLower() == "pet")
-						{
-							Message.AppendInt32(3);
-                            Session.GetHabbo().NewPetsBuyed++;
-                            Session.GetHabbo().CheckPetCountAchievements();
-						}
-						else
-						{
-							if (Item.Type.ToString() == "i")
-							{
-								Message.AppendInt32(2);
-							}
-							else
-							{
-								Message.AppendInt32(1);
-							}
-						}
-						Message.AppendInt32(1);
-						Message.AppendUInt(num);
-						Session.SendMessage(Message);
-						i++;
-						continue;
-						IL_4CF:
-                        Session.GetHabbo().method_23().method_11(num, Item.UInt32_0, string_0, bool_0);
-						goto IL_4EA;
-					}
-					Session.GetHabbo().method_23().method_9(false);
-					return;
-				}
-				if (text == "e")
-				{
-					for (int i = 0; i < int_0; i++)
-					{
-						Session.GetHabbo().method_24().method_0(Item.Sprite, 3600);
-					}
-					return;
-				}
-				if (text == "h")
-				{
-					for (int i = 0; i < int_0; i++)
-					{
-						Session.GetHabbo().GetSubscriptionManager().method_3("habbo_club", 2678400);
-                        Session.GetHabbo().CheckHCAchievements();
-					}
-					ServerMessage Message2 = new ServerMessage(7u);
-					Message2.AppendStringWithBreak("habbo_club");
-                    if (Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
-					{
-						double num3 = (double)Session.GetHabbo().GetSubscriptionManager().method_1("habbo_club").Int32_0;
-						double num4 = num3 - GoldTree.GetUnixTimestamp();
-						int num5 = (int)Math.Ceiling(num4 / 86400.0);
-						int num6 = num5 / 31;
-						if (num6 >= 1)
-						{
-							num6--;
-						}
-						Message2.AppendInt32(num5 - num6 * 31);
-						Message2.AppendBoolean(true);
-						Message2.AppendInt32(num6);
-					}
-					else
-					{
-						for (int i = 0; i < 3; i++)
-						{
-							Message2.AppendInt32(0);
-						}
-					}
-					Session.SendMessage(Message2);
-					ServerMessage Message3 = new ServerMessage(2u);
-					if (Session.GetHabbo().Vip || LicenseTools.Boolean_3)
-					{
-						Message3.AppendInt32(2);
-					}
-					else
-					{
+                                Session.GetHabbo().method_23().method_7(class15_);
+                                Session.GetHabbo().method_23().method_11(num, 320u, "0", bool_0);
+                            }
+                        IL_4EA:
+                            ServerMessage Message = new ServerMessage(832u);
+                            Message.AppendInt32(1);
+                            if (Item.InteractionType.ToLower() == "pet")
+                            {
+                                Message.AppendInt32(3);
+                                Session.GetHabbo().NewPetsBuyed++;
+                                Session.GetHabbo().CheckPetCountAchievements();
+                            }
+                            else
+                            {
+                                if (Item.Type.ToString() == "i")
+                                {
+                                    Message.AppendInt32(2);
+                                }
+                                else
+                                {
+                                    Message.AppendInt32(1);
+                                }
+                            }
+                            Message.AppendInt32(1);
+                            Message.AppendUInt(num);
+                            Session.SendMessage(Message);
+                            i++;
+                            continue;
+                        IL_4CF:
+                            Session.GetHabbo().method_23().method_11(num, Item.UInt32_0, string_0, bool_0);
+                            goto IL_4EA;
+                        }
+                        Session.GetHabbo().method_23().method_9(false);
+                        return;
+                    }
+                    if (text == "e")
+                    {
+                        for (int i = 0; i < int_0; i++)
+                        {
+                            Session.GetHabbo().method_24().method_0(Item.Sprite, 3600);
+                        }
+                        return;
+                    }
+                    if (text == "h")
+                    {
+                        for (int i = 0; i < int_0; i++)
+                        {
+                            Session.GetHabbo().GetSubscriptionManager().method_3("habbo_club", 2678400);
+                            Session.GetHabbo().CheckHCAchievements();
+                        }
+                        ServerMessage Message2 = new ServerMessage(7u);
+                        Message2.AppendStringWithBreak("habbo_club");
                         if (Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
-						{
-							Message3.AppendInt32(1);
-						}
-						else
-						{
-							Message3.AppendInt32(0);
-						}
-					}
-					if (Session.GetHabbo().HasFuse("acc_anyroomowner"))
-					{
-						Message3.AppendInt32(7);
-					}
-					else
-					{
-						if (Session.GetHabbo().HasFuse("acc_anyroomrights"))
-						{
-							Message3.AppendInt32(5);
-						}
-						else
-						{
-							if (Session.GetHabbo().HasFuse("acc_supporttool"))
-							{
-								Message3.AppendInt32(4);
-							}
-							else
-							{
-                                if (Session.GetHabbo().Vip || LicenseTools.Boolean_3 || Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
-								{
-									Message3.AppendInt32(2);
-								}
-								else
-								{
-									Message3.AppendInt32(0);
-								}
-							}
-						}
-					}
-					Session.SendMessage(Message3);
-					return;
-				}
-			}
-			Session.SendNotif("Something went wrong! The item type could not be processed. Please do not try to buy this item anymore, instead inform support as soon as possible.");
-		}
+                        {
+                            double num3 = (double)Session.GetHabbo().GetSubscriptionManager().method_1("habbo_club").Int32_0;
+                            double num4 = num3 - GoldTree.GetUnixTimestamp();
+                            int num5 = (int)Math.Ceiling(num4 / 86400.0);
+                            int num6 = num5 / 31;
+                            if (num6 >= 1)
+                            {
+                                num6--;
+                            }
+                            Message2.AppendInt32(num5 - num6 * 31);
+                            Message2.AppendBoolean(true);
+                            Message2.AppendInt32(num6);
+                        }
+                        else
+                        {
+                            for (int i = 0; i < 3; i++)
+                            {
+                                Message2.AppendInt32(0);
+                            }
+                        }
+                        Session.SendMessage(Message2);
+                        ServerMessage Message3 = new ServerMessage(2u);
+                        if (Session.GetHabbo().Vip || LicenseTools.Boolean_3)
+                        {
+                            Message3.AppendInt32(2);
+                        }
+                        else
+                        {
+                            if (Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
+                            {
+                                Message3.AppendInt32(1);
+                            }
+                            else
+                            {
+                                Message3.AppendInt32(0);
+                            }
+                        }
+                        if (Session.GetHabbo().HasFuse("acc_anyroomowner"))
+                        {
+                            Message3.AppendInt32(7);
+                        }
+                        else
+                        {
+                            if (Session.GetHabbo().HasFuse("acc_anyroomrights"))
+                            {
+                                Message3.AppendInt32(5);
+                            }
+                            else
+                            {
+                                if (Session.GetHabbo().HasFuse("acc_supporttool"))
+                                {
+                                    Message3.AppendInt32(4);
+                                }
+                                else
+                                {
+                                    if (Session.GetHabbo().Vip || LicenseTools.Boolean_3 || Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
+                                    {
+                                        Message3.AppendInt32(2);
+                                    }
+                                    else
+                                    {
+                                        Message3.AppendInt32(0);
+                                    }
+                                }
+                            }
+                        }
+                        Session.SendMessage(Message3);
+                        return;
+                    }
+                }
+                Session.SendNotif("Something went wrong! The item type could not be processed. Please do not try to buy this item anymore, instead inform support as soon as possible.");
+            }
+        }
 		public Item method_10()
 		{
 			switch (GoldTree.smethod_5(0, 6))

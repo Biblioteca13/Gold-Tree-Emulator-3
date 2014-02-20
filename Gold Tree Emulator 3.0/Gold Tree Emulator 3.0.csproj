@@ -445,6 +445,19 @@
     <Compile Include="HabboHotel\Users\UserDataManagement\UserDataNotFoundException.cs" />
     <Compile Include="GoldTree.cs" />
     <Compile Include="GoldTreeEnvironment.cs" />
+    <Compile Include="Net\NEW\Connection Enum.cs" />
+    <Compile Include="Net\NEW\ConnectionHandeling.cs" />
+    <Compile Include="Net\NEW\ConnectionInformation.cs" />
+    <Compile Include="Net\NEW\GamePacketParser.cs" />
+    <Compile Include="Net\NEW\GameSocketManager.cs" />
+    <Compile Include="Net\NEW\GameSocketManagerStatics.cs" />
+    <Compile Include="Net\NEW\IDataParser.cs" />
+    <Compile Include="Net\NEW\InitialPacketParser.cs" />
+    <Compile Include="Net\NEW\LoggingSystem\LogState.cs" />
+    <Compile Include="Net\NEW\LoggingSystem\Message.cs" />
+    <Compile Include="Net\NEW\LoggingSystem\MessageLoggerManager.cs" />
+    <Compile Include="Net\NEW\PacketMalformedException.cs" />
+    <Compile Include="Net\NEW\Socket Exceptions\SocketInitializationException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Messages\ClientMessage.cs" />
@@ -496,7 +509,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.None" BuildVersion_StartDate="2013/10/21" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_StartDate="2013/10/21" BuildVersion_BuildVersioningStyle="None.None.Increment.None" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

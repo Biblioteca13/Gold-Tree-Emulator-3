@@ -13,7 +13,7 @@ namespace GoldTree.Communication.Messages.Messenger
             if (@class != null && @class.GetHabbo() != null && @class.GetHabbo().InRoom)
 			{
 				Room class2 = GoldTree.GetGame().GetRoomManager().GetRoom(@class.GetHabbo().CurrentRoomId);
-				if (class2 != null && class2 != Session.GetHabbo().CurrentRoom)
+				if (class2 != null && Session != null && Session.GetHabbo() != null && class2 != Session.GetHabbo().CurrentRoom)
 				{
 					ServerMessage Message = new ServerMessage(286u);
 					Message.AppendBoolean(class2.Boolean_3);
