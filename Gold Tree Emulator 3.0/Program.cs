@@ -95,20 +95,23 @@ namespace GoldTree
             {
                 if (int.Parse(GoldTree.GetConfig().data["disable.autoupdate"]) == 0)
                 {
-                    WebClient client = new WebClient();
-                    Stream stream = client.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/possibleautoupdate.txt");
-                    StreamReader reader = new StreamReader(stream);
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
+
+                    WebClient client2 = new WebClient();
+                    Stream stream2 = client2.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/currentbuild.txt");
+                    StreamReader reader2 = new StreamReader(stream2);
+                    String content2 = reader2.ReadLine();
+                    if (int.Parse(content2) > System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build)
                     {
-                        if (line.Contains(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build.ToString()))
+                        WebClient client = new WebClient();
+                        Stream stream = client.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/possibleautoupdate.txt");
+                        StreamReader reader = new StreamReader(stream);
+                        bool PossibleUpdate = false;
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
                         {
-                            WebClient client2 = new WebClient();
-                            Stream stream2 = client2.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/currentbuild.txt");
-                            StreamReader reader2 = new StreamReader(stream2);
-                            String content2 = reader2.ReadLine();
-                            if (int.Parse(content2) > System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build)
+                            if (line.Contains(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build.ToString()))
                             {
+                                PossibleUpdate = true;
                                 if (int.Parse(GoldTree.GetConfig().data["autoupdate"]) == 0)
                                 {
                                     Console.WriteLine("New version available! Download new version? [Y/N]");
@@ -134,8 +137,11 @@ namespace GoldTree
                                     System.Diagnostics.Process.Start(Environment.CurrentDirectory + @"\" + content2 + ".exe");
                                     return true;
                                 }
-
                             }
+                        }
+                        if (!PossibleUpdate)
+                        {
+                            Console.WriteLine("New version available! From some reason auto update is not possible.");
                         }
                     }
                 }

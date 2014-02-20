@@ -298,25 +298,27 @@ namespace GoldTree.HabboHotel.Users.Inventory
 				}
 			}
 		}
-		public void method_12(uint uint_1, uint uint_2, bool bool_0)
-		{
-			ServerMessage Message = new ServerMessage(99u);
-			Message.AppendUInt(uint_1);
-			this.GetClient().SendMessage(Message);
-			if (this.hashtable_1.ContainsKey(uint_1))
-			{
-				this.hashtable_1.Remove(uint_1);
-			}
-            if (!this.list_1.Contains(uint_1))
+        public void method_12(uint uint_1, uint uint_2, bool bool_0)
+        {
+            if (this != null && this.GetClient() != null)
             {
-                this.list_0.Remove(this.method_10(uint_1));
-                this.list_1.Add(uint_1);
-                this.discs.Remove(uint_1);
-                if (bool_0)
+                ServerMessage Message = new ServerMessage(99u);
+                Message.AppendUInt(uint_1);
+                this.GetClient().SendMessage(Message);
+                if (this.hashtable_1.ContainsKey(uint_1))
                 {
-                    using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+                    this.hashtable_1.Remove(uint_1);
+                }
+                if (!this.list_1.Contains(uint_1))
+                {
+                    this.list_0.Remove(this.method_10(uint_1));
+                    this.list_1.Add(uint_1);
+                    this.discs.Remove(uint_1);
+                    if (bool_0)
                     {
-                        @class.ExecuteQuery(string.Concat(new object[]
+                        using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+                        {
+                            @class.ExecuteQuery(string.Concat(new object[]
 						{
 							"UPDATE items SET user_id = '",
 							uint_2,
@@ -324,18 +326,19 @@ namespace GoldTree.HabboHotel.Users.Inventory
 							uint_1,
 							"' LIMIT 1"
 						}));
-                        return;
+                            return;
+                        }
                     }
-                }
-                if (uint_2 == 0u && !bool_0)
-                {
-                    using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+                    if (uint_2 == 0u && !bool_0)
                     {
-                        @class.ExecuteQuery("DELETE FROM items WHERE Id = '" + uint_1 + "' LIMIT 1");
+                        using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+                        {
+                            @class.ExecuteQuery("DELETE FROM items WHERE Id = '" + uint_1 + "' LIMIT 1");
+                        }
                     }
                 }
             }
-		}
+        }
 		public ServerMessage method_13()
 		{
 			ServerMessage Message = new ServerMessage(140u);

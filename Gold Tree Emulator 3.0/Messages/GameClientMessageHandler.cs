@@ -60,20 +60,23 @@ namespace GoldTree.Messages
 		}
 		public void method_4()
 		{
-			RoomAdvertisement @class = GoldTree.GetGame().GetAdvertisementManager().method_1();
-			this.Response.Init(258);
-			if (@class == null)
-			{
-				this.Response.AppendStringWithBreak("");
-				this.Response.AppendStringWithBreak("");
-			}
-			else
-			{
-				this.Response.AppendStringWithBreak(@class.string_0);
-				this.Response.AppendStringWithBreak(@class.string_1);
-				@class.method_0();
-			}
-			this.method_3();
+            if (this != null)
+            {
+                RoomAdvertisement @class = GoldTree.GetGame().GetAdvertisementManager().method_1();
+                this.Response.Init(258);
+                if (@class == null)
+                {
+                    this.Response.AppendStringWithBreak("");
+                    this.Response.AppendStringWithBreak("");
+                }
+                else
+                {
+                    this.Response.AppendStringWithBreak(@class.string_0);
+                    this.Response.AppendStringWithBreak(@class.string_1);
+                    @class.method_0();
+                }
+                this.method_3();
+            }
 		}
 		public void method_5(uint uint_0, string string_0)
 		{
