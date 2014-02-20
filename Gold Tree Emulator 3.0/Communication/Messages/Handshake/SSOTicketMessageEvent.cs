@@ -9,7 +9,7 @@ namespace GoldTree.Communication.Messages.Handshake
 	{
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
-			if (Session.GetHabbo() == null)
+			if (Session != null && Session.GetHabbo() == null)
 			{
 				Session.method_6(Event.PopFixedString());
 				if (Session.GetHabbo() != null && Session.GetHabbo().list_2 != null && Session.GetHabbo().list_2.Count > 0)

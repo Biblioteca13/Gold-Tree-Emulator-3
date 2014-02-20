@@ -360,25 +360,28 @@ namespace GoldTree.HabboHotel.GameClients
 		}
 		public void SendNotif(string string_0, int int_0)
 		{
-			ServerMessage nMessage = new ServerMessage();
-			switch (int_0)
-			{
-			case 0:
-				nMessage.Init(161u);
-				break;
-			case 1:
-				nMessage.Init(139u);
-				break;
-			case 2:
-				nMessage.Init(810u);
-				nMessage.AppendUInt(1u);
-				break;
-			default:
-				nMessage.Init(161u);
-				break;
-			}
-			nMessage.AppendStringWithBreak(string_0);
-			this.GetConnection().SendMessage(nMessage);
+            if (this != null && this.GetConnection() != null)
+            {
+                ServerMessage nMessage = new ServerMessage();
+                switch (int_0)
+                {
+                    case 0:
+                        nMessage.Init(161u);
+                        break;
+                    case 1:
+                        nMessage.Init(139u);
+                        break;
+                    case 2:
+                        nMessage.Init(810u);
+                        nMessage.AppendUInt(1u);
+                        break;
+                    default:
+                        nMessage.Init(161u);
+                        break;
+                }
+                nMessage.AppendStringWithBreak(string_0);
+                this.GetConnection().SendMessage(nMessage);
+            }
 		}
 		public void method_10(string string_0, string string_1)
 		{
