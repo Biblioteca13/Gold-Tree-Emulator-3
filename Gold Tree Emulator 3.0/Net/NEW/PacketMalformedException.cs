@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
-namespace SharedPacketLib
-{
-    public class PacketMalformedException : Exception
-    {
-    }
-}
+//namespace SharedPacketLib
+//{
+//    public class PacketMalformedException : Exception
+//    {
+//    }
+//}

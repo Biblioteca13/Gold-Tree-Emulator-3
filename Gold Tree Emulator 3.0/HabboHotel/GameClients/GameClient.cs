@@ -17,14 +17,14 @@ namespace GoldTree.HabboHotel.GameClients
 	internal sealed class GameClient
 	{
 		private uint uint_0;
-        //private SocketConnection Message1_0;
-        private ConnectionInformation Message1_0;
+        private SocketConnection Message1_0;
+        //private ConnectionInformation Message1_0;
         private GameClientMessageHandler class17_0;
 		private Habbo Habbo;
 		public bool bool_0;
 		internal bool bool_1 = false;
 		private bool bool_2 = false;
-        private GamePacketParser packetParser;
+        //private GamePacketParser packetParser;
 		public uint UInt32_0
 		{
 			get
@@ -39,25 +39,25 @@ namespace GoldTree.HabboHotel.GameClients
 				return this.Habbo != null;
 			}
 		}
-        //public GameClient(uint uint_1, ref SocketConnection Message1_1)
-        //{
-        //    this.uint_0 = uint_1;
-        //    this.Message1_0 = Message1_1;
-        //}
-        public GameClient(uint uint_1, ConnectionInformation Message1_1)
+        public GameClient(uint uint_1, ref SocketConnection Message1_1)
         {
             this.uint_0 = uint_1;
             this.Message1_0 = Message1_1;
-            packetParser = new GamePacketParser();
         }
-        //public SocketConnection GetConnection()
+        //public GameClient(uint uint_1, ConnectionInformation Message1_1)
         //{
-        //    return this.Message1_0;
+        //    this.uint_0 = uint_1;
+        //    this.Message1_0 = Message1_1;
+        //    packetParser = new GamePacketParser();
         //}
-        public ConnectionInformation GetConnection()
+        public SocketConnection GetConnection()
         {
             return this.Message1_0;
         }
+        //public ConnectionInformation GetConnection()
+        //{
+        //    return this.Message1_0;
+        //}
 		public GameClientMessageHandler method_1()
 		{
 			return this.class17_0;
@@ -71,34 +71,34 @@ namespace GoldTree.HabboHotel.GameClients
 			if (this.Message1_0 != null)
 			{
                 this.bool_0 = true;
-                //SocketConnection.RouteReceivedDataCallback dataRouter = new SocketConnection.RouteReceivedDataCallback(this.method_13);
-                //this.Message1_0.Start(dataRouter);
+                SocketConnection.RouteReceivedDataCallback dataRouter = new SocketConnection.RouteReceivedDataCallback(this.method_13);
+                this.Message1_0.Start(dataRouter);
 
-                (this.Message1_0.parser as InitialPacketParser).PolicyRequest += new InitialPacketParser.NoParamDelegate(PolicyRequest);
-                (this.Message1_0.parser as InitialPacketParser).SwitchParserRequest += new InitialPacketParser.NoParamDelegate(SwitchParserRequest);
+                //(this.Message1_0.parser as InitialPacketParser).PolicyRequest += new InitialPacketParser.NoParamDelegate(PolicyRequest);
+                //(this.Message1_0.parser as InitialPacketParser).SwitchParserRequest += new InitialPacketParser.NoParamDelegate(SwitchParserRequest);
 
-                this.Message1_0.startPacketProcessing();
+                //this.Message1_0.startPacketProcessing();
 			}
 		}
 
-        void PolicyRequest()
-        {
-            this.Message1_0.SendData(GoldTree.GetDefaultEncoding().GetBytes(CrossdomainPolicy.GetXmlPolicy()));
-        }
+        //void PolicyRequest()
+        //{
+        //    this.Message1_0.SendData(GoldTree.GetDefaultEncoding().GetBytes(CrossdomainPolicy.GetXmlPolicy()));
+        //}
 
-        void SwitchParserRequest()
-        {
-            if (class17_0 == null)
-            {
-                method_4();
-            }
-            packetParser.SetConnection(Message1_0);
-            packetParser.onNewPacket += new GamePacketParser.HandlePacket(this.method_13);
-            byte[] data = (Message1_0.parser as InitialPacketParser).currentData;
-            Message1_0.parser.Dispose();
-            Message1_0.parser = packetParser;
-            Message1_0.parser.handlePacketData(data);
-        }
+        //void SwitchParserRequest()
+        //{
+        //    if (class17_0 == null)
+        //    {
+        //        method_4();
+        //    }
+        //    packetParser.SetConnection(Message1_0);
+        //    packetParser.onNewPacket += new GamePacketParser.HandlePacket(this.method_13);
+        //    byte[] data = (Message1_0.parser as InitialPacketParser).currentData;
+        //    Message1_0.parser.Dispose();
+        //    Message1_0.parser = packetParser;
+        //    Message1_0.parser.handlePacketData(data);
+        //}
 
 		internal void method_4()
 		{
@@ -112,11 +112,11 @@ namespace GoldTree.HabboHotel.GameClients
 		{
             try
             {
-                string ip = GetConnection().getIp();
-                //UserDataFactory @class = new UserDataFactory(string_0, this.GetConnection().String_0, true);
-                //if (this.GetConnection().String_0 == "127.0.0.1" && !@class.Boolean_0)
-                UserDataFactory @class = new UserDataFactory(string_0, ip, true);
-                if (ip == "127.0.0.1" && !@class.Boolean_0)
+                //string ip = GetConnection().getIp();
+                UserDataFactory @class = new UserDataFactory(string_0, this.GetConnection().String_0, true);
+                if (this.GetConnection().String_0 == "127.0.0.1" && !@class.Boolean_0)
+                //UserDataFactory @class = new UserDataFactory(string_0, ip, true);
+                //if (ip == "127.0.0.1" && !@class.Boolean_0)
                 {
                     @class = new UserDataFactory(string_0, "::1", true);
                 }
@@ -126,8 +126,8 @@ namespace GoldTree.HabboHotel.GameClients
                     string str = "";
                     if (LicenseTools.Boolean_2)
                     {
-                        //str = GoldTreeEnvironment.smethod_1("emu_sso_wrong_secure") + "(" + this.GetConnection().String_0 + ")";
-                        str = GoldTreeEnvironment.smethod_1("emu_sso_wrong_secure") + "(" + ip + ")";
+                        str = GoldTreeEnvironment.smethod_1("emu_sso_wrong_secure") + "(" + this.GetConnection().String_0 + ")";
+                        //str = GoldTreeEnvironment.smethod_1("emu_sso_wrong_secure") + "(" + ip + ")";
                     }
                     ServerMessage Message = new ServerMessage(161u);
                     Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("emu_sso_wrong") + str);
@@ -490,9 +490,9 @@ namespace GoldTree.HabboHotel.GameClients
 			{
 				if (true)//Class13.Boolean_7)
 				{
-                    //this.Message1_0.method_4(CrossdomainPolicy.GetXmlPolicy());
-                    this.Message1_0.SendData(GoldTree.GetDefaultEncoding().GetBytes(CrossdomainPolicy.GetXmlPolicy()));
-					this.Message1_0.Dispose();
+                    this.Message1_0.method_4(CrossdomainPolicy.GetXmlPolicy());
+                    //this.Message1_0.SendData(GoldTree.GetDefaultEncoding().GetBytes(CrossdomainPolicy.GetXmlPolicy()));
+				    this.Message1_0.Dispose();
 				}
 			}
 		}

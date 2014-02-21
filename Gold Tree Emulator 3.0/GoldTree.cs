@@ -20,8 +20,8 @@ namespace GoldTree
         private static PacketManager class117_0;
         private static ConfigurationData Configuration;
         private static DatabaseManager DatabaseManager;
-        //private static SocketsManager ConnectionManage;
-        private static ConnectionHandeling ConnectionManage;
+        private static SocketsManager ConnectionManage;
+        //private static ConnectionHandeling ConnectionManage;
         private static MusListener MusListener;
         private static Game Game;
         internal static DateTime ServerStarted;
@@ -213,11 +213,11 @@ namespace GoldTree
                 }
 
                 GoldTree.MusListener = new MusListener(GoldTree.GetConfig().data["mus.tcp.bindip"], LicenseTools.int_13, GoldTree.GetConfig().data["mus.tcp.allowedaddr"].Split(new char[] { ';' }), 20);
-                //GoldTree.ConnectionManage = new SocketsManager(LicenseTools.string_33, LicenseTools.int_12, int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
-                ConnectionManage = new ConnectionHandeling(LicenseTools.int_12, int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]), int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]), true);
-                //GoldTree.ConnectionManage.method_3().method_0();
-                ConnectionManage.init();
-                ConnectionManage.Start();
+                GoldTree.ConnectionManage = new SocketsManager(LicenseTools.string_33, LicenseTools.int_12, int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
+                //ConnectionManage = new ConnectionHandeling(LicenseTools.int_12, int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]), int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]), true);
+                GoldTree.ConnectionManage.method_3().method_0();
+                //ConnectionManage.init();
+                //ConnectionManage.Start();
 
                 /*try
                 {
@@ -357,14 +357,14 @@ namespace GoldTree
         {
             return Encoding.Default;
         }
-        //public static SocketsManager smethod_14()
-        //{
-        //    return GoldTree.ConnectionManage;
-        //}
-        public static ConnectionHandeling smethod_14()
+        public static SocketsManager smethod_14()
         {
             return GoldTree.ConnectionManage;
         }
+        //public static ConnectionHandeling smethod_14()
+        //{
+        //    return GoldTree.ConnectionManage;
+        //}
         internal static Game GetGame()
         {
             return Game;
@@ -380,9 +380,9 @@ namespace GoldTree
             if (GoldTree.smethod_14() != null)
             {
                 Logging.WriteLine("Destroying connection manager.");
-                //GoldTree.smethod_14().method_3().method_2();
-                GoldTree.smethod_14().Destroy();
-                //GoldTree.smethod_14().method_0();
+                GoldTree.smethod_14().method_3().method_2();
+                //GoldTree.smethod_14().Destroy();
+                GoldTree.smethod_14().method_0();
                 GoldTree.ConnectionManage = null;
             }
             if (GoldTree.GetDatabase() != null)
@@ -449,8 +449,8 @@ namespace GoldTree
                 }
                 try
                 {
-                    //GoldTree.smethod_14().method_3().method_1();
-                    GoldTree.smethod_14().Destroy();
+                    GoldTree.smethod_14().method_3().method_1();
+                    //GoldTree.smethod_14().Destroy();
                     GoldTree.GetGame().GetClientManager().CloseAll();
                 }
                 catch
@@ -486,8 +486,8 @@ namespace GoldTree
                 {
                     if (GoldTree.smethod_14() != null)
                     {
-                        //GoldTree.smethod_14().method_3().method_1();
-                        GoldTree.smethod_14().Destroy();
+                        GoldTree.smethod_14().method_3().method_1();
+                        //GoldTree.smethod_14().Destroy();
                         GoldTree.GetGame().GetClientManager().CloseAll();
                     }
                 }

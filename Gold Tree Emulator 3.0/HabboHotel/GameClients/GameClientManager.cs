@@ -22,8 +22,8 @@ namespace GoldTree.HabboHotel.GameClients
 		private Hashtable hashtable_0;
 		private Hashtable hashtable_1;
 		private Timer timer_0;
-        //private List<SocketConnection> list_0;
-        private List<ConnectionInformation> list_0;
+        private List<SocketConnection> list_0;
+        //private List<ConnectionInformation> list_0;
 		public int ClientCount
 		{
 			get
@@ -54,8 +54,8 @@ namespace GoldTree.HabboHotel.GameClients
 			this.hashtable_0 = new Hashtable();
 			this.hashtable_1 = new Hashtable();
 			this.Session = new GameClient[int_0];
-            //this.list_0 = new List<SocketConnection>();
-            this.list_0 = new List<ConnectionInformation>();
+            this.list_0 = new List<SocketConnection>();
+            //this.list_0 = new List<ConnectionInformation>();
 			this.timer_0 = new Timer(new TimerCallback(this.method_4), null, 500, 500);
 		}
 		public void method_0(uint uint_0, string string_0, GameClient class16_1)
@@ -112,19 +112,19 @@ namespace GoldTree.HabboHotel.GameClients
 		{
 			try
 			{
-                //List<SocketConnection> list = this.list_0;
-                //this.list_0 = new List<SocketConnection>();
-                List<ConnectionInformation> list = this.list_0;
-                this.list_0 = new List<ConnectionInformation>();
+                List<SocketConnection> list = this.list_0;
+                this.list_0 = new List<SocketConnection>();
+                //List<ConnectionInformation> list = this.list_0;
+                //this.list_0 = new List<ConnectionInformation>();
 				if (list != null)
 				{
-                    //foreach (SocketConnection current in list)
-                    foreach (ConnectionInformation current in list)
+                    foreach (SocketConnection current in list)
+                    //foreach (ConnectionInformation current in list)
 					{
 						if (current != null)
 						{
-                            //current.method_1();
-                            current.disconnect();
+                            current.method_1();
+                            //current.disconnect();
 						}
 					}
 				}
@@ -134,20 +134,20 @@ namespace GoldTree.HabboHotel.GameClients
                 Logging.LogThreadException(ex.ToString(), "Disconnector task");
 			}
 		}
-        //internal void method_5(SocketConnection Message1_0)
-        //{
-        //    if (!this.list_0.Contains(Message1_0))
-        //    {
-        //        this.list_0.Add(Message1_0);
-        //    }
-        //}
-        internal void method_5(ConnectionInformation Message1_0)
+        internal void method_5(SocketConnection Message1_0)
         {
             if (!this.list_0.Contains(Message1_0))
             {
                 this.list_0.Add(Message1_0);
             }
         }
+        //internal void method_5(ConnectionInformation Message1_0)
+        //{
+        //    if (!this.list_0.Contains(Message1_0))
+        //    {
+        //        this.list_0.Add(Message1_0);
+        //    }
+        //}
 		public void method_6()
 		{
 		}
@@ -164,11 +164,11 @@ namespace GoldTree.HabboHotel.GameClients
 			}
 			return result;
 		}
-        //internal void method_8(uint uint_0, ref SocketConnection Message1_0)
-        //{
-        //    this.Session[(int)((UIntPtr)uint_0)] = new GameClient(uint_0, ref Message1_0);
-        //    this.Session[(int)((UIntPtr)uint_0)].method_3();
-        //}
+        internal void method_8(uint uint_0, ref SocketConnection Message1_0)
+        {
+            this.Session[(int)((UIntPtr)uint_0)] = new GameClient(uint_0, ref Message1_0);
+            this.Session[(int)((UIntPtr)uint_0)].method_3();
+        }
 		public void method_9(uint uint_0)
 		{
 			GameClient @class = this.method_7(uint_0);
@@ -759,12 +759,12 @@ namespace GoldTree.HabboHotel.GameClients
 			}
         }
 
-        #region NEWSOCKETS
-        internal void CreateAndStartClient(uint clientID, ConnectionInformation connection)
-        {
-            this.Session[(int)((UIntPtr)clientID)] = new GameClient(clientID, connection);
-            this.Session[(int)((UIntPtr)clientID)].method_3();
-        }
-        #endregion
+        //#region NEWSOCKETS
+        //internal void CreateAndStartClient(uint clientID, ConnectionInformation connection)
+        //{
+        //    this.Session[(int)((UIntPtr)clientID)] = new GameClient(clientID, connection);
+        //    this.Session[(int)((UIntPtr)clientID)].method_3();
+        //}
+        //#endregion
     }
 }
