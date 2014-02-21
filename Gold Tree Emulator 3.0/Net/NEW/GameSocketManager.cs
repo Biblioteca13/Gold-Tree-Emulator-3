@@ -236,10 +236,9 @@ namespace GoldTree.Net
                         //else
                         //    Console.WriteLine("Maximum amount of connections reached " + maximumConnections, Out.logFlags.ImportantLogLevel);
                     }
-                    catch
+                    catch (Exception Ex)
                     {
-                        //Out.writeError(ex.Message); }
-                        
+                        Console.WriteLine(Ex.ToString());
                     }
                     finally
                     {

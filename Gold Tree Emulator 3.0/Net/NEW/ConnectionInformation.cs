@@ -229,24 +229,24 @@ namespace GoldTree.Net
                 bytesReceived = dataSocket.EndReceive(iAr);
             }
             #region socket error / closed
-            //catch (ObjectDisposedException) { disconnect(); return; }
-            //catch (SocketException ex)
-            //{
-            //    Out.writeError("SocketException :\r\n" + ex.Message + "\r\n" + ex.StackTrace);
-            //    disconnect(); return;
-            //}
-            //catch (Exception ex)
-            //{
-            //    Out.writeError("Exception :\r\n" + ex.Message + "\r\n" + ex.StackTrace);
-            //    disconnect();
-            //    return;
-            //}
-            catch //(Exception e)
+            catch (ObjectDisposedException) { disconnect(); return; }
+            catch (SocketException ex)
             {
-                //Console.WriteLine("Error 0x003: " + e.ToString());
+                Console.WriteLine("SocketException :\r\n" + ex.Message + "\r\n" + ex.StackTrace);
+                disconnect(); return;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception :\r\n" + ex.Message + "\r\n" + ex.StackTrace);
                 disconnect();
                 return;
             }
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine("Error 0x003: " + e.ToString());
+            //    disconnect();
+            //    return;
+            //}
 
             if (bytesReceived == 0)
             {
@@ -256,6 +256,7 @@ namespace GoldTree.Net
 
                 //else
                 //    Console.WriteLine("Error 0x000b: Client closed");
+                Console.WriteLine("Disconnect because received 0 bytes");
                 disconnect();
                 return;
             }
@@ -280,30 +281,30 @@ namespace GoldTree.Net
                 }
             }
             #region exception handeling and continueing receiving
-            catch //(Exception e)
+            //catch //(Exception e)
+            //{
+            //    //Console.WriteLine("Error 0x002: " + e.ToString());
+            //    disconnect();
+            //}
+            catch (PacketMalformedException ex)
             {
-                //Console.WriteLine("Error 0x002: " + e.ToString());
-                disconnect();
+                Console.WriteLine("Packet was malformed: " + ex.Message);
+                if (this.connectionChanged != null)
+                    connectionChanged.Invoke(this, ConnectionState.malfunctioning_packet);
             }
-            //catch (PacketMalformedException ex)
-            //{
-            //    Out.writeError("Packet was malformed: " + ex.Message);
-            //    if (this.connectionChanged != null)
-            //        connectionChanged.Invoke(this, ConnectionState.malfunctioning_packet);
-            //}
 
-            //catch (SocketException ex)
-            //{
-            //    Out.writeError("SocketException :\r\n" + ex.Message + "\r\n" + ex.StackTrace);
-            //    this.disconnect();
-            //    return;
-            //}
-            //catch (Exception ex)
-            //{
-            //    Out.writeError("Error occured in the connection manager:\r\n" + ex.Message + "\r\n" + ex.StackTrace);
-            //    this.disconnect();
-            //    return;
-            //}
+            catch (SocketException ex)
+            {
+                Console.WriteLine("SocketException :\r\n" + ex.Message + "\r\n" + ex.StackTrace);
+                this.disconnect();
+                return;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error occured in the connection manager:\r\n" + ex.Message + "\r\n" + ex.StackTrace);
+                this.disconnect();
+                return;
+            }
 
             finally
             {
@@ -314,17 +315,20 @@ namespace GoldTree.Net
                     //and we keep looking for the next packet
                     this.dataSocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(incomingDataPacket), dataSocket);
                 }
-                catch //(Exception e)
+                catch (SocketException)
                 {
-                    //Console.WriteLine("Error 0x001: " + e.ToString());
+                    Console.WriteLine("Socket exception while listening for next packet for client [" + this.connectionID + "]");
                     disconnect();
                 }
-                //catch (SocketException)
-                //{
-                //    Console.WriteLine("Socket exception while listening for next packet for client [" + this.connectionID + "]");
-                //    disconnect();
-                //}
-                //catch (ObjectDisposedException) { disconnect(); }
+                catch (ObjectDisposedException)
+                {
+                    disconnect();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error 0x001: " + e.ToString());
+                    disconnect();
+                }
             }
             #endregion
         }
