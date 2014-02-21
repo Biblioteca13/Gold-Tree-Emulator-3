@@ -214,7 +214,7 @@ namespace GoldTree
 
                 GoldTree.MusListener = new MusListener(GoldTree.GetConfig().data["mus.tcp.bindip"], LicenseTools.int_13, GoldTree.GetConfig().data["mus.tcp.allowedaddr"].Split(new char[] { ';' }), 20);
                 //GoldTree.ConnectionManage = new SocketsManager(LicenseTools.string_33, LicenseTools.int_12, int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
-                ConnectionManage = new ConnectionHandeling(LicenseTools.int_12, int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]), 10, true);
+                ConnectionManage = new ConnectionHandeling(LicenseTools.int_12, int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]), int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]), true);
                 //GoldTree.ConnectionManage.method_3().method_0();
                 ConnectionManage.init();
                 ConnectionManage.Start();

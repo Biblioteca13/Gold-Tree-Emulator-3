@@ -143,6 +143,7 @@ namespace GoldTree.Net
             }
             catch { destroy(); }
             //Console.WriteLine("Started listening for connection requests on port [" + portInformation + "]", Out.logFlags.ImportantLogLevel);
+            AntiDDosSystem.SetupTcpAuthorization(20000);
             Logging.WriteLine("Listening for connections on port: " + portInformation);
         }
         #endregion
@@ -192,6 +193,12 @@ namespace GoldTree.Net
                     try
                     {
                         Socket replyFromComputer = ((Socket)iAr.AsyncState).EndAccept(iAr);
+                        if (!AntiDDosSystem.CheckConnection(replyFromComputer))
+                        {
+                            replyFromComputer.Shutdown(SocketShutdown.Both);
+                            replyFromComputer.Close();
+                            replyFromComputer.Dispose();
+                        }
                         replyFromComputer.NoDelay = this.disableNagleAlgorithm;
                         //Console.WriteLine("New connection from [" + replyFromComputer.RemoteEndPoint.ToString().Split(':')[0] + "].");
 

@@ -154,17 +154,6 @@ namespace GoldTree.Net
 
                     //Console.WriteLine("Connection [" + this.connectionID + "] has been disconnected");
 
-                    if (GoldTree.GetConfig().data["emu.messages.connections"] == "1")
-                    {
-                        Logging.WriteLine(string.Concat(new object[]
-                                    {
-                                        ">> Connection [",
-                                        this.connectionID,
-                                        "] from [",
-                                        this.getIp(),
-                                        "]"
-                                    }));
-                    }
                     try
                     {
                         if (this.dataSocket != null && this.dataSocket.Connected)
@@ -188,6 +177,19 @@ namespace GoldTree.Net
                         Console.WriteLine(Ex.ToString());
                     }
                     this.connectionChanged = null;
+
+                    AntiDDosSystem.FreeConnection(this.getIp());
+                    if (GoldTree.GetConfig().data["emu.messages.connections"] == "1")
+                    {
+                        Console.WriteLine(string.Concat(new object[]
+                                        {
+                                            ">> Connection Dropped [",
+                                            this.connectionID,
+                                            "] from [",
+                                            this.getIp(),
+                                            "]"
+                                        }));
+                    }
                 }
                 else
                 {
