@@ -112,10 +112,11 @@ namespace GoldTree.HabboHotel.GameClients
 		{
             try
             {
+                string ip = GetConnection().getIp();
                 //UserDataFactory @class = new UserDataFactory(string_0, this.GetConnection().String_0, true);
                 //if (this.GetConnection().String_0 == "127.0.0.1" && !@class.Boolean_0)
-                UserDataFactory @class = new UserDataFactory(string_0, this.GetConnection().getIp(), true);
-                if (this.GetConnection().getIp() == "127.0.0.1" && !@class.Boolean_0)
+                UserDataFactory @class = new UserDataFactory(string_0, ip, true);
+                if (ip == "127.0.0.1" && !@class.Boolean_0)
                 {
                     @class = new UserDataFactory(string_0, "::1", true);
                 }
@@ -126,7 +127,7 @@ namespace GoldTree.HabboHotel.GameClients
                     if (LicenseTools.Boolean_2)
                     {
                         //str = GoldTreeEnvironment.smethod_1("emu_sso_wrong_secure") + "(" + this.GetConnection().String_0 + ")";
-                        str = GoldTreeEnvironment.smethod_1("emu_sso_wrong_secure") + "(" + this.GetConnection().getIp() + ")";
+                        str = GoldTreeEnvironment.smethod_1("emu_sso_wrong_secure") + "(" + ip + ")";
                     }
                     ServerMessage Message = new ServerMessage(161u);
                     Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("emu_sso_wrong") + str);
@@ -161,8 +162,11 @@ namespace GoldTree.HabboHotel.GameClients
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("!!!CRITICAL LOGIN ERROR!!! " + ex.Message);
                 Console.ForegroundColor = ConsoleColor.Gray;
-                this.SendNotif("!!!CRITICAL LOGIN ERROR!!! " + ex.Message);
-                this.method_12();
+                if (this != null)
+                {
+                    this.SendNotif("!!!CRITICAL LOGIN ERROR!!! " + ex.Message);
+                    this.method_12();
+                }
                 return;
             }
 			try

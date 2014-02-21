@@ -1,0 +1,5 @@
+21.2.2014 9:32:13: Error: System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
+   kohteessa GoldTree.HabboHotel.GameClients.GameClient.method_6(String string_0) tiedostossa c:\Users\Joni\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:rivill? 243
+   kohteessa GoldTree.Communication.Messages.Handshake.SSOTicketMessageEvent.Handle(GameClient Session, ClientMessage Event) tiedostossa c:\Users\Joni\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Handshake\SSOTicketMessageEvent.cs:rivill? 14
+   kohteessa GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) tiedostossa c:\Users\Joni\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:rivill? 476
+
