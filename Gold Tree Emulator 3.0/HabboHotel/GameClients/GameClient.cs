@@ -474,7 +474,15 @@ namespace GoldTree.HabboHotel.GameClients
 							Interface @interface;
 							if (GoldTree.smethod_10().Handle(@class.Id, out @interface))
 							{
-								@interface.Handle(this, @class);
+                                try
+                                {
+                                    @interface.Handle(this, @class);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Logging.LogException("Error: " + ex.ToString());
+                                    this.method_12();
+                                }
 							}
 						}
 					}

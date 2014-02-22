@@ -152,7 +152,7 @@ namespace GoldTree.HabboHotel.Quests
 		}
 		public void method_7(uint uint_0, GameClient Session)
 		{
-			if (Session != null)
+			if (Session != null && Session.GetHabbo() != null)
 			{
 				if (Session.GetHabbo().CurrentQuestId != uint_0)
 				{
