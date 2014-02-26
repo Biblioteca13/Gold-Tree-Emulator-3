@@ -71,8 +71,11 @@ namespace GoldTree.HabboHotel.GameClients
 			if (this.Message1_0 != null)
 			{
                 this.bool_0 = true;
-                SocketConnection.RouteReceivedDataCallback dataRouter = new SocketConnection.RouteReceivedDataCallback(this.method_13);
-                this.Message1_0.Start(dataRouter);
+                SocketConnection.GDelegate0 gdelegate0_ = new SocketConnection.GDelegate0(this.method_13);
+                this.Message1_0.method_0(gdelegate0_);
+
+                //SocketConnection.RouteReceivedDataCallback dataRouter = new SocketConnection.RouteReceivedDataCallback(this.method_13);
+                //this.Message1_0.Start(dataRouter);
 
                 //(this.Message1_0.parser as InitialPacketParser).PolicyRequest += new InitialPacketParser.NoParamDelegate(PolicyRequest);
                 //(this.Message1_0.parser as InitialPacketParser).SwitchParserRequest += new InitialPacketParser.NoParamDelegate(SwitchParserRequest);

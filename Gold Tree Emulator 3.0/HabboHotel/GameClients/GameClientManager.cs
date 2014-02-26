@@ -141,6 +141,13 @@ namespace GoldTree.HabboHotel.GameClients
                 this.list_0.Add(Message1_0);
             }
         }
+        //internal void method_5(SocketConnection Message1_0)
+        //{
+        //    if (!this.list_0.Contains(Message1_0))
+        //    {
+        //        this.list_0.Add(Message1_0);
+        //    }
+        //}
         //internal void method_5(ConnectionInformation Message1_0)
         //{
         //    if (!this.list_0.Contains(Message1_0))

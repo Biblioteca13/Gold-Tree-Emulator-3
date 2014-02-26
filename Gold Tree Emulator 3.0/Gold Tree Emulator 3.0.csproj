@@ -445,19 +445,22 @@
     <Compile Include="HabboHotel\Users\UserDataManagement\UserDataNotFoundException.cs" />
     <Compile Include="GoldTree.cs" />
     <Compile Include="GoldTreeEnvironment.cs" />
-    <Compile Include="Net\NEW\Connection Enum.cs" />
-    <Compile Include="Net\NEW\ConnectionHandeling.cs" />
-    <Compile Include="Net\NEW\ConnectionInformation.cs" />
-    <Compile Include="Net\NEW\GamePacketParser.cs" />
-    <Compile Include="Net\NEW\GameSocketManager.cs" />
-    <Compile Include="Net\NEW\GameSocketManagerStatics.cs" />
-    <Compile Include="Net\NEW\IDataParser.cs" />
-    <Compile Include="Net\NEW\InitialPacketParser.cs" />
-    <Compile Include="Net\NEW\LoggingSystem\LogState.cs" />
-    <Compile Include="Net\NEW\LoggingSystem\Message.cs" />
-    <Compile Include="Net\NEW\LoggingSystem\MessageLoggerManager.cs" />
-    <Compile Include="Net\NEW\PacketMalformedException.cs" />
-    <Compile Include="Net\NEW\Socket Exceptions\SocketInitializationException.cs" />
+    <Compile Include="Net\Butterfly Sockets\Connection Enum.cs" />
+    <Compile Include="Net\Butterfly Sockets\ConnectionHandeling.cs" />
+    <Compile Include="Net\Butterfly Sockets\ConnectionInformation.cs" />
+    <Compile Include="Net\Butterfly Sockets\GamePacketParser.cs" />
+    <Compile Include="Net\Butterfly Sockets\GameSocketManager.cs" />
+    <Compile Include="Net\Butterfly Sockets\GameSocketManagerStatics.cs" />
+    <Compile Include="Net\Butterfly Sockets\IDataParser.cs" />
+    <Compile Include="Net\Butterfly Sockets\InitialPacketParser.cs" />
+    <Compile Include="Net\Butterfly Sockets\LoggingSystem\LogState.cs" />
+    <Compile Include="Net\Butterfly Sockets\LoggingSystem\Message.cs" />
+    <Compile Include="Net\Butterfly Sockets\LoggingSystem\MessageLoggerManager.cs" />
+    <Compile Include="Net\Butterfly Sockets\PacketMalformedException.cs" />
+    <Compile Include="Net\Butterfly Sockets\Socket Exceptions\SocketInitializationException.cs" />
+    <Compile Include="Net\NEW Phoenix Sockets\SocketsConnection.cs" />
+    <Compile Include="Net\NEW Phoenix Sockets\SocketsListener.cs" />
+    <Compile Include="Net\NEW Phoenix Sockets\SocketsManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Messages\ClientMessage.cs" />
@@ -509,7 +512,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.None" BuildVersion_StartDate="2013/10/21" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" />
+      <UserProperties BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_StartDate="2013/10/21" BuildVersion_BuildVersioningStyle="None.None.Increment.None" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
