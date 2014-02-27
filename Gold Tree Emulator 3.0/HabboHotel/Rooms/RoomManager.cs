@@ -270,7 +270,24 @@ namespace GoldTree.HabboHotel.Rooms
 			{
 				dataRow = @class.ReadDataRow("SELECT doorx,doory,height,modeldata FROM room_models_customs WHERE roomid = '" + uint_0 + "'");
 			}
-			return new RoomModel("custom", (int)dataRow["doorx"], (int)dataRow["doory"], (double)dataRow["height"], 2, (string)dataRow["modeldata"], "", false);
+            RoomModel RoomModel = new RoomModel("custom", (int)dataRow["doorx"], (int)dataRow["doory"], (double)dataRow["height"], 2, (string)dataRow["modeldata"], "", false);
+            if (RoomModel != null)
+            {
+                return RoomModel;
+            }
+            else
+            {
+                Room Room = this.GetRoom(uint_0);
+                if (Room != null)
+                {
+                    Room.method_34();
+                    return null;
+                }
+                else
+                {
+                    return null;
+                }
+            }
 		}
 		public RoomModel GetModel(string Model, uint uint_0)
 		{

@@ -3,3 +3,147 @@
    kohteessa GoldTree.Communication.Messages.Handshake.SSOTicketMessageEvent.Handle(GameClient Session, ClientMessage Event) tiedostossa c:\Users\Joni\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Handshake\SSOTicketMessageEvent.cs:rivill? 14
    kohteessa GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) tiedostossa c:\Users\Joni\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:rivill? 476
 
+27.2.2014 18:52:35: Error: System.ArgumentException: parsing "\b(\-n\s*o\s*o\s*b\b(\-" - Not enough )'s.
+   at System.Text.RegularExpressions.RegexParser.ScanRegex()
+   at System.Text.RegularExpressions.RegexParser.Parse(String re, RegexOptions op)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options)
+   at GoldTree.HabboHotel.Misc.ChatCommandHandler.smethod_4(String string_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Misc\ChatCommandHandler.cs:line 115
+   at GoldTree.HabboHotel.Rooms.RoomUser.method_1(GameClient Session, String string_1, Boolean bool_13) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 196
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 19
+   at GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 482
+
+27.2.2014 18:54:02: Error: System.ArgumentException: parsing "\b(\n\s*o\s*o\s*b\b(\" - Illegal \ at end of pattern.
+   at System.Text.RegularExpressions.RegexParser.ScanBackslash()
+   at System.Text.RegularExpressions.RegexParser.ScanRegex()
+   at System.Text.RegularExpressions.RegexParser.Parse(String re, RegexOptions op)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options)
+   at GoldTree.HabboHotel.Misc.ChatCommandHandler.smethod_4(String string_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Misc\ChatCommandHandler.cs:line 115
+   at GoldTree.HabboHotel.Rooms.RoomUser.method_1(GameClient Session, String string_1, Boolean bool_13) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 196
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 19
+   at GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 482
+
+27.2.2014 19:26:23: Error: System.ArgumentException: parsing "\b(n^[]o^[]o^[]b)\b" - Unterminated [] set.
+   at System.Text.RegularExpressions.RegexParser.ScanCharClass(Boolean caseInsensitive, Boolean scanOnly)
+   at System.Text.RegularExpressions.RegexParser.CountCaptures()
+   at System.Text.RegularExpressions.RegexParser.Parse(String re, RegexOptions op)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options)
+   at GoldTree.HabboHotel.Misc.ChatCommandHandler.smethod_4(String string_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Misc\ChatCommandHandler.cs:line 115
+   at GoldTree.HabboHotel.Rooms.RoomUser.method_1(GameClient Session, String string_1, Boolean bool_13) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 196
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 19
+   at GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 482
+
+27.2.2014 19:27:21: Error: System.ArgumentException: parsing "\b(n[^]o[^]o[^]b)\b" - Unterminated [] set.
+   at System.Text.RegularExpressions.RegexParser.ScanCharClass(Boolean caseInsensitive, Boolean scanOnly)
+   at System.Text.RegularExpressions.RegexParser.CountCaptures()
+   at System.Text.RegularExpressions.RegexParser.Parse(String re, RegexOptions op)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options)
+   at GoldTree.HabboHotel.Misc.ChatCommandHandler.smethod_4(String string_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Misc\ChatCommandHandler.cs:line 115
+   at GoldTree.HabboHotel.Rooms.RoomUser.method_1(GameClient Session, String string_1, Boolean bool_13) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 196
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 19
+   at GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 482
+
+27.2.2014 21:43:03: Error: System.ArgumentException: parsing "\b(n\p*\P*o\p*\P*o\p*\P*b)\b" - Malformed \p{X} character escape.
+   at System.Text.RegularExpressions.RegexParser.ParseProperty()
+   at System.Text.RegularExpressions.RegexParser.ScanBackslash()
+   at System.Text.RegularExpressions.RegexParser.ScanRegex()
+   at System.Text.RegularExpressions.RegexParser.Parse(String re, RegexOptions op)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options)
+   at GoldTree.HabboHotel.Misc.ChatCommandHandler.smethod_4(String string_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Misc\ChatCommandHandler.cs:line 115
+   at GoldTree.HabboHotel.Rooms.RoomUser.method_1(GameClient Session, String string_1, Boolean bool_13) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 196
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 19
+   at GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 482
+
+27.2.2014 21:43:45: Error: System.ArgumentException: parsing "\b(n\p{}*\P{}*o\p{}*\P{}*o\p{}*\P{}*b)\b" - Unknown property ''.
+   at System.Text.RegularExpressions.RegexCharClass.SetFromProperty(String capname, Boolean invert, String pattern)
+   at System.Text.RegularExpressions.RegexCharClass.AddCategoryFromName(String categoryName, Boolean invert, Boolean caseInsensitive, String pattern)
+   at System.Text.RegularExpressions.RegexParser.ScanBackslash()
+   at System.Text.RegularExpressions.RegexParser.ScanRegex()
+   at System.Text.RegularExpressions.RegexParser.Parse(String re, RegexOptions op)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options)
+   at GoldTree.HabboHotel.Misc.ChatCommandHandler.smethod_4(String string_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Misc\ChatCommandHandler.cs:line 115
+   at GoldTree.HabboHotel.Rooms.RoomUser.method_1(GameClient Session, String string_1, Boolean bool_13) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 196
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 19
+   at GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 482
+
+27.2.2014 21:44:21: Error: System.ArgumentException: parsing "\b(n\p{ }*\P{ }*o\p{ }*\P{ }*o\p{ }*\P{ }*b)\b" - Incomplete \p{X} character escape.
+   at System.Text.RegularExpressions.RegexParser.ParseProperty()
+   at System.Text.RegularExpressions.RegexParser.ScanBackslash()
+   at System.Text.RegularExpressions.RegexParser.ScanRegex()
+   at System.Text.RegularExpressions.RegexParser.Parse(String re, RegexOptions op)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options)
+   at GoldTree.HabboHotel.Misc.ChatCommandHandler.smethod_4(String string_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Misc\ChatCommandHandler.cs:line 115
+   at GoldTree.HabboHotel.Rooms.RoomUser.method_1(GameClient Session, String string_1, Boolean bool_13) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 196
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 19
+   at GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 482
+
+27.2.2014 21:44:53: Error: System.ArgumentException: parsing "\b(n\p{J}*\P{J}*o\p{J}*\P{J}*o\p{J}*\P{J}*b)\b" - Unknown property 'J'.
+   at System.Text.RegularExpressions.RegexCharClass.SetFromProperty(String capname, Boolean invert, String pattern)
+   at System.Text.RegularExpressions.RegexCharClass.AddCategoryFromName(String categoryName, Boolean invert, Boolean caseInsensitive, String pattern)
+   at System.Text.RegularExpressions.RegexParser.ScanBackslash()
+   at System.Text.RegularExpressions.RegexParser.ScanRegex()
+   at System.Text.RegularExpressions.RegexParser.Parse(String re, RegexOptions op)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options)
+   at GoldTree.HabboHotel.Misc.ChatCommandHandler.smethod_4(String string_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Misc\ChatCommandHandler.cs:line 115
+   at GoldTree.HabboHotel.Rooms.RoomUser.method_1(GameClient Session, String string_1, Boolean bool_13) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 196
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 19
+   at GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 482
+
+27.2.2014 21:45:39: Error: System.ArgumentException: parsing "\b(n\p{}\P{}o\p{}\P{}o\p{}\P{}b)\b" - Unknown property ''.
+   at System.Text.RegularExpressions.RegexCharClass.SetFromProperty(String capname, Boolean invert, String pattern)
+   at System.Text.RegularExpressions.RegexCharClass.AddCategoryFromName(String categoryName, Boolean invert, Boolean caseInsensitive, String pattern)
+   at System.Text.RegularExpressions.RegexParser.ScanBackslash()
+   at System.Text.RegularExpressions.RegexParser.ScanRegex()
+   at System.Text.RegularExpressions.RegexParser.Parse(String re, RegexOptions op)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options)
+   at GoldTree.HabboHotel.Misc.ChatCommandHandler.smethod_4(String string_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Misc\ChatCommandHandler.cs:line 115
+   at GoldTree.HabboHotel.Rooms.RoomUser.method_1(GameClient Session, String string_1, Boolean bool_13) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 196
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 19
+   at GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 482
+
+27.2.2014 21:46:13: Error: System.ArgumentException: parsing "\b(n\p{ }\P{ }o\p{ }\P{ }o\p{ }\P{ }b)\b" - Incomplete \p{X} character escape.
+   at System.Text.RegularExpressions.RegexParser.ParseProperty()
+   at System.Text.RegularExpressions.RegexParser.ScanBackslash()
+   at System.Text.RegularExpressions.RegexParser.ScanRegex()
+   at System.Text.RegularExpressions.RegexParser.Parse(String re, RegexOptions op)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options)
+   at GoldTree.HabboHotel.Misc.ChatCommandHandler.smethod_4(String string_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Misc\ChatCommandHandler.cs:line 115
+   at GoldTree.HabboHotel.Rooms.RoomUser.method_1(GameClient Session, String string_1, Boolean bool_13) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 196
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 19
+   at GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 482
+
+27.2.2014 21:47:08: Error: System.ArgumentException: parsing "\b(n\p{J}o\p{J}o\p{J}b)\b" - Unknown property 'J'.
+   at System.Text.RegularExpressions.RegexCharClass.SetFromProperty(String capname, Boolean invert, String pattern)
+   at System.Text.RegularExpressions.RegexCharClass.AddCategoryFromName(String categoryName, Boolean invert, Boolean caseInsensitive, String pattern)
+   at System.Text.RegularExpressions.RegexParser.ScanBackslash()
+   at System.Text.RegularExpressions.RegexParser.ScanRegex()
+   at System.Text.RegularExpressions.RegexParser.Parse(String re, RegexOptions op)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options)
+   at GoldTree.HabboHotel.Misc.ChatCommandHandler.smethod_4(String string_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Misc\ChatCommandHandler.cs:line 115
+   at GoldTree.HabboHotel.Rooms.RoomUser.method_1(GameClient Session, String string_1, Boolean bool_13) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 196
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 19
+   at GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 482
+
+27.2.2014 21:48:42: Error: System.ArgumentException: parsing "\b(n\p{Juniori}o\p{Juniori}o\p{Juniori}b)\b" - Unknown property 'Juniori'.
+   at System.Text.RegularExpressions.RegexCharClass.SetFromProperty(String capname, Boolean invert, String pattern)
+   at System.Text.RegularExpressions.RegexCharClass.AddCategoryFromName(String categoryName, Boolean invert, Boolean caseInsensitive, String pattern)
+   at System.Text.RegularExpressions.RegexParser.ScanBackslash()
+   at System.Text.RegularExpressions.RegexParser.ScanRegex()
+   at System.Text.RegularExpressions.RegexParser.Parse(String re, RegexOptions op)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options, TimeSpan matchTimeout, Boolean useCache)
+   at System.Text.RegularExpressions.Regex..ctor(String pattern, RegexOptions options)
+   at GoldTree.HabboHotel.Misc.ChatCommandHandler.smethod_4(String string_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Misc\ChatCommandHandler.cs:line 115
+   at GoldTree.HabboHotel.Rooms.RoomUser.method_1(GameClient Session, String string_1, Boolean bool_13) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 196
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 19
+   at GoldTree.HabboHotel.GameClients.GameClient.method_13(Byte[]& byte_0) in c:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 482
+

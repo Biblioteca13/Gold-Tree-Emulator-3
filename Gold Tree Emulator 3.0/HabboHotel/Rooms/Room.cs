@@ -3655,7 +3655,7 @@ namespace GoldTree.HabboHotel.Rooms
                 }
             }
         }
-        private void method_34()
+        internal void method_34()
         {
             if (!this.bool_7 && LicenseTools.bool_18)
             {

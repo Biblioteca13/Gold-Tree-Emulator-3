@@ -111,10 +111,11 @@ namespace GoldTree.HabboHotel.Misc
                     }
                     else if (ChatCommandHandler.list_2[num] == 2)
                     {
+                        string cheaters = @"\s*";
                         var re = new Regex(
                         @"\b("
                         + string.Join("|", list_0.Select(word =>
-                            string.Join(@"\s*", word.ToCharArray())))
+                            string.Join(cheaters, word.ToCharArray())))
                         + @")\b", RegexOptions.IgnoreCase);
                         return re.Replace(string_0, match =>
                         {
