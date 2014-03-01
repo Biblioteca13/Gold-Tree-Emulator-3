@@ -1173,7 +1173,17 @@ namespace GoldTree.HabboHotel.Roles
 		}
 		public string method_8(uint uint_0)
 		{
-			return this.dictionary_2[uint_0];
+            if (this.dictionary_2.ContainsKey(uint_0))
+            {
+                return this.dictionary_2[uint_0];
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nCan't find rank: " + uint_0);
+                Console.ForegroundColor = ConsoleColor.Gray;
+                return "error";
+            }
 		}
 		public int method_9()
 		{

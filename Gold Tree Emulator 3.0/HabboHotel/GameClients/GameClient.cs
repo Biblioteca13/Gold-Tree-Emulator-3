@@ -161,13 +161,9 @@ namespace GoldTree.HabboHotel.GameClients
             }
             catch (Exception ex)
             {
-                Logging.LogCriticalException(ex.ToString());
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("!!!CRITICAL LOGIN ERROR!!! " + ex.Message);
-                Console.ForegroundColor = ConsoleColor.Gray;
                 if (this != null)
                 {
-                    this.SendNotif("!!!CRITICAL LOGIN ERROR!!! " + ex.Message);
+                    this.SendNotif(ex.Message);
                     this.method_12();
                 }
                 return;
