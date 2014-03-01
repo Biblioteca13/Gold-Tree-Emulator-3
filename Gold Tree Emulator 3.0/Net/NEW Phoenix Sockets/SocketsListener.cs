@@ -17,7 +17,7 @@ namespace GoldTree.Net
         public Class114(string string_0, int Port, SocketsManager Manager)
         {
             this.socket_0 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint localEP = new IPEndPoint(IPAddress.Parse(GoldTree.GetConfig().data["game.tcp.bindip"]), Port);
+            IPEndPoint localEP = new IPEndPoint(IPAddress.Parse(GoldTree.GetConfig().data["game.tcp.bindip"].Replace(",", ".")), Port);
             this.socket_0.Bind(localEP);
             this.socket_0.Listen(0x3e8);
             this.asyncCallback_0 = new AsyncCallback(this.method_4);
