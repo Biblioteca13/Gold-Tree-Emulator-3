@@ -2348,7 +2348,7 @@ namespace GoldTree.HabboHotel.Rooms
                                         foreach (string current in enumerable)
                                         {
                                             RoomItem class3 = this.method_28(Convert.ToUInt32(current));
-                                            if (class3 != null && !(class3.GetBaseItem().InteractionType.ToLower() == "dice"))
+                                            if (class3 != null && !(class3.GetBaseItem().InteractionType.ToLower() == "dice") && !(class3.GetBaseItem().InteractionType.ToLower() == "bb_patch"))
                                             {
                                                 string[] collection3 = list8[num8].Split(new char[]
 											{
