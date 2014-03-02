@@ -63,12 +63,8 @@ namespace GoldTree
             {
                 Console.Write(ex.ToString());
             }
-            while (true)
-            {
-                ConsoleKeyInfo = Console.ReadKey();
-                if (ConsoleKeyInfo.Key == ConsoleKey.Escape)
-                    smethod_1(CtrlType.CTRL_CLOSE_EVENT);
-            }
+
+            Wait();
         }
         private static void smethod_0(object sender, UnhandledExceptionEventArgs e)
         {
@@ -151,6 +147,14 @@ namespace GoldTree
             {
                 return false;
             }
+        }
+
+        public static void Wait()
+        {
+            ConsoleKeyInfo = Console.ReadKey();
+            if (ConsoleKeyInfo.Key == ConsoleKey.Escape)
+                smethod_1(CtrlType.CTRL_CLOSE_EVENT);
+            Wait();
         }
     }
 }
