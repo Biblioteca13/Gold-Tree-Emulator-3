@@ -282,15 +282,15 @@ namespace GoldTree.HabboHotel.GameClients
 
             try
             {
-                if (GoldTree.UserAdType >= 0 && GoldTree.UserAdType <= 3 && GoldTree.UserAdMessage.Count > 0)
+                if (GoldTree.UserAdType >= 0 && GoldTree.UserAdType <= 2 && GoldTree.UserAdMessage.Count > 0)
                 {
                     if (!(int.Parse(GoldTree.GetConfig().data["ads.disable"]) == 1))
                     {
-                        if (!(int.Parse(GoldTree.GetConfig().data["ads.allowedonlyrandomads"]) == 1))
+                        if (!(int.Parse(GoldTree.GetConfig().data["ads.allowedonlyrandomads"]) == 0))
                         {
                             int random = GoldTreeEnvironment.GetRandomNumber(1, 100);
 
-                            if (random <= 3)
+                            if (random <= 5)
                             {
                                 if (GoldTree.UserAdType == 0)
                                 {
@@ -305,7 +305,7 @@ namespace GoldTree.HabboHotel.GameClients
                                     ServerMessage Message = new ServerMessage(161u);
                                     Message.AppendStringWithBreak(string.Concat(new string[]
 							{
-								" >>> Ad <<< ",
+								" >>>>>>>>>>>>>>>>>> Ad <<<<<<<<<<<<<<<<<< ",
 								"\r\n",
 								string.Join("\r\n", GoldTree.UserAdMessage),
 							}));
@@ -329,7 +329,7 @@ namespace GoldTree.HabboHotel.GameClients
                                 ServerMessage Message = new ServerMessage(161u);
                                 Message.AppendStringWithBreak(string.Concat(new string[]
 							{
-								" >>> Ad <<< ",
+								" >>>>>>>>>>>>>>>>>> Ad <<<<<<<<<<<<<<<<<< ",
 								"\r\n",
 								string.Join("\r\n", GoldTree.UserAdMessage),
 							}));

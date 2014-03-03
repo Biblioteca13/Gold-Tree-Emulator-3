@@ -120,6 +120,8 @@ namespace GoldTree
             Console.WriteLine();
             try
             {
+                UserAdMessage = new List<string>();
+
                 WebClient client = new WebClient();
                 Stream stream = client.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/consoleads.txt");
                 StreamReader reader = new StreamReader(stream);
@@ -146,7 +148,7 @@ namespace GoldTree
                 Stream stream3 = client3.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradmessage.txt");
                 StreamReader reader3 = new StreamReader(stream3);
                 string line2;
-                while ((line2 = reader.ReadLine()) != null)
+                while ((line2 = reader3.ReadLine()) != null)
                 {
                     UserAdMessage.Add(line2);
                 }
