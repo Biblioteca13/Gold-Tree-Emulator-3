@@ -11,6 +11,7 @@ using GoldTree.Util;
 using GoldTree.Communication;
 using GoldTree.Messages;
 using System.Net;
+using System.IO;
 namespace GoldTree
 {
     internal sealed class GoldTree
@@ -35,6 +36,9 @@ namespace GoldTree
         public static string string_6;
         public static string string_7;
         private static bool bool_1 = false;
+        public static List<string> UserAdMessage;
+        public static int UserAdType;
+        public static string UserAdLink;
 
         public static int Build
         {
@@ -114,6 +118,53 @@ namespace GoldTree
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("                  " + PrettyVersion);
             Console.WriteLine();
+            try
+            {
+                WebClient client = new WebClient();
+                Stream stream = client.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/consoleads.txt");
+                StreamReader reader = new StreamReader(stream);
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    Console.WriteLine(line);
+                }
+
+                WebClient client2 = new WebClient();
+                Stream stream2 = client2.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradtype.txt");
+                StreamReader reader2 = new StreamReader(stream2);
+                String content2 = reader2.ReadLine();
+
+                try
+                {
+                    UserAdType = int.Parse(content2);
+                }
+                catch
+                {
+                }
+
+                WebClient client3 = new WebClient();
+                Stream stream3 = client3.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradmessage.txt");
+                StreamReader reader3 = new StreamReader(stream3);
+                string line2;
+                while ((line2 = reader.ReadLine()) != null)
+                {
+                    UserAdMessage.Add(line2);
+                }
+
+                WebClient client4 = new WebClient();
+                Stream stream4 = client4.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradlink.txt");
+                StreamReader reader4 = new StreamReader(stream4);
+                String content4 = reader4.ReadLine();
+
+                UserAdLink = content4;
+
+                System.Threading.Thread.Sleep(2500);
+            }
+            catch
+            {
+                Console.WriteLine("Sad cant find ads :(");
+            }
+
             Console.ResetColor();
 
             try

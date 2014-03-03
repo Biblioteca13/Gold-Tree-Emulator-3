@@ -280,6 +280,70 @@ namespace GoldTree.HabboHotel.GameClients
             this.GetHabbo().CheckFootballGoalHostScoreAchievements();
             this.GetHabbo().CheckStaffPicksAchievement();
 
+            try
+            {
+                if (GoldTree.UserAdType >= 0 && GoldTree.UserAdType <= 3 && GoldTree.UserAdMessage.Count > 0)
+                {
+                    if (!(int.Parse(GoldTree.GetConfig().data["ads.disable"]) == 1))
+                    {
+                        if (!(int.Parse(GoldTree.GetConfig().data["ads.allowedonlyrandomads"]) == 1))
+                        {
+                            int random = GoldTreeEnvironment.GetRandomNumber(1, 100);
+
+                            if (random <= 3)
+                            {
+                                if (GoldTree.UserAdType == 0)
+                                {
+                                    this.SendNotif(string.Join("\r\n", GoldTree.UserAdMessage), 0);
+                                }
+                                if (GoldTree.UserAdType == 1)
+                                {
+                                    this.SendNotif(string.Join("\r\n", GoldTree.UserAdMessage), 2);
+                                }
+                                else if (GoldTree.UserAdType == 2 && GoldTree.UserAdLink != "")
+                                {
+                                    ServerMessage Message = new ServerMessage(161u);
+                                    Message.AppendStringWithBreak(string.Concat(new string[]
+							{
+								" >>> Ad <<< ",
+								"\r\n",
+								string.Join("\r\n", GoldTree.UserAdMessage),
+							}));
+                                    Message.AppendStringWithBreak(GoldTree.UserAdLink);
+                                    this.SendMessage(Message);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (GoldTree.UserAdType == 0)
+                            {
+                                this.SendNotif(string.Join("\r\n", GoldTree.UserAdMessage), 0);
+                            }
+                            if (GoldTree.UserAdType == 1)
+                            {
+                                this.SendNotif(string.Join("\r\n", GoldTree.UserAdMessage), 2);
+                            }
+                            else if (GoldTree.UserAdType == 2 && GoldTree.UserAdLink != "")
+                            {
+                                ServerMessage Message = new ServerMessage(161u);
+                                Message.AppendStringWithBreak(string.Concat(new string[]
+							{
+								" >>> Ad <<< ",
+								"\r\n",
+								string.Join("\r\n", GoldTree.UserAdMessage),
+							}));
+                                Message.AppendStringWithBreak(GoldTree.UserAdLink);
+                                this.SendMessage(Message);
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+
 			if (LicenseTools.String_4 != "")
 			{
 				this.SendNotif(LicenseTools.String_4, 2);
