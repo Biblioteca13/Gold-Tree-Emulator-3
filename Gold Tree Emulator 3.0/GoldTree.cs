@@ -55,7 +55,7 @@ namespace GoldTree
         {
             get
             {
-                return "Gold Tree Emulator v3.19.0 ALPHA 5 (Build " + build + ")";
+                return "Gold Tree Emulator v3.19.0 ALPHA 6 (Build " + build + ")";
             }
         }
 
@@ -125,6 +125,35 @@ namespace GoldTree
             {
                 UserAdMessage = new List<string>();
 
+                WebClient client2 = new WebClient();
+                Stream stream2 = client2.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradtype.txt");
+                StreamReader reader2 = new StreamReader(stream2);
+                String content2 = reader2.ReadLine();
+
+                try
+                {
+                    UserAdType = int.Parse(content2);
+                }
+                catch
+                {
+                }
+
+                WebClient client3 = new WebClient();
+                Stream stream3 = client3.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradmessage.txt");
+                StreamReader reader3 = new StreamReader(stream3);
+                string line2;
+                while ((line2 = reader3.ReadLine()) != null)
+                {
+                    UserAdMessage.Add(line2);
+                }
+
+                WebClient client4 = new WebClient();
+                Stream stream4 = client4.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradlink.txt");
+                StreamReader reader4 = new StreamReader(stream4);
+                String content4 = reader4.ReadLine();
+
+                UserAdLink = content4;
+
                 try
                 {
                     WebClient client = new WebClient();
@@ -161,41 +190,10 @@ namespace GoldTree
                         }
                     }
                 }
-                catch(Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-
-                WebClient client2 = new WebClient();
-                Stream stream2 = client2.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradtype.txt");
-                StreamReader reader2 = new StreamReader(stream2);
-                String content2 = reader2.ReadLine();
-
-                try
-                {
-                    UserAdType = int.Parse(content2);
-                }
                 catch
                 {
+                    
                 }
-
-                WebClient client3 = new WebClient();
-                Stream stream3 = client3.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradmessage.txt");
-                StreamReader reader3 = new StreamReader(stream3);
-                string line2;
-                while ((line2 = reader3.ReadLine()) != null)
-                {
-                    UserAdMessage.Add(line2);
-                }
-
-                WebClient client4 = new WebClient();
-                Stream stream4 = client4.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradlink.txt");
-                StreamReader reader4 = new StreamReader(stream4);
-                String content4 = reader4.ReadLine();
-
-                UserAdLink = content4;
-
-                System.Threading.Thread.Sleep(2500);
             }
             catch
             {
@@ -249,130 +247,189 @@ namespace GoldTree
                             DataRow DataRow;
                             DataRow = @class.ReadDataRow("SHOW COLUMNS FROM `items` WHERE field = 'fw_count'");
 
-                            if (DataRow != null)
+                            DataRow DataRow2;
+                            DataRow2 = @class.ReadDataRow("SHOW COLUMNS FROM `items` WHERE field = 'extra_data'");
+
+                            if (DataRow != null || DataRow2 != null)
                             {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("UPDATING ITEMS POSSIBLY TAKE A LONG TIME! DONT SHUTDOWN EMULATOR! PLEASE WAIT!");
-                                Console.ForegroundColor = ConsoleColor.Gray;
-                                Console.Write("Updating items (Fireworks) ...");
-                                Dictionary<uint, int> newfwcount = new Dictionary<uint, int>();
-
-                                DataTable dataTable = @class.ReadDataTable("SELECT Id, fw_count FROM items;");
-
-                                if (dataTable != null)
+                                if (DoYouWantContinue("Remember get backups before continue! Do you want continue? [Y/N]"))
                                 {
-                                    foreach (DataRow dataRow in dataTable.Rows)
+                                    if (DataRow != null)
                                     {
-                                        try
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("UPDATING ITEMS POSSIBLY TAKE A LONG TIME! DONT SHUTDOWN EMULATOR! PLEASE WAIT!");
+                                        Console.ForegroundColor = ConsoleColor.Gray;
+                                        Console.Write("Updating items (Fireworks) ...");
+                                        Dictionary<uint, int> newfwcount = new Dictionary<uint, int>();
+
+                                        DataTable dataTable = @class.ReadDataTable("SELECT Id, fw_count FROM items;");
+
+                                        int fails1 = 0;
+
+                                        if (dataTable != null)
                                         {
-                                            uint id = (uint)dataRow["Id"];
-                                            int wf_count = (int)dataRow["fw_count"];
-                                            if (wf_count > 0)
+                                            foreach (DataRow dataRow in dataTable.Rows)
                                             {
-                                                newfwcount.Add(id, wf_count);
+                                                try
+                                                {
+                                                    if (dataRow != null && !string.IsNullOrEmpty(dataRow["Id"].ToString()) && !string.IsNullOrEmpty(dataRow["fw_count"].ToString()) && (uint)dataRow["Id"] > 0 && (int)dataRow["fw_count"] > 0)
+                                                    {
+                                                        uint id = (uint)dataRow["Id"];
+                                                        int wf_count = (int)dataRow["fw_count"];
+                                                        if (wf_count > 0)
+                                                        {
+                                                            newfwcount.Add(id, wf_count);
+                                                        }
+                                                    }
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    Console.WriteLine("OOPS! Error when updating.. Firework count lost :( Lets continue...");
+                                                    Logging.LogItemUpdateError(ex.ToString());
+                                                    fails1++;
+                                                }
+
                                             }
                                         }
-                                        catch (Exception ex)
+
+                                        if (newfwcount != null)
                                         {
-                                            Console.WriteLine("OOPS! Error when updating.. Firework count lost :( Lets continue...");
-                                            Logging.LogItemUpdateError(ex.ToString());
-                                        }
-                                    }
-                                }
-
-                                if (newfwcount != null)
-                                {
-                                    foreach (KeyValuePair<uint, int> current in newfwcount)
-                                    {
-                                        try
-                                        {
-                                            @class.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES ( '" + current.Key + "', '" + current.Value + "')");
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            Console.WriteLine("OOPS! Error when updating.. Firework count lost :( Lets continue...");
-                                            Logging.LogItemUpdateError(ex.ToString());
-                                        }
-                                    }
-                                }
-
-
-                                @class.ExecuteQuery("ALTER TABLE items DROP fw_count");
-
-                                if (newfwcount != null)
-                                {
-                                    newfwcount.Clear();
-                                }
-
-                                newfwcount = null;
-
-                                Console.WriteLine("completed!");
-
-                                DataRow DataRow2;
-                                DataRow2 = @class.ReadDataRow("SHOW COLUMNS FROM `items` WHERE field = 'extra_data'");
-
-                                if (DataRow2 != null)
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("UPDATING ITEMS POSSIBLY TAKE A LONG TIME! DONT SHUTDOWN EMULATOR! PLEASE WAIT!");
-                                    Console.ForegroundColor = ConsoleColor.Gray;
-                                    Console.Write("Updating items (Extra data) ...");
-                                    Dictionary<uint, string> newextradata = new Dictionary<uint, string>();
-
-                                    DataTable dataTable2 = @class.ReadDataTable("SELECT Id, extra_data FROM items;");
-
-                                    if (dataTable2 != null)
-                                    {
-                                        foreach (DataRow dataRow in dataTable2.Rows)
-                                        {
-                                            try
+                                            foreach (KeyValuePair<uint, int> current in newfwcount)
                                             {
-                                                uint id = (uint)dataRow["Id"];
-                                                string extra_data = (string)dataRow["extra_data"];
-                                                if (!string.IsNullOrEmpty(extra_data))
+                                                try
                                                 {
-                                                    newextradata.Add(id, extra_data);
+                                                    if (!string.IsNullOrEmpty(current.Key.ToString()) && !string.IsNullOrEmpty(current.Value.ToString()) && current.Key > 0 && current.Value > 0)
+                                                    {
+                                                        @class.AddParamWithValue("key", current.Key);
+                                                        @class.AddParamWithValue("value", current.Value);
+                                                        @class.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES (@key, @value)");
+                                                    }
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    Console.WriteLine("OOPS! Error when updating.. Firework count lost :( Lets continue...");
+                                                    Logging.LogItemUpdateError(ex.ToString());
+                                                    fails1++;
                                                 }
                                             }
-                                            catch (Exception ex)
-                                            {
-                                                Console.WriteLine("OOPS! Error when updating.. Extra data lost :( Lets continue...");
-                                                Logging.LogItemUpdateError(ex.ToString());
-                                            }
                                         }
-                                    }
 
-                                    if (newextradata != null)
-                                    {
-                                        foreach (KeyValuePair<uint, string> current in newextradata)
+                                        if (fails1 > 0 && !DoYouWantContinue("Failed update " + fails1 + " item firework count. Do you want continue? YOU LOST THEIR ITEMS FIREWORK COUNT! [Y/N]"))
                                         {
-                                            try
+                                            Logging.WriteLine("Press any key to shut down ...");
+                                            Console.ReadKey(true);
+                                            GoldTree.smethod_16();
+                                            Logging.WriteLine("Press any key to close window ...");
+                                            Console.ReadKey(true);
+                                            Environment.Exit(0);
+                                            return;
+                                        }
+
+                                        @class.ExecuteQuery("ALTER TABLE items DROP fw_count");
+
+                                        if (newfwcount != null)
+                                        {
+                                            newfwcount.Clear();
+                                        }
+
+                                        newfwcount = null;
+
+                                        Console.WriteLine("completed!");
+                                    }
+
+                                    if (DataRow2 != null)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("UPDATING ITEMS POSSIBLY TAKE A LONG TIME! DONT SHUTDOWN EMULATOR! PLEASE WAIT!");
+                                        Console.ForegroundColor = ConsoleColor.Gray;
+                                        Console.Write("Updating items (Extra data) ...");
+                                        Dictionary<uint, string> newextradata = new Dictionary<uint, string>();
+
+                                        DataTable dataTable2 = @class.ReadDataTable("SELECT Id, extra_data FROM items;");
+
+                                        int fails2 = 0;
+
+                                        if (dataTable2 != null)
+                                        {
+                                            foreach (DataRow dataRow in dataTable2.Rows)
                                             {
-                                                @class.ExecuteQuery("INSERT INTO items_extra_data(item_id, extra_data) VALUES ( '" + current.Key + "', '" + current.Value + "')");
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Console.WriteLine("OOPS! Error when updating.. Extra data lost :( Lets continue...");
-                                                Logging.LogItemUpdateError(ex.ToString());
+                                                try
+                                                {
+                                                    if (dataRow != null && !string.IsNullOrEmpty(dataRow["Id"].ToString()) && !string.IsNullOrEmpty(dataRow["extra_data"].ToString()) && (uint)dataRow["Id"] > 0)
+                                                    {
+                                                        uint id = (uint)dataRow["Id"];
+                                                        string extra_data = (string)dataRow["extra_data"];
+                                                        if (!string.IsNullOrEmpty(extra_data))
+                                                        {
+                                                            newextradata.Add(id, extra_data);
+                                                        }
+                                                    }
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    Console.WriteLine("OOPS! Error when updating.. Extra data lost :( Lets continue...");
+                                                    Logging.LogItemUpdateError(ex.ToString());
+                                                    fails2++;
+                                                }
                                             }
                                         }
+
+                                        if (newextradata != null)
+                                        {
+                                            foreach (KeyValuePair<uint, string> current in newextradata)
+                                            {
+                                                try
+                                                {
+                                                    if (!string.IsNullOrEmpty(current.Key.ToString()) && !string.IsNullOrEmpty(current.Value.ToString()) && current.Key > 0)
+                                                    {
+                                                        @class.AddParamWithValue("key", current.Key);
+                                                        @class.AddParamWithValue("value", current.Value);
+                                                        @class.ExecuteQuery("INSERT INTO items_extra_data(item_id, extra_data) VALUES (@key, @value)");
+                                                    }
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    Console.WriteLine("OOPS! Error when updating.. Extra data lost :( Lets continue...");
+                                                    Logging.LogItemUpdateError(ex.ToString());
+                                                    fails2++;
+                                                }
+                                            }
+                                        }
+
+                                        if (fails2 > 0 && !DoYouWantContinue("Failed update " + fails2 + " item extra data. Do you want continue? YOU LOST THEIR ITEMS EXTRA DATA! [Y/N]"))
+                                        {
+                                            Logging.WriteLine("Press any key to shut down ...");
+                                            Console.ReadKey(true);
+                                            GoldTree.smethod_16();
+                                            Logging.WriteLine("Press any key to close window ...");
+                                            Console.ReadKey(true);
+                                            Environment.Exit(0);
+                                            return;
+                                        }
+
+                                        @class.ExecuteQuery("ALTER TABLE items DROP extra_data");
+
+                                        if (newextradata != null)
+                                        {
+                                            newextradata.Clear();
+                                        }
+
+                                        newextradata = null;
+
+                                        Console.WriteLine("completed!");
                                     }
 
-
-                                    @class.ExecuteQuery("ALTER TABLE items DROP extra_data");
-
-                                    if (newextradata != null)
-                                    {
-                                        newextradata.Clear();
-                                    }
-
-                                    newfwcount = null;
-
-                                    Console.WriteLine("completed!");
                                 }
-                            }
-                            else
-                            {
+                                else
+                                {
+                                    Logging.WriteLine("Press any key to shut down ...");
+                                    Console.ReadKey(true);
+                                    GoldTree.smethod_16();
+                                    Logging.WriteLine("Press any key to close window ...");
+                                    Console.ReadKey(true);
+                                    Environment.Exit(0);
+                                    return;
+                                }
                             }
                         }
                         //GoldTree.ConnectionManage.method_7();
@@ -588,6 +645,7 @@ namespace GoldTree
         }
         public static void smethod_16()
         {
+            Program.DeleteMenu(Program.GetSystemMenu(Program.GetConsoleWindow(), true), Program.SC_CLOSE, Program.MF_BYCOMMAND);
             Logging.WriteLine("Destroying GoldTreeEmu environment...");
             if (GoldTree.GetGame() != null)
             {
@@ -775,6 +833,8 @@ namespace GoldTree
         {
             if (count > maxcount)
             {
+                Console.ResetColor();
+                Console.Write("\r{0}   ", text);
                 Console.WriteLine();
                 return;
             }
@@ -784,39 +844,37 @@ namespace GoldTree
             if (randomcolors)
             {
                 Random random = new Random();
-                int randomcolor = random.Next(0, colors.Count());
+                int randomcolor = random.Next(1, 15);
 
-                while (randomcolor == color)
+                while (lastcolor == randomcolor || randomcolor == 0)
                 {
-                    randomcolor = random.Next(0, colors.Count());
+                    randomcolor = random.Next(1, 15);
                 }
 
-                color = colors[randomcolor];
+                color = randomcolor;
             }
             else
             {
                 if (colors.Count() > 1)
                 {
-                    if (!(color > 0 && color <= 15))
+                    if (!(color >= 0 && color <= 15))
                     {
                         color = 0;
                     }
 
-                    while ((!colors.Contains(color) && (lastcolor == color || (color < 0 || color > 15))) || (colors.Contains(color) && (lastcolor == color || (color < 0 || color > 15))))
+                    while (!colors.Contains(color) || lastcolor == color || (!(color >= 0 && color <= 15)))
                     {
                         color++;
 
-                        if (!(color > 0 && color <= 15))
+                        if (!(color >= 0 && color <= 15))
                         {
                             color = 0;
                         }
                     }
-
-                    lastcolor = color;
                 }
                 else
                 {
-                    color = colors[0];
+                    color = colors[1];
                 }
             }
 
@@ -825,11 +883,32 @@ namespace GoldTree
                 Console.ForegroundColor = (ConsoleColor)color;
                 Console.Write("\r{0}   ", text);
                 Console.ResetColor();
+                lastcolor = color;
             }
 
             System.Threading.Thread.Sleep(interval);
 
             RainbowText(text, colors, color, interval, count, maxcount, randomcolors, lastcolor);
+        }
+
+        public bool DoYouWantContinue(string message)
+        {
+            Console.WriteLine(message);
+            ConsoleKeyInfo ConsoleKeyInfo = Console.ReadKey();
+            if (ConsoleKeyInfo.Key == ConsoleKey.Y)
+            {
+                return true;
+            }
+            else if (ConsoleKeyInfo.Key == ConsoleKey.N)
+            {
+                return false;
+            }
+            else
+            {
+                DoYouWantContinue(message);
+            }
+
+            return false;
         }
     }
 }
