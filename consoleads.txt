@@ -1,3 +1,3 @@
 Want donate to Gold Tree Emulator project? Go to this link: http://pok.li/j03 and you can donate! Thanks! :)
 
-:colorchangingtext 9|10|14|12 250 10 false REMEMBER GET BACKUPS WHEN YOU UPDATING TO 3.19.0 ALPHA 5 AND RUN GTE 3.18.1 TO GTE 3.19.0 ALPHA 5 UPDATE SWL!
+:colorchangingtext 9|10|14|12 250 10 false REMEMBER GET BACKUPS WHEN YOU UPDATING TO 3.19.0 ALPHA 5
