@@ -116,6 +116,7 @@ namespace GoldTree.HabboHotel.Rooms
         private GameManager game;
         private Freeze freeze;
         public List<int> InfobusAnswers;
+        internal bool isCycling = false;
         public bool Boolean_0
         {
             get
@@ -381,7 +382,7 @@ namespace GoldTree.HabboHotel.Rooms
                 this.byte_0 = new byte[this.Class28_0.int_4, this.Class28_0.int_5];
                 this.double_1 = new double[this.Class28_0.int_4, this.Class28_0.int_5];
                 this.double_2 = new double[this.Class28_0.int_4, this.Class28_0.int_5];
-                this.timer_0 = new Timer(new TimerCallback(this.method_32), null, 480, 480);
+                //this.timer_0 = new Timer(new TimerCallback(this.method_32), null, 480, 480);
                 this.int_8 = 0;
                 this.bool_4 = false;
                 this.bool_9 = true;
@@ -2114,7 +2115,7 @@ namespace GoldTree.HabboHotel.Rooms
                                     if (GetPlayerSession != null)
                                     {
                                         Room class2 = RoomUser_1.GetClient().GetHabbo().CurrentRoom;
-                                        if (!(class2.Owner == GetPlayerSession.GetHabbo().Username && GetPlayerSession.GetHabbo().HasFuse("acc_unkickable")))
+                                        if (!(class2.Owner == GetPlayerSession.GetHabbo().Username || GetPlayerSession.GetHabbo().HasFuse("acc_unkickable")))
                                         {
                                             class2.method_47(GetPlayerSession, true, false);
                                             if (current2.string_2.Length > 0)
@@ -2644,6 +2645,10 @@ namespace GoldTree.HabboHotel.Rooms
                         {
                             @class.method_8().method_38(@class.Int32_0, @class.Int32_1);
                         }
+                        else if (@class.GetBaseItem().InteractionType.ToLower() == "freeze_tile")
+                        {
+                            @class.ExtraData = "";
+                        }
                     }
                 }
                 catch
@@ -2735,13 +2740,27 @@ namespace GoldTree.HabboHotel.Rooms
             DataTable dataTable;
             using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
             {
-                dataTable = @class.ReadDataTable("SELECT Id, base_item, extra_data, x, y, z, rot, wall_pos FROM items WHERE room_id = '" + this.uint_0 + "' ORDER BY room_id DESC");
+                dataTable = @class.ReadDataTable("SELECT Id, base_item, x, y, z, rot, wall_pos FROM items WHERE room_id = '" + this.uint_0 + "' ORDER BY room_id DESC");
             }
             if (dataTable != null)
             {
                 foreach (DataRow dataRow in dataTable.Rows)
                 {
-                    RoomItem class2 = new RoomItem((uint)dataRow["Id"], this.Id, (uint)dataRow["base_item"], (string)dataRow["extra_data"], (int)dataRow["x"], (int)dataRow["y"], (double)dataRow["z"], (int)dataRow["rot"], (string)dataRow["wall_pos"], this);
+                    DataRow DataRowExtraData;
+                    string ExtraData;
+                    using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+                    {
+                        DataRowExtraData = @class.ReadDataRow("SELECT extra_data FROM items_extra_data WHERE item_id = '" + (uint)dataRow["Id"] + "'");
+                        if (DataRowExtraData != null)
+                        {
+                            ExtraData = (string)DataRowExtraData["extra_data"];
+                        }
+                        else
+                        {
+                            ExtraData = "";
+                        }
+                    }
+                    RoomItem class2 = new RoomItem((uint)dataRow["Id"], this.Id, (uint)dataRow["base_item"], ExtraData, (int)dataRow["x"], (int)dataRow["y"], (double)dataRow["z"], (int)dataRow["rot"], (string)dataRow["wall_pos"], this);
                     if (class2.Boolean_0)
                     {
                         this.bool_11 = true;
@@ -2767,11 +2786,16 @@ namespace GoldTree.HabboHotel.Rooms
                         DataRow dataRow2;
                         using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
                         {
-                            dataRow2 = @class.ReadDataRow("SELECT fw_count FROM items WHERE id = '" + class2.uint_0 + "'");
-                        }
-                        if (dataRow2 != null)
-                        {
-                            class2.FireWorkCount = (int)dataRow2["fw_count"];
+                            dataRow2 = @class.ReadDataRow("SELECT fw_count FROM items_firework WHERE item_id = '" + class2.uint_0 + "'");
+
+                            if (dataRow2 != null)
+                            {
+                                class2.FireWorkCount = (int)dataRow2["fw_count"];
+                            }
+                            else
+                            {
+                                @class.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES ( '" + class2.uint_0 + "', '0')");
+                            }
                         }
                     }
 
@@ -3241,12 +3265,14 @@ namespace GoldTree.HabboHotel.Rooms
                 }
             }
         }
-        private void method_32(object object_0)
+
+        internal void method_32(object object_0)
         {
             this.method_33();
         }
         private void method_33()
         {
+            isCycling = true;
             int num = 0;
             if (!this.bool_6 && !this.bool_7)
             {
@@ -3635,6 +3661,7 @@ namespace GoldTree.HabboHotel.Rooms
                                 GoldTree.GetGame().GetRoomManager().method_16(this);
                                 return;
                             }
+
                             ServerMessage Logging = this.method_67(false);
                             if (Logging != null)
                             {
@@ -3654,6 +3681,7 @@ namespace GoldTree.HabboHotel.Rooms
                     Logging.LogThreadException(ex.ToString(), "Room [ID: " + this.Id + "] cycle task");
                 }
             }
+            isCycling = false;
         }
         internal void method_34()
         {
@@ -4237,7 +4265,7 @@ namespace GoldTree.HabboHotel.Rooms
             {
                 foreach (DataRow Row in Data.Rows)
                 {
-                    int ResultCount = Room.InfobusAnswers.Where(number => number == (int)Row["id"]).Count();
+                    int ResultCount = Room.InfobusAnswers.Where(number => (int)Data.Rows[number - 1]["id"] == (int)Row["id"]).Count();
                     InfobusQuestion.AppendInt32((int)Row["id"]);
                     InfobusQuestion.AppendStringWithBreak((string)Row["answer_text"]);
                     InfobusQuestion.AppendInt32(ResultCount);
@@ -4819,16 +4847,13 @@ namespace GoldTree.HabboHotel.Rooms
                                     {
                                         if (class2.Boolean_2)
                                         {
-                                            @class.AddParamWithValue("extra_data" + class2.uint_0, class2.ExtraData);
                                             stringBuilder.Append(string.Concat(new object[]
 											{
 												"UPDATE items SET room_id = '",
 												this.Id,
 												"', base_item = '",
 												class2.uint_2,
-												"', extra_data = @extra_data",
-												class2.uint_0,
-												", x = '",
+												"', x = '",
 												class2.Int32_0,
 												"', y = '",
 												class2.Int32_1,
@@ -4840,6 +4865,23 @@ namespace GoldTree.HabboHotel.Rooms
 												class2.uint_0,
 												"' LIMIT 1; "
 											}));
+
+                                            if (!string.IsNullOrEmpty(class2.ExtraData))
+                                            {
+                                                @class.AddParamWithValue("extra_data" + class2.uint_0, class2.ExtraData);
+                                                stringBuilder.Append(string.Concat(new object[]
+                                            {
+                                                "DELETE FROM items_extra_data WHERE item_id = '" + class2.uint_0 + "'; ",
+                                                "INSERT INTO items_extra_data (item_id,extra_data) VALUES ('" + class2.uint_0 + "' , @extra_data" + class2.uint_0 + "); ",
+                                            }));
+                                            }
+                                            else
+                                            {
+                                                stringBuilder.Append(string.Concat(new object[]
+                                            {
+                                                "DELETE FROM items_extra_data WHERE item_id = '" + class2.uint_0 + "'; "
+                                            }));
+                                            }
                                         }
                                     }
                                 }
@@ -4849,7 +4891,6 @@ namespace GoldTree.HabboHotel.Rooms
                                     {
                                         if (class2.Boolean_1)
                                         {
-                                            @class.AddParamWithValue("extra_data" + class2.uint_0, class2.ExtraData);
                                             @class.AddParamWithValue("pos" + class2.uint_0, class2.string_7);
                                             stringBuilder.Append(string.Concat(new object[]
 											{
@@ -4857,14 +4898,29 @@ namespace GoldTree.HabboHotel.Rooms
 												this.Id,
 												"', base_item = '",
 												class2.uint_2,
-												"', extra_data = @extra_data",
-												class2.uint_0,
-												", x = '0', y = '0', z = '0', rot = '0', wall_pos = @pos",
+												"', x = '0', y = '0', z = '0', rot = '0', wall_pos = @pos",
 												class2.uint_0,
 												" WHERE Id = '",
 												class2.uint_0,
 												"' LIMIT 1; "
 											}));
+
+                                            if (!string.IsNullOrEmpty(class2.ExtraData))
+                                            {
+                                                @class.AddParamWithValue("extra_data" + class2.uint_0, class2.ExtraData);
+                                                stringBuilder.Append(string.Concat(new object[]
+                                            {
+                                                "DELETE FROM items_extra_data WHERE item_id = '" + class2.uint_0 + "'; ",
+                                                "INSERT INTO items_extra_data (item_id,extra_data) VALUES ('" + class2.uint_0 + "' , @extra_data" + class2.uint_0 + "); ",
+                                            }));
+                                            }
+                                            else
+                                            {
+                                                stringBuilder.Append(string.Concat(new object[]
+                                            {
+                                                "DELETE FROM items_extra_data WHERE item_id = '" + class2.uint_0 + "'; "
+                                            }));
+                                            }
                                         }
                                     }
                                 }
@@ -4875,7 +4931,6 @@ namespace GoldTree.HabboHotel.Rooms
                         {
                             foreach (RoomItem class2 in this.hashtable_2.Values)
                             {
-                                @class.AddParamWithValue("mextra_data" + class2.uint_0, class2.ExtraData);
                                 stringBuilder.Append(string.Concat(new object[]
 								{
 									"UPDATE items SET x = '",
@@ -4888,12 +4943,27 @@ namespace GoldTree.HabboHotel.Rooms
 									class2.int_3,
 									"', wall_pos = '",
 									class2.string_7,
-									"', extra_data = @mextra_data",
-									class2.uint_0,
-									" WHERE Id = '",
+									"' WHERE Id = '",
 									class2.uint_0,
 									"' LIMIT 1; "
 								}));
+
+                                if (!string.IsNullOrEmpty(class2.ExtraData))
+                                {
+                                    @class.AddParamWithValue("mextra_data" + class2.uint_0, class2.ExtraData);
+                                    stringBuilder.Append(string.Concat(new object[]
+                                            {
+                                                "DELETE FROM items_extra_data WHERE item_id = '" + class2.uint_0 + "'; ",
+                                                "INSERT INTO items_extra_data (item_id,extra_data) VALUES ('" + class2.uint_0 + "' , @mextra_data" + class2.uint_0 + "); ",
+                                            }));
+                                }
+                                else
+                                {
+                                    stringBuilder.Append(string.Concat(new object[]
+                                            {
+                                                "DELETE FROM items_extra_data WHERE item_id = '" + class2.uint_0 + "'; "
+                                            }));
+                                }
                             }
                         }
                         this.hashtable_2.Clear();
@@ -5198,15 +5268,12 @@ namespace GoldTree.HabboHotel.Rooms
                                     RoomItem @class = (RoomItem)enumerator2.Current;
                                     if (@class.Boolean_2)
                                     {
-                                        class6_0.AddParamWithValue("extra_data" + @class.uint_0, @class.ExtraData);
                                         stringBuilder.Append(string.Concat(new object[]
 										{
 											"UPDATE items SET room_id = '",
 											this.Id,
 											"', base_item = '",
 											@class.uint_2,
-											"', extra_data = @extra_data",
-											@class.uint_0,
 											", x = '",
 											@class.Int32_0,
 											"', y = '",
@@ -5219,6 +5286,23 @@ namespace GoldTree.HabboHotel.Rooms
 											@class.uint_0,
 											"' LIMIT 1; "
 										}));
+
+                                            if (!string.IsNullOrEmpty(@class.ExtraData))
+                                            {
+                                                class6_0.AddParamWithValue("extra_data" + @class.uint_0, @class.ExtraData);
+                                                stringBuilder.Append(string.Concat(new object[]
+                                            {
+                                                "DELETE FROM items_extra_data WHERE item_id = '" + @class.uint_0 + "'; ",
+                                                "INSERT INTO items_extra_data (item_id,extra_data) VALUES ('" + @class.uint_0 + "' , @extra_data" + @class.uint_0 + "); ",
+                                            }));
+                                            }
+                                            else
+                                            {
+                                                stringBuilder.Append(string.Concat(new object[]
+                                            {
+                                                "DELETE FROM items_extra_data WHERE item_id = '" + @class.uint_0 + "'; "
+                                            }));
+                                            }
                                     }
                                 }
                             }
@@ -5241,7 +5325,6 @@ namespace GoldTree.HabboHotel.Rooms
                                     RoomItem @class = (RoomItem)enumerator2.Current;
                                     if (@class.Boolean_1)
                                     {
-                                        class6_0.AddParamWithValue("extra_data" + @class.uint_0, @class.ExtraData);
                                         class6_0.AddParamWithValue("pos" + @class.uint_0, @class.string_7);
                                         stringBuilder.Append(string.Concat(new object[]
 										{
@@ -5249,14 +5332,29 @@ namespace GoldTree.HabboHotel.Rooms
 											this.Id,
 											"', base_item = '",
 											@class.uint_2,
-											"', extra_data = @extra_data",
-											@class.uint_0,
 											", x = '0', y = '0', z = '0', rot = '0', wall_pos = @pos",
 											@class.uint_0,
 											" WHERE Id = '",
 											@class.uint_0,
 											"' LIMIT 1; "
 										}));
+
+                                            if (!string.IsNullOrEmpty(@class.ExtraData))
+                                            {
+                                                class6_0.AddParamWithValue("extra_data" + @class.uint_0, @class.ExtraData);
+                                                stringBuilder.Append(string.Concat(new object[]
+                                            {
+                                                "DELETE FROM items_extra_data WHERE item_id = '" + @class.uint_0 + "'; ",
+                                                "INSERT INTO items_extra_data (item_id,extra_data) VALUES ('" + @class.uint_0 + "' , @extra_data" + @class.uint_0 + "); ",
+                                            }));
+                                            }
+                                            else
+                                            {
+                                                stringBuilder.Append(string.Concat(new object[]
+                                            {
+                                                "DELETE FROM items_extra_data WHERE item_id = '" + @class.uint_0 + "'; "
+                                            }));
+                                            }
                                     }
                                 }
                             }
@@ -5404,6 +5502,7 @@ namespace GoldTree.HabboHotel.Rooms
                         this.bool_6 = true;
                         this.timer_0.Change(-1, -1);
                     }
+                    this.bool_6 = true;
                     this.method_64();
                     using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
                     {
@@ -5415,7 +5514,7 @@ namespace GoldTree.HabboHotel.Rooms
 							GoldTree.GetGame().GetClientManager().method_27(this.Owner)
 						}));
                     }
-                    this.timer_0.Dispose();
+                    //this.timer_0.Dispose();
                     this.timer_0 = null;
                     this.bool_9 = false;
                     if (this.Tags != null)

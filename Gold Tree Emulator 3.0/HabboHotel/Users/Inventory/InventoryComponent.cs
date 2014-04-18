@@ -191,13 +191,21 @@ namespace GoldTree.HabboHotel.Users.Inventory
 				DataTable dataTable;
 				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 				{
-					dataTable = @class.ReadDataTable("SELECT Id,base_item,extra_data,user_id FROM items WHERE room_id = 0 AND user_id = " + this.uint_0);
+                    dataTable = @class.ReadDataTable("SELECT items.Id,items.base_item,items_extra_data.extra_data FROM items LEFT JOIN items_extra_data ON items_extra_data.item_id = items.Id WHERE room_id = 0 AND user_id = " + this.uint_0);
 				}
 				if (dataTable != null)
 				{
 					foreach (DataRow dataRow in dataTable.Rows)
 					{
-						this.list_0.Add(new UserItem((uint)dataRow["Id"], (uint)dataRow["base_item"], (string)dataRow["extra_data"]));
+                        string ExtraData = (dataRow["extra_data"] == DBNull.Value) ? string.Empty : (string)dataRow["extra_data"];
+                        if (ExtraData != null && !DBNull.Value.Equals(ExtraData) && !string.IsNullOrEmpty(ExtraData))
+                        {
+                            this.list_0.Add(new UserItem((uint)dataRow["Id"], (uint)dataRow["base_item"], ExtraData));
+                        }
+                        else
+                        {
+                            this.list_0.Add(new UserItem((uint)dataRow["Id"], (uint)dataRow["base_item"], ""));
+                        }
 					}
 				}
 				using (TimedLock.Lock(this.hashtable_0))
@@ -262,17 +270,33 @@ namespace GoldTree.HabboHotel.Users.Inventory
 				{
 					using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 					{
-						@class.AddParamWithValue("extra_data", string_0);
 						@class.ExecuteQuery(string.Concat(new object[]
 						{
-							"INSERT INTO items (Id,user_id,base_item,extra_data,wall_pos) VALUES ('",
+							"INSERT INTO items (Id,user_id,base_item,wall_pos) VALUES ('",
 							uint_1,
 							"','",
 							this.uint_0,
 							"','",
 							uint_2,
-							"',@extra_data, '')"
+							"', '')"
 						}));
+
+                        if (!string.IsNullOrEmpty(string_0))
+                        {
+                            @class.AddParamWithValue("extra_data", string_0);
+                            @class.ExecuteQuery(string.Concat(new object[]
+                                            {
+                                                "DELETE FROM items_extra_data WHERE item_id = '" + uint_1 + "'; ",
+                                                "INSERT INTO items_extra_data (item_id,extra_data) VALUES ('" + uint_1 + "' , @extra_data); "
+                                            }));
+                        }
+                        else
+                        {
+                            @class.ExecuteQuery(string.Concat(new object[]
+                                            {
+                                                "DELETE FROM items_extra_data WHERE item_id = '" + uint_1 + "'; "
+                                            }));
+                        }
 						return;
 					}
 				}

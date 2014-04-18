@@ -62,33 +62,33 @@ namespace GoldTree.HabboHotel.Items.Interactors
 						num2 = num + 1;
 					}
 				}
-				if (RoomItem_0.GetBaseItem().Name.Contains("jukebox"))
-				{
-					ServerMessage Message = new ServerMessage(327u);
-					if (num2 == 1)
-					{
-						Message.AppendInt32(7);
-						Message.AppendInt32(6);
-						Message.AppendInt32(7);
-						Message.AppendInt32(0);
-						Message.AppendInt32(0);
-						RoomItem_0.int_0 = 1;
-						RoomItem_0.bool_0 = true;
-						RoomItem_0.bool_1 = true;
-					}
-					else
-					{
-						Message.AppendInt32(-1);
-						Message.AppendInt32(-1);
-						Message.AppendInt32(-1);
-						Message.AppendInt32(-1);
-						Message.AppendInt32(0);
-						RoomItem_0.int_0 = 0;
-						RoomItem_0.bool_0 = false;
-						RoomItem_0.method_8().int_13 = 0;
-					}
-					RoomItem_0.method_8().SendMessage(Message, null);
-				}
+                //if (RoomItem_0.GetBaseItem().Name.Contains("jukebox"))
+                //{
+                //    ServerMessage Message = new ServerMessage(327u);
+                //    if (num2 == 1)
+                //    {
+                //        Message.AppendInt32(7);
+                //        Message.AppendInt32(6);
+                //        Message.AppendInt32(7);
+                //        Message.AppendInt32(0);
+                //        Message.AppendInt32(0);
+                //        RoomItem_0.int_0 = 1;
+                //        RoomItem_0.bool_0 = true;
+                //        RoomItem_0.bool_1 = true;
+                //    }
+                //    else
+                //    {
+                //        Message.AppendInt32(-1);
+                //        Message.AppendInt32(-1);
+                //        Message.AppendInt32(-1);
+                //        Message.AppendInt32(-1);
+                //        Message.AppendInt32(0);
+                //        RoomItem_0.int_0 = 0;
+                //        RoomItem_0.bool_0 = false;
+                //        RoomItem_0.method_8().int_13 = 0;
+                //    }
+                //    RoomItem_0.method_8().SendMessage(Message, null);
+                //}
 				double double_ = RoomItem_0.Double_1;
 				RoomItem_0.ExtraData = num2.ToString();
 				RoomItem_0.method_4();

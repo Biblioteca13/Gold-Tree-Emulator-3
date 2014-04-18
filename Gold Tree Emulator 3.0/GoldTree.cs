@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Linq;
 using GoldTree.Core;
 using GoldTree.HabboHotel;
 using GoldTree.Net;
@@ -12,6 +13,8 @@ using GoldTree.Communication;
 using GoldTree.Messages;
 using System.Net;
 using System.IO;
+using System.Data;
+using System.Collections;
 namespace GoldTree
 {
     internal sealed class GoldTree
@@ -52,7 +55,7 @@ namespace GoldTree
         {
             get
             {
-                return "Gold Tree Emulator v3.18.1 (Build " + build + ")";
+                return "Gold Tree Emulator v3.19.0 ALPHA 5 (Build " + build + ")";
             }
         }
 
@@ -122,13 +125,45 @@ namespace GoldTree
             {
                 UserAdMessage = new List<string>();
 
-                WebClient client = new WebClient();
-                Stream stream = client.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/consoleads.txt");
-                StreamReader reader = new StreamReader(stream);
-                string line;
-                while ((line = reader.ReadLine()) != null)
+                try
                 {
-                    Console.WriteLine(line);
+                    WebClient client = new WebClient();
+                    Stream stream = client.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/consoleads.txt");
+                    StreamReader reader = new StreamReader(stream);
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        if (line.StartsWith(":"))
+                        {
+                            string[] Params = line.Split(new char[]
+			{
+				' '
+			});
+                            if (Params[0] == ":textcolor")
+                            {
+                                if (!string.IsNullOrEmpty(Params[1]))
+                                {
+                                    ConsoleColor Color = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), Params[1]);
+                                    Console.ForegroundColor = Color;
+                                }
+                            }
+
+                            else if (Params[0] == ":colorchangingtext")
+                            {
+                                string text = line.Substring(Params[0].Length + Params[1].Length + Params[2].Length + Params[3].Length + Params[4].Length + 5);
+                                RainbowText(text, IntToArray(Params[1]), 0, int.Parse(Params[2]), 0, int.Parse(Params[3]), bool.Parse(Params[4]), -1);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine(line);
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
                 }
 
                 WebClient client2 = new WebClient();
@@ -210,6 +245,135 @@ namespace GoldTree
                         {
                             @class.ExecuteQuery("UPDATE users SET online = '0'");
                             @class.ExecuteQuery("UPDATE rooms SET users_now = '0'");
+
+                            DataRow DataRow;
+                            DataRow = @class.ReadDataRow("SHOW COLUMNS FROM `items` WHERE field = 'fw_count'");
+
+                            if (DataRow != null)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("UPDATING ITEMS POSSIBLY TAKE A LONG TIME! DONT SHUTDOWN EMULATOR! PLEASE WAIT!");
+                                Console.ForegroundColor = ConsoleColor.Gray;
+                                Console.Write("Updating items (Fireworks) ...");
+                                Dictionary<uint, int> newfwcount = new Dictionary<uint, int>();
+
+                                DataTable dataTable = @class.ReadDataTable("SELECT Id, fw_count FROM items;");
+
+                                if (dataTable != null)
+                                {
+                                    foreach (DataRow dataRow in dataTable.Rows)
+                                    {
+                                        try
+                                        {
+                                            uint id = (uint)dataRow["Id"];
+                                            int wf_count = (int)dataRow["fw_count"];
+                                            if (wf_count > 0)
+                                            {
+                                                newfwcount.Add(id, wf_count);
+                                            }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine("OOPS! Error when updating.. Firework count lost :( Lets continue...");
+                                            Logging.LogItemUpdateError(ex.ToString());
+                                        }
+                                    }
+                                }
+
+                                if (newfwcount != null)
+                                {
+                                    foreach (KeyValuePair<uint, int> current in newfwcount)
+                                    {
+                                        try
+                                        {
+                                            @class.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES ( '" + current.Key + "', '" + current.Value + "')");
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Console.WriteLine("OOPS! Error when updating.. Firework count lost :( Lets continue...");
+                                            Logging.LogItemUpdateError(ex.ToString());
+                                        }
+                                    }
+                                }
+
+
+                                @class.ExecuteQuery("ALTER TABLE items DROP fw_count");
+
+                                if (newfwcount != null)
+                                {
+                                    newfwcount.Clear();
+                                }
+
+                                newfwcount = null;
+
+                                Console.WriteLine("completed!");
+
+                                DataRow DataRow2;
+                                DataRow2 = @class.ReadDataRow("SHOW COLUMNS FROM `items` WHERE field = 'extra_data'");
+
+                                if (DataRow2 != null)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("UPDATING ITEMS POSSIBLY TAKE A LONG TIME! DONT SHUTDOWN EMULATOR! PLEASE WAIT!");
+                                    Console.ForegroundColor = ConsoleColor.Gray;
+                                    Console.Write("Updating items (Extra data) ...");
+                                    Dictionary<uint, string> newextradata = new Dictionary<uint, string>();
+
+                                    DataTable dataTable2 = @class.ReadDataTable("SELECT Id, extra_data FROM items;");
+
+                                    if (dataTable2 != null)
+                                    {
+                                        foreach (DataRow dataRow in dataTable2.Rows)
+                                        {
+                                            try
+                                            {
+                                                uint id = (uint)dataRow["Id"];
+                                                string extra_data = (string)dataRow["extra_data"];
+                                                if (!string.IsNullOrEmpty(extra_data))
+                                                {
+                                                    newextradata.Add(id, extra_data);
+                                                }
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine("OOPS! Error when updating.. Extra data lost :( Lets continue...");
+                                                Logging.LogItemUpdateError(ex.ToString());
+                                            }
+                                        }
+                                    }
+
+                                    if (newextradata != null)
+                                    {
+                                        foreach (KeyValuePair<uint, string> current in newextradata)
+                                        {
+                                            try
+                                            {
+                                                @class.ExecuteQuery("INSERT INTO items_extra_data(item_id, extra_data) VALUES ( '" + current.Key + "', '" + current.Value + "')");
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine("OOPS! Error when updating.. Extra data lost :( Lets continue...");
+                                                Logging.LogItemUpdateError(ex.ToString());
+                                            }
+                                        }
+                                    }
+
+
+                                    @class.ExecuteQuery("ALTER TABLE items DROP extra_data");
+
+                                    if (newextradata != null)
+                                    {
+                                        newextradata.Clear();
+                                    }
+
+                                    newfwcount = null;
+
+                                    Console.WriteLine("completed!");
+                                }
+                            }
+                            else
+                            {
+                            }
                         }
                         //GoldTree.ConnectionManage.method_7();
                         GoldTree.Game.ContinueLoading();
@@ -474,6 +638,14 @@ namespace GoldTree
             LicenseTools.bool_16 = true;
             try
             {
+                Game.StopGameLoop();
+            }
+            catch
+            {
+            }
+
+            try
+            {
                 if (GoldTree.smethod_10() != null)
                 {
                     GoldTree.smethod_10().Clear();
@@ -570,6 +742,94 @@ namespace GoldTree
         {
             DateTime result = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return result.AddSeconds(double_0).ToLocalTime();
+        }
+
+        
+        public static int[] IntToArray(string numbers)
+        {
+            string[] ColorList = numbers.Split(new char[]
+			{
+				'|'
+			});
+
+            var digits = new List<int>();
+
+            if (ColorList.Count() > 1)
+            {
+                for (int i = 0; i < ColorList.Count(); i++)
+                {
+                    digits.Add(int.Parse(ColorList[i]));
+                }
+            }
+            else
+            {
+                digits.Add(int.Parse(ColorList[0]));
+            }
+
+            var arr = digits.ToArray();
+            Array.Reverse(arr);
+            return arr;
+        }
+
+        public static void RainbowText(string text, int[] colors, int color, int interval, int count, int maxcount, bool randomcolors, int lastcolor)
+        {
+            if (count > maxcount)
+            {
+                Console.WriteLine();
+                return;
+            }
+
+            count++;
+
+            if (randomcolors)
+            {
+                Random random = new Random();
+                int randomcolor = random.Next(0, colors.Count());
+
+                while (randomcolor == color)
+                {
+                    randomcolor = random.Next(0, colors.Count());
+                }
+
+                color = colors[randomcolor];
+            }
+            else
+            {
+                if (colors.Count() > 1)
+                {
+                    if (!(color > 0 && color <= 15))
+                    {
+                        color = 0;
+                    }
+
+                    while ((!colors.Contains(color) && (lastcolor == color || (color < 0 || color > 15))) || (colors.Contains(color) && (lastcolor == color || (color < 0 || color > 15))))
+                    {
+                        color++;
+
+                        if (!(color > 0 && color <= 15))
+                        {
+                            color = 0;
+                        }
+                    }
+
+                    lastcolor = color;
+                }
+                else
+                {
+                    color = colors[0];
+                }
+            }
+
+            if (color > 0 && color <= 15)
+            {
+                Console.ForegroundColor = (ConsoleColor)color;
+                Console.Write("\r{0}   ", text);
+                Console.ResetColor();
+            }
+
+            System.Threading.Thread.Sleep(interval);
+
+            RainbowText(text, colors, color, interval, count, maxcount, randomcolors, lastcolor);
         }
     }
 }

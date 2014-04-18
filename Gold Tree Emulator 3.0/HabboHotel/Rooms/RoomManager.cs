@@ -539,7 +539,33 @@ namespace GoldTree.HabboHotel.Rooms
                     if (@class != null)
                     {
                         GoldTree.GetGame().GetRoomManager().method_16(@class);
-                        Console.WriteLine(@class.Id);
+                    }
+                }
+            }
+        }
+
+        internal void OnCycle()
+        {
+            RoomCycleTask();
+        }
+
+        private DateTime cycleLastExecution;
+        private void RoomCycleTask()
+        {
+            TimeSpan sinceLastTime = DateTime.Now - cycleLastExecution;
+
+            if (sinceLastTime.TotalMilliseconds >= 480)
+            {
+                cycleLastExecution = DateTime.Now;
+
+                using (Class26 class26_ = this.class25_0.Class26_0)
+                {
+                    foreach (Room @class in class26_.Values)
+                    {
+                        if (@class != null && !@class.isCycling)
+                        {
+                            ThreadPool.UnsafeQueueUserWorkItem(@class.method_32, null);
+                        }
                     }
                 }
             }

@@ -266,6 +266,11 @@ namespace GoldTree.HabboHotel.Quests
             int num5 = 0;
 			foreach (Quest current in this.Quests)
 			{
+                if (current == null || Session == null ||Session.GetHabbo() == null)
+                {
+                    continue;
+                }
+
 				if (current.QuestId() == Session.GetHabbo().CurrentQuestId)
 				{
 					current.Serialize(Message5_0, Session, false);

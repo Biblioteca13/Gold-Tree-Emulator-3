@@ -25,11 +25,16 @@ namespace GoldTree.HabboHotel.Items.Interactors
             DataRow dataRow2;
             using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
             {
-                dataRow2 = @class.ReadDataRow("SELECT fw_count FROM items WHERE id = '" + Item.uint_0 + "'");
-            }
-            if (dataRow2 != null)
-            {
-                Item.FireWorkCount = (int)dataRow2["fw_count"];
+                dataRow2 = @class.ReadDataRow("SELECT fw_count FROM items_firework WHERE id = '" + Item.uint_0 + "'");
+
+                if (dataRow2 != null)
+                {
+                    Item.FireWorkCount = (int)dataRow2["fw_count"];
+                }
+                else
+                {
+                    @class.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES ( '" + Item.uint_0 + "', '0')");
+                }
             }
 
             if (Item.FireWorkCount > 0)
@@ -50,11 +55,16 @@ namespace GoldTree.HabboHotel.Items.Interactors
             DataRow dataRow2;
             using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
             {
-                dataRow2 = @class.ReadDataRow("SELECT fw_count FROM items WHERE id = '" + Item.uint_0 + "'");
-            }
-            if (dataRow2 != null)
-            {
-                Item.FireWorkCount = (int)dataRow2["fw_count"];
+                dataRow2 = @class.ReadDataRow("SELECT fw_count FROM items_firework WHERE id = '" + Item.uint_0 + "'");
+
+                if (dataRow2 != null)
+                {
+                    Item.FireWorkCount = (int)dataRow2["fw_count"];
+                }
+                else
+                {
+                    @class.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES ( '" + Item.uint_0 + "', '0')");
+                }
             }
 
             if (Item.FireWorkCount > 0)
@@ -120,7 +130,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
                 {
                     dbClient.AddParamWithValue("itemid", Item.uint_0);
                     dbClient.AddParamWithValue("sessionid", Session.GetHabbo().Id);
-                    dbClient.ExecuteQuery("UPDATE items SET fw_count = fw_count + '" + Fireworks + "' WHERE id = @itemid LIMIT 1");
+                    dbClient.ExecuteQuery("UPDATE items_firework SET fw_count = fw_count + '" + Fireworks + "' WHERE item_id = @itemid LIMIT 1");
                     dbClient.ExecuteQuery("UPDATE user_stats SET fireworks = fireworks + '" + Pixels + "' WHERE id = @sessionid LIMIT 1");
                 }
 
@@ -153,7 +163,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
                 using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                 {
                     dbClient.AddParamWithValue("itemid", Item.uint_0);
-                    dbClient.ExecuteQuery("UPDATE items SET fw_count = fw_count - 1 WHERE id = @itemid LIMIT 1");
+                    dbClient.ExecuteQuery("UPDATE items_firework SET fw_count = fw_count - 1 WHERE item_id = @itemid LIMIT 1");
                 }
             }
 

@@ -16,6 +16,7 @@ using GoldTree.HabboHotel.RoomBots;
 using GoldTree.HabboHotel.Quests;
 using GoldTree.Util;
 using GoldTree.Storage;
+using System.Threading;
 namespace GoldTree.HabboHotel
 {
 	internal sealed class Game
@@ -39,6 +40,10 @@ namespace GoldTree.HabboHotel
 		private QuestManager QuestManager;
 		private GoldTreeEnvironment class8_0;
 		private Groups Groups;
+        private Task gameLoop;
+        private bool gameLoopActive;
+        private bool gameLoopEnded;
+        private const int gameLoopSleepTime = 25;
 		public Game(int conns)
 		{
 			this.ClientManager = new GameClientManager(conns);
@@ -101,6 +106,8 @@ namespace GoldTree.HabboHotel
 			}
 			this.task_0 = new Task(new Action(LowPriorityWorker.smethod_0));
 			this.task_0.Start();
+
+            StartGameLoop();
 		}
 		public void method_0(DatabaseClient class6_0, int int_0)
 		{
@@ -260,5 +267,40 @@ namespace GoldTree.HabboHotel
             LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor = GoldTree.smethod_3(dataRow["DisableOtherUsersToMovingOtherUsersToDoor"].ToString());
 			Logging.WriteLine("completed!");
 		}
+
+        internal void StartGameLoop()
+        {
+            gameLoopEnded = false;
+            gameLoopActive = true;
+            gameLoop = new Task(MainGameLoop);
+            gameLoop.Start();
+        }
+
+        internal void StopGameLoop()
+        {
+            gameLoopActive = false;
+
+            while (!gameLoopEnded)
+            {
+                Thread.Sleep(gameLoopSleepTime);
+            }
+        }
+
+        private void MainGameLoop()
+        {
+            while (gameLoopActive)
+            {
+                try
+                {
+                    RoomManager.OnCycle();
+                }
+                catch
+                {
+                }
+                Thread.Sleep(gameLoopSleepTime);
+            }
+
+            gameLoopEnded = true;
+        }
 	}
 }

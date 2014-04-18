@@ -59,7 +59,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 					using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 					{
 						class2.AddParamWithValue("extradata", text11);
-						class2.ExecuteQuery("UPDATE items SET extra_data = @extradata WHERE Id = '" + num + "' LIMIT 1");
+						class2.ExecuteQuery("UPDATE items_extra_data SET extra_data = @extradata WHERE item_id = '" + num + "' LIMIT 1");
 					}
 					ServerMessage Message = new ServerMessage(88u);
 					Message.AppendStringWithBreak(num.ToString());

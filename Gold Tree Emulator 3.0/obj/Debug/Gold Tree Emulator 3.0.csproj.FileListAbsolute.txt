@@ -27,3 +27,12 @@ C:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\obj\Debug\Gold 
 C:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\bin\Debug\Gold Tree Emulator 3.0.exe
 C:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\bin\Debug\Gold Tree Emulator 3.0.pdb
 C:\Users\Administrator\Gold-Tree-Emulator\Gold Tree Emulator 3.0\obj\Debug\Gold Tree Emulator 3.0.csprojResolveAssemblyReference.cache
+D:\Visual Studio Projects\Gold-Tree-Emulator\Gold Tree Emulator 3.0\bin\Debug\Gold Tree Emulator 3.0.exe.config
+D:\Visual Studio Projects\Gold-Tree-Emulator\Gold Tree Emulator 3.0\obj\Debug\Gold Tree Emulator 3.0.exe
+D:\Visual Studio Projects\Gold-Tree-Emulator\Gold Tree Emulator 3.0\obj\Debug\Gold Tree Emulator 3.0.pdb
+C:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\bin\Debug\Gold Tree Emulator 3.0.exe.config
+C:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\obj\Debug\Gold Tree Emulator 3.0.exe
+C:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\obj\Debug\Gold Tree Emulator 3.0.pdb
+C:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\obj\Debug\Gold Tree Emulator 3.0.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\bin\Debug\Gold Tree Emulator 3.0.exe
+C:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\bin\Debug\Gold Tree Emulator 3.0.pdb

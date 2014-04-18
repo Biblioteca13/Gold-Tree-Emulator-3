@@ -1096,16 +1096,6 @@ namespace GoldTree.HabboHotel.Roles
             this.dictionary_4.Add(GoldTreeEnvironment.smethod_1("cmd_redeemshell_name"), 96);
             this.dictionary_4.Add(GoldTreeEnvironment.smethod_1("cmd_viphal_name"), 97);
 			Logging.WriteLine("completed!");
-			try
-			{
-				if (int.Parse(GoldTree.GetConfig().data["debug"]) == 1)
-				{
-					Logging.WriteLine("Commands loaded:" + this.dictionary_4.Count.ToString());
-				}
-			}
-			catch
-			{
-			}
 		}
 		public bool method_1(uint uint_0, string string_0)
 		{

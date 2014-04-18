@@ -30,13 +30,19 @@ namespace GoldTree.Communication.Messages.Recycler
 					{
 						class3.ExecuteQuery(string.Concat(new object[]
 						{
-							"INSERT INTO items (Id,user_id,base_item,extra_data,wall_pos) VALUES ('",
+							"INSERT INTO items (Id,user_id,base_item,wall_pos) VALUES ('",
 							num2,
 							"','",
 							Session.GetHabbo().Id,
-							"','1478','",
+							"','1478','')"
+						}));
+                        class3.ExecuteQuery(string.Concat(new object[]
+						{
+							"INSERT INTO items_extra_data (item_id,extra_data) VALUES ('",
+							num2,
+							"','",
 							DateTime.Now.ToLongDateString(),
-							"', '')"
+							"')"
 						}));
 						class3.ExecuteQuery(string.Concat(new object[]
 						{

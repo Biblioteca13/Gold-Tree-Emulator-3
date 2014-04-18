@@ -56,7 +56,10 @@ namespace GoldTree.HabboHotel.Users.Messenger
 			{
 				foreach (DataRow dataRow in dataTable_.Rows)
 				{
-					this.hashtable_1.Add((uint)dataRow["from_id"], new MessengerRequest((uint)dataRow["Id"], this.uint_0, (uint)dataRow["from_id"], dataRow["username"] as string));
+                    if (!this.hashtable_1.ContainsKey((uint)dataRow["from_id"]))
+                    {
+                        this.hashtable_1.Add((uint)dataRow["from_id"], new MessengerRequest((uint)dataRow["Id"], this.uint_0, (uint)dataRow["from_id"], dataRow["username"] as string));
+                    }
 				}
 			}
 		}

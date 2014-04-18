@@ -403,14 +403,20 @@ namespace GoldTree.HabboHotel.Catalogs
 										class3.AddParamWithValue("extra_data", string_0);
 										class3.ExecuteQuery(string.Concat(new object[]
 										{
-											"INSERT INTO items (Id,user_id,base_item,extra_data,wall_pos) VALUES ('",
+											"INSERT INTO items (Id,user_id,base_item,wall_pos) VALUES ('",
 											num3,
 											"','",
 											num,
 											"','",
 											class4.UInt32_0,
-											"',@gift_message,'')"
+											"','')"
 										}));
+                                        class3.ExecuteQuery(string.Concat(new object[]
+						{
+							"INSERT INTO items_extra_data (item_id,extra_data) VALUES ('",
+							num3,
+							"',@gift_message)"
+						}));
 										class3.ExecuteQuery(string.Concat(new object[]
 										{
 											"INSERT INTO user_presents (item_id,base_id,amount,extra_data) VALUES ('",
@@ -465,14 +471,20 @@ namespace GoldTree.HabboHotel.Catalogs
 				class4.AddParamWithValue("gift_message", "!" + ChatCommandHandler.smethod_4(GoldTree.DoFilter(string_0, true, true)));
 				class4.ExecuteQuery(string.Concat(new object[]
 				{
-					"INSERT INTO items (Id,user_id,base_item,extra_data,wall_pos) VALUES ('",
+					"INSERT INTO items (Id,user_id,base_item,wall_pos) VALUES ('",
 					num,
 					"','",
 					uint_1,
 					"','",
 					class3.UInt32_0,
-					"',@gift_message,'')"
+					"','')"
 				}));
+                class4.ExecuteQuery(string.Concat(new object[]
+						{
+							"INSERT INTO items_extra_data (item_id,extra_data) VALUES ('",
+							num,
+							"',@gift_message)"
+						}));
 				class4.ExecuteQuery(string.Concat(new object[]
 				{
 					"INSERT INTO user_presents (item_id,base_id,amount,extra_data) VALUES ('",

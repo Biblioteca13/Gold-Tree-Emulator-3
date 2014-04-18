@@ -161,9 +161,11 @@ namespace GoldTree.HabboHotel.GameClients
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Logging login error because you are on alpha test!");
+                Logging.LogException(ex.ToString());
                 if (this != null)
                 {
-                    this.SendNotif(ex.Message);
+                    this.SendNotif(ex.ToString());
                     this.method_12();
                 }
                 return;
