@@ -177,8 +177,8 @@ namespace GoldTree.HabboHotel.Misc
                                 if (class2 != null && class2.CheckRights(Session, true))
                                 {
                                     List<RoomItem> list = class2.method_24(Session);
-                                    Session.GetHabbo().method_23().method_17(list);
-                                    Session.GetHabbo().method_23().method_9(true);
+                                    Session.GetHabbo().GetInventoryComponent().method_17(list);
+                                    Session.GetHabbo().GetInventoryComponent().method_9(true);
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input + " " + Session.GetHabbo().CurrentRoomId);
                                     return true;
                                 }
@@ -201,7 +201,7 @@ namespace GoldTree.HabboHotel.Misc
                                     {
                                         if (num2 > 100 || num2 < 5)
                                         {
-                                            Session.SendNotif("ERROR: Use a number between 5 and 100");
+                                            Session.SendNotification("ERROR: Use a number between 5 and 100");
                                         }
                                         else
                                         {
@@ -237,11 +237,11 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(TargetUser);
                                 if (TargetClient == null)
                                 {
-                                    Session.SendNotif("Could not find user: " + TargetUser);
+                                    Session.SendNotification("Could not find user: " + TargetUser);
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
-                                TargetClient.SendNotif(ChatCommandHandler.MergeParams(Params, 2), 0);
+                                TargetClient.SendNotification(ChatCommandHandler.MergeParams(Params, 2), 0);
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
@@ -255,7 +255,7 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(text);
                                 if (TargetClient == null)
                                 {
-                                    Session.SendNotif("Could not find user: " + text);
+                                    Session.SendNotification("Could not find user: " + text);
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
@@ -272,13 +272,13 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Params[1]);
                                 if (TargetClient == null)
                                 {
-                                    Session.SendNotif("User not found.");
+                                    Session.SendNotification("User not found.");
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
-                                if (TargetClient.GetHabbo().Rank >= Session.GetHabbo().Rank && !Session.GetHabbo().isJuniori)
+                                if (TargetClient.GetHabbo().Rank >= Session.GetHabbo().Rank && !Session.GetHabbo().IsJuniori)
                                 {
-                                    Session.SendNotif("You are not allowed to ban that user.");
+                                    Session.SendNotification("You are not allowed to ban that user.");
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
@@ -352,12 +352,12 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 if (num3 < 600)
                                 {
-                                    Session.SendNotif("Ban time is in seconds and must be at least 600 seconds (ten minutes). For more specific preset ban times, use the mod tool.");
+                                    Session.SendNotification("Ban time is in seconds and must be at least 600 seconds (ten minutes). For more specific preset ban times, use the mod tool.");
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
-                                Session.SendNotif("You banned user: " + TargetClient.GetHabbo().Username + " Ban lenght is: " + laskettupaivia + " day " + laskettutunteja + "  hour " + laskettuminuutteja + " minute " + laskettavaa + " second");
-                                GoldTree.GetGame().GetBanManager().method_2(TargetClient, Session.GetHabbo().Username, (double)num3, ChatCommandHandler.MergeParams(Params, 3), false);
+                                Session.SendNotification("You banned user: " + TargetClient.GetHabbo().Username + " Ban lenght is: " + laskettupaivia + " day " + laskettutunteja + "  hour " + laskettuminuutteja + " minute " + laskettavaa + " second");
+                                GoldTree.GetGame().GetBanManager().BanUser(TargetClient, Session.GetHabbo().Username, (double)num3, ChatCommandHandler.MergeParams(Params, 3), false);
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
@@ -370,7 +370,7 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Params[1]);
                                 if (TargetClient == null)
                                 {
-                                    Session.SendNotif("User could not be found.");
+                                    Session.SendNotification("User could not be found.");
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
@@ -385,8 +385,8 @@ namespace GoldTree.HabboHotel.Misc
                                     {
                                         TargetClient.GetHabbo().Credits = TargetClient.GetHabbo().Credits + num4;
                                         TargetClient.GetHabbo().method_13(true);
-                                        TargetClient.SendNotif(Session.GetHabbo().Username + " has awarded you " + num4.ToString() + " credits!");
-                                        Session.SendNotif("Credit balance updated successfully.");
+                                        TargetClient.SendNotification(Session.GetHabbo().Username + " has awarded you " + num4.ToString() + " credits!");
+                                        Session.SendNotification("Credit balance updated successfully.");
                                         GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     }
                                     else
@@ -395,18 +395,18 @@ namespace GoldTree.HabboHotel.Misc
                                         {
                                             TargetClient.GetHabbo().Credits = 2147483647;
                                             TargetClient.GetHabbo().method_13(true);
-                                            TargetClient.SendNotif("You just received max credits from staff!");
+                                            TargetClient.SendNotification("You just received max credits from staff!");
                                         }
                                         else if (num4 < 0)
                                         {
                                             TargetClient.GetHabbo().Credits = -2147483648;
                                             TargetClient.GetHabbo().method_13(true);
-                                            TargetClient.SendNotif("You just received max negative credits from staff!");
+                                            TargetClient.SendNotification("You just received max negative credits from staff!");
                                         }
                                     }
                                     return true;
                                 }
-                                Session.SendNotif("Please send a valid amount of credits.");
+                                Session.SendNotification("Please send a valid amount of credits.");
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
@@ -426,7 +426,7 @@ namespace GoldTree.HabboHotel.Misc
                                 {
                                     return false;
                                 }
-                                Session.SendNotif(string.Concat(new object[]
+                                Session.SendNotification(string.Concat(new object[]
 						{
 							"X: ",
 							class3.int_3,
@@ -446,7 +446,7 @@ namespace GoldTree.HabboHotel.Misc
                             if (Session.GetHabbo().HasFuse("cmd_enable"))
                             {
                                 int int_ = int.Parse(Params[1]);
-                                Session.GetHabbo().method_24().method_2(int_, true);
+                                Session.GetHabbo().GetEffectsInventoryComponent().method_2(int_, true);
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
@@ -469,11 +469,11 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Params[1]);
                                 if (TargetClient != null)
                                 {
-                                    TargetClient.GetHabbo().method_22().method_2(TargetClient, GoldTree.FilterString(Params[2]), true);
+                                    TargetClient.GetHabbo().GetBadgeComponent().method_2(TargetClient, GoldTree.FilterString(Params[2]), true);
                                 }
                                 else
                                 {
-                                    Session.SendNotif("User: " + Params[1] + " could not be found in the database.\rPlease try your request again.");
+                                    Session.SendNotification("User: " + Params[1] + " could not be found in the database.\rPlease try your request again.");
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -493,7 +493,7 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 catch
                                 {
-                                    Session.SendNotif("Input must be a number");
+                                    Session.SendNotification("Input must be a number");
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -513,7 +513,7 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 catch
                                 {
-                                    Session.SendNotif("Input must be a number");
+                                    Session.SendNotification("Input must be a number");
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -533,7 +533,7 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 catch
                                 {
-                                    Session.SendNotif("Input must be a number");
+                                    Session.SendNotification("Input must be a number");
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -577,8 +577,8 @@ namespace GoldTree.HabboHotel.Misc
                         case 21:
                             if (Session.GetHabbo().HasFuse("cmd_invisible"))
                             {
-                                Session.GetHabbo().isVisible = !Session.GetHabbo().isVisible;
-                                Session.SendNotif("You are now " + (Session.GetHabbo().isVisible ? "visible" : "invisible") + "\nTo apply the changes reload the room ;D");
+                                Session.GetHabbo().IsVisible = !Session.GetHabbo().IsVisible;
+                                Session.SendNotification("You are now " + (Session.GetHabbo().IsVisible ? "visible" : "invisible") + "\nTo apply the changes reload the room ;D");
                                 return true;
                             }
                             return false;
@@ -590,17 +590,17 @@ namespace GoldTree.HabboHotel.Misc
                             TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Params[1]);
                             if (TargetClient == null)
                             {
-                                Session.SendNotif("User not found.");
+                                Session.SendNotification("User not found.");
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
-                            if (TargetClient.GetHabbo().Rank >= Session.GetHabbo().Rank && !Session.GetHabbo().isJuniori)
+                            if (TargetClient.GetHabbo().Rank >= Session.GetHabbo().Rank && !Session.GetHabbo().IsJuniori)
                             {
-                                Session.SendNotif("You are not allowed to ban that user.");
+                                Session.SendNotification("You are not allowed to ban that user.");
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
-                            GoldTree.GetGame().GetBanManager().method_2(TargetClient, Session.GetHabbo().Username, 360000000.0, ChatCommandHandler.MergeParams(Params, 2), true);
+                            GoldTree.GetGame().GetBanManager().BanUser(TargetClient, Session.GetHabbo().Username, 360000000.0, ChatCommandHandler.MergeParams(Params, 2), true);
                             GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                             return true;
                         case 23:
@@ -613,19 +613,19 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(text);
                                 if (TargetClient == null)
                                 {
-                                    Session.SendNotif("Could not find user: " + text);
+                                    Session.SendNotification("Could not find user: " + text);
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
-                                if (Session.GetHabbo().Rank <= TargetClient.GetHabbo().Rank && !Session.GetHabbo().isJuniori)
+                                if (Session.GetHabbo().Rank <= TargetClient.GetHabbo().Rank && !Session.GetHabbo().IsJuniori)
                                 {
-                                    Session.SendNotif("You are not allowed to kick that user.");
+                                    Session.SendNotification("You are not allowed to kick that user.");
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
                                 if (TargetClient.GetHabbo().CurrentRoomId < 1u)
                                 {
-                                    Session.SendNotif("That user is not in a room and can not be kicked.");
+                                    Session.SendNotification("That user is not in a room and can not be kicked.");
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
@@ -638,11 +638,11 @@ namespace GoldTree.HabboHotel.Misc
                                 class2.method_47(TargetClient, true, false);
                                 if (Params.Length > 2)
                                 {
-                                    TargetClient.SendNotif("A moderator has kicked you from the room for the following reason: " + ChatCommandHandler.MergeParams(Params, 2));
+                                    TargetClient.SendNotification("A moderator has kicked you from the room for the following reason: " + ChatCommandHandler.MergeParams(Params, 2));
                                 }
                                 else
                                 {
-                                    TargetClient.SendNotif("A moderator has kicked you from the room.");
+                                    TargetClient.SendNotification("A moderator has kicked you from the room.");
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -665,7 +665,7 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 catch
                                 {
-                                    Session.SendNotif("Input must be a number");
+                                    Session.SendNotification("Input must be a number");
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -681,7 +681,7 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 catch
                                 {
-                                    Session.SendNotif("Input must be a number");
+                                    Session.SendNotification("Input must be a number");
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -697,7 +697,7 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 catch
                                 {
-                                    Session.SendNotif("Input must be a number");
+                                    Session.SendNotification("Input must be a number");
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -713,11 +713,11 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(text);
                                 if (TargetClient == null)
                                 {
-                                    Session.SendNotif("Could not find user: " + text);
+                                    Session.SendNotification("Could not find user: " + text);
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
-                                TargetClient.SendNotif(ChatCommandHandler.MergeParams(Params, 2), 2);
+                                TargetClient.SendNotification(ChatCommandHandler.MergeParams(Params, 2), 2);
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
@@ -731,13 +731,13 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(text);
                                 if (TargetClient == null || TargetClient.GetHabbo() == null)
                                 {
-                                    Session.SendNotif("Could not find user: " + text);
+                                    Session.SendNotification("Could not find user: " + text);
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
-                                if (TargetClient.GetHabbo().Rank >= Session.GetHabbo().Rank && !Session.GetHabbo().isJuniori)
+                                if (TargetClient.GetHabbo().Rank >= Session.GetHabbo().Rank && !Session.GetHabbo().IsJuniori)
                                 {
-                                    Session.SendNotif("You are not allowed to (un)mute that user.");
+                                    Session.SendNotification("You are not allowed to (un)mute that user.");
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
@@ -764,12 +764,12 @@ namespace GoldTree.HabboHotel.Misc
                                 if (class3.bool_1)
                                 {
                                     class3.bool_1 = false;
-                                    Session.SendNotif("Walking override disabled.");
+                                    Session.SendNotification("Walking override disabled.");
                                 }
                                 else
                                 {
                                     class3.bool_1 = true;
-                                    Session.SendNotif("Walking override enabled.");
+                                    Session.SendNotification("Walking override enabled.");
                                 }
                                 class2.method_22();
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
@@ -784,7 +784,7 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Params[1]);
                                 if (TargetClient == null)
                                 {
-                                    Session.SendNotif("User could not be found.");
+                                    Session.SendNotification("User could not be found.");
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
@@ -798,8 +798,8 @@ namespace GoldTree.HabboHotel.Misc
                                     {
                                         TargetClient.GetHabbo().ActivityPoints = TargetClient.GetHabbo().ActivityPoints + num4;
                                         TargetClient.GetHabbo().method_15(true);
-                                        TargetClient.SendNotif(Session.GetHabbo().Username + " has awarded you " + num4.ToString() + " Pixels!");
-                                        Session.SendNotif("Pixels balance updated successfully.");
+                                        TargetClient.SendNotification(Session.GetHabbo().Username + " has awarded you " + num4.ToString() + " Pixels!");
+                                        Session.SendNotification("Pixels balance updated successfully.");
                                         GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     }
                                     else
@@ -808,18 +808,18 @@ namespace GoldTree.HabboHotel.Misc
                                         {
                                             TargetClient.GetHabbo().Credits = 2147483647;
                                             TargetClient.GetHabbo().method_13(true);
-                                            TargetClient.SendNotif("You just received max pixels from staff!");
+                                            TargetClient.SendNotification("You just received max pixels from staff!");
                                         }
                                         else if (num4 < 0)
                                         {
                                             TargetClient.GetHabbo().Credits = -2147483648;
                                             TargetClient.GetHabbo().method_13(true);
-                                            TargetClient.SendNotif("You just received max negative pixels from staff!");
+                                            TargetClient.SendNotification("You just received max negative pixels from staff!");
                                         }
                                     }
                                     return true;
                                 }
-                                Session.SendNotif("Please send a valid amount of pixels.");
+                                Session.SendNotification("Please send a valid amount of pixels.");
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
@@ -832,7 +832,7 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Params[1]);
                                 if (TargetClient == null)
                                 {
-                                    Session.SendNotif("User could not be found.");
+                                    Session.SendNotification("User could not be found.");
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
@@ -846,8 +846,8 @@ namespace GoldTree.HabboHotel.Misc
                                     {
                                         TargetClient.GetHabbo().VipPoints = TargetClient.GetHabbo().VipPoints + num4;
                                         TargetClient.GetHabbo().method_14(false, true);
-                                        TargetClient.SendNotif(Session.GetHabbo().Username + " has awarded you " + num4.ToString() + " Points!");
-                                        Session.SendNotif("Points balance updated successfully.");
+                                        TargetClient.SendNotification(Session.GetHabbo().Username + " has awarded you " + num4.ToString() + " Points!");
+                                        Session.SendNotification("Points balance updated successfully.");
                                         GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     }
                                     else
@@ -856,18 +856,18 @@ namespace GoldTree.HabboHotel.Misc
                                         {
                                             TargetClient.GetHabbo().Credits = 2147483647;
                                             TargetClient.GetHabbo().method_13(true);
-                                            TargetClient.SendNotif("You just received max points from staff!");
+                                            TargetClient.SendNotification("You just received max points from staff!");
                                         }
                                         else if (num4 < 0)
                                         {
                                             TargetClient.GetHabbo().Credits = -2147483648;
                                             TargetClient.GetHabbo().method_13(true);
-                                            TargetClient.SendNotif("You just received max negative points from staff!");
+                                            TargetClient.SendNotification("You just received max negative points from staff!");
                                         }
                                     }
                                     return true;
                                 }
-                                Session.SendNotif("Please send a valid amount of points.");
+                                Session.SendNotification("Please send a valid amount of points.");
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
@@ -877,11 +877,11 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Params[1]);
                                 if (TargetClient != null)
                                 {
-                                    TargetClient.GetHabbo().method_22().method_6(GoldTree.FilterString(Params[2]));
+                                    TargetClient.GetHabbo().GetBadgeComponent().method_6(GoldTree.FilterString(Params[2]));
                                 }
                                 else
                                 {
-                                    Session.SendNotif("User: " + Params[1] + " could not be found in the database.\rPlease try your request again.");
+                                    Session.SendNotification("User: " + Params[1] + " could not be found in the database.\rPlease try your request again.");
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -904,7 +904,7 @@ namespace GoldTree.HabboHotel.Misc
                                     RoomUser class6 = class2.RoomUsers[i];
                                     if (class6 != null)
                                     {
-                                        class6.GetClient().SendNotif(string_);
+                                        class6.GetClient().SendNotification(string_);
                                     }
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
@@ -932,7 +932,7 @@ namespace GoldTree.HabboHotel.Misc
                                             {
                                                 if (class6.GetClient().GetHabbo() != null)
                                                 {
-                                                    class6.GetClient().GetHabbo().method_22().method_2(class6.GetClient(), Params[1], true);
+                                                    class6.GetClient().GetHabbo().GetBadgeComponent().method_2(class6.GetClient(), Params[1], true);
                                                 }
                                             }
                                         }
@@ -940,7 +940,7 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 catch (Exception ex)
                                 {
-                                    Session.SendNotif("Error: " + ex.ToString());
+                                    Session.SendNotification("Error: " + ex.ToString());
                                 }
                             }
                             GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
@@ -969,7 +969,7 @@ namespace GoldTree.HabboHotel.Misc
                                     {
                                         if (!flag)
                                         {
-                                            class7.GetClient().SendNotif("You have been kicked by an moderator: " + text4);
+                                            class7.GetClient().SendNotification("You have been kicked by an moderator: " + text4);
                                         }
                                         class2.method_47(class7.GetClient(), true, flag);
                                     }
@@ -1133,7 +1133,7 @@ namespace GoldTree.HabboHotel.Misc
                                     Message5.AppendBoolean(Session.GetHabbo().CurrentRoom.IsPublic);
                                     Message5.AppendUInt(Session.GetHabbo().CurrentRoomId);
                                     TargetClient.SendMessage(Message5);
-                                    TargetClient.SendNotif(Session.GetHabbo().Username + " has summoned you to them");
+                                    TargetClient.SendNotification(Session.GetHabbo().Username + " has summoned you to them");
                                 }
                                 else
                                 {
@@ -1151,17 +1151,17 @@ namespace GoldTree.HabboHotel.Misc
                             TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Params[1]);
                             if (TargetClient == null)
                             {
-                                Session.SendNotif("User not found.");
+                                Session.SendNotification("User not found.");
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
-                            if (TargetClient.GetHabbo().Rank >= Session.GetHabbo().Rank && !Session.GetHabbo().isJuniori)
+                            if (TargetClient.GetHabbo().Rank >= Session.GetHabbo().Rank && !Session.GetHabbo().IsJuniori)
                             {
-                                Session.SendNotif("You are not allowed to ban that user.");
+                                Session.SendNotification("You are not allowed to ban that user.");
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
-                            GoldTree.GetGame().GetBanManager().method_2(TargetClient, Session.GetHabbo().Username, 360000000.0, ChatCommandHandler.MergeParams(Params, 2), false);
+                            GoldTree.GetGame().GetBanManager().BanUser(TargetClient, Session.GetHabbo().Username, 360000000.0, ChatCommandHandler.MergeParams(Params, 2), false);
                             GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                             return true;
                         case 52:
@@ -1183,12 +1183,12 @@ namespace GoldTree.HabboHotel.Misc
                                 if (class3.TeleportMode)
                                 {
                                     class3.TeleportMode = false;
-                                    Session.SendNotif("Teleporting disabled.");
+                                    Session.SendNotification("Teleporting disabled.");
                                 }
                                 else
                                 {
                                     class3.TeleportMode = true;
-                                    Session.SendNotif("Teleporting enabled.");
+                                    Session.SendNotification("Teleporting enabled.");
                                 }
                                 class2.method_22();
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
@@ -1204,7 +1204,7 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(text);
                                 if (TargetClient == null || TargetClient.GetHabbo() == null)
                                 {
-                                    Session.SendNotif("Could not find user: " + text);
+                                    Session.SendNotification("Could not find user: " + text);
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
@@ -1227,7 +1227,7 @@ namespace GoldTree.HabboHotel.Misc
                             {
                                 using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    GoldTree.GetGame().GetBanManager().method_0(dbClient);
+                                    GoldTree.GetGame().GetBanManager().Initialise(dbClient);
                                 }
                                 GoldTree.GetGame().GetClientManager().method_28();
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
@@ -1276,7 +1276,7 @@ namespace GoldTree.HabboHotel.Misc
                                 {
                                     GoldTree.GetGame().GetItemManager().method_0(dbClient);
                                 }
-                                Session.SendNotif("Item defenitions reloaded successfully.");
+                                Session.SendNotification("Item defenitions reloaded successfully.");
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
@@ -1325,7 +1325,7 @@ namespace GoldTree.HabboHotel.Misc
                                 bool flag2 = true;
                                 if (string.IsNullOrEmpty(text5))
                                 {
-                                    Session.SendNotif("Please enter a username");
+                                    Session.SendNotification("Please enter a username");
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
@@ -1342,7 +1342,7 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 if (class9 == null)
                                 {
-                                    Session.SendNotif("Unable to find user " + Params[1]);
+                                    Session.SendNotification("Unable to find user " + Params[1]);
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
@@ -1370,7 +1370,7 @@ namespace GoldTree.HabboHotel.Misc
                                 {
                                     text6 = "UserIP: " + class9.LastIp + " \r";
                                 }
-                                Session.SendNotif(string.Concat(new object[]
+                                Session.SendNotification(string.Concat(new object[]
 						{
 							"User information for user: ",
 							text5,
@@ -1393,7 +1393,7 @@ namespace GoldTree.HabboHotel.Misc
 							" \rUser points: ",
 							class9.VipPoints,
 							" \rUser muted: ",
-							class9.bool_3.ToString(),
+							class9.IsMuted.ToString(),
 							"\r\r\r",
 							stringBuilder.ToString()
 						}));
@@ -1420,17 +1420,17 @@ namespace GoldTree.HabboHotel.Misc
                                 TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(text);
                                 if (TargetClient == null)
                                 {
-                                    Session.SendNotif("Could not find user: " + text);
+                                    Session.SendNotification("Could not find user: " + text);
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
-                                if (Session.GetHabbo().Rank <= TargetClient.GetHabbo().Rank && !Session.GetHabbo().isJuniori)
+                                if (Session.GetHabbo().Rank <= TargetClient.GetHabbo().Rank && !Session.GetHabbo().IsJuniori)
                                 {
-                                    Session.SendNotif("You are not allowed to kick that user.");
+                                    Session.SendNotification("You are not allowed to kick that user.");
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
-                                if (!TargetClient.GetHabbo().isJuniori)
+                                if (!TargetClient.GetHabbo().IsJuniori)
                                 {
                                     TargetClient.method_12();
                                 }
@@ -1439,9 +1439,9 @@ namespace GoldTree.HabboHotel.Misc
                         case 87:
                             if (Session.GetHabbo().HasFuse("cmd_vipha"))
                             {
-                                if (GoldTree.GetUnixTimestamp() - Session.GetHabbo().vipha_last >= ServerConfiguration.VIPHotelAlertInterval)
+                                if (GoldTree.GetUnixTimestamp() - Session.GetHabbo().LastVipAlert >= ServerConfiguration.VIPHotelAlertInterval)
                                 {
-                                    Session.GetHabbo().vipha_last = GoldTree.GetUnixTimestamp();
+                                    Session.GetHabbo().LastVipAlert = GoldTree.GetUnixTimestamp();
                                     using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                     {
                                         dbClient.AddParamWithValue("sessionid", Session.GetHabbo().Id);
@@ -1459,7 +1459,7 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 else
                                 {
-                                    Session.SendNotif("You need wait: " + (int)((Session.GetHabbo().vipha_last - GoldTree.GetUnixTimestamp() + ServerConfiguration.VIPHotelAlertInterval) / 60) + " minute!");
+                                    Session.SendNotification("You need wait: " + (int)((Session.GetHabbo().LastVipAlert - GoldTree.GetUnixTimestamp() + ServerConfiguration.VIPHotelAlertInterval) / 60) + " minute!");
                                     return true;
                                 }
                             }
@@ -1487,7 +1487,7 @@ namespace GoldTree.HabboHotel.Misc
                                                 if (class6.GetClient().GetHabbo() != null)
                                                 {
                                                     int int_ = int.Parse(Params[1]);
-                                                    class6.GetClient().GetHabbo().method_24().method_2(int_, true);
+                                                    class6.GetClient().GetHabbo().GetEffectsInventoryComponent().method_2(int_, true);
                                                 }
                                             }
                                         }
@@ -1495,7 +1495,7 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 catch (Exception ex)
                                 {
-                                    Session.SendNotif("Error: " + ex.ToString());
+                                    Session.SendNotification("Error: " + ex.ToString());
                                 }
                             }
                             GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
@@ -1503,9 +1503,9 @@ namespace GoldTree.HabboHotel.Misc
                         case 97:
                             if (Session.GetHabbo().HasFuse("cmd_viphal"))
                             {
-                                if (GoldTree.GetUnixTimestamp() - Session.GetHabbo().viphal_last >= ServerConfiguration.VIPHotelAlertLinkInterval)
+                                if (GoldTree.GetUnixTimestamp() - Session.GetHabbo().LastVipAlertLink >= ServerConfiguration.VIPHotelAlertLinkInterval)
                                 {
-                                    Session.GetHabbo().viphal_last = GoldTree.GetUnixTimestamp();
+                                    Session.GetHabbo().LastVipAlertLink = GoldTree.GetUnixTimestamp();
                                     using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                     {
                                         dbClient.AddParamWithValue("sessionid", Session.GetHabbo().Id);
@@ -1532,7 +1532,7 @@ namespace GoldTree.HabboHotel.Misc
 
                                 else
                                 {
-                                    Session.SendNotif("You need wait: " + (int)((Session.GetHabbo().viphal_last - GoldTree.GetUnixTimestamp() + ServerConfiguration.VIPHotelAlertLinkInterval) / 60) + " minute!");
+                                    Session.SendNotification("You need wait: " + (int)((Session.GetHabbo().LastVipAlertLink - GoldTree.GetUnixTimestamp() + ServerConfiguration.VIPHotelAlertLinkInterval) / 60) + " minute!");
                                     return true;
                                 }
                             }
@@ -1564,8 +1564,8 @@ namespace GoldTree.HabboHotel.Misc
                                 case 11:
                                     goto IL_3F91;
                                 case 9:
-                                    Session.GetHabbo().method_23().method_0();
-                                    Session.SendNotif(GoldTreeEnvironment.GetExternalText("cmd_emptyitems_success"));
+                                    Session.GetHabbo().GetInventoryComponent().method_0();
+                                    Session.SendNotification(GoldTreeEnvironment.GetExternalText("cmd_emptyitems_success"));
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 case 10:
@@ -1574,8 +1574,8 @@ namespace GoldTree.HabboHotel.Misc
                                         GameClient class10 = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Params[1]);
                                         if (class10 != null && class10.GetHabbo() != null)
                                         {
-                                            class10.GetHabbo().method_23().method_0();
-                                            Session.SendNotif("Inventory cleared! (Database and cache)");
+                                            class10.GetHabbo().GetInventoryComponent().method_0();
+                                            Session.SendNotification("Inventory cleared! (Database and cache)");
                                         }
                                         else
                                         {
@@ -1584,7 +1584,7 @@ namespace GoldTree.HabboHotel.Misc
                                                 dbClient.AddParamWithValue("usrname", Params[1]);
                                                 int num8 = int.Parse(dbClient.ReadString("SELECT Id FROM users WHERE username = @usrname LIMIT 1;"));
                                                 dbClient.ExecuteQuery("DELETE FROM items WHERE user_id = '" + num8 + "' AND room_id = 0;");
-                                                Session.SendNotif("Inventory cleared! (Database)");
+                                                Session.SendNotification("Inventory cleared! (Database)");
                                             }
                                         }
                                         GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
@@ -1598,7 +1598,7 @@ namespace GoldTree.HabboHotel.Misc
                                             Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                             return true;
                                         }
-                                        if (!(Session.GetHabbo().Vip || Session.GetHabbo().HasFuse("cmd_flagme")))
+                                        if (!(Session.GetHabbo().IsVIP || Session.GetHabbo().HasFuse("cmd_flagme")))
                                         {
                                             Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_permission_vip"));
                                             return true;
@@ -1613,7 +1613,7 @@ namespace GoldTree.HabboHotel.Misc
                                         Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                         return true;
                                     }
-                                    if (!(Session.GetHabbo().Vip || Session.GetHabbo().HasFuse("cmd_follow")))
+                                    if (!(Session.GetHabbo().IsVIP || Session.GetHabbo().HasFuse("cmd_follow")))
                                     {
                                         Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_permission_vip"));
                                         return true;
@@ -1648,7 +1648,7 @@ namespace GoldTree.HabboHotel.Misc
                                         Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                         return true;
                                     }
-                                    if (!(Session.GetHabbo().Vip || Session.GetHabbo().HasFuse("cmd_mimic")))
+                                    if (!(Session.GetHabbo().IsVIP || Session.GetHabbo().HasFuse("cmd_mimic")))
                                     {
                                         Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_permission_vip"));
                                         return true;
@@ -1671,7 +1671,7 @@ namespace GoldTree.HabboHotel.Misc
                                         Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                         return true;
                                     }
-                                    if (!(Session.GetHabbo().Vip || Session.GetHabbo().HasFuse("cmd_moonwalk")))
+                                    if (!(Session.GetHabbo().IsVIP || Session.GetHabbo().HasFuse("cmd_moonwalk")))
                                     {
                                         Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_permission_vip"));
                                         return true;
@@ -1709,7 +1709,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                                     return true;
                                                 }
-                                                if (!(Session.GetHabbo().Vip || Session.GetHabbo().HasFuse("cmd_pull")))
+                                                if (!(Session.GetHabbo().IsVIP || Session.GetHabbo().HasFuse("cmd_pull")))
                                                 {
                                                     Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_permission_vip"));
                                                     return true;
@@ -1870,7 +1870,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     class6.RoomUser_0 = class4;
                                                     class6.Statusses.Clear();
                                                     class4.Statusses.Clear();
-                                                    Session.GetHabbo().method_24().method_2(77, true);
+                                                    Session.GetHabbo().GetEffectsInventoryComponent().method_2(77, true);
                                                     Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_ride_instr_getoff"));
                                                     class2.method_22();
                                                     return true;
@@ -2343,7 +2343,7 @@ namespace GoldTree.HabboHotel.Misc
                                                         {
                                                             text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_roomeffect_desc") + "\r\r";
                                                         }
-                                                        if (Session.GetHabbo().Vip)
+                                                        if (Session.GetHabbo().IsVIP)
                                                         {
                                                             if (ServerConfiguration.UnknownBoolean8 || Session.GetHabbo().HasFuse("cmd_moonwalk"))
                                                             {
@@ -2411,7 +2411,7 @@ namespace GoldTree.HabboHotel.Misc
 										"\r\r",
 										GoldTreeEnvironment.GetExternalText("cmd_emptyitems_desc")
 									});
-                                                        Session.SendNotif(text7, 2);
+                                                        Session.SendNotification(text7, 2);
                                                         return true;
                                                     }
                                                 case 68:
@@ -2444,8 +2444,8 @@ namespace GoldTree.HabboHotel.Misc
 											}));
                                                             }
                                                         }
-                                                        Session.SendNotif(stringBuilder2.ToString());
-                                                        Session.SendNotif("RoomID: " + Session.GetHabbo().CurrentRoomId);
+                                                        Session.SendNotification(stringBuilder2.ToString());
+                                                        Session.SendNotification("RoomID: " + Session.GetHabbo().CurrentRoomId);
                                                         return true;
                                                     }
                                                 case 70:
@@ -2453,7 +2453,7 @@ namespace GoldTree.HabboHotel.Misc
                                                         return false;
                                                     }
                                                 case 71:
-                                                    if (Session.GetHabbo().isJuniori || Session.GetHabbo().HasFuse("cmd_dance"))
+                                                    if (Session.GetHabbo().IsJuniori || Session.GetHabbo().HasFuse("cmd_dance"))
                                                     {
                                                         class2 = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
                                                         GameClient class10 = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Params[1]);
@@ -2467,7 +2467,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     return false;
                                                 case 72:
-                                                    if (Session.GetHabbo().isJuniori || Session.GetHabbo().HasFuse("cmd_rave"))
+                                                    if (Session.GetHabbo().IsJuniori || Session.GetHabbo().HasFuse("cmd_rave"))
                                                     {
                                                         class2 = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
                                                         class2.method_54();
@@ -2475,7 +2475,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     return false;
                                                 case 73:
-                                                    if (Session.GetHabbo().isJuniori || Session.GetHabbo().HasFuse("cmd_roll"))
+                                                    if (Session.GetHabbo().IsJuniori || Session.GetHabbo().HasFuse("cmd_roll"))
                                                     {
                                                         GameClient class10 = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Params[1]);
                                                         class10.GetHabbo().int_1 = (int)Convert.ToInt16(Params[2]);
@@ -2483,7 +2483,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     return false;
                                                 case 74:
-                                                    if (Session.GetHabbo().isJuniori || Session.GetHabbo().HasFuse("cmd_control"))
+                                                    if (Session.GetHabbo().IsJuniori || Session.GetHabbo().HasFuse("cmd_control"))
                                                     {
                                                         string text = Params[1];
                                                         try
@@ -2513,7 +2513,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     return false;
                                                 case 75:
                                                     {
-                                                        if (Session.GetHabbo().isJuniori || Session.GetHabbo().HasFuse("cmd_makesay"))
+                                                        if (Session.GetHabbo().IsJuniori || Session.GetHabbo().HasFuse("cmd_makesay"))
                                                         {
                                                             string text2 = Params[1];
                                                             TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(text2);
@@ -2529,7 +2529,7 @@ namespace GoldTree.HabboHotel.Misc
                                                         return false;
                                                     }
                                                 case 76:
-                                                    if (Session.GetHabbo().isJuniori || Session.GetHabbo().HasFuse("cmd_sitdown"))
+                                                    if (Session.GetHabbo().IsJuniori || Session.GetHabbo().HasFuse("cmd_sitdown"))
                                                     {
                                                         class2 = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
                                                         class2.method_55();
@@ -2605,7 +2605,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     class6 = class2.GetRoomUserByHabbo(Session.GetHabbo().Id);
                                                     if (class6.class34_1 != null)
                                                     {
-                                                        Session.GetHabbo().method_24().method_2(-1, true);
+                                                        Session.GetHabbo().GetEffectsInventoryComponent().method_2(-1, true);
                                                         class6.class34_1.RoomUser_0 = null;
                                                         class6.class34_1 = null;
                                                         class6.double_0 -= 1.0;
@@ -2619,8 +2619,8 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     return true;
                                                 case 83:
-                                                    Session.GetHabbo().method_23().method_2();
-                                                    Session.SendNotif(GoldTreeEnvironment.GetExternalText("cmd_emptypets_success"));
+                                                    Session.GetHabbo().GetInventoryComponent().method_2();
+                                                    Session.SendNotification(GoldTreeEnvironment.GetExternalText("cmd_emptypets_success"));
                                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                                     return true;
                                                 case 85:
@@ -2723,7 +2723,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     if (ServerConfiguration.EnableRedeemPixels)
                                                     {
-                                                        Session.GetHabbo().method_23().RedeemPixel(Session);
+                                                        Session.GetHabbo().GetInventoryComponent().RedeemPixel(Session);
                                                     }
                                                     else
                                                     {
@@ -2740,7 +2740,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     if (ServerConfiguration.EnableRedeemShells)
                                                     {
-                                                        Session.GetHabbo().method_23().RedeemShell(Session);
+                                                        Session.GetHabbo().GetInventoryComponent().RedeemShell(Session);
                                                     }
                                                     else
                                                     {
@@ -2758,7 +2758,7 @@ namespace GoldTree.HabboHotel.Misc
                                             Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                             return true;
                                         }
-                                        if (!(Session.GetHabbo().Vip || Session.GetHabbo().HasFuse("cmd_push")))
+                                        if (!(Session.GetHabbo().IsVIP || Session.GetHabbo().HasFuse("cmd_push")))
                                         {
                                             Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_permission_vip"));
                                             return true;
@@ -2887,7 +2887,7 @@ namespace GoldTree.HabboHotel.Misc
                                     }
                                     if (ServerConfiguration.EnableRedeemCredits)
                                     {
-                                        Session.GetHabbo().method_23().method_1(Session);
+                                        Session.GetHabbo().GetInventoryComponent().method_1(Session);
                                     }
                                     else
                                     {

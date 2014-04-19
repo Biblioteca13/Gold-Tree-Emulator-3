@@ -18,32 +18,48 @@ namespace GoldTree.HabboHotel.Users
 	internal sealed class Habbo
 	{
 		public uint Id;
+
 		public string Username;
 		public string RealName;
-        public bool isJuniori;
-		public bool isVisible;
-		public bool bool_2;
+
+        public bool IsJuniori;
+
+		public bool IsVisible;
+
+		public bool TradingDisabled;
+
 		public string SSO;
+
 		public string LastIp;
+
 		public uint Rank;
+
 		public string Motto;
+
 		public string Figure;
 		public string Gender;
+
 		public int int_0;
 		public DataTable dataTable_0;
 		public List<int> list_0;
 		public int int_1;
+
 		public int Credits;
+
 		public int ActivityPoints;
 		public double LastActivityPointsUpdate;
-		public bool bool_3;
+
+		public bool IsMuted;
+
 		public int int_4;
 		internal bool bool_4 = false;
 		public uint uint_2;
 		public bool bool_5;
 		public bool bool_6;
+
 		public uint CurrentRoomId;
-		public uint uint_4;
+		public uint HomeRoomId;
+
 		public bool bool_7;
 		public uint uint_5;
 		public List<uint> list_1;
@@ -51,64 +67,102 @@ namespace GoldTree.HabboHotel.Users
 		public List<string> list_3;
 		public Dictionary<uint, int> dictionary_0;
 		public List<uint> list_4;
-		private SubscriptionManager class53_0;
-		private HabboMessenger class105_0;
-		private BadgeComponent class56_0;
+
+		private SubscriptionManager SubscriptionManager;
+
+		private HabboMessenger Messenger;
+
+		private BadgeComponent BadgeComponent;
         private InventoryComponent InventoryComponent;
-		private AvatarEffectsInventoryComponent class50_0;
+		private AvatarEffectsInventoryComponent EffectsInventoryComponent;
+
 		private GameClient Session;
+
 		public List<uint> CompletedQuests;
 		public uint CurrentQuestId;
 		public int CurrentQuestProgress;
+
 		public int int_6;
 		public int int_7;
 		public int int_8;
 		public int int_9;
 		public uint uint_7;
+
 		public int NewbieStatus;
+
 		public bool bool_8;
 		public bool bool_9;
 		public bool bool_10;
+
 		public bool BlockNewFriends;
+
 		public bool HideInRom;
 		public bool HideOnline;
-		public bool Vip;
+
+		public bool IsVIP;
+        public int VipPoints;
+
 		public int Volume;
-		public int VipPoints;
+
 		public int AchievementScore;
+
 		public int RoomVisits;
+
 		public int int_15;
 		public int int_16;
+
 		public int Respect;
 		public int RespectGiven;
+
 		public int GiftsGiven;
 		public int GiftsReceived;
+
 		public int int_21;
 		public int int_22;
+
 		private UserDataFactory UserDataFactory;
-		internal List<RoomData> list_6;
+
+		internal List<RoomData> OwnedRooms;
+
 		public int int_23;
+
 		public DateTime dateTime_0;
+
 		public bool bool_15;
 		public int int_24;
 		private bool bool_16 = false;
+
         public int FireworkPixelLoadedCount;
+
         public int NewPetsBuyed;
+
         public string DataCadastro;
-        public string last_loggedin;
+
+        public string LastOnline;
+
         public int RegularVisitor;
+
         public int PetBuyed;
+
         public int RegistrationDuration;
+
         public int FootballGoalScorer;
         public int FootballGoalHost;
+
         public bool Online = false;
+
         public int TilesLocked;
-        public int daily_respect_points;
-        public int daily_pet_respect_points;
+
+        public int RespectPoints;
+        public int PetRespectPoints;
+
         public int StaffPicks;
-        public double vipha_last;
-        public double viphal_last;
+
+        public double LastVipAlert;
+        public double LastVipAlertLink;
+
         public bool FriendStreamEnabled;
+
         public int QuestsCustom1Progress;
 
         public bool InRoom
@@ -118,6 +172,7 @@ namespace GoldTree.HabboHotel.Users
 				return this.CurrentRoomId >= 1u;
 			}
 		}
+
         public Room CurrentRoom
 		{
 			get
@@ -132,14 +187,8 @@ namespace GoldTree.HabboHotel.Users
 				}
 			}
 		}
-		internal UserDataFactory Class12_0
-		{
-			get
-			{
-				return this.UserDataFactory;
-			}
-		}
-		internal string String_0
+
+		internal string UpdateQuery
 		{
 			get
 			{
@@ -184,17 +233,52 @@ namespace GoldTree.HabboHotel.Users
 				});
 			}
 		}
+
+        private GameClient GetClient()
+        {
+            return GoldTree.GetGame().GetClientManager().method_2(this.Id);
+        }
+
+        public SubscriptionManager GetSubscriptionManager()
+        {
+            return this.SubscriptionManager;
+        }
+
+        public HabboMessenger GetMessenger()
+        {
+            return this.Messenger;
+        }
+
+        public UserDataFactory GetUserDataFactory()
+        {
+            return this.UserDataFactory;
+        }
+
+        public BadgeComponent GetBadgeComponent()
+        {
+            return this.BadgeComponent;
+        }
+
+        public InventoryComponent GetInventoryComponent()
+        {
+            return this.InventoryComponent;
+        }
+
+        public AvatarEffectsInventoryComponent GetEffectsInventoryComponent()
+        {
+            return this.EffectsInventoryComponent;
+        }
+
         public Habbo(uint UserId, string Username, string Name, string SSO, uint Rank, string Motto, string Look, string Gender, int Credits, int Pixels, double Activity_Points_LastUpdate, string DataCadastro, bool Muted, uint HomeRoom, int NewbieStatus, bool BlockNewFriends, bool HideInRoom, bool HideOnline, bool Vip, int Volume, int Points, bool AcceptTrading, string LastIp, GameClient Session, UserDataFactory userDataFactory, string last_online, int daily_respect_points, int daily_pet_respect_points, double vipha_last, double viphal_last, bool FriendStream)
 		{
 			if (Session != null)
-			{
 				GoldTree.GetGame().GetClientManager().method_0(UserId, Username, Session);
-			}
+
 			this.Id = UserId;
 			this.Username = Username;
 			this.RealName = Name;
-            this.isJuniori = false;
-            this.isVisible = true;
+            this.IsJuniori = false;
+            this.IsVisible = true;
 			this.SSO = SSO;
 			this.Rank = Rank;
 			this.Motto = Motto;
@@ -204,41 +288,61 @@ namespace GoldTree.HabboHotel.Users
 			this.VipPoints = Points;
 			this.ActivityPoints = Pixels;
 			this.LastActivityPointsUpdate = Activity_Points_LastUpdate;
-			this.bool_2 = AcceptTrading;
-			this.bool_3 = Muted;
+
+			this.TradingDisabled = AcceptTrading;
+			this.IsMuted = Muted;
 			this.uint_2 = 0u;
 			this.bool_5 = false;
 			this.bool_6 = false;
+
 			this.CurrentRoomId = 0u;
-			this.uint_4 = HomeRoom;
+			this.HomeRoomId = HomeRoom;
+
 			this.list_1 = new List<uint>();
 			this.list_2 = new List<uint>();
 			this.list_3 = new List<string>();
 			this.dictionary_0 = new Dictionary<uint, int>();
 			this.list_4 = new List<uint>();
+
 			this.NewbieStatus = NewbieStatus;
+
 			this.bool_10 = false;
+
 			this.BlockNewFriends = BlockNewFriends;
+
 			this.HideInRom = HideInRoom;
 			this.HideOnline = HideOnline;
-			this.Vip = Vip;
+
+			this.IsVIP = Vip;
 			this.Volume = Volume;
 			this.int_1 = 0;
 			this.int_24 = 1;
+
 			this.LastIp = LastIp;
+
 			this.bool_7 = false;
 			this.uint_5 = 0u;
+
 			this.Session = Session;
+
 			this.UserDataFactory = userDataFactory;
-			this.list_6 = new List<RoomData>();
+
+			this.OwnedRooms = new List<RoomData>();
+
 			this.list_0 = new List<int>();
+
             this.DataCadastro = DataCadastro;
-            this.last_loggedin = last_online;
+
+            this.LastOnline = last_online;
+
             this.Online = true;
-            this.daily_respect_points = daily_respect_points;
-            this.daily_pet_respect_points = daily_pet_respect_points;
-            this.vipha_last = vipha_last;
-            this.viphal_last = viphal_last;
+
+            this.RespectPoints = daily_respect_points;
+            this.PetRespectPoints = daily_pet_respect_points;
+
+            this.LastVipAlert = vipha_last;
+            this.LastVipAlertLink = viphal_last;
+
             this.FriendStreamEnabled = FriendStream;
 
 			DataRow dataRow = null;
@@ -361,15 +465,15 @@ namespace GoldTree.HabboHotel.Users
             this.StaffPicks = (int)dataRow["staff_picks"];
 			if (Session != null)
 			{
-				this.class53_0 = new SubscriptionManager(UserId, userDataFactory);
-				this.class56_0 = new BadgeComponent(UserId, userDataFactory);
+				this.SubscriptionManager = new SubscriptionManager(UserId, userDataFactory);
+				this.BadgeComponent = new BadgeComponent(UserId, userDataFactory);
                 this.InventoryComponent = new InventoryComponent(UserId, Session, userDataFactory);
-				this.class50_0 = new AvatarEffectsInventoryComponent(UserId, Session, userDataFactory);
+				this.EffectsInventoryComponent = new AvatarEffectsInventoryComponent(UserId, Session, userDataFactory);
 				this.bool_8 = false;
 				this.bool_9 = false;
 				foreach (DataRow dataRow3 in userDataFactory.DataTable_10.Rows)
 				{
-					this.list_6.Add(GoldTree.GetGame().GetRoomManager().method_17((uint)dataRow3["Id"], dataRow3));
+					this.OwnedRooms.Add(GoldTree.GetGame().GetRoomManager().method_17((uint)dataRow3["Id"], dataRow3));
 				}
 			}
 		}
@@ -429,12 +533,12 @@ namespace GoldTree.HabboHotel.Users
 		}
 		internal void method_1(DatabaseClient class6_0)
 		{
-			this.list_6.Clear();
+			this.OwnedRooms.Clear();
 			class6_0.AddParamWithValue("name", this.Username);
 			DataTable dataTable = class6_0.ReadDataTable("SELECT * FROM rooms WHERE owner = @name ORDER BY Id ASC");
 			foreach (DataRow dataRow in dataTable.Rows)
 			{
-				this.list_6.Add(GoldTree.GetGame().GetRoomManager().method_17((uint)dataRow["Id"], dataRow));
+				this.OwnedRooms.Add(GoldTree.GetGame().GetRoomManager().method_17((uint)dataRow["Id"], dataRow));
 			}
 		}
 		public void method_2(UserDataFactory class12_1)
@@ -443,7 +547,7 @@ namespace GoldTree.HabboHotel.Users
 			this.method_5(class12_1);
 			this.method_6(class12_1);
 			this.method_7(class12_1);
-			this.method_25();
+			this.LoadQuests();
 		}
 		public bool HasFuse(string string_7)
 		{
@@ -458,7 +562,7 @@ namespace GoldTree.HabboHotel.Users
 		}
 		public int method_4()
 		{
-			if (this.isJuniori)
+			if (this.IsJuniori)
 			{
                 return GoldTree.GetGame().GetRoleManager().method_9();
 			}
@@ -492,7 +596,7 @@ namespace GoldTree.HabboHotel.Users
 			{
 				this.list_3.Add((string)dataRow["tag"]);
 			}
-			if (this.list_3.Count >= 5 && this.method_19() != null)
+			if (this.list_3.Count >= 5 && this.GetClient() != null)
 			{
                 this.TagAchievementsCompleted();
 			}
@@ -568,16 +672,16 @@ namespace GoldTree.HabboHotel.Users
 				{
 					this.CurrentRoom.method_47(this.Session, false, false);
 				}
-				if (this.class105_0 != null)
+				if (this.Messenger != null)
 				{
-					this.class105_0.bool_0 = true;
-					this.class105_0.method_5(true);
-					this.class105_0 = null;
+					this.Messenger.bool_0 = true;
+					this.Messenger.method_5(true);
+					this.Messenger = null;
 				}
-				if (this.class53_0 != null)
+				if (this.SubscriptionManager != null)
 				{
-					this.class53_0.method_0();
-					this.class53_0 = null;
+					this.SubscriptionManager.method_0();
+					this.SubscriptionManager = null;
 				}
                 this.InventoryComponent.method_18();
 			}
@@ -605,9 +709,9 @@ namespace GoldTree.HabboHotel.Users
 			this.CurrentRoomId = RoomId;
             if (this.CurrentQuestId > 0 && this.CurrentRoom.Owner != this.Username && GoldTree.GetGame().GetQuestManager().GetQuestAction(this.CurrentQuestId) == "ENTEROTHERSROOM")
 			{
-                GoldTree.GetGame().GetQuestManager().ProgressUserQuest(this.CurrentQuestId, this.method_19());
+                GoldTree.GetGame().GetQuestManager().ProgressUserQuest(this.CurrentQuestId, this.GetClient());
 			}
-			this.class105_0.method_5(false);
+			this.Messenger.method_5(false);
 		}
 		public void method_11()
 		{
@@ -632,24 +736,24 @@ namespace GoldTree.HabboHotel.Users
 			{
 			}
 			this.CurrentRoomId = 0u;
-			if (this.class105_0 != null)
+			if (this.Messenger != null)
 			{
-				this.class105_0.method_5(false);
+				this.Messenger.method_5(false);
 			}
 		}
 		public void method_12()
 		{
 			if (this.GetMessenger() == null)
 			{
-				this.class105_0 = new HabboMessenger(this.Id);
-				this.class105_0.method_0(this.UserDataFactory);
-				this.class105_0.method_1(this.UserDataFactory);
-				GameClient @class = this.method_19();
+				this.Messenger = new HabboMessenger(this.Id);
+				this.Messenger.method_0(this.UserDataFactory);
+				this.Messenger.method_1(this.UserDataFactory);
+				GameClient @class = this.GetClient();
 				if (@class != null)
 				{
-					@class.SendMessage(this.class105_0.method_21());
-					@class.SendMessage(this.class105_0.method_23());
-					this.class105_0.method_5(true);
+					@class.SendMessage(this.Messenger.method_21());
+					@class.SendMessage(this.Messenger.method_23());
+					this.Messenger.method_5(true);
 				}
 			}
 		}
@@ -673,6 +777,7 @@ namespace GoldTree.HabboHotel.Users
 				}
 			}
 		}
+
 		public void method_14(bool bool_17, bool bool_18)
 		{
 			if (bool_17)
@@ -698,6 +803,7 @@ namespace GoldTree.HabboHotel.Users
 			}
 			this.method_16(0);
 		}
+
 		public void method_15(bool bool_17)
 		{
 			this.method_16(0);
@@ -716,74 +822,59 @@ namespace GoldTree.HabboHotel.Users
 				}
 			}
 		}
+
 		public void method_16(int int_25)
 		{
 			ServerMessage Message = new ServerMessage(438u);
 			Message.AppendInt32(this.ActivityPoints);
 			Message.AppendInt32(int_25);
 			Message.AppendInt32(0);
+
 			ServerMessage Message2 = new ServerMessage(438u);
 			Message2.AppendInt32(this.VipPoints);
 			Message2.AppendInt32(0);
 			Message2.AppendInt32(1);
+
 			ServerMessage Message3 = new ServerMessage(438u);
 			Message3.AppendInt32(this.VipPoints);
 			Message3.AppendInt32(0);
 			Message3.AppendInt32(2);
+
 			ServerMessage Message4 = new ServerMessage(438u);
 			Message4.AppendInt32(this.VipPoints);
 			Message4.AppendInt32(0);
 			Message4.AppendInt32(3);
+
 			ServerMessage Message5 = new ServerMessage(438u);
 			Message5.AppendInt32(this.VipPoints);
 			Message5.AppendInt32(0);
 			Message5.AppendInt32(4);
+
 			this.Session.SendMessage(Message);
 			this.Session.SendMessage(Message2);
 			this.Session.SendMessage(Message3);
 			this.Session.SendMessage(Message4);
 			this.Session.SendMessage(Message5);
 		}
+
 		public void method_17()
 		{
-			if (!this.bool_3)
+			if (!this.IsMuted)
 			{
-				this.method_19().SendNotif("You have been muted by a moderator.");
-				this.bool_3 = true;
+				this.GetClient().SendNotification("You have been muted by a moderator.");
+				this.IsMuted = true;
 			}
 		}
+
 		public void method_18()
 		{
-			if (this.bool_3)
+			if (this.IsMuted)
 			{
-				this.bool_3 = false;
+				this.IsMuted = false;
 			}
 		}
-		private GameClient method_19()
-		{
-			return GoldTree.GetGame().GetClientManager().method_2(this.Id);
-		}
-        public SubscriptionManager GetSubscriptionManager()
-		{
-			return this.class53_0;
-		}
-		public HabboMessenger GetMessenger()
-		{
-			return this.class105_0;
-		}
-		public BadgeComponent method_22()
-		{
-			return this.class56_0;
-		}
-		public InventoryComponent method_23()
-		{
-            return this.InventoryComponent;
-		}
-		public AvatarEffectsInventoryComponent method_24()
-		{
-			return this.class50_0;
-		}
-		public void method_25()
+
+		public void LoadQuests()
 		{
 			this.CompletedQuests.Clear();
 			DataTable dataTable = null;
@@ -799,6 +890,7 @@ namespace GoldTree.HabboHotel.Users
 				}
 			}
 		}
+
 		public void method_26(bool bool_17, GameClient class16_1)
 		{
 			ServerMessage Message = new ServerMessage(266u);
@@ -840,6 +932,7 @@ namespace GoldTree.HabboHotel.Users
 				}
 			}
 		}
+
 		public void method_27()
 		{
 			DataRow dataRow;
@@ -847,9 +940,9 @@ namespace GoldTree.HabboHotel.Users
 			{
 				dataRow = @class.ReadDataRow("SELECT vip FROM users WHERE Id = '" + this.Id + "' LIMIT 1;");
 			}
-			this.Vip = GoldTree.StringToBoolean(dataRow["vip"].ToString());
+			this.IsVIP = GoldTree.StringToBoolean(dataRow["vip"].ToString());
 			ServerMessage Message = new ServerMessage(2u);
-			if (this.Vip || ServerConfiguration.HabboClubForClothes)
+			if (this.IsVIP || ServerConfiguration.HabboClubForClothes)
 			{
 				Message.AppendInt32(2);
 			}
@@ -882,7 +975,7 @@ namespace GoldTree.HabboHotel.Users
 					}
 					else
 					{
-						if (this.Vip || ServerConfiguration.HabboClubForClothes || this.GetSubscriptionManager().HasSubscription("habbo_club"))
+						if (this.IsVIP || ServerConfiguration.HabboClubForClothes || this.GetSubscriptionManager().HasSubscription("habbo_club"))
 						{
 							Message.AppendInt32(2);
 						}
@@ -893,8 +986,10 @@ namespace GoldTree.HabboHotel.Users
 					}
 				}
 			}
-			this.method_19().SendMessage(Message);
+
+			this.GetClient().SendMessage(Message);
 		}
+
 		public void method_28(string string_7)
 		{
 			Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(this.CurrentRoomId);
@@ -905,7 +1000,7 @@ namespace GoldTree.HabboHotel.Users
 				Message.AppendInt32(class2.VirtualId);
 				Message.AppendStringWithBreak(string_7);
 				Message.AppendBoolean(false);
-				this.method_19().SendMessage(Message);
+				this.GetClient().SendMessage(Message);
 			}
 		}
 
@@ -1175,23 +1270,6 @@ namespace GoldTree.HabboHotel.Users
             }
         }
 
-        public static DateTime UnixTimeStampToDateTime2(double unixTimeStamp)
-        {
-            // Unix timestamp is seconds past epoch
-            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-            DateTime dtDateTimeToDateTime = Convert.ToDateTime(dtDateTime.ToString());
-            return dtDateTimeToDateTime;
-        }
-
-        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
-        {
-            // Unix timestamp is seconds past epoch
-            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-            return dtDateTime;
-        }
-
         public void CheckTrueHabboAchievements()
         {
             //DateTime AccountCreated = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().DataCadastro));
@@ -1201,9 +1279,7 @@ namespace GoldTree.HabboHotel.Users
             DateTime AccountCreated;
 
             if (double.TryParse(Session.GetHabbo().DataCadastro, out dAccountCreated))
-            {
-                AccountCreated = UnixTimeStampToDateTime(dAccountCreated);
-            }
+                AccountCreated = GoldTree.TimestampToDate(dAccountCreated);
             else
             {
                 if (!DateTime.TryParseExact(Session.GetHabbo().DataCadastro, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.NoCurrentDateDefault, out AccountCreated))
@@ -1264,7 +1340,7 @@ namespace GoldTree.HabboHotel.Users
 
         public void CheckRegularVisitorAchievements()
         {
-            DateTime LastLoggedIn = UnixTimeStampToDateTime(double.Parse(Session.GetHabbo().last_loggedin));
+            DateTime LastLoggedIn = GoldTree.TimestampToDate(double.Parse(Session.GetHabbo().LastOnline));
             DateTime yesterday = DateTime.Now.AddDays(-1);
 
             if (LastLoggedIn.ToString("dd-MM-yyyy") == yesterday.ToString("dd-MM-yyyy"))
@@ -1274,8 +1350,8 @@ namespace GoldTree.HabboHotel.Users
                     RegularVisitor++;
                     dbClient.AddParamWithValue("sessionid", Session.GetHabbo().Id);
                     dbClient.ExecuteQuery("UPDATE user_stats SET RegularVisitor = RegularVisitor + 1 WHERE id = @sessionid LIMIT 1");
-                    dbClient.AddParamWithValue("daily_respect_points", Session.GetHabbo().daily_respect_points);
-                    dbClient.AddParamWithValue("daily_pet_respect_points", Session.GetHabbo().daily_pet_respect_points);
+                    dbClient.AddParamWithValue("daily_respect_points", Session.GetHabbo().RespectPoints);
+                    dbClient.AddParamWithValue("daily_pet_respect_points", Session.GetHabbo().PetRespectPoints);
                     dbClient.ExecuteQuery("UPDATE user_stats SET DailyRespectPoints = @daily_respect_points, DailyPetRespectPoints = @daily_pet_respect_points WHERE id = @sessionid");
                 }
             }
@@ -1290,8 +1366,8 @@ namespace GoldTree.HabboHotel.Users
                     RegularVisitor = 1;
                     dbClient.AddParamWithValue("sessionid", Session.GetHabbo().Id);
                     dbClient.ExecuteQuery("UPDATE user_stats SET RegularVisitor = 1 WHERE id = @sessionid LIMIT 1");
-                    dbClient.AddParamWithValue("daily_respect_points", Session.GetHabbo().daily_respect_points);
-                    dbClient.AddParamWithValue("daily_pet_respect_points", Session.GetHabbo().daily_pet_respect_points);
+                    dbClient.AddParamWithValue("daily_respect_points", Session.GetHabbo().RespectPoints);
+                    dbClient.AddParamWithValue("daily_pet_respect_points", Session.GetHabbo().PetRespectPoints);
                     dbClient.ExecuteQuery("UPDATE user_stats SET DailyRespectPoints = @daily_respect_points, DailyPetRespectPoints = @daily_pet_respect_points WHERE id = @sessionid");
                 }
             }

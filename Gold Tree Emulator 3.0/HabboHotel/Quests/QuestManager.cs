@@ -241,7 +241,7 @@ namespace GoldTree.HabboHotel.Quests
 					Session.GetHabbo().int_8++;
 				}
 			}
-			Session.GetHabbo().method_25();
+			Session.GetHabbo().LoadQuests();
 			ServerMessage Message = new ServerMessage(801u);
 			Quest class2 = this.method_6(uint_0);
 			class2.Serialize(Message, Session, true);

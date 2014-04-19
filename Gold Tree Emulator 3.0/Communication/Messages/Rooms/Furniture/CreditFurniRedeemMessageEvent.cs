@@ -17,7 +17,7 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
                 if (@class != null && @class.CheckRights(Session, true))
 				{
 					RoomItem class2 = @class.method_28(Event.PopWiredUInt());
-					UserItem class3 = Session.GetHabbo().method_23().method_10(class2.uint_0);
+					UserItem class3 = Session.GetHabbo().GetInventoryComponent().method_10(class2.uint_0);
 					if (class2 != null)
 					{
 						if (class2.GetBaseItem().Name.StartsWith("CF_") || class2.GetBaseItem().Name.StartsWith("CFC_") || class2.GetBaseItem().Name.StartsWith("PixEx_") || class2.GetBaseItem().Name.StartsWith("PntEx_"))

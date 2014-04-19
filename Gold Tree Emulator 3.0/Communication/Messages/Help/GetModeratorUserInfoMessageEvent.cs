@@ -16,7 +16,7 @@ namespace GoldTree.Communication.Messages.Help
 				}
 				else
 				{
-					Session.SendNotif("Could not load user info, invalid user.");
+					Session.SendNotification("Could not load user info, invalid user.");
 				}
 			}
 		}

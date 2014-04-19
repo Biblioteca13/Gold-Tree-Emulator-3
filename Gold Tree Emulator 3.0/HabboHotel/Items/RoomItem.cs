@@ -616,7 +616,7 @@ namespace GoldTree.HabboHotel.Items
                                                 {
                                                     if (!@class.IsBot)
                                                     {
-                                                        GoldTree.GetGame().GetRoomManager().method_5(new TeleUserData(@class.GetClient().method_1(), @class.GetClient().GetHabbo(), num3, num2));
+                                                        GoldTree.GetGame().GetRoomManager().method_5(new TeleUserData(@class.GetClient().GetClientMessageHandler(), @class.GetClient().GetHabbo(), num3, num2));
                                                     }
                                                 }
                                                 this.uint_3 = 0u;
@@ -745,7 +745,7 @@ namespace GoldTree.HabboHotel.Items
                                                 {
                                                     if (!@class.IsBot)
                                                     {
-                                                        GoldTree.GetGame().GetRoomManager().method_5(new TeleUserData(@class.GetClient().method_1(), @class.GetClient().GetHabbo(), num3, num2));
+                                                        GoldTree.GetGame().GetRoomManager().method_5(new TeleUserData(@class.GetClient().GetClientMessageHandler(), @class.GetClient().GetHabbo(), num3, num2));
                                                     }
                                                 }
                                                 this.uint_3 = 0u;
@@ -965,7 +965,7 @@ namespace GoldTree.HabboHotel.Items
                                         {
                                             if (this.dictionary_1[class4] == 10 && !class4.IsBot && class4 != null && class4.GetClient() != null && class4.GetClient().GetHabbo() != null)
                                             {
-                                                class4.GetClient().GetHabbo().method_24().method_2(4, true);
+                                                class4.GetClient().GetHabbo().GetEffectsInventoryComponent().method_2(4, true);
                                             }
                                             Dictionary<RoomUser, int> dictionary;
                                             RoomUser key;
@@ -975,23 +975,23 @@ namespace GoldTree.HabboHotel.Items
                                         else
                                         {
                                             this.dictionary_1.Remove(class4);
-                                            class4.GetClient().GetHabbo().method_24().method_2(0, true);
+                                            class4.GetClient().GetHabbo().GetEffectsInventoryComponent().method_2(0, true);
 
                                             if (class4.team != Team.None && class4.game == Rooms.Games.Game.Freeze)
                                             {
                                                 int FreezeEffect = ((int)class4.team) + 39;
-                                                if (class4.GetClient().GetHabbo().method_24().int_0 != FreezeEffect)
+                                                if (class4.GetClient().GetHabbo().GetEffectsInventoryComponent().int_0 != FreezeEffect)
                                                 {
-                                                    class4.GetClient().GetHabbo().method_24().method_2(FreezeEffect, true);
+                                                    class4.GetClient().GetHabbo().GetEffectsInventoryComponent().method_2(FreezeEffect, true);
                                                 }
                                             }
 
                                             else if (class4.team != Team.None && class4.game == Rooms.Games.Game.BattleBanzai)
                                             {
                                                 int FreezeEffect = ((int)class4.team) + 32;
-                                                if (class4.GetClient().GetHabbo().method_24().int_0 != FreezeEffect)
+                                                if (class4.GetClient().GetHabbo().GetEffectsInventoryComponent().int_0 != FreezeEffect)
                                                 {
-                                                    class4.GetClient().GetHabbo().method_24().method_2(FreezeEffect, true);
+                                                    class4.GetClient().GetHabbo().GetEffectsInventoryComponent().method_2(FreezeEffect, true);
                                                 }
                                             }
                                         }

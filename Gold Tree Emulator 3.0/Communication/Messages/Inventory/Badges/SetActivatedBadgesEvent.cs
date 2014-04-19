@@ -9,7 +9,7 @@ namespace GoldTree.Communication.Messages.Inventory.Badges
 	{
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
-			Session.GetHabbo().method_22().method_5();
+			Session.GetHabbo().GetBadgeComponent().method_5();
 			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 			{
 				@class.ExecuteQuery("UPDATE user_badges SET badge_slot = '0' WHERE user_id = '" + Session.GetHabbo().Id + "'");
@@ -20,7 +20,7 @@ namespace GoldTree.Communication.Messages.Inventory.Badges
 			string text = Event.PopFixedString();
 			if (text.Length != 0)
 			{
-				if (!Session.GetHabbo().method_22().method_1(text) || num < 1 || num > 5)
+				if (!Session.GetHabbo().GetBadgeComponent().method_1(text) || num < 1 || num > 5)
 				{
 					return;
 				}
@@ -28,7 +28,7 @@ namespace GoldTree.Communication.Messages.Inventory.Badges
 				{
                     GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 				}
-				Session.GetHabbo().method_22().method_0(text).Slot = num;
+				Session.GetHabbo().GetBadgeComponent().method_0(text).Slot = num;
 				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 				{
 					@class.AddParamWithValue("slotid", num);
@@ -44,8 +44,8 @@ namespace GoldTree.Communication.Messages.Inventory.Badges
 			}
 			ServerMessage Message = new ServerMessage(228u);
 			Message.AppendUInt(Session.GetHabbo().Id);
-			Message.AppendInt32(Session.GetHabbo().method_22().Int32_1);
-			foreach (Badge current in Session.GetHabbo().method_22().List_0)
+			Message.AppendInt32(Session.GetHabbo().GetBadgeComponent().Int32_1);
+			foreach (Badge current in Session.GetHabbo().GetBadgeComponent().List_0)
 			{
 				if (current.Slot > 0)
 				{

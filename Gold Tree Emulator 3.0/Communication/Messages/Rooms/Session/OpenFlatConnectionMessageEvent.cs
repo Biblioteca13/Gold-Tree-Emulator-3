@@ -15,7 +15,7 @@ namespace GoldTree.Communication.Messages.Rooms.Session
 			{
 				Logging.WriteLine("[RoomMgr] Requesting Private Room [ID: " + num + "]");
 			}
-			Session.method_1().method_5(num, string_);
+			Session.GetClientMessageHandler().method_5(num, string_);
 		}
 	}
 }

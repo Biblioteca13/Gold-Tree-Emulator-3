@@ -18,9 +18,9 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 				{
 					if (@class.Model == null)
 					{
-						Session.SendNotif("Error loading room, please try again soon! (Error Code: MdlData)");
+						Session.SendNotification("Error loading room, please try again soon! (Error Code: MdlData)");
 						Session.SendMessage(new ServerMessage(18u));
-						Session.method_1().method_7();
+						Session.GetClientMessageHandler().method_7();
 					}
 					else
 					{
@@ -29,7 +29,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 						Room class2 = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().uint_2);
 						if (class2 != null)
 						{
-							Session.method_1().method_7();
+							Session.GetClientMessageHandler().method_7();
 							ServerMessage Message = new ServerMessage(30u);
 							if (class2.Class28_0.string_2 != "")
 							{
@@ -146,11 +146,11 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 									{
 										try
 										{
-											if (class4.GetClient().GetHabbo() != null && class4.GetClient().GetHabbo().method_24() != null && class4.GetClient().GetHabbo().method_24().int_0 >= 1)
+											if (class4.GetClient().GetHabbo() != null && class4.GetClient().GetHabbo().GetEffectsInventoryComponent() != null && class4.GetClient().GetHabbo().GetEffectsInventoryComponent().int_0 >= 1)
 											{
 												ServerMessage Message12 = new ServerMessage(485u);
 												Message12.AppendInt32(class4.VirtualId);
-												Message12.AppendInt32(class4.GetClient().GetHabbo().method_24().int_0);
+												Message12.AppendInt32(class4.GetClient().GetHabbo().GetEffectsInventoryComponent().int_0);
 												Session.SendMessage(Message12);
 											}
 											goto IL_5C5;
@@ -172,14 +172,14 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 							}
 							if (class2 != null && Session != null && Session.GetHabbo().CurrentRoom != null)
 							{
-                                Session.GetHabbo().method_24().method_2(0, true);
+                                Session.GetHabbo().GetEffectsInventoryComponent().method_2(0, true);
 								class2.method_8(Session.GetHabbo().CurrentRoom.GetRoomUserByHabbo(Session.GetHabbo().Id));
 							}
 							if (class2.Achievement > 0u)
 							{
 								GoldTree.GetGame().GetAchievementManager().addAchievement(Session, class2.Achievement, 1);
 							}
-							if (Session.GetHabbo().bool_3 && Session.GetHabbo().int_4 > 0)
+							if (Session.GetHabbo().IsMuted && Session.GetHabbo().int_4 > 0)
 							{
 								ServerMessage Message13 = new ServerMessage(27u);
 								Message13.AppendInt32(Session.GetHabbo().int_4);

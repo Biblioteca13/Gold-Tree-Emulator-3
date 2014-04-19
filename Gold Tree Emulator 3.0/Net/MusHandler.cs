@@ -312,7 +312,7 @@ namespace GoldTree.Net
 								RoomUser class5 = class4.RoomUsers[i];
 								if (class5 != null)
 								{
-									class5.GetClient().SendNotif(string_2);
+									class5.GetClient().SendNotification(string_2);
 								}
 							}
 							goto IL_C70;
@@ -362,7 +362,7 @@ namespace GoldTree.Net
 					case 19:
 						using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 						{
-							GoldTree.GetGame().GetBanManager().method_0(class2);
+							GoldTree.GetGame().GetBanManager().Initialise(class2);
 						}
 						GoldTree.GetGame().GetClientManager().method_28();
 						goto IL_C70;

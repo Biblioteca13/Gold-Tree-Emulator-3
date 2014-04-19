@@ -464,21 +464,21 @@ namespace GoldTree.HabboHotel.Rooms
 			RoomData result;
 			if (!this.Models.ContainsKey(string_1))
 			{
-				Session.SendNotif("Sorry, this room model has not been added yet. Try again later.");
+				Session.SendNotification("Sorry, this room model has not been added yet. Try again later.");
 				result = null;
 			}
 			else
 			{
                 if (this.Models[string_1].bool_0 && !Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club") && !Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_vip"))
 				{
-					Session.SendNotif("You must be an GoldTree Club member to use that room layout.");
+					Session.SendNotification("You must be an GoldTree Club member to use that room layout.");
 					result = null;
 				}
 				else
 				{
 					if (string_0.Length < 3)
 					{
-						Session.SendNotif("Room name is too short for room creation!");
+						Session.SendNotification("Room name is too short for room creation!");
 						result = null;
 					}
 					else
@@ -490,7 +490,7 @@ namespace GoldTree.HabboHotel.Rooms
 							@class.AddParamWithValue("model", string_1);
 							@class.AddParamWithValue("username", Session.GetHabbo().Username);
 							@class.ExecuteQuery("INSERT INTO rooms (roomtype,caption,owner,model_name) VALUES ('private',@caption,@username,@model)");
-							Session.GetHabbo().Class12_0.DataTable_10 = @class.ReadDataTable("SELECT * FROM rooms WHERE owner = @username ORDER BY Id ASC");
+							Session.GetHabbo().GetUserDataFactory().DataTable_10 = @class.ReadDataTable("SELECT * FROM rooms WHERE owner = @username ORDER BY Id ASC");
 							uint_ = (uint)@class.ReadDataRow("SELECT Id FROM rooms WHERE owner = @username AND caption = @caption ORDER BY Id DESC")[0];
 							Session.GetHabbo().method_1(@class);
 						}

@@ -16,7 +16,7 @@ namespace GoldTree.Communication.Messages.Rooms.Pets
             if (@class != null && (@class.AllowPet || @class.CheckRights(Session, true)))
 			{
 				uint uint_ = Event.PopWiredUInt();
-				Pet class2 = Session.GetHabbo().method_23().method_4(uint_);
+				Pet class2 = Session.GetHabbo().GetInventoryComponent().method_4(uint_);
 				if (class2 != null && !class2.PlacedInRoom)
 				{
 					int num = Event.PopWiredInt32();
@@ -25,7 +25,7 @@ namespace GoldTree.Communication.Messages.Rooms.Pets
 					{
 						if (@class.Int32_2 >= ServerConfiguration.PetsPerRoomLimit)
 						{
-							Session.SendNotif(GoldTreeEnvironment.GetExternalText("error_maxpets") + ServerConfiguration.PetsPerRoomLimit);
+							Session.SendNotification(GoldTreeEnvironment.GetExternalText("error_maxpets") + ServerConfiguration.PetsPerRoomLimit);
 						}
 						else
 						{
@@ -36,7 +36,7 @@ namespace GoldTree.Communication.Messages.Rooms.Pets
 							@class.method_4(new RoomBot(class2.PetId, class2.RoomId, AIType.const_0, "freeroam", class2.Name, "", class2.Look, num, num2, 0, 0, 0, 0, 0, 0, ref list, ref list2, 0), class2);
                             if (@class.CheckRights(Session, true))
 							{
-								Session.GetHabbo().method_23().method_6(class2.PetId, @class.Id);
+								Session.GetHabbo().GetInventoryComponent().method_6(class2.PetId, @class.Id);
 							}
 						}
 					}

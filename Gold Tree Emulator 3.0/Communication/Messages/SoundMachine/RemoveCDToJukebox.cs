@@ -25,9 +25,9 @@ namespace GoldTree.Communication.Messages.SoundMachine
                     if (item != null)
                     {
                         item.RemoveFromDatabase();
-                        Session.GetHabbo().method_23().method_11((uint)item.itemID, item.baseItem.UInt32_0, item.songID.ToString(), false);
-                        Session.GetHabbo().method_23().method_9(true);
-                        Session.SendMessage(JukeboxDiscksComposer.SerializeSongInventory(Session.GetHabbo().method_23().songDisks));
+                        Session.GetHabbo().GetInventoryComponent().method_11((uint)item.itemID, item.baseItem.UInt32_0, item.songID.ToString(), false);
+                        Session.GetHabbo().GetInventoryComponent().method_9(true);
+                        Session.SendMessage(JukeboxDiscksComposer.SerializeSongInventory(Session.GetHabbo().GetInventoryComponent().songDisks));
                         Session.SendMessage(JukeboxDiscksComposer.Compose(roomMusicController.PlaylistCapacity, roomMusicController.Playlist.Values.ToList<SongInstance>()));
                     }
                 }

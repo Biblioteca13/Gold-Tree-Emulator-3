@@ -41,10 +41,10 @@ namespace GoldTree.HabboHotel
 		private GoldTreeEnvironment GoldTreeEnvironment;
 		private Groups Groups;
 
-        private Task gameLoop;
-        private bool gameLoopActive;
-        private bool gameLoopEnded;
-        private const int gameLoopSleepTime = 25;
+        private Task GameLoop;
+        private bool GameLoopActive;
+        private bool GameLoopEnded;
+        private const int GameLoopSleepTime = 25;
 
 		public Game(int conns)
 		{
@@ -55,7 +55,7 @@ namespace GoldTree.HabboHotel
 				this.ClientManager.method_10();
 			}
 
-			DateTime arg_45_0 = DateTime.Now;
+			DateTime now = DateTime.Now;
 
 			Logging.Write("Connecting to the database.. ");
 
@@ -64,7 +64,8 @@ namespace GoldTree.HabboHotel
                 using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                 {
                     Logging.WriteLine("completed!", ConsoleColor.Green);
-                    GoldTree.Class3_0 = this;
+
+                    GoldTree.Game = this;
                     this.LoadServerSettings(dbClient);
                     this.BanManager = new ModerationBanManager();
                     this.RoleManager = new RoleManager();
@@ -86,7 +87,7 @@ namespace GoldTree.HabboHotel
 
                     GoldTreeEnvironment.LoadExternalTexts(dbClient);
 
-                    this.BanManager.method_0(dbClient);
+                    this.BanManager.Initialise(dbClient);
 
                     this.RoleManager.method_0(dbClient);
 
@@ -117,6 +118,8 @@ namespace GoldTree.HabboHotel
                 Logging.WriteLine("failed!", ConsoleColor.Red);
                 Logging.WriteLine(e.Message + " Check the given configuration details in config.confn\r\n", ConsoleColor.Yellow);
                 GoldTree.Destroy("", false);
+
+                return;
             }
 
 			this.task_0 = new Task(new Action(LowPriorityWorker.smethod_0));
@@ -333,25 +336,25 @@ namespace GoldTree.HabboHotel
 
         internal void StartGameLoop()
         {
-            gameLoopEnded = false;
-            gameLoopActive = true;
-            gameLoop = new Task(MainGameLoop);
-            gameLoop.Start();
+            GameLoopEnded = false;
+            GameLoopActive = true;
+            GameLoop = new Task(MainGameLoop);
+            GameLoop.Start();
         }
 
         internal void StopGameLoop()
         {
-            gameLoopActive = false;
+            GameLoopActive = false;
 
-            while (!gameLoopEnded)
+            while (!GameLoopEnded)
             {
-                Thread.Sleep(gameLoopSleepTime);
+                Thread.Sleep(GameLoopSleepTime);
             }
         }
 
         private void MainGameLoop()
         {
-            while (gameLoopActive)
+            while (GameLoopActive)
             {
                 try
                 {
@@ -360,10 +363,10 @@ namespace GoldTree.HabboHotel
                 catch
                 {
                 }
-                Thread.Sleep(gameLoopSleepTime);
+                Thread.Sleep(GameLoopSleepTime);
             }
 
-            gameLoopEnded = true;
+            GameLoopEnded = true;
         }
 	}
 }

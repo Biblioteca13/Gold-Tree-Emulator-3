@@ -73,7 +73,7 @@ namespace GoldTree.Communication.Messages.Rooms.Settings
 						{
 							if ((long)class2.MinRank > (long)((ulong)Session.GetHabbo().Rank))
 							{
-								Session.SendNotif("You are not allowed to use this category. Your room has been moved to no category instead.");
+								Session.SendNotification("You are not allowed to use this category. Your room has been moved to no category instead.");
 								num3 = 0;
 							}
 							if (num4 <= 2)

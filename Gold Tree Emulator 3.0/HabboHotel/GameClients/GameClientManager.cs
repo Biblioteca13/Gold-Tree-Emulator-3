@@ -186,7 +186,7 @@ namespace GoldTree.HabboHotel.GameClients
         internal void method_8(uint uint_0, ref SocketConnection Message1_0)
         {
             this.Clients[(int)((UIntPtr)uint_0)] = new GameClient(uint_0, ref Message1_0);
-            this.Clients[(int)((UIntPtr)uint_0)].method_3();
+            this.Clients[(int)((UIntPtr)uint_0)].GetSocketConnection();
         }
 
 		public void method_9(uint uint_0)
@@ -405,7 +405,7 @@ namespace GoldTree.HabboHotel.GameClients
                         {
                             @class.GetHabbo().Credits += int_0;
                             @class.GetHabbo().method_13(true);
-                            @class.SendNotif("You just received " + int_0 + " credits from staff!");
+                            @class.SendNotification("You just received " + int_0 + " credits from staff!");
                         }
                         else
                         {
@@ -413,13 +413,13 @@ namespace GoldTree.HabboHotel.GameClients
                             {
                                 @class.GetHabbo().Credits = 2147483647;
                                 @class.GetHabbo().method_13(true);
-                                @class.SendNotif("You just received max credits from staff!");
+                                @class.SendNotification("You just received max credits from staff!");
                             }
                             else if (int_0 < 0)
                             {
                                 @class.GetHabbo().Credits = -2147483648;
                                 @class.GetHabbo().method_13(true);
-                                @class.SendNotif("You just received max negative credits from staff!");
+                                @class.SendNotification("You just received max negative credits from staff!");
                             }
                         }
                     }
@@ -445,7 +445,7 @@ namespace GoldTree.HabboHotel.GameClients
                         {
                             @class.GetHabbo().ActivityPoints += int_0;
                             @class.GetHabbo().method_15(bool_0);
-                            @class.SendNotif("You just received " + int_0 + " pixels from staff!");
+                            @class.SendNotification("You just received " + int_0 + " pixels from staff!");
                         }
                         else
                         {
@@ -453,13 +453,13 @@ namespace GoldTree.HabboHotel.GameClients
                             {
                                 @class.GetHabbo().Credits = 2147483647;
                                 @class.GetHabbo().method_13(true);
-                                @class.SendNotif("You just received max pixels from staff!");
+                                @class.SendNotification("You just received max pixels from staff!");
                             }
                             else if (int_0 < 0)
                             {
                                 @class.GetHabbo().Credits = -2147483648;
                                 @class.GetHabbo().method_13(true);
-                                @class.SendNotif("You just received max negative pixels from staff!");
+                                @class.SendNotification("You just received max negative pixels from staff!");
                             }
                         }
                     }
@@ -485,7 +485,7 @@ namespace GoldTree.HabboHotel.GameClients
                         {
                             @class.GetHabbo().VipPoints += int_0;
                             @class.GetHabbo().method_14(false, bool_0);
-                            @class.SendNotif("You just received " + int_0 + " points from staff!");
+                            @class.SendNotification("You just received " + int_0 + " points from staff!");
                         }
                         else
                         {
@@ -493,13 +493,13 @@ namespace GoldTree.HabboHotel.GameClients
                             {
                                 @class.GetHabbo().Credits = 2147483647;
                                 @class.GetHabbo().method_13(true);
-                                @class.SendNotif("You just received max points from staff!");
+                                @class.SendNotification("You just received max points from staff!");
                             }
                             else if (int_0 < 0)
                             {
                                 @class.GetHabbo().Credits = -2147483648;
                                 @class.GetHabbo().method_13(true);
-                                @class.SendNotif("You just received max negative points from staff!");
+                                @class.SendNotification("You just received max negative points from staff!");
                             }
                         }
                     }
@@ -518,8 +518,8 @@ namespace GoldTree.HabboHotel.GameClients
 				{
 					try
 					{
-						@class.GetHabbo().method_22().method_2(@class, string_0, true);
-						@class.SendNotif("You just received a badge from hotel staff!");
+						@class.GetHabbo().GetBadgeComponent().method_2(@class, string_0, true);
+						@class.SendNotification("You just received a badge from hotel staff!");
 					}
 					catch
 					{
@@ -552,9 +552,9 @@ namespace GoldTree.HabboHotel.GameClients
 			for (int i = 0; i < this.Clients.Length; i++)
 			{
 				GameClient @class = this.Clients[i];
-				if (@class != null && (@class.GetHabbo() != null && @class.GetHabbo().method_24() != null))
+				if (@class != null && (@class.GetHabbo() != null && @class.GetHabbo().GetEffectsInventoryComponent() != null))
 				{
-					@class.GetHabbo().method_24().method_7();
+					@class.GetHabbo().GetEffectsInventoryComponent().method_7();
 				}
 			}
 		}
@@ -571,8 +571,8 @@ namespace GoldTree.HabboHotel.GameClients
 					{
 						try
 						{
-							class2.GetHabbo().method_23().method_19(@class, true);
-							stringBuilder.Append(class2.GetHabbo().String_0);
+							class2.GetHabbo().GetInventoryComponent().method_19(@class, true);
+							stringBuilder.Append(class2.GetHabbo().UpdateQuery);
 							flag = true;
 						}
 						catch
@@ -701,7 +701,7 @@ namespace GoldTree.HabboHotel.GameClients
 			}
 			foreach (KeyValuePair<GameClient, ModerationBanException> current in dictionary)
 			{
-				current.Key.method_7(current.Value.Message);
+				current.Key.NotifyBan(current.Value.Message);
 				current.Key.method_12();
 			}
 		}

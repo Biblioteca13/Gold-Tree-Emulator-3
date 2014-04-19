@@ -27,7 +27,7 @@ namespace GoldTree.HabboHotel.Rooms.Games
         private static void ActivateShield(RoomUser user)
         {
             int Effect = (int)user.team + 48;
-            user.GetClient().GetHabbo().method_24().method_2(Effect, true);
+            user.GetClient().GetHabbo().GetEffectsInventoryComponent().method_2(Effect, true);
             user.shieldActive = true;
             user.shieldCounter += 10;
         }
@@ -98,7 +98,7 @@ namespace GoldTree.HabboHotel.Rooms.Games
             if (user.Freezed)
             {
                 user.FreezeCounter++;
-                user.GetClient().GetHabbo().method_24().method_2(12, true);
+                user.GetClient().GetHabbo().GetEffectsInventoryComponent().method_2(12, true);
                 if (user.FreezeCounter > 10)
                 {
                     user.bool_5 = !user.bool_5;
@@ -110,7 +110,7 @@ namespace GoldTree.HabboHotel.Rooms.Games
                     }
                     else if (user.FreezeLives <= 0)
                     {
-                        user.GetClient().GetHabbo().method_24().method_2(-1, true);
+                        user.GetClient().GetHabbo().GetEffectsInventoryComponent().method_2(-1, true);
                         this.room.GetGameManager().AddPointToTeam(user.team, -10, user);
                         TeamManager teamManagerForFreeze = this.room.GetRoomTeamManager();
                         teamManagerForFreeze.OnUserLeave(user);
@@ -160,7 +160,7 @@ namespace GoldTree.HabboHotel.Rooms.Games
                     user.shieldActive = false;
                     user.shieldCounter = 0;
                     int Effect = (int)user.team + 39;
-                    user.GetClient().GetHabbo().method_24().method_2(Effect, true);
+                    user.GetClient().GetHabbo().GetEffectsInventoryComponent().method_2(Effect, true);
                 }
             }
         }
@@ -261,7 +261,7 @@ namespace GoldTree.HabboHotel.Rooms.Games
         private static void RemoveUserFromTeam(RoomUser user)
         {
             user.team = Team.None;
-            user.GetClient().GetHabbo().method_24().method_2(-1, true);
+            user.GetClient().GetHabbo().GetEffectsInventoryComponent().method_2(-1, true);
         }
 
         internal void ResetGame()

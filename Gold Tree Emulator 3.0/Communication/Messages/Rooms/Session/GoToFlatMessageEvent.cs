@@ -8,7 +8,7 @@ namespace GoldTree.Communication.Messages.Rooms.Session
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
 			Session.GetHabbo().uint_2 = Event.PopWiredUInt();
-			Session.method_1().method_6();
+			Session.GetClientMessageHandler().method_6();
 		}
 	}
 }

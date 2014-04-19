@@ -36,7 +36,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
                                     @class.RoomUser_0 = null;
                                     @class.class34_1 = null;
                                     @class.MoveTo(num, num2);
-                                    Session.GetHabbo().method_24().method_2(-1, true);
+                                    Session.GetHabbo().GetEffectsInventoryComponent().method_2(-1, true);
                                     return;
                                 }
                             }

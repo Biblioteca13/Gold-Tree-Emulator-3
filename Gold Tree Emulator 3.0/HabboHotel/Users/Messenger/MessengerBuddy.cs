@@ -90,7 +90,7 @@ namespace GoldTree.HabboHotel.Users.Messenger
 			this.string_0 = string_4;
 			this.string_1 = string_5;
 			this.string_2 = string_6;
-            this.string_3 = GoldTree.smethod_21(double.Parse(string_7, CultureInfo.InvariantCulture)).ToString();
+            this.string_3 = GoldTree.TimestampToDate(double.Parse(string_7, CultureInfo.InvariantCulture)).ToString();
 			this.bool_0 = false;
 		}
 		public void method_0(ServerMessage Message5_0, bool bool_1)

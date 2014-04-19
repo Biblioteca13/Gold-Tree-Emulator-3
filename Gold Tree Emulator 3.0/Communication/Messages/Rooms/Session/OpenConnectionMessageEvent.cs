@@ -19,7 +19,7 @@ namespace GoldTree.Communication.Messages.Rooms.Session
             RoomData @class = GoldTree.GetGame().GetRoomManager().method_12(num);
 			if (@class != null && !(@class.Type != "public"))
 			{
-				Session.method_1().method_5(num, "");
+				Session.GetClientMessageHandler().method_5(num, "");
 			}
 		}
 	}

@@ -13,7 +13,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 			Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
             if (@class != null && @class.CheckRights(Session, true))
 			{
-				UserItem class2 = Session.GetHabbo().method_23().method_10(Event.PopWiredUInt());
+				UserItem class2 = Session.GetHabbo().GetInventoryComponent().method_10(Event.PopWiredUInt());
 				if (class2 != null)
 				{
 					string text = "floor";
@@ -70,7 +70,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 							"' LIMIT 1"
 						}));
 					}
-                    Session.GetHabbo().method_23().method_12(class2.uint_0, 0u, false);
+                    Session.GetHabbo().GetInventoryComponent().method_12(class2.uint_0, 0u, false);
 					ServerMessage Message = new ServerMessage(46u);
 					Message.AppendStringWithBreak(text);
 					Message.AppendStringWithBreak(class2.string_0);

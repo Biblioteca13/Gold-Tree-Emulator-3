@@ -11,17 +11,17 @@ namespace GoldTree.Communication.Messages.Messenger
 		{
             ServerMessage Message = new ServerMessage(950u);
             int StreamCount = 0;
-            foreach (DataRow dRow in Session.GetHabbo().Class12_0.DataTable_12.Rows)
+            foreach (DataRow dRow in Session.GetHabbo().GetUserDataFactory().DataTable_12.Rows)
             {
                 StreamCount = StreamCount + 1;
             }
-            DataTable dataTable_ = Session.GetHabbo().Class12_0.DataTable_12;
+            DataTable dataTable_ = Session.GetHabbo().GetUserDataFactory().DataTable_12;
             foreach (DataRow dataRow in dataTable_.Rows)
             {
                 int type = (int)dataRow["type"];
                 if (type == 1)
                 {
-                    DataRow[] DataRow_ = Session.GetHabbo().Class12_0.DataTable_8.Select("id = " + (uint)dataRow["userid"]);
+                    DataRow[] DataRow_ = Session.GetHabbo().GetUserDataFactory().DataTable_8.Select("id = " + (uint)dataRow["userid"]);
                     uint userid = (uint)dataRow["userid"];
                     string username = (string)DataRow_[0]["username"];
                     string gender = (string)dataRow["gender"].ToString().ToLower();

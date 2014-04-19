@@ -159,9 +159,9 @@ namespace GoldTree.HabboHotel.Rooms
 			if (Session == null || (Session.GetHabbo().HasFuse("ignore_roommute") || !this.method_17().bool_4))
 			{
 				this.Unidle();
-				if (!this.IsBot && this.GetClient().GetHabbo().bool_3)
+				if (!this.IsBot && this.GetClient().GetHabbo().IsMuted)
 				{
-					this.GetClient().SendNotif(GoldTreeEnvironment.GetExternalText("error_muted"));
+					this.GetClient().SendNotification(GoldTreeEnvironment.GetExternalText("error_muted"));
 				}
 				else
 				{
@@ -184,14 +184,14 @@ namespace GoldTree.HabboHotel.Rooms
 								ServerMessage Message = new ServerMessage(27u);
 								Message.AppendInt32(Session.GetHabbo().method_4());
 								this.GetClient().SendMessage(Message);
-								this.GetClient().GetHabbo().bool_3 = true;
+								this.GetClient().GetHabbo().IsMuted = true;
 								this.GetClient().GetHabbo().int_4 = Session.GetHabbo().method_4();
 								return;
 							}
 							Session.GetHabbo().dateTime_0 = DateTime.Now;
 							Session.GetHabbo().int_23++;
 						}
-						if (!this.IsBot && !Session.GetHabbo().isJuniori)
+						if (!this.IsBot && !Session.GetHabbo().IsJuniori)
 						{
 							string_1 = ChatCommandHandler.smethod_4(string_1);
 						}
@@ -285,7 +285,7 @@ namespace GoldTree.HabboHotel.Rooms
                                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 							}
 						}
-                        if (ServerConfiguration.EnableChatlog && !this.IsBot && !this.GetClient().GetHabbo().isJuniori)
+                        if (ServerConfiguration.EnableChatlog && !this.IsBot && !this.GetClient().GetHabbo().IsJuniori)
 						{
 							using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 							{

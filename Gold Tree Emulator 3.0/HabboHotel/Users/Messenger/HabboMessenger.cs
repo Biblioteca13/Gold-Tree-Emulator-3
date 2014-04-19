@@ -339,13 +339,13 @@ namespace GoldTree.HabboHotel.Users.Messenger
 				}
 				else
 				{
-					if (this.method_25().GetHabbo().bool_3)
+					if (this.method_25().GetHabbo().IsMuted)
 					{
 						this.method_20(4, uint_1);
 					}
 					else
 					{
-						if (@class.GetHabbo().bool_3)
+						if (@class.GetHabbo().IsMuted)
 						{
 							this.method_20(3, uint_1);
 						}
@@ -365,7 +365,7 @@ namespace GoldTree.HabboHotel.Users.Messenger
 							this.method_25().GetHabbo().int_23++;
 						}
 						string_0 = ChatCommandHandler.smethod_4(string_0);
-						if (ServerConfiguration.EnableChatlog && !this.method_25().GetHabbo().isJuniori)
+						if (ServerConfiguration.EnableChatlog && !this.method_25().GetHabbo().IsJuniori)
 						{
 							using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 							{

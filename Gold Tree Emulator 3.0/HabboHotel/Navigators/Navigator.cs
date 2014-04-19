@@ -477,7 +477,7 @@ namespace GoldTree.HabboHotel.Navigators
 				goto IL_508;
 			}
 			IL_3A2:
-			using (List<RoomData>.Enumerator enumerator4 = Session.GetHabbo().list_6.GetEnumerator())
+			using (List<RoomData>.Enumerator enumerator4 = Session.GetHabbo().OwnedRooms.GetEnumerator())
 			{
 				while (enumerator4.MoveNext())
 				{

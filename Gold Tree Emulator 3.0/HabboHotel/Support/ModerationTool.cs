@@ -420,7 +420,7 @@ namespace GoldTree.HabboHotel.Support
 					RoomUser class2 = @class.RoomUsers[i];
 					if (class2 != null && !class2.IsBot)
 					{
-						class2.GetClient().SendNotif(string_0, 0);
+						class2.GetClient().SendNotification(string_0, 0);
 						if (class2.GetClient().GetHabbo().Rank <= 2u)
 						{
 							if (num > 0)
@@ -512,7 +512,7 @@ namespace GoldTree.HabboHotel.Support
 			{
 				if (@class.GetHabbo().Rank >= Session.GetHabbo().Rank)
 				{
-					Session.SendNotif(GoldTreeEnvironment.GetExternalText("mod_error_permission_kick"));
+					Session.SendNotification(GoldTreeEnvironment.GetExternalText("mod_error_permission_kick"));
 				}
 				else
 				{
@@ -522,7 +522,7 @@ namespace GoldTree.HabboHotel.Support
 						class2.method_47(@class, true, false);
 						if (!bool_0)
 						{
-							@class.SendNotif(string_0);
+							@class.SendNotification(string_0);
 							using (DatabaseClient class3 = GoldTree.GetDatabase().GetClient())
 							{
 								class3.ExecuteQuery("UPDATE user_info SET cautions = cautions + 1 WHERE user_id = '" + uint_0 + "' LIMIT 1");
@@ -539,10 +539,10 @@ namespace GoldTree.HabboHotel.Support
 			{
 				if (bool_0 && @class.GetHabbo().Rank >= Session.GetHabbo().Rank)
 				{
-					Session.SendNotif(GoldTreeEnvironment.GetExternalText("mod_error_permission_caution"));
+					Session.SendNotification(GoldTreeEnvironment.GetExternalText("mod_error_permission_caution"));
 					bool_0 = false;
 				}
-				@class.SendNotif(string_0, 0);
+				@class.SendNotification(string_0, 0);
 				if (bool_0)
 				{
 					using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
@@ -559,12 +559,12 @@ namespace GoldTree.HabboHotel.Support
 			{
 				if (@class.GetHabbo().Rank >= Session.GetHabbo().Rank)
 				{
-					Session.SendNotif(GoldTreeEnvironment.GetExternalText("mod_error_permission_ban"));
+					Session.SendNotification(GoldTreeEnvironment.GetExternalText("mod_error_permission_ban"));
 				}
 				else
 				{
 					double double_ = (double)int_0;
-					GoldTree.GetGame().GetBanManager().method_2(@class, Session.GetHabbo().Username, double_, string_0, false);
+					GoldTree.GetGame().GetBanManager().BanUser(@class, Session.GetHabbo().Username, double_, string_0, false);
 				}
 			}
 		}

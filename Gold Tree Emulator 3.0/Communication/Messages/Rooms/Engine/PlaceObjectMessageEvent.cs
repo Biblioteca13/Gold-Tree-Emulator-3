@@ -35,17 +35,17 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
                     {
                         return;
                     }
-                    UserItem class2 = Session.GetHabbo().method_23().method_10(uint_);
+                    UserItem class2 = Session.GetHabbo().GetInventoryComponent().method_10(uint_);
                     if (class2 != null)
                     {
                         string text2 = class2.method_1().InteractionType.ToLower();
                         if (text2 != null && text2 == "dimmer" && @class.method_72("dimmer") >= 1)
                         {
-                            Session.SendNotif("You can only have one moodlight in a room.");
+                            Session.SendNotification("You can only have one moodlight in a room.");
                         }
                         else if (text2 != null && text2 == "jukebox" && @class.method_72("jukebox") >= 1)
                         {
-                            Session.SendNotif("You can only have one jukebox in a room.");
+                            Session.SendNotification("You can only have one jukebox in a room.");
                         }
                         else
                         {
@@ -68,7 +68,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
                                 {
                                     goto IL_32C;
                                 }
-                                Session.GetHabbo().method_23().method_12(uint_, 1u, false);
+                                Session.GetHabbo().GetInventoryComponent().method_12(uint_, 1u, false);
                                 using (DatabaseClient class3 = GoldTree.GetDatabase().GetClient())
                                 {
                                     class3.ExecuteQuery(string.Concat(new object[]
@@ -88,7 +88,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
                             RoomItem_ = new RoomItem(class2.uint_0, @class.Id, class2.uint_1, class2.string_0, 0, 0, 0.0, 0, "", @class);
                             if (@class.method_79(Session, RoomItem_, int_, int_2, int_3, true, false, false))
                             {
-                                Session.GetHabbo().method_23().method_12(uint_, 1u, false);
+                                Session.GetHabbo().GetInventoryComponent().method_12(uint_, 1u, false);
                                 using (DatabaseClient class3 = GoldTree.GetDatabase().GetClient())
                                 {
                                     class3.ExecuteQuery(string.Concat(new object[]

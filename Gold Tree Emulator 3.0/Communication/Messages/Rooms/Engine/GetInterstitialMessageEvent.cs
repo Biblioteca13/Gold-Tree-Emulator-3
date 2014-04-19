@@ -7,7 +7,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 	{
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
-			Session.method_1().method_4();
+			Session.GetClientMessageHandler().method_4();
 		}
 	}
 }

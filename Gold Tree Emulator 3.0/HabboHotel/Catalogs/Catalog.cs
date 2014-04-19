@@ -254,7 +254,7 @@ namespace GoldTree.HabboHotel.Catalogs
 						{
 							if (bool_0 && class2.method_0().Type == 'e')
 							{
-								Session.SendNotif("You can not send this item as a gift.");
+								Session.SendNotification("You can not send this item as a gift.");
 								return false;
 							}
 							else
@@ -431,14 +431,14 @@ namespace GoldTree.HabboHotel.Catalogs
 									GameClient class5 = GoldTree.GetGame().GetClientManager().method_2(num);
 									if (class5 != null)
 									{
-										class5.SendNotif("You have received a gift! Check your inventory.");
-										class5.GetHabbo().method_23().method_9(true);
+										class5.SendNotification("You have received a gift! Check your inventory.");
+										class5.GetHabbo().GetInventoryComponent().method_9(true);
 										class5.GetHabbo().GiftsReceived++;
                                         class5.GetHabbo().CheckGiftReceivedAchievements();
 									}
 									Session.GetHabbo().GiftsGiven++;
                                     Session.GetHabbo().CheckGiftGivenAchievements();
-									Session.SendNotif("Gift sent successfully!");
+									Session.SendNotification("Gift sent successfully!");
 									return true;
 								}
 								else
@@ -450,7 +450,7 @@ namespace GoldTree.HabboHotel.Catalogs
 									}
                                     if (!string.IsNullOrEmpty(class2.BadgeID))
                                     {
-                                        Session.GetHabbo().method_22().method_2(Session, class2.BadgeID, true);
+                                        Session.GetHabbo().GetBadgeComponent().method_2(Session, class2.BadgeID, true);
                                     }
 									return true;
 								}
@@ -499,8 +499,8 @@ namespace GoldTree.HabboHotel.Catalogs
 			GameClient class5 = GoldTree.GetGame().GetClientManager().method_2(uint_1);
 			if (class5 != null)
 			{
-				class5.SendNotif("You have received a gift! Check your inventory.");
-				class5.GetHabbo().method_23().method_9(true);
+				class5.SendNotification("You have received a gift! Check your inventory.");
+				class5.GetHabbo().GetInventoryComponent().method_9(true);
 			}
 		}
 		public bool method_8(string string_0)
@@ -545,7 +545,7 @@ namespace GoldTree.HabboHotel.Catalogs
                                     {
                                         @class.ExecuteQuery("INSERT INTO room_items_moodlight (item_id,enabled,current_preset,preset_one,preset_two,preset_three) VALUES ('" + num + "','0','1','#000000,255,0','#000000,255,0','#000000,255,0')");
                                     }
-                                    Session.GetHabbo().method_23().method_11(num, Item.UInt32_0, string_0, bool_0);
+                                    Session.GetHabbo().GetInventoryComponent().method_11(num, Item.UInt32_0, string_0, bool_0);
                                 }
                                 else
                                 {
@@ -569,8 +569,8 @@ namespace GoldTree.HabboHotel.Catalogs
 										"')"
 									}));
                                     }
-                                    Session.GetHabbo().method_23().method_11(num2, Item.UInt32_0, "0", bool_0);
-                                    Session.GetHabbo().method_23().method_11(num, Item.UInt32_0, "0", bool_0);
+                                    Session.GetHabbo().GetInventoryComponent().method_11(num2, Item.UInt32_0, "0", bool_0);
+                                    Session.GetHabbo().GetInventoryComponent().method_11(num, Item.UInt32_0, "0", bool_0);
                                 }
                             }
                             else
@@ -583,8 +583,8 @@ namespace GoldTree.HabboHotel.Catalogs
 							{
 								't'
 							})[1]), array[1], array[2]);
-                                Session.GetHabbo().method_23().method_7(class15_);
-                                Session.GetHabbo().method_23().method_11(num, 320u, "0", bool_0);
+                                Session.GetHabbo().GetInventoryComponent().method_7(class15_);
+                                Session.GetHabbo().GetInventoryComponent().method_11(num, 320u, "0", bool_0);
                             }
                         IL_4EA:
                             ServerMessage Message = new ServerMessage(832u);
@@ -612,17 +612,17 @@ namespace GoldTree.HabboHotel.Catalogs
                             i++;
                             continue;
                         IL_4CF:
-                            Session.GetHabbo().method_23().method_11(num, Item.UInt32_0, string_0, bool_0);
+                            Session.GetHabbo().GetInventoryComponent().method_11(num, Item.UInt32_0, string_0, bool_0);
                             goto IL_4EA;
                         }
-                        Session.GetHabbo().method_23().method_9(false);
+                        Session.GetHabbo().GetInventoryComponent().method_9(false);
                         return;
                     }
                     if (text == "e")
                     {
                         for (int i = 0; i < int_0; i++)
                         {
-                            Session.GetHabbo().method_24().method_0(Item.Sprite, 3600);
+                            Session.GetHabbo().GetEffectsInventoryComponent().method_0(Item.Sprite, 3600);
                         }
                         return;
                     }
@@ -658,7 +658,7 @@ namespace GoldTree.HabboHotel.Catalogs
                         }
                         Session.SendMessage(Message2);
                         ServerMessage Message3 = new ServerMessage(2u);
-                        if (Session.GetHabbo().Vip || ServerConfiguration.HabboClubForClothes)
+                        if (Session.GetHabbo().IsVIP || ServerConfiguration.HabboClubForClothes)
                         {
                             Message3.AppendInt32(2);
                         }
@@ -691,7 +691,7 @@ namespace GoldTree.HabboHotel.Catalogs
                                 }
                                 else
                                 {
-                                    if (Session.GetHabbo().Vip || ServerConfiguration.HabboClubForClothes || Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
+                                    if (Session.GetHabbo().IsVIP || ServerConfiguration.HabboClubForClothes || Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
                                     {
                                         Message3.AppendInt32(2);
                                     }
@@ -706,7 +706,7 @@ namespace GoldTree.HabboHotel.Catalogs
                         return;
                     }
                 }
-                Session.SendNotif("Something went wrong! The item type could not be processed. Please do not try to buy this item anymore, instead inform support as soon as possible.");
+                Session.SendNotification("Something went wrong! The item type could not be processed. Please do not try to buy this item anymore, instead inform support as soon as possible.");
             }
         }
 		public Item method_10()

@@ -108,7 +108,7 @@ namespace GoldTree.Messages
 						}
 						class2.method_69(this.Session.GetHabbo().Id);
 					}
-					if (class2.UsersNow >= class2.UsersMax && !GoldTree.GetGame().GetRoleManager().method_1(this.Session.GetHabbo().Rank, "acc_enter_fullrooms") && !this.Session.GetHabbo().Vip)
+					if (class2.UsersNow >= class2.UsersMax && !GoldTree.GetGame().GetRoleManager().method_1(this.Session.GetHabbo().Rank, "acc_enter_fullrooms") && !this.Session.GetHabbo().IsVIP)
 					{
 						ServerMessage Message = new ServerMessage(224u);
 						Message.AppendInt32(1);
@@ -122,7 +122,7 @@ namespace GoldTree.Messages
 						{
 							if (class2.State > 0 && !this.Session.GetHabbo().HasFuse("acc_restrictedrooms"))
 							{
-								this.Session.SendNotif("This public room is accessible to GoldTree staff only.");
+								this.Session.SendNotification("This public room is accessible to GoldTree staff only.");
 								ServerMessage Message2 = new ServerMessage(18u);
 								this.Session.SendMessage(Message2);
 								return;

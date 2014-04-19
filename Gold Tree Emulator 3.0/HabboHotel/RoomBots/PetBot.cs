@@ -73,7 +73,7 @@ namespace GoldTree.HabboHotel.RoomBots
 				if (RoomUser_.class34_1 != null && RoomUser_ == base.method_3().RoomUser_0)
 				{
 					base.method_3().RoomUser_0 = null;
-					RoomUser_.GetClient().GetHabbo().method_24().method_2(-1, true);
+					RoomUser_.GetClient().GetHabbo().GetEffectsInventoryComponent().method_2(-1, true);
 					RoomUser_.class34_1 = null;
 					RoomUser_.RoomUser_0 = null;
 				}
@@ -156,7 +156,7 @@ namespace GoldTree.HabboHotel.RoomBots
 					if (string_.ToLower() == base.GetRoomUser().PetData.OwnerName.ToLower() && string_.ToLower() != base.method_1().Owner.ToLower())
 					{
 						base.method_1().method_6(base.GetRoomUser().PetData.VirtualId, false);
-						Session.GetHabbo().method_23().method_7(base.GetRoomUser().PetData);
+						Session.GetHabbo().GetInventoryComponent().method_7(base.GetRoomUser().PetData);
 					}
 				}
 				catch
