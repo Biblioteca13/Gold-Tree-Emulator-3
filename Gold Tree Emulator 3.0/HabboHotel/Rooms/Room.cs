@@ -88,7 +88,6 @@ namespace GoldTree.HabboHotel.Rooms
         public int int_10;
         public int int_11;
         public int int_12;
-        public int int_13;
         private bool bool_10;
         public List<RoomItem> list_14;
         public List<RoomItem> list_15;
@@ -374,7 +373,6 @@ namespace GoldTree.HabboHotel.Rooms
                 this.int_11 = 0;
                 this.int_9 = 0;
                 this.int_12 = 0;
-                this.int_13 = 0;
                 this.list_3 = new List<RoomItem>();
                 this.list_14 = new List<RoomItem>();
                 this.list_15 = new List<RoomItem>();

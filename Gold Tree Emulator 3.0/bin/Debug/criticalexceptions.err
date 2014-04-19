@@ -1,0 +1,20 @@
+19.4.2014 8:08:21: System.NullReferenceException: Object reference not set to an instance of an object.
+   at GoldTree.HabboHotel.Items.Interactors.InteractorFreezeTile.FreezeUser(RoomItem Item, RoomItem Item2) in c:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\HabboHotel\Items\Interactors\InteractorFreezeTile.cs:line 188
+   at GoldTree.HabboHotel.Items.Interactors.InteractorFreezeTile.<OnTrigger>d__0.MoveNext() in c:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\HabboHotel\Items\Interactors\InteractorFreezeTile.cs:line 88
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.AsyncMethodBuilderCore.<ThrowAsync>b__1(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.QueueUserWorkItemCallback.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem()
+   at System.Threading.ThreadPoolWorkQueue.Dispatch()
+
+19.4.2014 8:09:40: System.NullReferenceException: Object reference not set to an instance of an object.
+   at GoldTree.HabboHotel.Items.Interactors.InteractorFreezeTile.FreezeUser(RoomItem Item, RoomItem Item2) in c:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\HabboHotel\Items\Interactors\InteractorFreezeTile.cs:line 188
+   at GoldTree.HabboHotel.Items.Interactors.InteractorFreezeTile.<OnTrigger>d__0.MoveNext() in c:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\HabboHotel\Items\Interactors\InteractorFreezeTile.cs:line 88
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.AsyncMethodBuilderCore.<ThrowAsync>b__1(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.QueueUserWorkItemCallback.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem()
+   at System.Threading.ThreadPoolWorkQueue.Dispatch()
+
