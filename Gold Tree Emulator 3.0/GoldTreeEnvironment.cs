@@ -18,7 +18,7 @@ namespace GoldTree
 
 		public static void LoadExternalTexts(DatabaseClient dbClient)
 		{
-            Logging.Write("Fetching external texts for the Gold Tree Environment");
+            Logging.Write("Fetching external texts for the Gold Tree Environment.. ");
 
             if (ExternalTexts.Count > 0)
                 ExternalTexts.Clear();
@@ -32,6 +32,8 @@ namespace GoldTree
                     GoldTreeEnvironment.ExternalTexts.Add(dataRow["identifier"].ToString(), dataRow["display_text"].ToString());
                 }
 			}
+
+            Logging.WriteLine("completed!", ConsoleColor.Green);
 		}
 
 		public static string GetExternalText(string key)

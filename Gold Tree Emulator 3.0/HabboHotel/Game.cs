@@ -57,12 +57,13 @@ namespace GoldTree.HabboHotel
 
 			DateTime arg_45_0 = DateTime.Now;
 
-			Logging.Write("Connecting to the database...");
+			Logging.Write("Connecting to the database.. ");
 
             try
             {
                 using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                 {
+                    Logging.WriteLine("completed!", ConsoleColor.Green);
                     GoldTree.Class3_0 = this;
                     this.LoadServerSettings(dbClient);
                     this.BanManager = new ModerationBanManager();
