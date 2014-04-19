@@ -11,7 +11,7 @@ namespace GoldTree.Communication.Messages.Inventory.Trading
 			Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
 			if (@class != null)
 			{
-				if (!@class.Boolean_2)
+				if (!@class.CanTrade)
 				{
 					Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("trade_error_roomdisabled"));
 				}

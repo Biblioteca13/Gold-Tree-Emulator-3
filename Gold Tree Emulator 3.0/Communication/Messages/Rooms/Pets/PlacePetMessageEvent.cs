@@ -23,7 +23,7 @@ namespace GoldTree.Communication.Messages.Rooms.Pets
 					int num2 = Event.PopWiredInt32();
 					if (@class.method_30(num, num2, 0.0, true, false))
 					{
-						if (@class.Int32_2 >= ServerConfiguration.PetsPerRoomLimit)
+						if (@class.PetCount >= ServerConfiguration.PetsPerRoomLimit)
 						{
 							Session.SendNotification(GoldTreeEnvironment.GetExternalText("error_maxpets") + ServerConfiguration.PetsPerRoomLimit);
 						}

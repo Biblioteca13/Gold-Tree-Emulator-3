@@ -153,7 +153,7 @@ namespace GoldTree.Messages
 								{
 									if (class2.State == 1)
 									{
-										if (class2.Int32_0 == 0)
+										if (class2.UserCount == 0)
 										{
 											ServerMessage Message5 = new ServerMessage(131u);
 											this.Session.SendMessage(Message5);
@@ -251,7 +251,7 @@ namespace GoldTree.Messages
 						Message8.AppendInt32(-1);
 					}
 					this.Session.SendMessage(Message8);
-					if (@class.Boolean_0)
+					if (@class.HasEvent)
 					{
 						this.Session.SendMessage(@class.Event.Serialize(this.Session));
 					}

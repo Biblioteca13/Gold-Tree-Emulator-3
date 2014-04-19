@@ -183,7 +183,7 @@ namespace GoldTree.Communication.Messages.Rooms.Settings
 								Message4.AppendBoolean(true);
 								Message4.AppendBoolean(true);
 								@class.SendMessage(Message4, null);
-                                RoomData class27_ = @class.Class27_0;
+                                RoomData class27_ = @class.RoomData;
 								ServerMessage Message5 = new ServerMessage(454u);
 								Message5.AppendBoolean(false);
 								class27_.method_3(Message5, false, false);

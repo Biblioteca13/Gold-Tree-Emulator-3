@@ -485,7 +485,7 @@ namespace GoldTree.HabboHotel.Support
 			}
 			if (@class != null)
 			{
-				Message.AppendBoolean(@class.Boolean_0);
+				Message.AppendBoolean(@class.HasEvent);
 				if (@class.Event == null)
 				{
 					return Message;

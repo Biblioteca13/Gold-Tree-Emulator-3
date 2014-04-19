@@ -36,7 +36,7 @@ namespace GoldTree.HabboHotel.RoomBots
 			}
 			else
 			{
-				result = this.GetRoomUser().class34_0;
+				result = this.GetRoomUser().RoomBot;
 			}
 			return result;
 		}

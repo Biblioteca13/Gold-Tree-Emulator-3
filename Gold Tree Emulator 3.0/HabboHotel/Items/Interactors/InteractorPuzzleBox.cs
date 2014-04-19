@@ -25,7 +25,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 				ThreeDCoord gstruct1_2 = new ThreeDCoord(RoomItem_0.Int32_0 - 1, RoomItem_0.Int32_1);
 				ThreeDCoord gstruct1_3 = new ThreeDCoord(RoomItem_0.Int32_0, RoomItem_0.Int32_1 + 1);
 				ThreeDCoord gstruct1_4 = new ThreeDCoord(RoomItem_0.Int32_0, RoomItem_0.Int32_1 - 1);
-				if (ThreeDCoord.smethod_1(class2.GStruct1_0, gstruct1_) && ThreeDCoord.smethod_1(class2.GStruct1_0, gstruct1_2) && ThreeDCoord.smethod_1(class2.GStruct1_0, gstruct1_3) && ThreeDCoord.smethod_1(class2.GStruct1_0, gstruct1_4))
+				if (ThreeDCoord.smethod_1(class2.Position, gstruct1_) && ThreeDCoord.smethod_1(class2.Position, gstruct1_2) && ThreeDCoord.smethod_1(class2.Position, gstruct1_3) && ThreeDCoord.smethod_1(class2.Position, gstruct1_4))
 				{
 					if (class2.bool_0)
 					{
@@ -36,28 +36,28 @@ namespace GoldTree.HabboHotel.Items.Interactors
 				{
 					int num = RoomItem_0.Int32_0;
 					int num2 = RoomItem_0.Int32_1;
-					if (ThreeDCoord.smethod_0(class2.GStruct1_0, gstruct1_))
+					if (ThreeDCoord.smethod_0(class2.Position, gstruct1_))
 					{
 						num = RoomItem_0.Int32_0 - 1;
 						num2 = RoomItem_0.Int32_1;
 					}
 					else
 					{
-						if (ThreeDCoord.smethod_0(class2.GStruct1_0, gstruct1_2))
+						if (ThreeDCoord.smethod_0(class2.Position, gstruct1_2))
 						{
 							num = RoomItem_0.Int32_0 + 1;
 							num2 = RoomItem_0.Int32_1;
 						}
 						else
 						{
-							if (ThreeDCoord.smethod_0(class2.GStruct1_0, gstruct1_3))
+							if (ThreeDCoord.smethod_0(class2.Position, gstruct1_3))
 							{
 								num = RoomItem_0.Int32_0;
 								num2 = RoomItem_0.Int32_1 - 1;
 							}
 							else
 							{
-								if (ThreeDCoord.smethod_0(class2.GStruct1_0, gstruct1_4))
+								if (ThreeDCoord.smethod_0(class2.Position, gstruct1_4))
 								{
 									num = RoomItem_0.Int32_0;
 									num2 = RoomItem_0.Int32_1 + 1;

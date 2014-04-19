@@ -31,9 +31,9 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 						{
 							Session.GetClientMessageHandler().method_7();
 							ServerMessage Message = new ServerMessage(30u);
-							if (class2.Class28_0.string_2 != "")
+							if (class2.RoomModel.string_2 != "")
 							{
-								Message.AppendStringWithBreak(class2.Class28_0.string_2);
+								Message.AppendStringWithBreak(class2.RoomModel.string_2);
 							}
 							else
 							{
@@ -121,7 +121,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 								RoomUser class4 = class2.RoomUsers[i];
 								if (class4 != null && !class4.bool_11)
 								{
-									if (class4.Boolean_1)
+									if (class4.IsDancing)
 									{
 										ServerMessage Message9 = new ServerMessage(480u);
 										Message9.AppendInt32(class4.VirtualId);
@@ -160,11 +160,11 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 											goto IL_5C5;
 										}
 									}
-									if (!class4.isPet && class4.class34_0.EffectId != 0)
+									if (!class4.IsPet && class4.RoomBot.EffectId != 0)
 									{
 										ServerMessage Message12 = new ServerMessage(485u);
 										Message12.AppendInt32(class4.VirtualId);
-										Message12.AppendInt32(class4.class34_0.EffectId);
+										Message12.AppendInt32(class4.RoomBot.EffectId);
 										Session.SendMessage(Message12);
 									}
 								}

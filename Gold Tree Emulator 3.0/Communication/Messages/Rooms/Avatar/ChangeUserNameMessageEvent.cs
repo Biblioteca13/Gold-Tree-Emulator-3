@@ -119,7 +119,7 @@ namespace GoldTree.Communication.Messages.Rooms.Avatar
 		[CompilerGenerated]
 		private static int smethod_0(Room class14_0)
 		{
-			return class14_0.Int32_0;
+			return class14_0.UserCount;
 		}
 	}
 }

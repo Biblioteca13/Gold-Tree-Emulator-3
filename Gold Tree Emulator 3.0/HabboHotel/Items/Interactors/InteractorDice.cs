@@ -34,7 +34,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 					}
 					else
 					{
-						RoomItem_0.uint_3 = @class.uint_0;
+						RoomItem_0.uint_3 = @class.UId;
 						RoomItem_0.ExtraData = "-1";
 						RoomItem_0.UpdateState(false, true);
 						RoomItem_0.ReqUpdate(4);

@@ -12,13 +12,13 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
 			try
 			{
 				Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
-                if (@class != null && @class.CheckRights(Session, true) && @class.class67_0 != null)
+                if (@class != null && @class.CheckRights(Session, true) && @class.MoodlightData != null)
 				{
 					ServerMessage Message = new ServerMessage(365u);
-					Message.AppendInt32(@class.class67_0.Presets.Count);
-					Message.AppendInt32(@class.class67_0.CurrentPreset);
+					Message.AppendInt32(@class.MoodlightData.Presets.Count);
+					Message.AppendInt32(@class.MoodlightData.CurrentPreset);
 					int num = 0;
-					foreach (MoodlightPreset current in @class.class67_0.Presets)
+					foreach (MoodlightPreset current in @class.MoodlightData.Presets)
 					{
 						num++;
 						Message.AppendInt32(num);

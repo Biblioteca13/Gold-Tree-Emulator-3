@@ -219,7 +219,7 @@ namespace GoldTree.HabboHotel.Rooms
 			this.Hidewall = Room.Hidewall;
 			this.Wallthick = Room.Wallthick;
 			this.Floorthick = Room.Floorthick;
-			this.myIcon = Room.myIcon;
+            this.myIcon = Room.RoomIcon;
 			this.Password = Room.Password;
 			this.Event = Room.Event;
 			this.Wallpaper = Room.Wallpaper;

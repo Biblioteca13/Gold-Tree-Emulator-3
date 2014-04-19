@@ -337,7 +337,7 @@ namespace GoldTree.HabboHotel.Rooms
 				}
 				if (this.method_13(uint_0))
 				{
-					result = this.GetRoom(uint_0).Class27_0;
+					result = this.GetRoom(uint_0).RoomData;
 					return result;
 				}
 				DataRow dataRow = null;
@@ -427,7 +427,7 @@ namespace GoldTree.HabboHotel.Rooms
 				RoomData @class = new RoomData();
 				if (this.method_13(uint_0))
 				{
-					@class = this.GetRoom(uint_0).Class27_0;
+					@class = this.GetRoom(uint_0).RoomData;
 				}
 				else
 				{
@@ -507,9 +507,9 @@ namespace GoldTree.HabboHotel.Rooms
 			{
 				foreach (Room @class in class26_.Values)
 				{
-					if (@class != null && @class.Int32_0 > 0 && !@class.IsPublic)
+					if (@class != null && @class.UserCount > 0 && !@class.IsPublic)
 					{
-						dictionary.Add(@class, @class.Int32_0);
+						dictionary.Add(@class, @class.UserCount);
 					}
 				}
 			}
@@ -524,7 +524,7 @@ namespace GoldTree.HabboHotel.Rooms
 				{
 					if (@class != null)
 					{
-						dictionary.Add(@class, @class.Int32_0);
+						dictionary.Add(@class, @class.UserCount);
 					}
 				}
 			}

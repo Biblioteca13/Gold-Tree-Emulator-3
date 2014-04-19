@@ -57,7 +57,7 @@ namespace GoldTree.Communication.Messages.Navigator
 							"' LIMIT 1"
 						}));
 					}
-					@class.myIcon = new RoomIcon(num, num2, dictionary);
+					@class.RoomIcon = new RoomIcon(num, num2, dictionary);
 					ServerMessage Message = new ServerMessage(457u);
 					Message.AppendUInt(@class.Id);
 					Message.AppendBoolean(true);
@@ -65,7 +65,7 @@ namespace GoldTree.Communication.Messages.Navigator
 					ServerMessage Message2 = new ServerMessage(456u);
 					Message2.AppendUInt(@class.Id);
 					Session.SendMessage(Message2);
-					RoomData class27_ = @class.Class27_0;
+					RoomData class27_ = @class.RoomData;
 					ServerMessage Message3 = new ServerMessage(454u);
 					Message3.AppendBoolean(false);
 					class27_.method_3(Message3, false, false);

@@ -19,8 +19,10 @@ namespace GoldTree.HabboHotel.Misc
                     TimeSpan timeSpan = now - GoldTree.ServerStarted;
                     new PerformanceCounter("Processor", "% Processor Time", "_Total");
                     int Status = 1;
-                    int UsersOnline = GoldTree.GetGame().GetClientManager().ClientCount + -1;
+
+                    int UsersOnline = GoldTree.GetGame().GetClientManager().ClientCount;
                     int RoomsLoaded = GoldTree.GetGame().GetRoomManager().LoadedRoomsCount;
+
                     bool flag = true;
                     try
                     {

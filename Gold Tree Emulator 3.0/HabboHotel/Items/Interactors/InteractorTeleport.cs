@@ -60,7 +60,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 			RoomUser @class = RoomItem_0.method_8().GetRoomUserByHabbo(Session.GetHabbo().Id);
 			if (@class != null && @class.class34_1 == null)
 			{
-				if (ThreeDCoord.smethod_0(@class.GStruct1_0, RoomItem_0.GStruct1_0) || ThreeDCoord.smethod_0(@class.GStruct1_0, RoomItem_0.GStruct1_1))
+				if (ThreeDCoord.smethod_0(@class.Position, RoomItem_0.GStruct1_0) || ThreeDCoord.smethod_0(@class.Position, RoomItem_0.GStruct1_1))
 				{
 					if (RoomItem_0.uint_3 == 0u)
 					{

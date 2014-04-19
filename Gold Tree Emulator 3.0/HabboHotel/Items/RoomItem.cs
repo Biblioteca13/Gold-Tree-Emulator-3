@@ -516,7 +516,7 @@ namespace GoldTree.HabboHotel.Items
                             }
                             else
                             {
-                                if ((@class != null && ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_2)) || this.string_2 == "tried")
+                                if ((@class != null && ThreeDCoord.smethod_0(@class.Position, this.GStruct1_2)) || this.string_2 == "tried")
                                 {
                                     this.string_2 = "";
                                     this.ExtraData = "0";
@@ -548,7 +548,7 @@ namespace GoldTree.HabboHotel.Items
                                 RoomUser @class = this.method_8().GetRoomUserByHabbo(this.uint_3);
                                 if (@class != null)
                                 {
-                                    if (ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_0))
+                                    if (ThreeDCoord.smethod_0(@class.Position, this.GStruct1_0))
                                     {
                                         @class.bool_1 = false;
                                         if (@class.int_19 == -1)
@@ -635,7 +635,7 @@ namespace GoldTree.HabboHotel.Items
                                     }
                                     else
                                     {
-                                        if (ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_1) && @class.RoomItem_0 == this)
+                                        if (ThreeDCoord.smethod_0(@class.Position, this.GStruct1_1) && @class.RoomItem_0 == this)
                                         {
                                             @class.bool_1 = true;
                                             flag = true;
@@ -665,7 +665,7 @@ namespace GoldTree.HabboHotel.Items
                                 {
                                     flag = true;
                                     class3.method_6();
-                                    if (ThreeDCoord.smethod_0(class3.GStruct1_0, this.GStruct1_0))
+                                    if (ThreeDCoord.smethod_0(class3.Position, this.GStruct1_0))
                                     {
                                         class3.method_4(this.GStruct1_1);
                                     }
@@ -711,7 +711,7 @@ namespace GoldTree.HabboHotel.Items
                                 RoomUser @class = this.method_8().GetRoomUserByHabbo(this.uint_3);
                                 if (@class != null)
                                 {
-                                    if (ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_0))
+                                    if (ThreeDCoord.smethod_0(@class.Position, this.GStruct1_0))
                                     {
                                         @class.bool_1 = false;
                                         if (@class.int_19 == -1)
@@ -764,7 +764,7 @@ namespace GoldTree.HabboHotel.Items
                                     }
                                     else
                                     {
-                                        if (ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_1) && @class.RoomItem_0 == this)
+                                        if (ThreeDCoord.smethod_0(@class.Position, this.GStruct1_1) && @class.RoomItem_0 == this)
                                         {
                                             @class.bool_1 = true;
                                             flag = true;
@@ -794,7 +794,7 @@ namespace GoldTree.HabboHotel.Items
                                 {
                                     flag = true;
                                     class3.method_6();
-                                    if (ThreeDCoord.smethod_0(class3.GStruct1_0, this.GStruct1_0))
+                                    if (ThreeDCoord.smethod_0(class3.Position, this.GStruct1_0))
                                     {
                                         class3.method_4(this.GStruct1_1);
                                     }

@@ -92,8 +92,8 @@ namespace GoldTree.HabboHotel.RoomBots
 			}
 			if (this.int_3 <= 0)
 			{
-				int int_ = GoldTree.smethod_5(0, base.method_1().Class28_0.int_4);
-				int int_2 = GoldTree.smethod_5(0, base.method_1().Class28_0.int_5);
+				int int_ = GoldTree.smethod_5(0, base.method_1().RoomModel.int_4);
+				int int_2 = GoldTree.smethod_5(0, base.method_1().RoomModel.int_5);
 				base.GetRoomUser().MoveTo(int_, int_2);
 				this.int_3 = GoldTree.smethod_5(0, 30);
 			}

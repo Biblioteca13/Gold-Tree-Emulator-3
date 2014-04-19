@@ -31,7 +31,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 				if (RoomItem_0.GetBaseItem().InteractionType.ToLower() == "switch" && Session != null)
 				{
 					RoomUser @class = Session.GetHabbo().CurrentRoom.GetRoomUserByHabbo(Session.GetHabbo().Id);
-					if (@class.GStruct1_0.x - RoomItem_0.GStruct1_1.x > 1 || @class.GStruct1_0.y - RoomItem_0.GStruct1_1.y > 1)
+					if (@class.Position.x - RoomItem_0.GStruct1_1.x > 1 || @class.Position.y - RoomItem_0.GStruct1_1.y > 1)
 					{
 						if (@class.bool_0)
 						{

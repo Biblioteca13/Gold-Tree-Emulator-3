@@ -206,7 +206,7 @@ namespace GoldTree.HabboHotel.Navigators
 			Message.AppendInt32(list.Count);
 			foreach (Room current in list)
 			{
-				RoomData class27_ = current.Class27_0;
+				RoomData class27_ = current.RoomData;
 				class27_.method_3(Message, true, false);
 			}
 			return Message;
@@ -415,7 +415,7 @@ namespace GoldTree.HabboHotel.Navigators
 					{
 						break;
 					}
-					list.Add(current.Class27_0);
+					list.Add(current.RoomData);
 					num++;
 				}
 				using (IEnumerator<RoomData> enumerator2 = enumerable.GetEnumerator())
@@ -449,7 +449,7 @@ namespace GoldTree.HabboHotel.Navigators
 					GameClient class3 = GoldTree.GetGame().GetClientManager().method_2(class2.UInt32_0);
 					if (class3 != null && class3.GetHabbo() != null && class3.GetHabbo().CurrentRoom != null)
 					{
-						RoomData class27_ = class3.GetHabbo().CurrentRoom.Class27_0;
+						RoomData class27_ = class3.GetHabbo().CurrentRoom.RoomData;
 						if (!dictionary3.ContainsKey(class27_))
 						{
 							dictionary3.Add(class27_, class27_.UsersNow);
@@ -526,7 +526,7 @@ namespace GoldTree.HabboHotel.Navigators
 					break;
 				}
 				num2++;
-				list.Add(current4.Class27_0);
+				list.Add(current4.RoomData);
 			}
 			IL_508:
 			Message.AppendInt32(list.Count);
@@ -552,12 +552,12 @@ namespace GoldTree.HabboHotel.Navigators
 		[CompilerGenerated]
 		private static int smethod_2(Room class14_0)
 		{
-			return class14_0.Int32_0;
+			return class14_0.UserCount;
 		}
 		[CompilerGenerated]
 		private static int smethod_3(Room class14_0)
 		{
-			return class14_0.Int32_0;
+			return class14_0.UserCount;
 		}
 	}
 }

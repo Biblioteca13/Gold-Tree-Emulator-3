@@ -44,13 +44,13 @@ namespace GoldTree.HabboHotel.RoomBots
 			RoomUser @class = base.GetRoomUser();
 			if (bool_0)
 			{
-				int int_6 = GoldTree.smethod_5(0, base.method_1().Class28_0.int_4);
-				int int_7 = GoldTree.smethod_5(0, base.method_1().Class28_0.int_5);
+				int int_6 = GoldTree.smethod_5(0, base.method_1().RoomModel.int_4);
+				int int_7 = GoldTree.smethod_5(0, base.method_1().RoomModel.int_5);
 				@class.MoveTo(int_6, int_7);
 			}
 			else
 			{
-				if (int_4 < base.method_1().Class28_0.int_4 && int_5 < base.method_1().Class28_0.int_5 && int_4 >= 0 && int_5 >= 0)
+				if (int_4 < base.method_1().RoomModel.int_4 && int_5 < base.method_1().RoomModel.int_5 && int_4 >= 0 && int_5 >= 0)
 				{
 					@class.MoveTo(int_4, int_5);
 				}
@@ -167,7 +167,7 @@ namespace GoldTree.HabboHotel.RoomBots
 		public override void OnUserSay(RoomUser RoomUser_0, string string_0)
 		{
 			RoomUser @class = base.GetRoomUser();
-			if (@class.class34_0.RoomUser_0 == null)
+			if (@class.RoomBot.RoomUser_0 == null)
 			{
 				if (string_0.ToLower().Equals(@class.PetData.Name.ToLower()))
 				{
@@ -534,7 +534,7 @@ namespace GoldTree.HabboHotel.RoomBots
 					if (num == 2)
 					{
 						@class.Statusses.Clear();
-						if (base.GetRoomUser().class34_0.RoomUser_0 == null)
+						if (base.GetRoomUser().RoomBot.RoomUser_0 == null)
 						{
 							if (@class.PetData.Type == 13u)
 							{
@@ -614,7 +614,7 @@ namespace GoldTree.HabboHotel.RoomBots
 			if (this.int_3 <= 0)
 			{
 				base.GetRoomUser().PetData.PetEnergy(-10);
-				if (base.GetRoomUser().class34_0.RoomUser_0 == null)
+				if (base.GetRoomUser().RoomBot.RoomUser_0 == null)
 				{
 					this.method_5(0, 0, true);
 				}

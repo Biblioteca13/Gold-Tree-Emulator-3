@@ -1063,7 +1063,7 @@ namespace GoldTree.HabboHotel.Misc
                                     {
                                         if (ServerConfiguration.PreventDoorPush)
                                         {
-                                            if (!(class6.int_3 == class2.Class28_0.int_0 && class6.int_4 - 1 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
+                                            if (!(class6.int_3 == class2.RoomModel.int_0 && class6.int_4 - 1 == class2.RoomModel.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                 class4.MoveTo(class6.int_3, class6.int_4 - 1);
                                             else
                                                 class4.MoveTo(class6.int_3, class6.int_4 + 1);
@@ -1077,7 +1077,7 @@ namespace GoldTree.HabboHotel.Misc
                                     {
                                         if (ServerConfiguration.PreventDoorPush)
                                         {
-                                            if (!(class6.int_3 + 1 == class2.Class28_0.int_0 && class6.int_4 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
+                                            if (!(class6.int_3 + 1 == class2.RoomModel.int_0 && class6.int_4 == class2.RoomModel.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                 class4.MoveTo(class6.int_3 + 1, class6.int_4);
                                             else
                                                 class4.MoveTo(class6.int_3 - 1, class6.int_4);
@@ -1091,7 +1091,7 @@ namespace GoldTree.HabboHotel.Misc
                                     {
                                         if (ServerConfiguration.PreventDoorPush)
                                         {
-                                            if (!(class6.int_3 == class2.Class28_0.int_0 && class6.int_4 + 1 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
+                                            if (!(class6.int_3 == class2.RoomModel.int_0 && class6.int_4 + 1 == class2.RoomModel.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                 class4.MoveTo(class6.int_3, class6.int_4 + 1);
                                             else
                                                 class4.MoveTo(class6.int_3, class6.int_4 - 1);
@@ -1105,7 +1105,7 @@ namespace GoldTree.HabboHotel.Misc
                                     {
                                         if (ServerConfiguration.PreventDoorPush)
                                         {
-                                            if (!(class6.int_3 - 1 == class2.Class28_0.int_0 && class6.int_4 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
+                                            if (!(class6.int_3 - 1 == class2.RoomModel.int_0 && class6.int_4 == class2.RoomModel.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                 class4.MoveTo(class6.int_3 - 1, class6.int_4);
                                             else
                                                 class4.MoveTo(class6.int_3 + 1, class6.int_4);
@@ -1355,7 +1355,7 @@ namespace GoldTree.HabboHotel.Misc
                                     stringBuilder.Append(string.Concat(new object[]
 							{
 								"Users in room: ",
-								class9.CurrentRoom.Int32_0,
+								class9.CurrentRoom.UserCount,
 								"/",
 								class9.CurrentRoom.UsersMax
 							}));
@@ -1752,7 +1752,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     {
                                                         if (ServerConfiguration.PreventDoorPush)
                                                         {
-                                                            if (!(class6.int_3 == class2.Class28_0.int_0 && class6.int_4 - 1 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
+                                                            if (!(class6.int_3 == class2.RoomModel.int_0 && class6.int_4 - 1 == class2.RoomModel.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                                 class4.MoveTo(class6.int_3, class6.int_4 - 1);
                                                             else
                                                                 class4.MoveTo(class6.int_3, class6.int_4 + 1);
@@ -1766,7 +1766,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     {
                                                         if (ServerConfiguration.PreventDoorPush)
                                                         {
-                                                            if (!(class6.int_3 + 1 == class2.Class28_0.int_0 && class6.int_4 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
+                                                            if (!(class6.int_3 + 1 == class2.RoomModel.int_0 && class6.int_4 == class2.RoomModel.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                                 class4.MoveTo(class6.int_3 + 1, class6.int_4);
                                                             else
                                                                 class4.MoveTo(class6.int_3 - 1, class6.int_4);
@@ -1780,7 +1780,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     {
                                                         if (ServerConfiguration.PreventDoorPush)
                                                         {
-                                                            if (!(class6.int_3 == class2.Class28_0.int_0 && class6.int_4 + 1 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
+                                                            if (!(class6.int_3 == class2.RoomModel.int_0 && class6.int_4 + 1 == class2.RoomModel.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                                 class4.MoveTo(class6.int_3, class6.int_4 + 1);
                                                             else
                                                                 class4.MoveTo(class6.int_3, class6.int_4 - 1);
@@ -1794,7 +1794,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     {
                                                         if (ServerConfiguration.PreventDoorPush)
                                                         {
-                                                            if (!(class6.int_3 - 1 == class2.Class28_0.int_0 && class6.int_4 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
+                                                            if (!(class6.int_3 - 1 == class2.RoomModel.int_0 && class6.int_4 == class2.RoomModel.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                                 class4.MoveTo(class6.int_3 - 1, class6.int_4);
                                                             else
                                                                 class4.MoveTo(class6.int_3 + 1, class6.int_4);
@@ -1856,10 +1856,10 @@ namespace GoldTree.HabboHotel.Misc
                                                     Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_ride_err_toofar"));
                                                     return true;
                                                 }
-                                                if (class4.class34_0.RoomUser_0 == null)
+                                                if (class4.RoomBot.RoomUser_0 == null)
                                                 {
-                                                    class4.class34_0.RoomUser_0 = class6;
-                                                    class6.class34_1 = class4.class34_0;
+                                                    class4.RoomBot.RoomUser_0 = class6;
+                                                    class6.class34_1 = class4.RoomBot;
                                                     class6.int_3 = class4.int_3;
                                                     class6.int_4 = class4.int_4;
                                                     class6.double_0 = class4.double_0 + 1.0;
@@ -1956,15 +1956,15 @@ namespace GoldTree.HabboHotel.Misc
                                                             }
                                                             else
                                                             {
-                                                                if (!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 - 1 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 == class2.RoomModel.int_0 && class4.int_4 - 1 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3, class4.int_4 - 1);
-                                                                if (!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 - 2 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 == class2.RoomModel.int_0 && class4.int_4 - 2 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3, class4.int_4 - 2);
-                                                                if (!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 - 3 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 == class2.RoomModel.int_0 && class4.int_4 - 3 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3, class4.int_4 - 3);
-                                                                if (!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 - 4 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 == class2.RoomModel.int_0 && class4.int_4 - 4 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3, class4.int_4 - 4);
-                                                                if (!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 - 5 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 == class2.RoomModel.int_0 && class4.int_4 - 5 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3, class4.int_4 - 5);
                                                             }
                                                         }
@@ -1991,15 +1991,15 @@ namespace GoldTree.HabboHotel.Misc
                                                             }
                                                             else
                                                             {
-                                                                if (!(class4.int_3 + 1 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 + 1 == class2.RoomModel.int_0 && class4.int_4 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3 + 1, class4.int_4);
-                                                                if (!(class4.int_3 + 2 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 + 2 == class2.RoomModel.int_0 && class4.int_4 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3 + 2, class4.int_4);
-                                                                if (!(class4.int_3 + 3 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 + 3 == class2.RoomModel.int_0 && class4.int_4 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3 + 3, class4.int_4);
-                                                                if (!(class4.int_3 + 4 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 + 4 == class2.RoomModel.int_0 && class4.int_4 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3 + 4, class4.int_4);
-                                                                if (!(class4.int_3 + 5 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 + 5 == class2.RoomModel.int_0 && class4.int_4 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3 + 5, class4.int_4);
                                                             }
                                                         }
@@ -2026,15 +2026,15 @@ namespace GoldTree.HabboHotel.Misc
                                                             }
                                                             else
                                                             {
-                                                                if (!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 + 1 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 == class2.RoomModel.int_0 && class4.int_4 + 1 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3, class4.int_4 + 1);
-                                                                if (!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 + 2 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 == class2.RoomModel.int_0 && class4.int_4 + 2 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3, class4.int_4 + 2);
-                                                                if (!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 + 3 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 == class2.RoomModel.int_0 && class4.int_4 + 3 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3, class4.int_4 + 3);
-                                                                if (!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 + 4 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 == class2.RoomModel.int_0 && class4.int_4 + 4 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3, class4.int_4 + 4);
-                                                                if (!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 + 5 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 == class2.RoomModel.int_0 && class4.int_4 + 5 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3, class4.int_4 + 5);
                                                             }
                                                         }
@@ -2061,15 +2061,15 @@ namespace GoldTree.HabboHotel.Misc
                                                             }
                                                             else
                                                             {
-                                                                if (!(class4.int_3 - 1 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 - 1 == class2.RoomModel.int_0 && class4.int_4 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3 - 1, class4.int_4);
-                                                                if (!(class4.int_3 - 2 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 - 2 == class2.RoomModel.int_0 && class4.int_4 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3 - 2, class4.int_4);
-                                                                if (!(class4.int_3 - 3 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 - 3 == class2.RoomModel.int_0 && class4.int_4 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3 - 3, class4.int_4);
-                                                                if (!(class4.int_3 - 4 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 - 4 == class2.RoomModel.int_0 && class4.int_4 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3 - 4, class4.int_4);
-                                                                if (!(class4.int_3 - 5 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1))
+                                                                if (!(class4.int_3 - 5 == class2.RoomModel.int_0 && class4.int_4 == class2.RoomModel.int_1))
                                                                     class4.MoveTo(class4.int_3 - 5, class4.int_4);
                                                             }
                                                         }
@@ -2427,7 +2427,7 @@ namespace GoldTree.HabboHotel.Misc
                                                                 stringBuilder2.Append(string.Concat(new object[]
 											{
 												"UserID: ",
-												class6.uint_0,
+												class6.UId,
 												" RoomUID: ",
 												class6.int_20,
 												" VirtualID: ",
@@ -2611,8 +2611,8 @@ namespace GoldTree.HabboHotel.Misc
                                                         class6.double_0 -= 1.0;
                                                         class6.Statusses.Clear();
                                                         class6.UpdateNeeded = true;
-                                                        int int_3 = GoldTree.smethod_5(0, class2.Class28_0.int_4);
-                                                        int int_4 = GoldTree.smethod_5(0, class2.Class28_0.int_5);
+                                                        int int_3 = GoldTree.smethod_5(0, class2.RoomModel.int_4);
+                                                        int int_4 = GoldTree.smethod_5(0, class2.RoomModel.int_5);
                                                         class6.RoomUser_0.MoveTo(int_3, int_4);
                                                         class6.RoomUser_0 = null;
                                                         class2.method_87(class6, false, false);
@@ -2824,7 +2824,7 @@ namespace GoldTree.HabboHotel.Misc
                                             {
                                                 if (ServerConfiguration.PreventDoorPush)
                                                 {
-                                                    if ((!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 - 1 == class2.Class28_0.int_1)) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
+                                                    if ((!(class4.int_3 == class2.RoomModel.int_0 && class4.int_4 - 1 == class2.RoomModel.int_1)) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                     {
                                                         class4.MoveTo(class4.int_3, class4.int_4 - 1);
                                                     }
@@ -2838,7 +2838,7 @@ namespace GoldTree.HabboHotel.Misc
                                             {
                                                 if (ServerConfiguration.PreventDoorPush)
                                                 {
-                                                    if (!(class4.int_3 + 1 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
+                                                    if (!(class4.int_3 + 1 == class2.RoomModel.int_0 && class4.int_4 == class2.RoomModel.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                         class4.MoveTo(class4.int_3 + 1, class4.int_4);
                                                 }
                                                 else
@@ -2850,7 +2850,7 @@ namespace GoldTree.HabboHotel.Misc
                                             {
                                                 if (ServerConfiguration.PreventDoorPush)
                                                 {
-                                                    if (!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 + 1 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
+                                                    if (!(class4.int_3 == class2.RoomModel.int_0 && class4.int_4 + 1 == class2.RoomModel.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                         class4.MoveTo(class4.int_3, class4.int_4 + 1);
                                                 }
                                                 else
@@ -2862,7 +2862,7 @@ namespace GoldTree.HabboHotel.Misc
                                             {
                                                 if (ServerConfiguration.PreventDoorPush)
                                                 {
-                                                    if (!(class4.int_3 - 1 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
+                                                    if (!(class4.int_3 - 1 == class2.RoomModel.int_0 && class4.int_4 == class2.RoomModel.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                         class4.MoveTo(class4.int_3 - 1, class4.int_4);
                                                 }
                                                 else
@@ -2900,17 +2900,20 @@ namespace GoldTree.HabboHotel.Misc
                 IL_2F05:
                     DateTime now = DateTime.Now;
                     TimeSpan timeSpan = now - GoldTree.ServerStarted;
-                    int num9 = GoldTree.GetGame().GetClientManager().ClientCount + -1;
-                    int int32_ = GoldTree.GetGame().GetRoomManager().LoadedRoomsCount;
+
+                    int clients = GoldTree.GetGame().GetClientManager().ClientCount;
+                    int rooms = GoldTree.GetGame().GetRoomManager().LoadedRoomsCount;
+
                     string text10 = "";
+
                     if (ServerConfiguration.ShowUsersAndRoomsInAbout)
                     {
                         text10 = string.Concat(new object[]
 						{
 							"\nUsers Online: ",
-							num9,
+							clients,
 							"\nRooms Loaded: ",
-							int32_
+							rooms
 						});
                     }
                     Session.method_10(string.Concat(new object[]

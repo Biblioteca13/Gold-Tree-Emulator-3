@@ -12,7 +12,7 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
 			try
 			{
 				Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
-                if (@class != null && @class.CheckRights(Session, true) && @class.class67_0 != null)
+                if (@class != null && @class.CheckRights(Session, true) && @class.MoodlightData != null)
 				{
 					RoomItem class2 = null;
 					foreach (RoomItem class3 in @class.Hashtable_1.Values)
@@ -25,15 +25,15 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
 					}
 					if (class2 != null)
 					{
-						if (@class.class67_0.Enabled)
+						if (@class.MoodlightData.Enabled)
 						{
-							@class.class67_0.method_1();
+							@class.MoodlightData.method_1();
 						}
 						else
 						{
-							@class.class67_0.method_0();
+							@class.MoodlightData.method_0();
 						}
-						class2.ExtraData = @class.class67_0.method_7();
+						class2.ExtraData = @class.MoodlightData.method_7();
 						class2.method_4();
 					}
 				}

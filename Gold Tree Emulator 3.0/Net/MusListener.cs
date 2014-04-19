@@ -37,7 +37,7 @@ namespace GoldTree.Net
 
 				this.ServerSocket.BeginAccept(new AsyncCallback(this.OnAcceptCallback), this.ServerSocket);
 
-				Logging.WriteLine("Listening for MUS on port: " + this.Port, ConsoleColor.Green);
+				Logging.WriteLine("Listening for MUS on port: " + this.Port);
 			}
 			catch (Exception ex)
 			{

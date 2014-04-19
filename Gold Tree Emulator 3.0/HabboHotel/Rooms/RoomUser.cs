@@ -15,22 +15,28 @@ namespace GoldTree.HabboHotel.Rooms
 {
 	internal sealed class RoomUser
 	{
-		public uint uint_0;
+		public uint UId;
 		public int VirtualId;
-		public uint uint_1;
+
+		public uint RoomId;
+
 		public int int_1;
 		internal int int_2;
 		public int int_3;
 		public int int_4;
 		public double double_0;
 		internal byte byte_0;
+
         public int CarryItemID;
+
 		public int int_6;
 		public int int_7;
 		public int int_8;
 		public bool bool_0;
 		public bool bool_1;
+
 		public bool TeleportMode;
+
 		public int int_9;
 		public int int_10;
 		public int int_11;
@@ -39,14 +45,17 @@ namespace GoldTree.HabboHotel.Rooms
 		public int int_12;
 		public int int_13;
 		public double double_1;
-		public RoomBot class34_0;
+
+		public RoomBot RoomBot;
 		public BotAI BotAI;
+        public Pet PetData;
+
 		internal byte byte_1;
 		internal bool bool_5;
+
 		public RoomUser RoomUser_0;
 		public RoomItem RoomItem_0;
-		public RoomBot class34_1;
-		public Pet PetData;
+        public RoomBot class34_1;
 		public bool bool_6;
         public bool UpdateNeeded;
 		public bool bool_8;
@@ -72,27 +81,31 @@ namespace GoldTree.HabboHotel.Rooms
         internal int FreezeRange;
         internal int FreezeCounter;
         internal int FreezeBalls;
-		public ThreeDCoord GStruct1_0
+
+		public ThreeDCoord Position
 		{
 			get
 			{
 				return new ThreeDCoord(this.int_3, this.int_4);
 			}
 		}
-		public bool isPet
+
+		public bool IsPet
 		{
 			get
 			{
-				return this.IsBot && this.class34_0.Boolean_0;
+				return this.IsBot && this.RoomBot.Boolean_0;
 			}
 		}
-		internal bool Boolean_1
+
+		internal bool IsDancing
 		{
 			get
 			{
 				return this.DanceId >= 1;
 			}
 		}
+
 		internal bool Boolean_2
 		{
 			get
@@ -100,6 +113,7 @@ namespace GoldTree.HabboHotel.Rooms
 				return !this.IsBot && this.int_1 >= ServerConfiguration.KickTimer;
 			}
 		}
+
 		internal bool Boolean_3
 		{
 			get
@@ -107,18 +121,20 @@ namespace GoldTree.HabboHotel.Rooms
 				return !this.IsBot && this.Statusses.ContainsKey("trd");
 			}
 		}
+
 		internal bool IsBot
 		{
 			get
 			{
-				return this.class34_0 != null;
+				return this.RoomBot != null;
 			}
 		}
+
 		public RoomUser(uint UserId, uint RoomId, int VirtualId, bool Invisible)
 		{
 			this.bool_5 = false;
-			this.uint_0 = UserId;
-			this.uint_1 = RoomId;
+			this.UId = UserId;
+			this.RoomId = RoomId;
 			this.VirtualId = VirtualId;
 			this.int_1 = 0;
 			this.int_3 = 0;
@@ -376,7 +392,7 @@ namespace GoldTree.HabboHotel.Rooms
 				this.bool_10 = true;
 				this.int_17 = int_21;
 				this.int_18 = int_22;
-				if (int_21 >= this.method_17().Class28_0.int_4 || int_22 >= this.method_17().Class28_0.int_5)
+				if (int_21 >= this.method_17().RoomModel.int_4 || int_22 >= this.method_17().RoomModel.int_5)
 				{
 					this.int_10 = int_21;
 					this.int_11 = int_22;
@@ -533,16 +549,16 @@ namespace GoldTree.HabboHotel.Rooms
 				else
 				{
 					Message5_0.AppendInt32(this.BotAI.int_0);
-					Message5_0.AppendStringWithBreak(this.class34_0.Name);
-					Message5_0.AppendStringWithBreak(this.class34_0.Motto);
-					Message5_0.AppendStringWithBreak(this.class34_0.Look);
+					Message5_0.AppendStringWithBreak(this.RoomBot.Name);
+					Message5_0.AppendStringWithBreak(this.RoomBot.Motto);
+					Message5_0.AppendStringWithBreak(this.RoomBot.Look);
 					Message5_0.AppendInt32(this.VirtualId);
 					Message5_0.AppendInt32(this.int_3);
 					Message5_0.AppendInt32(this.int_4);
 					Message5_0.AppendStringWithBreak(this.double_0.ToString().Replace(',', '.'));
 					Message5_0.AppendInt32(4);
-					Message5_0.AppendInt32((this.class34_0.AiType == AIType.const_0) ? 2 : 3);
-					if (this.class34_0.AiType == AIType.const_0)
+					Message5_0.AppendInt32((this.RoomBot.AiType == AIType.const_0) ? 2 : 3);
+					if (this.RoomBot.AiType == AIType.const_0)
 					{
 						Message5_0.AppendInt32(0);
 					}
@@ -586,16 +602,16 @@ namespace GoldTree.HabboHotel.Rooms
 			else
 			{
                 result = null;
-                if (this.uint_0 > 0)
+                if (this.UId > 0)
                 {
-                    result = GoldTree.GetGame().GetClientManager().method_2(this.uint_0);
+                    result = GoldTree.GetGame().GetClientManager().method_2(this.UId);
                 }
 			}
 			return result;
 		}
 		private Room method_17()
 		{
-			return GoldTree.GetGame().GetRoomManager().GetRoom(this.uint_1);
+			return GoldTree.GetGame().GetRoomManager().GetRoom(this.RoomId);
 		}
 	}
 }
