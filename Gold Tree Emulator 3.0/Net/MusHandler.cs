@@ -13,70 +13,80 @@ namespace GoldTree.Net
 {
 	internal sealed class MusHandler
 	{
-		private Socket socket_0;
-		private byte[] byte_0 = new byte[1024];
-		public MusHandler(Socket socket_1)
+		private Socket ClientSocket;
+
+		private byte[] Buffer = new byte[1024];
+
+		public MusHandler(Socket serverSocket)
 		{
-			this.socket_0 = socket_1;
+			this.ClientSocket = serverSocket;
+
 			try
 			{
-				this.socket_0.BeginReceive(this.byte_0, 0, this.byte_0.Length, SocketFlags.None, new AsyncCallback(this.method_1), this.socket_0);
+				this.ClientSocket.BeginReceive(this.Buffer, 0, this.Buffer.Length, SocketFlags.None, new AsyncCallback(this.OnReceiveCallback), this.ClientSocket);
 			}
 			catch
 			{
-				this.method_0();
+				this.Dispose();
 			}
 		}
-		public void method_0()
+
+		public void Dispose()
 		{
-			try
-			{
-				this.socket_0.Shutdown(SocketShutdown.Both);
-				this.socket_0.Close();
-				this.socket_0.Dispose();
-			}
-			catch
-			{
-			}
+            try
+            {
+                this.ClientSocket.Shutdown(SocketShutdown.Both);
+                this.ClientSocket.Close();
+                this.ClientSocket.Dispose();
+            }
+            catch { }
 		}
-		public void method_1(IAsyncResult iasyncResult_0)
+
+		public void OnReceiveCallback(IAsyncResult ar)
 		{
-			try
-			{
-				int count = 0;
-				try
-				{
-					count = this.socket_0.EndReceive(iasyncResult_0);
-				}
-				catch
-				{
-					this.method_0();
-					return;
-				}
-				string @string = Encoding.Default.GetString(this.byte_0, 0, count);
-				if (@string.Length > 0)
-				{
-					this.method_2(@string);
-				}
-			}
-			catch
-			{
-			}
-			this.method_0();
+            try
+            {
+                int count = 0;
+
+                try
+                {
+                    count = this.ClientSocket.EndReceive(ar);
+                }
+                catch
+                {
+                    this.Dispose();
+                    return;
+                }
+
+                string data = Encoding.Default.GetString(this.Buffer, 0, count);
+
+                if (data.Length > 0)
+                {
+                    this.ParsePacket(data);
+                }
+            }
+            catch { }
+
+			this.Dispose();
 		}
-		public void method_2(string string_0)
+
+		public void ParsePacket(string data)
 		{
-			string text = string_0.Split(new char[]
+			string text = data.Split(new char[]
 			{
 				Convert.ToChar(1)
 			})[0];
-			string text2 = string_0.Split(new char[]
+
+			string text2 = data.Split(new char[]
 			{
 				Convert.ToChar(1)
 			})[1];
-			GameClient @class = null;
+
+			GameClient client = null;
 			DataRow dataRow = null;
+
 			string text3 = text.ToLower();
+
 			if (text3 != null)
 			{
 				if (MusCommands.dictionary_0 == null)
@@ -230,7 +240,9 @@ namespace GoldTree.Net
 						}
 					};
 				}
+
 				int num;
+
 				if (MusCommands.dictionary_0.TryGetValue(text3, out num))
 				{
 					uint num2;
@@ -238,6 +250,7 @@ namespace GoldTree.Net
 					Room class4;
 					uint num3;
 					string text5;
+
 					switch (num)
 					{
 					case 0:
@@ -352,10 +365,10 @@ namespace GoldTree.Net
 					case 17:
 						goto IL_6F7;
 					case 18:
-						@class = GoldTree.GetGame().GetClientManager().method_2(uint.Parse(text2));
-						if (@class != null)
+						client = GoldTree.GetGame().GetClientManager().method_2(uint.Parse(text2));
+						if (client != null)
 						{
-							@class.GetHabbo().method_14(true, false);
+							client.GetHabbo().method_14(true, false);
 							goto IL_C70;
 						}
 						goto IL_C70;
@@ -424,31 +437,31 @@ namespace GoldTree.Net
 					case 28:
 					{
 						uint_2 = uint.Parse(text2);
-						@class = GoldTree.GetGame().GetClientManager().method_2(uint_2);
+						client = GoldTree.GetGame().GetClientManager().method_2(uint_2);
 						using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 						{
-							dataRow = class2.ReadDataRow("SELECT look,gender,motto,mutant_penalty,block_newfriends FROM users WHERE id = '" + @class.GetHabbo().Id + "' LIMIT 1");
+							dataRow = class2.ReadDataRow("SELECT look,gender,motto,mutant_penalty,block_newfriends FROM users WHERE id = '" + client.GetHabbo().Id + "' LIMIT 1");
 						}
-						@class.GetHabbo().Figure = (string)dataRow["look"];
-						@class.GetHabbo().Gender = dataRow["gender"].ToString().ToLower();
-						@class.GetHabbo().Motto = GoldTree.FilterString((string)dataRow["motto"]);
-						@class.GetHabbo().BlockNewFriends = GoldTree.StringToBoolean(dataRow["block_newfriends"].ToString());
+						client.GetHabbo().Figure = (string)dataRow["look"];
+						client.GetHabbo().Gender = dataRow["gender"].ToString().ToLower();
+						client.GetHabbo().Motto = GoldTree.FilterString((string)dataRow["motto"]);
+						client.GetHabbo().BlockNewFriends = GoldTree.StringToBoolean(dataRow["block_newfriends"].ToString());
 						ServerMessage Message5 = new ServerMessage(266u);
 						Message5.AppendInt32(-1);
-						Message5.AppendStringWithBreak(@class.GetHabbo().Figure);
-						Message5.AppendStringWithBreak(@class.GetHabbo().Gender.ToLower());
-						Message5.AppendStringWithBreak(@class.GetHabbo().Motto);
-						@class.SendMessage(Message5);
-                        if (@class.GetHabbo().InRoom)
+						Message5.AppendStringWithBreak(client.GetHabbo().Figure);
+						Message5.AppendStringWithBreak(client.GetHabbo().Gender.ToLower());
+						Message5.AppendStringWithBreak(client.GetHabbo().Motto);
+						client.SendMessage(Message5);
+                        if (client.GetHabbo().InRoom)
 						{
-							class4 = GoldTree.GetGame().GetRoomManager().GetRoom(@class.GetHabbo().CurrentRoomId);
-							RoomUser class6 = class4.GetRoomUserByHabbo(@class.GetHabbo().Id);
+							class4 = GoldTree.GetGame().GetRoomManager().GetRoom(client.GetHabbo().CurrentRoomId);
+							RoomUser class6 = class4.GetRoomUserByHabbo(client.GetHabbo().Id);
 							ServerMessage Message6 = new ServerMessage(266u);
 							Message6.AppendInt32(class6.VirtualId);
-							Message6.AppendStringWithBreak(@class.GetHabbo().Figure);
-							Message6.AppendStringWithBreak(@class.GetHabbo().Gender.ToLower());
-							Message6.AppendStringWithBreak(@class.GetHabbo().Motto);
-							Message6.AppendInt32(@class.GetHabbo().AchievementScore);
+							Message6.AppendStringWithBreak(client.GetHabbo().Figure);
+							Message6.AppendStringWithBreak(client.GetHabbo().Gender.ToLower());
+							Message6.AppendStringWithBreak(client.GetHabbo().Motto);
+							Message6.AppendInt32(client.GetHabbo().AchievementScore);
 							Message6.AppendStringWithBreak("");
 							class4.SendMessage(Message6, null);
 						}
@@ -459,12 +472,12 @@ namespace GoldTree.Net
 						}
 						if (text3 == "updatemotto")
 						{
-                            @class.GetHabbo().MottoAchievementsCompleted();
+                            client.GetHabbo().MottoAchievementsCompleted();
 							goto IL_C70;
 						}
 						if (text3 == "updatelook")
 						{
-                            @class.GetHabbo().AvatarLookAchievementsCompleted();
+                            client.GetHabbo().AvatarLookAchievementsCompleted();
 							goto IL_C70;
 						}
 						goto IL_C70;
@@ -510,30 +523,30 @@ namespace GoldTree.Net
 					GoldTree.Close();
 					goto IL_C70;
 					IL_633:
-					@class = GoldTree.GetGame().GetClientManager().method_2(uint.Parse(text2));
-					if (@class != null)
+					client = GoldTree.GetGame().GetClientManager().method_2(uint.Parse(text2));
+					if (client != null)
 					{
 						int int_3 = 0;
 						using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 						{
-							int_3 = (int)class2.ReadDataRow("SELECT credits FROM users WHERE id = '" + @class.GetHabbo().Id + "' LIMIT 1")[0];
+							int_3 = (int)class2.ReadDataRow("SELECT credits FROM users WHERE id = '" + client.GetHabbo().Id + "' LIMIT 1")[0];
 						}
-						@class.GetHabbo().Credits = int_3;
-						@class.GetHabbo().method_13(false);
+						client.GetHabbo().Credits = int_3;
+						client.GetHabbo().method_13(false);
 						goto IL_C70;
 					}
 					goto IL_C70;
 					IL_6F7:
-					@class = GoldTree.GetGame().GetClientManager().method_2(uint.Parse(text2));
-					if (@class != null)
+					client = GoldTree.GetGame().GetClientManager().method_2(uint.Parse(text2));
+					if (client != null)
 					{
 						int int_4 = 0;
 						using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 						{
-							int_4 = (int)class2.ReadDataRow("SELECT activity_points FROM users WHERE id = '" + @class.GetHabbo().Id + "' LIMIT 1")[0];
+							int_4 = (int)class2.ReadDataRow("SELECT activity_points FROM users WHERE id = '" + client.GetHabbo().Id + "' LIMIT 1")[0];
 						}
-						@class.GetHabbo().ActivityPoints = int_4;
-						@class.GetHabbo().method_15(false);
+						client.GetHabbo().ActivityPoints = int_4;
+						client.GetHabbo().method_15(false);
 						goto IL_C70;
 					}
 					goto IL_C70;
@@ -555,7 +568,7 @@ namespace GoldTree.Net
 			IL_C70:
 			ServerMessage Message9 = new ServerMessage(1u);
 			Message9.AppendString("Hello Housekeeping, Love from GoldTree Emu");
-			this.socket_0.Send(Message9.GetBytes());
+			this.ClientSocket.Send(Message9.GetBytes());
 		}
 	}
 }
