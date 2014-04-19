@@ -121,7 +121,7 @@ namespace GoldTree.HabboHotel.Users.Inventory
 			}
 			class16_1.GetHabbo().Credits += num;
 			class16_1.GetHabbo().method_13(true);
-			class16_1.SendNotif("All coins in your inventory have been converted back into " + num + " credits!");
+			class16_1.SendNotification("All coins in your inventory have been converted back into " + num + " credits!");
 		}
 		public void method_2()
 		{
@@ -545,7 +545,7 @@ namespace GoldTree.HabboHotel.Users.Inventory
             }
             class16_1.GetHabbo().ActivityPoints += num;
             class16_1.GetHabbo().method_15(true);
-            class16_1.SendNotif("All pixels in your inventory have been converted back into " + num + " pixels!");
+            class16_1.SendNotification("All pixels in your inventory have been converted back into " + num + " pixels!");
         }
 
         public void RedeemShell(GameClient class16_1)
@@ -577,7 +577,7 @@ namespace GoldTree.HabboHotel.Users.Inventory
             }
             class16_1.GetHabbo().VipPoints += num;
             class16_1.GetHabbo().method_14(false, true);
-            class16_1.SendNotif("All shells in your inventory have been converted back into " + num + " shells!");
+            class16_1.SendNotification("All shells in your inventory have been converted back into " + num + " shells!");
         }
 	}
 }

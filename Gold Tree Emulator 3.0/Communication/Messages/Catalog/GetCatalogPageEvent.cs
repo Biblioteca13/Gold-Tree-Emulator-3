@@ -13,7 +13,7 @@ namespace GoldTree.Communication.Messages.Catalog
 			{
                 if (@class.bool_2 && !Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
 				{
-					Session.SendNotif("This page is for GoldTree Club members only!");
+					Session.SendNotification("This page is for GoldTree Club members only!");
 				}
 				else
 				{
@@ -30,7 +30,7 @@ namespace GoldTree.Communication.Messages.Catalog
 						if (@class.string_1 == "club_buy")
 						{
 							ServerMessage Message2 = new ServerMessage(625u);
-							if (Session.GetHabbo().Vip)
+							if (Session.GetHabbo().IsVIP)
 							{
 								Message2.AppendInt32(2);
 								Message2.AppendInt32(4535);

@@ -64,7 +64,7 @@ namespace GoldTree.HabboHotel.Misc
 						if (ServerConfiguration.CreditingAmount > 0 && (Session.GetHabbo().Credits < ServerConfiguration.CreditLimit || ServerConfiguration.CreditLimit == 0))
 						{
 							Session.GetHabbo().Credits += ServerConfiguration.CreditingAmount;
-							if (Session.GetHabbo().Vip)
+							if (Session.GetHabbo().IsVIP)
 							{
 								Session.GetHabbo().Credits += ServerConfiguration.CreditingAmount;
 							}

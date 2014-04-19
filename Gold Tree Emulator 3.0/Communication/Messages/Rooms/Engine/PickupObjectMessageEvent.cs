@@ -22,8 +22,8 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
                         if (text == null || !(text == "postit"))
                         {
                             @class.method_29(Session, class2.uint_0, false, true);
-                            Session.GetHabbo().method_23().method_11(class2.uint_0, class2.uint_2, class2.ExtraData, false);
-                            Session.GetHabbo().method_23().method_9(true);
+                            Session.GetHabbo().GetInventoryComponent().method_11(class2.uint_0, class2.uint_2, class2.ExtraData, false);
+                            Session.GetHabbo().GetInventoryComponent().method_9(true);
                             if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "PICKUPITEM")
                             {
                                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);

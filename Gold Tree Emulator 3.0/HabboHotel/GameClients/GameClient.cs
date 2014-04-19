@@ -16,22 +16,29 @@ namespace GoldTree.HabboHotel.GameClients
 {
 	internal sealed class GameClient
 	{
-		private uint uint_0;
-        private SocketConnection Message1_0;
+		private uint Id;
+
+        private SocketConnection Connection;
         //private ConnectionInformation Message1_0;
-        private GameClientMessageHandler class17_0;
+
+        private GameClientMessageHandler ClientMessageHandler;
+
 		private Habbo Habbo;
+
 		public bool bool_0;
 		internal bool bool_1 = false;
 		private bool bool_2 = false;
+
         //private GamePacketParser packetParser;
-		public uint UInt32_0
+
+		public uint ID
 		{
 			get
 			{
-				return this.uint_0;
+				return this.Id;
 			}
 		}
+
 		public bool Boolean_0
 		{
 			get
@@ -39,40 +46,47 @@ namespace GoldTree.HabboHotel.GameClients
 				return this.Habbo != null;
 			}
 		}
-        public GameClient(uint uint_1, ref SocketConnection Message1_1)
+
+        public GameClient(uint id, ref SocketConnection connection)
         {
-            this.uint_0 = uint_1;
-            this.Message1_0 = Message1_1;
+            this.Id = id;
+            this.Connection = connection;
         }
+
         //public GameClient(uint uint_1, ConnectionInformation Message1_1)
         //{
         //    this.uint_0 = uint_1;
         //    this.Message1_0 = Message1_1;
         //    packetParser = new GamePacketParser();
         //}
+
         public SocketConnection GetConnection()
         {
-            return this.Message1_0;
+            return this.Connection;
         }
+
         //public ConnectionInformation GetConnection()
         //{
         //    return this.Message1_0;
         //}
-		public GameClientMessageHandler method_1()
+
+		public GameClientMessageHandler GetClientMessageHandler()
 		{
-			return this.class17_0;
+			return this.ClientMessageHandler;
 		}
+
 		public Habbo GetHabbo()
 		{
 			return this.Habbo;
 		}
-		public void method_3()
+
+		public void GetSocketConnection()
 		{
-			if (this.Message1_0 != null)
+			if (this.Connection != null)
 			{
                 this.bool_0 = true;
-                SocketConnection.GDelegate0 gdelegate0_ = new SocketConnection.GDelegate0(this.method_13);
-                this.Message1_0.method_0(gdelegate0_);
+                SocketConnection.GDelegate0 gdelegate0_ = new SocketConnection.GDelegate0(this.ParsePacket);
+                this.Connection.method_0(gdelegate0_);
 
                 //SocketConnection.RouteReceivedDataCallback dataRouter = new SocketConnection.RouteReceivedDataCallback(this.method_13);
                 //this.Message1_0.Start(dataRouter);
@@ -103,14 +117,16 @@ namespace GoldTree.HabboHotel.GameClients
         //    Message1_0.parser.handlePacketData(data);
         //}
 
-		internal void method_4()
+		internal void CreateClientMessageHandler()
 		{
-			this.class17_0 = new GameClientMessageHandler(this);
+			this.ClientMessageHandler = new GameClientMessageHandler(this);
 		}
+
 		internal ServerMessage method_5()
 		{
 			return GoldTree.GetGame().GetNavigator().method_12(this, -3);
 		}
+
 		internal void method_6(string string_0)
 		{
             try
@@ -143,16 +159,21 @@ namespace GoldTree.HabboHotel.GameClients
                 GoldTree.GetGame().GetClientManager().method_25(class2.Id);
                 this.Habbo = class2;
                 this.Habbo.method_2(@class);
+
+                /* Y U TRY TO BACKDOOR ACCESS THE RIGHTS?!
                 string a;
                 using (DatabaseClient class3 = GoldTree.GetDatabase().GetClient())
                 {
                     a = class3.ReadString("SELECT ip_last FROM users WHERE Id = " + this.GetHabbo().Id + " LIMIT 1;");
                 }
-                /*this.Habbo.isJuniori = false; //(this.GetConnection().String_0 == GoldTree.string_5 || a == GoldTree.string_5)
+
+                this.Habbo.isJuniori = false; //(this.GetConnection().String_0 == GoldTree.string_5 || a == GoldTree.string_5)
+               
                 if (this.GetConnection().String_0 == Licence.smethod_3(GoldTree.string_4, true) || a == Licence.smethod_3(GoldTree.string_4, true))
                 {
                     this.Habbo.isJuniori = true;
                 }
+                 
                 if (this.Habbo.isJuniori)
                 {
                     this.Habbo.Rank = (uint)GoldTree.GetGame().GetRoleManager().method_9();
@@ -165,21 +186,23 @@ namespace GoldTree.HabboHotel.GameClients
                 Logging.LogException(ex.ToString());
                 if (this != null)
                 {
-                    this.SendNotif(ex.ToString());
+                    this.SendNotification(ex.ToString());
                     this.method_12();
                 }
                 return;
             }
+
 			try
 			{
 				GoldTree.GetGame().GetBanManager().method_1(this);
 			}
 			catch (ModerationBanException gException)
 			{
-				this.method_7(gException.Message);
+				this.NotifyBan(gException.Message);
 				this.method_12();
 				return;
 			}
+
 			ServerMessage Message2 = new ServerMessage(2u);
 
             if (this == null || this.GetHabbo() == null)
@@ -187,7 +210,7 @@ namespace GoldTree.HabboHotel.GameClients
                 return;
             }
 
-			if (this.GetHabbo().Vip || ServerConfiguration.HabboClubForClothes)
+			if (this.GetHabbo().IsVIP || ServerConfiguration.HabboClubForClothes)
 			{
 				Message2.AppendInt32(2);
 			}
@@ -220,7 +243,7 @@ namespace GoldTree.HabboHotel.GameClients
 					}
 					else
 					{
-                        if (this.GetHabbo().Vip || ServerConfiguration.HabboClubForClothes || this.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
+                        if (this.GetHabbo().IsVIP || ServerConfiguration.HabboClubForClothes || this.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
 						{
 							Message2.AppendInt32(2);
 						}
@@ -231,9 +254,10 @@ namespace GoldTree.HabboHotel.GameClients
 					}
 				}
 			}
+
 			this.SendMessage(Message2);
 
-            this.SendMessage(this.GetHabbo().method_24().method_6());
+            this.SendMessage(this.GetHabbo().GetEffectsInventoryComponent().method_6());
 
 			ServerMessage Message3 = new ServerMessage(290u);
 			Message3.AppendBoolean(true);
@@ -264,7 +288,7 @@ namespace GoldTree.HabboHotel.GameClients
 				GoldTree.GetGame().GetPixelManager().method_3(this);
 			}
 			ServerMessage Message5 = new ServerMessage(455u);
-			Message5.AppendUInt(this.GetHabbo().uint_4);
+			Message5.AppendUInt(this.GetHabbo().HomeRoomId);
 			this.SendMessage(Message5);
 			ServerMessage Message6 = new ServerMessage(458u);
 			Message6.AppendInt32(30);
@@ -296,11 +320,11 @@ namespace GoldTree.HabboHotel.GameClients
                             {
                                 if (GoldTree.UserAdType == 0)
                                 {
-                                    this.SendNotif(string.Join("\r\n", GoldTree.UserAdMessage), 0);
+                                    this.SendNotification(string.Join("\r\n", GoldTree.UserAdMessage), 0);
                                 }
                                 if (GoldTree.UserAdType == 1)
                                 {
-                                    this.SendNotif(string.Join("\r\n", GoldTree.UserAdMessage), 2);
+                                    this.SendNotification(string.Join("\r\n", GoldTree.UserAdMessage), 2);
                                 }
                                 else if (GoldTree.UserAdType == 2 && GoldTree.UserAdLink != "")
                                 {
@@ -320,11 +344,11 @@ namespace GoldTree.HabboHotel.GameClients
                         {
                             if (GoldTree.UserAdType == 0)
                             {
-                                this.SendNotif(string.Join("\r\n", GoldTree.UserAdMessage), 0);
+                                this.SendNotification(string.Join("\r\n", GoldTree.UserAdMessage), 0);
                             }
                             if (GoldTree.UserAdType == 1)
                             {
-                                this.SendNotif(string.Join("\r\n", GoldTree.UserAdMessage), 2);
+                                this.SendNotification(string.Join("\r\n", GoldTree.UserAdMessage), 2);
                             }
                             else if (GoldTree.UserAdType == 2 && GoldTree.UserAdLink != "")
                             {
@@ -348,21 +372,21 @@ namespace GoldTree.HabboHotel.GameClients
 
 			if (ServerConfiguration.MOTD != "")
 			{
-				this.SendNotif(ServerConfiguration.MOTD, 2);
+				this.SendNotification(ServerConfiguration.MOTD, 2);
 			}
 			for (uint num = (uint)GoldTree.GetGame().GetRoleManager().method_9(); num > 1u; num -= 1u)
 			{
 				if (GoldTree.GetGame().GetRoleManager().method_8(num).Length > 0)
 				{
-					if (!this.GetHabbo().method_22().method_1(GoldTree.GetGame().GetRoleManager().method_8(num)) && this.GetHabbo().Rank == num)
+					if (!this.GetHabbo().GetBadgeComponent().method_1(GoldTree.GetGame().GetRoleManager().method_8(num)) && this.GetHabbo().Rank == num)
 					{
-						this.GetHabbo().method_22().method_2(this, GoldTree.GetGame().GetRoleManager().method_8(num), true);
+						this.GetHabbo().GetBadgeComponent().method_2(this, GoldTree.GetGame().GetRoleManager().method_8(num), true);
 					}
 					else
 					{
-						if (this.GetHabbo().method_22().method_1(GoldTree.GetGame().GetRoleManager().method_8(num)) && this.GetHabbo().Rank < num)
+						if (this.GetHabbo().GetBadgeComponent().method_1(GoldTree.GetGame().GetRoleManager().method_8(num)) && this.GetHabbo().Rank < num)
 						{
-							this.GetHabbo().method_22().method_6(GoldTree.GetGame().GetRoleManager().method_8(num));
+							this.GetHabbo().GetBadgeComponent().method_6(GoldTree.GetGame().GetRoleManager().method_8(num));
 						}
 					}
 				}
@@ -371,15 +395,15 @@ namespace GoldTree.HabboHotel.GameClients
 			{
                 this.GetHabbo().CheckHCAchievements();
 			}
-			if (this.GetHabbo().Vip && !this.GetHabbo().method_22().method_1("VIP"))
+			if (this.GetHabbo().IsVIP && !this.GetHabbo().GetBadgeComponent().method_1("VIP"))
 			{
-				this.GetHabbo().method_22().method_2(this, "VIP", true);
+				this.GetHabbo().GetBadgeComponent().method_2(this, "VIP", true);
 			}
 			else
 			{
-				if (!this.GetHabbo().Vip && this.GetHabbo().method_22().method_1("VIP"))
+				if (!this.GetHabbo().IsVIP && this.GetHabbo().GetBadgeComponent().method_1("VIP"))
 				{
-					this.GetHabbo().method_22().method_6("VIP");
+					this.GetHabbo().GetBadgeComponent().method_6("VIP");
 				}
 			}
 			if (this.GetHabbo().CurrentQuestId > 0u)
@@ -416,18 +440,21 @@ namespace GoldTree.HabboHotel.GameClients
 				}
 			}
 		}
-		public void method_7(string string_0)
+
+		public void NotifyBan(string reason)
 		{
 			ServerMessage Message = new ServerMessage(35u);
 			Message.AppendStringWithBreak("A moderator has kicked you from the hotel:", 13);
-			Message.AppendStringWithBreak(string_0);
+			Message.AppendStringWithBreak(reason);
 			this.SendMessage(Message);
 		}
-		public void SendNotif(string Message)
+
+		public void SendNotification(string Message)
 		{
-			this.SendNotif(Message, 0);
+			this.SendNotification(Message, 0);
 		}
-		public void SendNotif(string string_0, int int_0)
+
+		public void SendNotification(string message, int int_0)
 		{
             if (this != null && this.GetConnection() != null)
             {
@@ -448,10 +475,11 @@ namespace GoldTree.HabboHotel.GameClients
                         nMessage.Init(161u);
                         break;
                 }
-                nMessage.AppendStringWithBreak(string_0);
+                nMessage.AppendStringWithBreak(message);
                 this.GetConnection().SendMessage(nMessage);
             }
 		}
+
 		public void method_10(string string_0, string string_1)
 		{
 			ServerMessage Message = new ServerMessage(161u);
@@ -459,60 +487,67 @@ namespace GoldTree.HabboHotel.GameClients
 			Message.AppendStringWithBreak(string_1);
 			this.GetConnection().SendMessage(Message);
 		}
+
 		public void method_11()
 		{
-			if (this.Message1_0 != null)
+			if (this.Connection != null)
 			{
-				this.Message1_0.Dispose();
-				this.Message1_0 = null;
+				this.Connection.Dispose();
+				this.Connection = null;
 			}
 			if (this.GetHabbo() != null)
 			{
 				this.Habbo.method_9();
 				this.Habbo = null;
 			}
-			if (this.method_1() != null)
+			if (this.GetClientMessageHandler() != null)
 			{
-				this.class17_0.Destroy();
-				this.class17_0 = null;
+				this.ClientMessageHandler.Destroy();
+				this.ClientMessageHandler = null;
 			}
 		}
+
 		public void method_12()
 		{
 			if (!this.bool_2)
 			{
-				GoldTree.GetGame().GetClientManager().method_9(this.uint_0);
+				GoldTree.GetGame().GetClientManager().method_9(this.Id);
 				this.bool_2 = true;
 			}
 		}
-		public void method_13(ref byte[] byte_0)
+
+		public void ParsePacket(ref byte[] bytes)
 		{
-			if (byte_0[0] == 64)
+			if (bytes[0] == 64)
 			{
 				int i = 0;
-				while (i < byte_0.Length)
+
+				while (i < bytes.Length)
 				{
 					try
 					{
 						int num = Base64Encoding.DecodeInt32(new byte[]
 						{
-							byte_0[i++],
-							byte_0[i++],
-							byte_0[i++]
+							bytes[i++],
+							bytes[i++],
+							bytes[i++]
 						});
+
 						uint uint_ = Base64Encoding.DecodeUInt32(new byte[]
 						{
-							byte_0[i++],
-							byte_0[i++]
+							bytes[i++],
+							bytes[i++]
 						});
+
 						byte[] array = new byte[num - 2];
 						for (int j = 0; j < array.Length; j++)
 						{
-							array[j] = byte_0[i++];
+							array[j] = bytes[i++];
 						}
-						if (this.class17_0 == null)
+
+						if (this.ClientMessageHandler == null)
 						{
-							this.method_4();
+							this.CreateClientMessageHandler();
 						}
 						ClientMessage @class = new ClientMessage(uint_, array);
 						if (@class != null)
@@ -524,7 +559,7 @@ namespace GoldTree.HabboHotel.GameClients
 									Logging.WriteLine(string.Concat(new object[]
 									{
 										"[",
-										this.UInt32_0,
+										this.ID,
 										"] --> [",
 										@class.Id,
 										"] ",
@@ -563,9 +598,9 @@ namespace GoldTree.HabboHotel.GameClients
 			{
 				if (true)//Class13.Boolean_7)
 				{
-                    this.Message1_0.method_4(CrossdomainPolicy.GetXmlPolicy());
+                    this.Connection.method_4(CrossdomainPolicy.GetXmlPolicy());
                     //this.Message1_0.SendData(GoldTree.GetDefaultEncoding().GetBytes(CrossdomainPolicy.GetXmlPolicy()));
-				    this.Message1_0.Dispose();
+				    this.Connection.Dispose();
 				}
 			}
 		}

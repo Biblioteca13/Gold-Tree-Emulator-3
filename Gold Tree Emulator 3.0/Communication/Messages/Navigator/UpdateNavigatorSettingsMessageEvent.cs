@@ -13,7 +13,7 @@ namespace GoldTree.Communication.Messages.Navigator
             RoomData @class = GoldTree.GetGame().GetRoomManager().method_12(num);
 			if (num == 0u || (@class != null && !(@class.Owner.ToLower() != Session.GetHabbo().Username.ToLower())))
 			{
-				Session.GetHabbo().uint_4 = num;
+				Session.GetHabbo().HomeRoomId = num;
 				using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 				{
 					class2.ExecuteQuery(string.Concat(new object[]

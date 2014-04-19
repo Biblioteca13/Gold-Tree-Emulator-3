@@ -32,7 +32,7 @@ namespace GoldTree.Communication.Messages.Rooms.Avatar
 				}
 				else
 				{
-					if (text.Contains(" ") || !Session.method_1().method_8(text) || text != ChatCommandHandler.smethod_4(text))
+					if (text.Contains(" ") || !Session.GetClientMessageHandler().method_8(text) || text != ChatCommandHandler.smethod_4(text))
 					{
 						ServerMessage Message = new ServerMessage(571u);
 						Message.AppendString("QA");
@@ -104,7 +104,7 @@ namespace GoldTree.Communication.Messages.Rooms.Avatar
 									GoldTree.GetGame().GetClientManager().method_31(Session, "flagme", "OldName: " + Session.GetHabbo().Username + " NewName: " + text);
 									Session.GetHabbo().Username = text;
 									Session.GetHabbo().method_1(class3);
-                                    foreach (RoomData current2 in Session.GetHabbo().list_6)
+                                    foreach (RoomData current2 in Session.GetHabbo().OwnedRooms)
 									{
 										current2.Owner = text;
 									}

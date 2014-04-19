@@ -51,7 +51,7 @@ namespace GoldTree.Communication.Messages.Navigator
                         }
                         catch (Exception)
                         {
-                            Session.SendNotif("Room owner is not in database!");
+                            Session.SendNotification("Room owner is not in database!");
                         }
                     }
                 }
@@ -61,7 +61,7 @@ namespace GoldTree.Communication.Messages.Navigator
                     GoldTree.GetGame().GetNavigator().method_0(dbClient);
                 }
 
-                Session.SendNotif("Room added to Staff Picks successfully.");
+                Session.SendNotification("Room added to Staff Picks successfully.");
 
             }
             else
@@ -77,7 +77,7 @@ namespace GoldTree.Communication.Messages.Navigator
                     GoldTree.GetGame().GetNavigator().method_0(dbClient);
                 }
 
-                Session.SendNotif("Room removed from Staff Picks successfully.");
+                Session.SendNotification("Room removed from Staff Picks successfully.");
             }
         }
     }

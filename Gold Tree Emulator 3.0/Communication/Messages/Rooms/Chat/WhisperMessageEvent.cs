@@ -14,9 +14,9 @@ namespace GoldTree.Communication.Messages.Rooms.Chat
 			Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
 			if (@class != null && Session != null)
 			{
-				if (Session.GetHabbo().bool_3)
+				if (Session.GetHabbo().IsMuted)
 				{
-					Session.SendNotif(GoldTreeEnvironment.GetExternalText("error_muted"));
+					Session.SendNotification(GoldTreeEnvironment.GetExternalText("error_muted"));
 				}
 				else
 				{
@@ -43,7 +43,7 @@ namespace GoldTree.Communication.Messages.Rooms.Chat
 								ServerMessage Message = new ServerMessage(27u);
 								Message.AppendInt32(Session.GetHabbo().method_4());
 								Session.SendMessage(Message);
-								Session.GetHabbo().bool_3 = true;
+								Session.GetHabbo().IsMuted = true;
 								Session.GetHabbo().int_4 = Session.GetHabbo().method_4();
 								return;
 							}
@@ -62,7 +62,7 @@ namespace GoldTree.Communication.Messages.Rooms.Chat
 						if (class3 != null && !class3.IsBot && (class3.GetClient().GetHabbo().list_2.Count <= 0 || !class3.GetClient().GetHabbo().list_2.Contains(Session.GetHabbo().Id)))
 						{
 							class3.GetClient().SendMessage(Message2);
-							if (ServerConfiguration.EnableChatlog && !Session.GetHabbo().isJuniori)
+							if (ServerConfiguration.EnableChatlog && !Session.GetHabbo().IsJuniori)
 							{
 								using (DatabaseClient class4 = GoldTree.GetDatabase().GetClient())
 								{

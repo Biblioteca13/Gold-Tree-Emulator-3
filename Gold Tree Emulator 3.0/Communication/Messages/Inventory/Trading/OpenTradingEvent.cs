@@ -19,7 +19,7 @@ namespace GoldTree.Communication.Messages.Inventory.Trading
 				{
 					RoomUser class2 = @class.GetRoomUserByHabbo(Session.GetHabbo().Id);
 					RoomUser class3 = @class.method_52(Event.PopWiredInt32());
-					if (class2 != null && class3 != null && class3.GetClient().GetHabbo().bool_2)
+					if (class2 != null && class3 != null && class3.GetClient().GetHabbo().TradingDisabled)
 					{
 						@class.method_77(class2, class3);
 					}

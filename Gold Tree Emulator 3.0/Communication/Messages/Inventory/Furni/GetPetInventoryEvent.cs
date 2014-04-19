@@ -7,9 +7,9 @@ namespace GoldTree.Communication.Messages.Inventory.Furni
 	{
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
-			if (Session.GetHabbo().method_23() != null)
+			if (Session.GetHabbo().GetInventoryComponent() != null)
 			{
-				Session.SendMessage(Session.GetHabbo().method_23().method_15());
+				Session.SendMessage(Session.GetHabbo().GetInventoryComponent().method_15());
 			}
 		}
 	}

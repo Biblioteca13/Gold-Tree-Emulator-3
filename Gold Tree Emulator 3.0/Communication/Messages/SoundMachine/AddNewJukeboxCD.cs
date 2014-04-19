@@ -24,7 +24,7 @@ namespace GoldTree.Communication.Messages.SoundMachine
                     if (roomMusicController.PlaylistSize < roomMusicController.PlaylistCapacity)
                     {
                         int num = Event.PopWiredInt32();
-                        UserItem item = Session.GetHabbo().method_23().method_10((uint)num);
+                        UserItem item = Session.GetHabbo().GetInventoryComponent().method_10((uint)num);
                         if ((item != null) && (item.method_1().InteractionType == "musicdisc"))
                         {
                             SongItem diskItem = new SongItem(item);
@@ -32,8 +32,8 @@ namespace GoldTree.Communication.Messages.SoundMachine
                             {
                                 //diskItem.SaveToDatabase((int)currentRoom.Id); // <-- old
                                 diskItem.SaveToDatabase((int)roomMusicController.LinkedItemId); // <-- new
-                                Session.GetHabbo().method_23().method_12((uint)num, 0u, true);
-                                Session.GetHabbo().method_23().method_9(true);
+                                Session.GetHabbo().GetInventoryComponent().method_12((uint)num, 0u, true);
+                                Session.GetHabbo().GetInventoryComponent().method_9(true);
                                 Session.SendMessage(JukeboxDiscksComposer.Compose(roomMusicController.PlaylistCapacity, roomMusicController.Playlist.Values.ToList<SongInstance>()));
                             }
                         }

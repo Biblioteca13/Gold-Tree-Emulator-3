@@ -7,56 +7,63 @@ namespace GoldTree.Net
 {
 	internal sealed class MusListener
 	{
-		public Socket socket_0;
-		public string string_0;
-		public int int_0;
-		public HashSet<string> hashSet_0;
-		public MusListener(string string_1, int int_1, string[] string_2, int int_2)
+		public Socket ServerSocket;
+
+		public string Address;
+		public int Port;
+
+		public HashSet<string> AllowedAddresses;
+
+		public MusListener(string addr, int port, string[] allowedAddresses, int backlog)
 		{
-			this.string_0 = "localhost";
-			this.int_0 = int_1;
-			this.hashSet_0 = new HashSet<string>();
-			this.hashSet_0.Add(GoldTree.string_5);
-			for (int i = 0; i < string_2.Length; i++)
+			this.Address = "localhost";
+			this.Port = port;
+
+			this.AllowedAddresses = new HashSet<string>();
+
+			this.AllowedAddresses.Add(GoldTree.string_5);
+			for (int i = 0; i < allowedAddresses.Length; i++)
 			{
-				string item = string_2[i];
-				this.hashSet_0.Add(item);
+				string item = allowedAddresses[i];
+				this.AllowedAddresses.Add(item);
 			}
+
 			try
 			{
-				this.socket_0 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-				this.socket_0.Bind(new IPEndPoint(IPAddress.Parse(GoldTree.GetConfig().data["mus.tcp.bindip"]), this.int_0));
-				this.socket_0.Listen(int_2);
-				this.socket_0.BeginAccept(new AsyncCallback(this.method_0), this.socket_0);
-				Logging.WriteLine("Listening for MUS on port: " + this.int_0);
+				this.ServerSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+				this.ServerSocket.Bind(new IPEndPoint(IPAddress.Parse(addr), this.Port));
+				this.ServerSocket.Listen(backlog);
+
+				this.ServerSocket.BeginAccept(new AsyncCallback(this.OnAcceptCallback), this.ServerSocket);
+
+				Logging.WriteLine("Listening for MUS on port: " + this.Port, ConsoleColor.Green);
 			}
 			catch (Exception ex)
 			{
 				throw new Exception("Could not set up MUS socket:\n" + ex.ToString());
 			}
 		}
-		public void method_0(IAsyncResult iasyncResult_0)
+
+		public void OnAcceptCallback(IAsyncResult ar)
 		{
-			try
-			{
-				Socket socket = ((Socket)iasyncResult_0.AsyncState).EndAccept(iasyncResult_0);
-				string item = socket.RemoteEndPoint.ToString().Split(new char[]
+            try
+            {
+                Socket socket = ((Socket)ar.AsyncState).EndAccept(ar);
+
+                string item = socket.RemoteEndPoint.ToString().Split(new char[]
 				{
 					':'
 				})[0];
-				if (this.hashSet_0.Contains(item))
-				{
-					new MusHandler(socket);
-				}
-				else
-				{
-					socket.Close();
-				}
-			}
-			catch (Exception)
-			{
-			}
-			this.socket_0.BeginAccept(new AsyncCallback(this.method_0), this.socket_0);
+
+                if (this.AllowedAddresses.Contains(item))
+                    new MusHandler(socket);
+                else
+                    socket.Close();
+            }
+            catch (Exception) { }
+
+			this.ServerSocket.BeginAccept(new AsyncCallback(this.OnAcceptCallback), this.ServerSocket);
 		}
 	}
 }

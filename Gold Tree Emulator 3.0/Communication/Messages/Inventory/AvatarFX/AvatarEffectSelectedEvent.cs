@@ -7,7 +7,7 @@ namespace GoldTree.Communication.Messages.Inventory.AvatarFX
 	{
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
-			Session.GetHabbo().method_24().method_2(Event.PopWiredInt32(), false);
+			Session.GetHabbo().GetEffectsInventoryComponent().method_2(Event.PopWiredInt32(), false);
 		}
 	}
 }

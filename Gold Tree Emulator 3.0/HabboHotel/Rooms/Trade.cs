@@ -221,24 +221,24 @@ namespace GoldTree.HabboHotel.Rooms
 			List<UserItem> list_2 = this.method_1(this.uint_2).OfferedItems;
 			foreach (UserItem current in list_)
 			{
-				if (this.method_1(this.uint_1).method_1().GetHabbo().method_23().method_10(current.uint_0) == null)
+				if (this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().method_10(current.uint_0) == null)
 				{
-					this.method_1(this.uint_1).method_1().SendNotif("Trade failed.");
-					this.method_1(this.uint_2).method_1().SendNotif("Trade failed.");
+					this.method_1(this.uint_1).method_1().SendNotification("Trade failed.");
+					this.method_1(this.uint_2).method_1().SendNotification("Trade failed.");
 					return;
 				}
 			}
 			foreach (UserItem current in list_2)
 			{
-				if (this.method_1(this.uint_2).method_1().GetHabbo().method_23().method_10(current.uint_0) == null)
+				if (this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().method_10(current.uint_0) == null)
 				{
-					this.method_1(this.uint_1).method_1().SendNotif("Trade failed.");
-					this.method_1(this.uint_2).method_1().SendNotif("Trade failed.");
+					this.method_1(this.uint_1).method_1().SendNotification("Trade failed.");
+					this.method_1(this.uint_2).method_1().SendNotification("Trade failed.");
 					return;
 				}
 			}
-			this.method_1(this.uint_2).method_1().GetHabbo().method_23().method_18();
-			this.method_1(this.uint_1).method_1().GetHabbo().method_23().method_18();
+			this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().method_18();
+			this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().method_18();
 			foreach (UserItem current in list_)
 			{
 				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
@@ -252,8 +252,8 @@ namespace GoldTree.HabboHotel.Rooms
 						"' LIMIT 1"
 					}));
 				}
-                this.method_1(this.uint_1).method_1().GetHabbo().method_23().method_12(current.uint_0, this.method_1(this.uint_2).method_1().GetHabbo().Id, true);
-				this.method_1(this.uint_2).method_1().GetHabbo().method_23().method_11(current.uint_0, current.uint_1, current.string_0, false);
+                this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().method_12(current.uint_0, this.method_1(this.uint_2).method_1().GetHabbo().Id, true);
+				this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().method_11(current.uint_0, current.uint_1, current.string_0, false);
 			}
 			foreach (UserItem current in list_2)
 			{
@@ -268,11 +268,11 @@ namespace GoldTree.HabboHotel.Rooms
 						"' LIMIT 1"
 					}));
 				}
-                this.method_1(this.uint_2).method_1().GetHabbo().method_23().method_12(current.uint_0, this.method_1(this.uint_1).method_1().GetHabbo().Id, true);
-				this.method_1(this.uint_1).method_1().GetHabbo().method_23().method_11(current.uint_0, current.uint_1, current.string_0, false);
+                this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().method_12(current.uint_0, this.method_1(this.uint_1).method_1().GetHabbo().Id, true);
+				this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().method_11(current.uint_0, current.uint_1, current.string_0, false);
 			}
-			this.method_1(this.uint_1).method_1().GetHabbo().method_23().method_9(true);
-			this.method_1(this.uint_2).method_1().GetHabbo().method_23().method_9(true);
+			this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().method_9(true);
+			this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().method_9(true);
 
 		}
 		public void method_11()

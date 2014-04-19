@@ -32,7 +32,7 @@ namespace GoldTree
         //private static ConnectionHandeling ConnectionManage;
         private static MusListener MusListener;
 
-        private static Game Game;
+        private static Game Internal_Game;
 
         internal static DateTime ServerStarted;
 
@@ -65,15 +65,15 @@ namespace GoldTree
             }
         }
 
-        internal static Game Class3_0
+        internal static Game Game
         {
             get
             {
-                return GoldTree.Game;
+                return GoldTree.Internal_Game;
             }
             set
             {
-                GoldTree.Game = value;
+                GoldTree.Internal_Game = value;
             }
         }
 
@@ -109,7 +109,7 @@ namespace GoldTree
 
         internal static Game GetGame()
         {
-            return Game;
+            return Internal_Game;
         }
 
         public static string smethod_0(string string_8)
@@ -459,17 +459,20 @@ namespace GoldTree
                         }
                     }
                     //GoldTree.ConnectionManage.method_7();
-                    GoldTree.Game.ContinueLoading();
+                    GoldTree.Internal_Game.ContinueLoading();
                 }
-                catch
-                {
-                }
-                GoldTree.Game = new Game(int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
+                catch { }
+
+                GoldTree.Internal_Game = new Game(int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
 
                 GoldTree.PacketManager = new PacketManager();
+
                 GoldTree.PacketManager.Handshake();
+
                 GoldTree.PacketManager.Messenger();
+
                 GoldTree.PacketManager.Navigator();
+
                 GoldTree.PacketManager.RoomsAction();
                 GoldTree.PacketManager.RoomsAvatar();
                 GoldTree.PacketManager.RoomsChat();
@@ -479,22 +482,30 @@ namespace GoldTree
                 GoldTree.PacketManager.RoomsPools();
                 GoldTree.PacketManager.RoomsSession();
                 GoldTree.PacketManager.RoomsSettings();
+
                 GoldTree.PacketManager.Catalog();
                 GoldTree.PacketManager.Marketplace();
                 GoldTree.PacketManager.Recycler();
+
                 GoldTree.PacketManager.Quest();
+
                 GoldTree.PacketManager.InventoryAchievements();
                 GoldTree.PacketManager.InventoryAvatarFX();
                 GoldTree.PacketManager.InventoryBadges();
                 GoldTree.PacketManager.InventoryFurni();
                 GoldTree.PacketManager.InventoryPurse();
                 GoldTree.PacketManager.InventoryTrading();
+
                 GoldTree.PacketManager.Avatar();
                 GoldTree.PacketManager.Users();
                 GoldTree.PacketManager.Register();
+
                 GoldTree.PacketManager.Help();
+
                 GoldTree.PacketManager.Sound();
+
                 GoldTree.PacketManager.Wired();
+
                 GoldTree.PacketManager.Jukebox();
 
                 GoldTree.MusListener = new MusListener(GoldTree.GetConfig().data["mus.tcp.bindip"], int.Parse(GoldTree.GetConfig().data["mus.tcp.port"]), GoldTree.GetConfig().data["mus.tcp.allowedaddr"].Split(new char[] { ';' }), 20);
@@ -635,11 +646,13 @@ namespace GoldTree
         {
             Program.DeleteMenu(Program.GetSystemMenu(Program.GetConsoleWindow(), true), Program.SC_CLOSE, Program.MF_BYCOMMAND);
             Logging.WriteLine("Destroying GoldTreeEmu environment...");
+            
             if (GoldTree.GetGame() != null)
             {
                 GoldTree.GetGame().ContinueLoading();
-                GoldTree.Game = null;
+                GoldTree.Internal_Game = null;
             }
+
             if (GoldTree.GetSocketsManager() != null)
             {
                 Logging.WriteLine("Destroying connection manager.");
@@ -648,6 +661,7 @@ namespace GoldTree
                 GoldTree.GetSocketsManager().method_0();
                 GoldTree.SocketsManager = null;
             }
+
             if (GoldTree.GetDatabase() != null)
             {
                 try
@@ -660,6 +674,7 @@ namespace GoldTree
                 {
                 }
             }
+
             Logging.WriteLine("Uninitialized successfully. Closing.");
         }
 
@@ -687,7 +702,7 @@ namespace GoldTree
 
             try
             {
-                Game.StopGameLoop();
+                Internal_Game.StopGameLoop();
             }
             catch { }
 
@@ -713,7 +728,7 @@ namespace GoldTree
                 Console.WriteLine("Server shutting down...");
                 try
                 {
-                    GoldTree.Game.GetRoomManager().method_4();
+                    GoldTree.Internal_Game.GetRoomManager().method_4();
                 }
                 catch
                 {
@@ -744,10 +759,10 @@ namespace GoldTree
                 GoldTree.bool_1 = true;
                 try
                 {
-                    if (GoldTree.Game != null && GoldTree.Game.GetRoomManager() != null)
+                    if (GoldTree.Internal_Game != null && GoldTree.Internal_Game.GetRoomManager() != null)
                     {
-                        GoldTree.Game.GetRoomManager().UnloadAllRooms();
-                        GoldTree.Game.GetRoomManager().method_4();
+                        GoldTree.Internal_Game.GetRoomManager().UnloadAllRooms();
+                        GoldTree.Internal_Game.GetRoomManager().method_4();
                     }
                 }
                 catch
@@ -769,9 +784,9 @@ namespace GoldTree
                 {
                     //GoldTree.ConnectionManage.method_7();
                 }
-                if (GoldTree.Game != null)
+                if (GoldTree.Internal_Game != null)
                 {
-                    GoldTree.Game.ContinueLoading();
+                    GoldTree.Internal_Game.ContinueLoading();
                 }
                 Console.WriteLine(string_8);
             }
@@ -784,10 +799,11 @@ namespace GoldTree
         {
             return int_3 % int_4 == 0;
         }
-        public static DateTime smethod_21(double double_0)
+        public static DateTime TimestampToDate(double timestamp)
         {
             DateTime result = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            return result.AddSeconds(double_0).ToLocalTime();
+           
+            return result.AddSeconds(timestamp).ToLocalTime();
         }
 
         

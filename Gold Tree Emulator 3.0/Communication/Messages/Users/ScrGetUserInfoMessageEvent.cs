@@ -25,7 +25,7 @@ namespace GoldTree.Communication.Messages.Users
 				Message.AppendInt32(num4);
 				Message.AppendBoolean(true);
 				Message.AppendBoolean(true);
-				Message.AppendBoolean(Session.GetHabbo().Vip);
+				Message.AppendBoolean(Session.GetHabbo().IsVIP);
 				Message.AppendInt32(0);
 				Message.AppendInt32(0);
 			}
