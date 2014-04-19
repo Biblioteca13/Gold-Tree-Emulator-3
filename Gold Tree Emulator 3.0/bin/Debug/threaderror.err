@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 20.2.2014 23:20:51: Error in thread Server status update task: 
 System.NullReferenceException: Objektin viittaukseksi ei voi m??ritt?? objektiesiintym??.
    kohteessa GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0()
@@ -342,3 +344,4 @@ System.NullReferenceException: Object reference not set to an instance of an obj
 System.NullReferenceException: Object reference not set to an instance of an object.
    at GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0() in c:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\HabboHotel\Misc\LowPriorityWorker.cs:line 23
 
+>>>>>>> 94c6ee8fee8f294259fd7fd57b1638a25f375286
