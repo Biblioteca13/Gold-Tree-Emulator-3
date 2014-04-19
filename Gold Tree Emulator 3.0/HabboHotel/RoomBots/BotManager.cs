@@ -14,7 +14,7 @@ namespace GoldTree.HabboHotel.RoomBots
 		}
 		public void method_0(DatabaseClient class6_0)
 		{
-            Logging.smethod_0("Loading Bot data..");
+            Logging.Write("Loading Bot data..");
 			this.list_0 = new List<RoomBot>();
 			DataTable dataTable = class6_0.ReadDataTable("SELECT * FROM bots;");
 			DataTable dataTable2 = class6_0.ReadDataTable("SELECT Id, bot_id, keywords, response_text, mode, serve_id FROM bots_responses;");
@@ -27,7 +27,7 @@ namespace GoldTree.HabboHotel.RoomBots
 			}
 			foreach (DataRow dataRow in dataTable3.Rows)
 			{
-				list2.Add(new RandomSpeech((string)dataRow["text"], GoldTree.smethod_3(dataRow["shout"].ToString()), (uint)dataRow["bot_id"]));
+				list2.Add(new RandomSpeech((string)dataRow["text"], GoldTree.StringToBoolean(dataRow["shout"].ToString()), (uint)dataRow["bot_id"]));
 			}
 			if (dataTable != null)
 			{
@@ -66,7 +66,7 @@ namespace GoldTree.HabboHotel.RoomBots
 					enum2_ = AIType.const_2;
 					goto IL_204;
 				}
-				Logging.WriteLine("completed!");
+				Logging.WriteLine("completed!", ConsoleColor.Green);
 			}
 		}
 		public bool method_1(uint uint_0)

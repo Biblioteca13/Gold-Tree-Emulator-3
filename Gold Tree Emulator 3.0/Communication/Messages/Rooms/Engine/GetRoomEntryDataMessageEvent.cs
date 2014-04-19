@@ -61,9 +61,9 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 							}
 							class2.method_46(Session, Session.GetHabbo().bool_8);
 							List<RoomUser> list = new List<RoomUser>();
-							for (int i = 0; i < class2.RoomUser_0.Length; i++)
+							for (int i = 0; i < class2.RoomUsers.Length; i++)
 							{
-								RoomUser class4 = class2.RoomUser_0[i];
+								RoomUser class4 = class2.RoomUsers[i];
 								if (class4 != null && (!class4.bool_11 && class4.bool_12))
 								{
 									list.Add(class4);
@@ -116,9 +116,9 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 							{
 								Session.SendMessage(Message8);
 							}
-							for (int i = 0; i < class2.RoomUser_0.Length; i++)
+							for (int i = 0; i < class2.RoomUsers.Length; i++)
 							{
-								RoomUser class4 = class2.RoomUser_0[i];
+								RoomUser class4 = class2.RoomUsers[i];
 								if (class4 != null && !class4.bool_11)
 								{
 									if (class4.Boolean_1)

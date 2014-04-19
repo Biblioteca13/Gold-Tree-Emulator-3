@@ -20,9 +20,9 @@ namespace GoldTree.Communication.Messages.Rooms.Settings
 					Room class2 = GoldTree.GetGame().GetRoomManager().GetRoom(@class.Id);
 					if (class2 != null)
 					{
-						for (int i = 0; i < class2.RoomUser_0.Length; i++)
+						for (int i = 0; i < class2.RoomUsers.Length; i++)
 						{
-							RoomUser class3 = class2.RoomUser_0[i];
+							RoomUser class3 = class2.RoomUsers[i];
 							if (class3 != null && !class3.IsBot)
 							{
 								class3.GetClient().SendMessage(new ServerMessage(18u));

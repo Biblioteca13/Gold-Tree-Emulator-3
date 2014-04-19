@@ -34,7 +34,7 @@ namespace GoldTree.Net
 			}
 			else
 			{
-                if (AntiDDosSystem.GetConnectionAmount(text) > 10 && text != "127.0.0.1" && text != LicenseTools.ProxyIP && !LicenseTools.AntiDDoSEnabled)
+                if (AntiDDosSystem.GetConnectionAmount(text) > 10 && text != "127.0.0.1" && text != ServerConfiguration.ProxyIP && !ServerConfiguration.DDoSProtectionEnabled)
 				{
                     Process[] peerblockrunning = Process.GetProcessesByName("peerblock");
                     if (peerblockrunning.Length == 0)

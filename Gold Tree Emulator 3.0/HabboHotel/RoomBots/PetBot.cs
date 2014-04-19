@@ -185,13 +185,13 @@ namespace GoldTree.HabboHotel.RoomBots
 							{
 								string[] array = new string[]
 								{
-									GoldTreeEnvironment.smethod_1("pet_response_confused1"),
-									GoldTreeEnvironment.smethod_1("pet_response_confused2"),
-									GoldTreeEnvironment.smethod_1("pet_response_confused3"),
-									GoldTreeEnvironment.smethod_1("pet_response_confused4"),
-									GoldTreeEnvironment.smethod_1("pet_response_confused5"),
-									GoldTreeEnvironment.smethod_1("pet_response_confused6"),
-									GoldTreeEnvironment.smethod_1("pet_response_confused7")
+									GoldTreeEnvironment.GetExternalText("pet_response_confused1"),
+									GoldTreeEnvironment.GetExternalText("pet_response_confused2"),
+									GoldTreeEnvironment.GetExternalText("pet_response_confused3"),
+									GoldTreeEnvironment.GetExternalText("pet_response_confused4"),
+									GoldTreeEnvironment.GetExternalText("pet_response_confused5"),
+									GoldTreeEnvironment.GetExternalText("pet_response_confused6"),
+									GoldTreeEnvironment.GetExternalText("pet_response_confused7")
 								};
 								Random random = new Random();
 								@class.method_1(null, array[random.Next(0, array.Length - 1)], false);
@@ -202,7 +202,7 @@ namespace GoldTree.HabboHotel.RoomBots
 								{
 								case 1:
 									@class.PetData.AddExpirience(10, -25);
-									@class.method_1(null, GoldTreeEnvironment.smethod_1("pet_response_sleep"), false);
+									@class.method_1(null, GoldTreeEnvironment.GetExternalText("pet_response_sleep"), false);
 									@class.Statusses.Add("lay", @class.double_0.ToString());
 									break;
 								case 2:
@@ -300,7 +300,7 @@ namespace GoldTree.HabboHotel.RoomBots
 									break;
 								case 10:
 									@class.PetData.AddExpirience(25, 25);
-									@class.method_1(null, GoldTreeEnvironment.smethod_1("pet_response_silent"), false);
+									@class.method_1(null, GoldTreeEnvironment.GetExternalText("pet_response_silent"), false);
 									this.int_2 = 120;
 									break;
 								case 11:
@@ -314,19 +314,19 @@ namespace GoldTree.HabboHotel.RoomBots
 						{
 							string[] array2 = new string[]
 							{
-								GoldTreeEnvironment.smethod_1("pet_response_sleeping1"),
-								GoldTreeEnvironment.smethod_1("pet_response_sleeping2"),
-								GoldTreeEnvironment.smethod_1("pet_response_sleeping3"),
-								GoldTreeEnvironment.smethod_1("pet_response_sleeping4"),
-								GoldTreeEnvironment.smethod_1("pet_response_sleeping5")
+								GoldTreeEnvironment.GetExternalText("pet_response_sleeping1"),
+								GoldTreeEnvironment.GetExternalText("pet_response_sleeping2"),
+								GoldTreeEnvironment.GetExternalText("pet_response_sleeping3"),
+								GoldTreeEnvironment.GetExternalText("pet_response_sleeping4"),
+								GoldTreeEnvironment.GetExternalText("pet_response_sleeping5")
 							};
 							string[] array3 = new string[]
 							{
-								GoldTreeEnvironment.smethod_1("pet_response_refusal1"),
-								GoldTreeEnvironment.smethod_1("pet_response_refusal2"),
-								GoldTreeEnvironment.smethod_1("pet_response_refusal3"),
-								GoldTreeEnvironment.smethod_1("pet_response_refusal4"),
-								GoldTreeEnvironment.smethod_1("pet_response_refusal5")
+								GoldTreeEnvironment.GetExternalText("pet_response_refusal1"),
+								GoldTreeEnvironment.GetExternalText("pet_response_refusal2"),
+								GoldTreeEnvironment.GetExternalText("pet_response_refusal3"),
+								GoldTreeEnvironment.GetExternalText("pet_response_refusal4"),
+								GoldTreeEnvironment.GetExternalText("pet_response_refusal5")
 							};
 							@class.int_10 = @class.int_12;
 							@class.int_11 = @class.int_13;
@@ -368,131 +368,131 @@ namespace GoldTree.HabboHotel.RoomBots
 				RoomUser @class = base.GetRoomUser();
 				string[] array = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_dog1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_dog2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_dog3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_dog4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_dog5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dog1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dog2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dog3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dog4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dog5")
 				};
 				string[] array2 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_cat1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_cat2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_cat3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_cat4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_cat5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_cat1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_cat2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_cat3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_cat4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_cat5")
 				};
 				string[] array3 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_croc1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_croc2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_croc3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_croc4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_croc5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_croc1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_croc2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_croc3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_croc4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_croc5")
 				};
 				string[] array4 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_dog1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_dog2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_dog3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_dog4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_dog5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dog1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dog2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dog3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dog4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dog5")
 				};
 				string[] array5 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_bear1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_bear2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_bear3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_bear4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_bear5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_bear1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_bear2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_bear3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_bear4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_bear5")
 				};
 				string[] array6 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_pig1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_pig2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_pig3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_pig4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_pig5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_pig1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_pig2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_pig3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_pig4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_pig5")
 				};
 				string[] array7 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_lion1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_lion2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_lion3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_lion4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_lion5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_lion1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_lion2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_lion3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_lion4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_lion5")
 				};
 				string[] array8 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_rhino1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_rhino2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_rhino3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_rhino4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_rhino5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_rhino1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_rhino2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_rhino3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_rhino4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_rhino5")
 				};
 				string[] array9 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_spider1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_spider2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_spider3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_spider4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_spider5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_spider1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_spider2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_spider3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_spider4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_spider5")
 				};
 				string[] array10 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_turtle1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_turtle2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_turtle3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_turtle4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_turtle5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_turtle1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_turtle2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_turtle3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_turtle4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_turtle5")
 				};
 				string[] array11 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_chic1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_chic2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_chic3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_chic4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_chic5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_chic1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_chic2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_chic3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_chic4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_chic5")
 				};
 				string[] array12 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_frog1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_frog2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_frog3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_frog4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_frog5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_frog1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_frog2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_frog3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_frog4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_frog5")
 				};
 				string[] array13 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_dragon1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_dragon2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_dragon3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_dragon4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_dragon5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dragon1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dragon2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dragon3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dragon4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_dragon5")
 				};
 				string[] array14 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_horse1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_horse2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_horse3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_horse4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_horse5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_horse1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_horse2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_horse3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_horse4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_horse5")
 				};
 				string[] array15 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_monkey1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_monkey2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_monkey3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_monkey4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_monkey5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_monkey1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_monkey2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_monkey3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_monkey4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_monkey5")
 				};
 				string[] array16 = new string[]
 				{
-					GoldTreeEnvironment.smethod_1("pet_chatter_generic1"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_generic2"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_generic3"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_generic4"),
-					GoldTreeEnvironment.smethod_1("pet_chatter_generic5")
+					GoldTreeEnvironment.GetExternalText("pet_chatter_generic1"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_generic2"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_generic3"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_generic4"),
+					GoldTreeEnvironment.GetExternalText("pet_chatter_generic5")
 				};
 				string[] array17 = new string[]
 				{

@@ -36,7 +36,7 @@ namespace GoldTree.Communication.Messages.Wired
                                 }
                                 else
                                 {
-                                    Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("wired_error_permissions"));
+                                    Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("wired_error_permissions"));
                                 }
                             }
                             break;
@@ -59,7 +59,7 @@ namespace GoldTree.Communication.Messages.Wired
                                 }
                                 else
                                 {
-                                    Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("wired_error_permissions"));
+                                    Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("wired_error_permissions"));
                                 }
                             }
                             break;

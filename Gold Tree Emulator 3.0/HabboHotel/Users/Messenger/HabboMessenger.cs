@@ -279,7 +279,7 @@ namespace GoldTree.HabboHotel.Users.Messenger
 			}
 			if (dataRow != null)
 			{
-				if (GoldTree.smethod_3(dataRow["block_newfriends"].ToString()) && !this.method_25().GetHabbo().HasFuse("ignore_friendsettings"))
+				if (GoldTree.StringToBoolean(dataRow["block_newfriends"].ToString()) && !this.method_25().GetHabbo().HasFuse("ignore_friendsettings"))
 				{
 					ServerMessage Message = new ServerMessage(260u);
 					Message.AppendInt32(39);
@@ -365,7 +365,7 @@ namespace GoldTree.HabboHotel.Users.Messenger
 							this.method_25().GetHabbo().int_23++;
 						}
 						string_0 = ChatCommandHandler.smethod_4(string_0);
-						if (LicenseTools.Boolean_4 && !this.method_25().GetHabbo().isJuniori)
+						if (ServerConfiguration.EnableChatlog && !this.method_25().GetHabbo().isJuniori)
 						{
 							using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 							{

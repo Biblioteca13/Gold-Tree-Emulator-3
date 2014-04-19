@@ -19,9 +19,9 @@ namespace GoldTree.HabboHotel.Misc
 		}
 		public void method_0()
 		{
-			Logging.smethod_0("Starting Reward Timer..");
+			Logging.Write("Starting Reward Timer..");
 			this.WorkerThread.Start();
-			Logging.WriteLine("completed!");
+			Logging.WriteLine("completed!", ConsoleColor.Green);
 		}
 		private void method_1()
 		{
@@ -43,7 +43,7 @@ namespace GoldTree.HabboHotel.Misc
 		public bool method_2(GameClient Session)
 		{
 			double num = (GoldTree.GetUnixTimestamp() - Session.GetHabbo().LastActivityPointsUpdate) / 60.0;
-			return num >= (double)LicenseTools.Int32_0;
+			return num >= (double)ServerConfiguration.CreditingInterval;
 		}
 		public void method_3(GameClient Session)
 		{
@@ -52,27 +52,27 @@ namespace GoldTree.HabboHotel.Misc
                 if (Session.GetHabbo().InRoom)
 				{
 					RoomUser @class = Session.GetHabbo().CurrentRoom.GetRoomUserByHabbo(Session.GetHabbo().Id);
-					if (@class.int_1 <= LicenseTools.int_14)
+					if (@class.int_1 <= ServerConfiguration.SleepTimer)
 					{
 						double double_ = GoldTree.GetUnixTimestamp();
 						Session.GetHabbo().LastActivityPointsUpdate = double_;
-						if (LicenseTools.Int32_3 > 0 && (Session.GetHabbo().ActivityPoints < LicenseTools.int_3 || LicenseTools.int_3 == 0))
+						if (ServerConfiguration.PointingAmount > 0 && (Session.GetHabbo().ActivityPoints < ServerConfiguration.PixelLimit || ServerConfiguration.PixelLimit == 0))
 						{
-							Session.GetHabbo().ActivityPoints += LicenseTools.Int32_3;
-							Session.GetHabbo().method_16(LicenseTools.Int32_3);
+							Session.GetHabbo().ActivityPoints += ServerConfiguration.PointingAmount;
+							Session.GetHabbo().method_16(ServerConfiguration.PointingAmount);
 						}
-						if (LicenseTools.Int32_1 > 0 && (Session.GetHabbo().Credits < LicenseTools.int_5 || LicenseTools.int_5 == 0))
+						if (ServerConfiguration.CreditingAmount > 0 && (Session.GetHabbo().Credits < ServerConfiguration.CreditLimit || ServerConfiguration.CreditLimit == 0))
 						{
-							Session.GetHabbo().Credits += LicenseTools.Int32_1;
+							Session.GetHabbo().Credits += ServerConfiguration.CreditingAmount;
 							if (Session.GetHabbo().Vip)
 							{
-								Session.GetHabbo().Credits += LicenseTools.Int32_1;
+								Session.GetHabbo().Credits += ServerConfiguration.CreditingAmount;
 							}
 							Session.GetHabbo().method_13(true);
 						}
-						if (LicenseTools.Int32_2 > 0 && (Session.GetHabbo().VipPoints < LicenseTools.int_4 || LicenseTools.int_4 == 0))
+						if (ServerConfiguration.PixelingAmount > 0 && (Session.GetHabbo().VipPoints < ServerConfiguration.PointLimit || ServerConfiguration.PointLimit == 0))
 						{
-							Session.GetHabbo().VipPoints += LicenseTools.Int32_2;
+							Session.GetHabbo().VipPoints += ServerConfiguration.PixelingAmount;
 							Session.GetHabbo().method_14(false, true);
 						}
 					}

@@ -21,7 +21,7 @@ namespace GoldTree.HabboHotel.Support
 		}
 		public void method_0(DatabaseClient class6_0)
 		{
-			Logging.smethod_0("Loading Help Categories..");
+			Logging.Write("Loading Help Categories..");
 			this.dictionary_0.Clear();
 			DataTable dataTable = class6_0.ReadDataTable("SELECT Id, caption FROM help_subjects");
 			if (dataTable != null)
@@ -30,7 +30,7 @@ namespace GoldTree.HabboHotel.Support
 				{
 					this.dictionary_0.Add((uint)dataRow["Id"], new HelpCategory((uint)dataRow["Id"], (string)dataRow["caption"]));
 				}
-				Logging.WriteLine("completed!");
+				Logging.WriteLine("completed!", ConsoleColor.Green);
 			}
 		}
 		public HelpCategory method_1(uint uint_0)
@@ -52,7 +52,7 @@ namespace GoldTree.HabboHotel.Support
 		}
 		public void method_3(DatabaseClient class6_0)
 		{
-			Logging.smethod_0("Loading Help Topics..");
+			Logging.Write("Loading Help Topics..");
 			this.dictionary_1.Clear();
 			DataTable dataTable = class6_0.ReadDataTable("SELECT Id, title, body, subject, known_issue FROM help_topics");
 			if (dataTable != null)
@@ -74,7 +74,7 @@ namespace GoldTree.HabboHotel.Support
 						}
 					}
 				}
-				Logging.WriteLine("completed!");
+				Logging.WriteLine("completed!", ConsoleColor.Green);
 			}
 		}
 		public HelpTopic method_4(uint uint_0)

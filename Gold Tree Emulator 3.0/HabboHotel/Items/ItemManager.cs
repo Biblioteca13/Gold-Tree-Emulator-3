@@ -17,7 +17,7 @@ namespace GoldTree.HabboHotel.Items
 		}
 		public void method_0(DatabaseClient class6_0)
 		{
-            Logging.smethod_0("Loading Items..");
+            Logging.Write("Loading Items..");
 			this.dictionary_0 = new Dictionary<uint, Item>();
 			DataTable dataTable = class6_0.ReadDataTable("SELECT * FROM furniture;");
 			if (dataTable != null)
@@ -26,7 +26,7 @@ namespace GoldTree.HabboHotel.Items
 				{
 					try
 					{
-                        this.dictionary_0.Add((uint)dataRow["Id"], new Item((uint)dataRow["Id"], (int)dataRow["sprite_id"], (string)dataRow["public_name"], (string)dataRow["item_name"], (string)dataRow["type"], (int)dataRow["width"], (int)dataRow["length"], (double)dataRow["stack_height"], GoldTree.smethod_3(dataRow["can_stack"].ToString()), GoldTree.smethod_3(dataRow["is_walkable"].ToString()), GoldTree.smethod_3(dataRow["can_sit"].ToString()), GoldTree.smethod_3(dataRow["allow_recycle"].ToString()), GoldTree.smethod_3(dataRow["allow_trade"].ToString()), GoldTree.smethod_3(dataRow["allow_marketplace_sell"].ToString()), GoldTree.smethod_3(dataRow["allow_gift"].ToString()), GoldTree.smethod_3(dataRow["allow_inventory_stack"].ToString()), (string)dataRow["interaction_type"], (int)dataRow["interaction_modes_count"], (string)dataRow["vending_ids"], dataRow["height_adjustable"].ToString(), Convert.ToByte((int)dataRow["EffectF"]), Convert.ToByte((int)dataRow["EffectM"]), GoldTree.smethod_3(dataRow["HeightOverride"].ToString())));
+                        this.dictionary_0.Add((uint)dataRow["Id"], new Item((uint)dataRow["Id"], (int)dataRow["sprite_id"], (string)dataRow["public_name"], (string)dataRow["item_name"], (string)dataRow["type"], (int)dataRow["width"], (int)dataRow["length"], (double)dataRow["stack_height"], GoldTree.StringToBoolean(dataRow["can_stack"].ToString()), GoldTree.StringToBoolean(dataRow["is_walkable"].ToString()), GoldTree.StringToBoolean(dataRow["can_sit"].ToString()), GoldTree.StringToBoolean(dataRow["allow_recycle"].ToString()), GoldTree.StringToBoolean(dataRow["allow_trade"].ToString()), GoldTree.StringToBoolean(dataRow["allow_marketplace_sell"].ToString()), GoldTree.StringToBoolean(dataRow["allow_gift"].ToString()), GoldTree.StringToBoolean(dataRow["allow_inventory_stack"].ToString()), (string)dataRow["interaction_type"], (int)dataRow["interaction_modes_count"], (string)dataRow["vending_ids"], dataRow["height_adjustable"].ToString(), Convert.ToByte((int)dataRow["EffectF"]), Convert.ToByte((int)dataRow["EffectM"]), GoldTree.StringToBoolean(dataRow["HeightOverride"].ToString())));
 					}
 					catch (Exception e)
 					{
@@ -35,7 +35,7 @@ namespace GoldTree.HabboHotel.Items
 					}
 				}
 			}
-			Logging.WriteLine("completed!");
+			Logging.WriteLine("completed!", ConsoleColor.Green);
 			/*Logging.smethod_0("Loading Soundtracks.."); //OMA LUOTU :3
 			this.dictionary_1 = new Dictionary<int, Soundtrack>();
 			DataTable dataTable2 = class6_0.ReadDataTable("SELECT * FROM soundtracks;");
@@ -53,10 +53,10 @@ namespace GoldTree.HabboHotel.Items
 					}
 				}
 			}
-			Logging.WriteLine("completed!");*/
-            Logging.smethod_0("Loading Soundtracks..");
+			Logging.WriteLine("completed!", ConsoleColor.Green);*/
+            Logging.Write("Loading Soundtracks..");
             SongManager.Initialize();
-            Logging.WriteLine("completed!");
+            Logging.WriteLine("completed!", ConsoleColor.Green);
 		}
 		public bool method_1(uint uint_0)
 		{

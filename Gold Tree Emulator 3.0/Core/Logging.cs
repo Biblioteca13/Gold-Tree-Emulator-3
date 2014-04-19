@@ -2,25 +2,45 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+
 namespace GoldTree.Core
 {
 	public sealed class Logging
 	{
-		private static bool IsRunning = false;
-		internal static void smethod_0(string string_0)
+		private static bool IsDisabled = false;
+
+		internal static void Write(string str)
 		{
-			if (!Logging.IsRunning)
-			{
-				Console.Write(string_0);
-			}
+			if (!Logging.IsDisabled)
+				Console.Write(str);
 		}
-		internal static void WriteLine(string Line)
+
+        internal static void Write(string str, ConsoleColor color)
+        {
+            if (Logging.IsDisabled)
+                return;
+
+            Console.ForegroundColor = color;
+            Console.Write(str);
+            Console.ResetColor();
+        }
+
+		internal static void WriteLine(string str)
 		{
-			if (!Logging.IsRunning)
-			{
-				Console.WriteLine(Line);
-			}
+            if (!Logging.IsDisabled)
+				Console.WriteLine(str);
 		}
+
+        internal static void WriteLine(string str, ConsoleColor color)
+        {
+            if (Logging.IsDisabled)
+                return;
+
+            Console.ForegroundColor = color;
+            Console.WriteLine(str);
+            Console.ResetColor();
+        }
+
 		internal static void LogException(string logText)
 		{
 			try
@@ -59,10 +79,12 @@ namespace GoldTree.Core
 			{
 				Logging.WriteLine(DateTime.Now + ": " + logText);
 			}
+
 			Console.ForegroundColor = ConsoleColor.Red;
 			Logging.WriteLine("Exception has been saved");
 			Console.ForegroundColor = ConsoleColor.Gray;
 		}
+
 		internal static void LogCriticalException(string logText)
 		{
 			try
@@ -102,6 +124,7 @@ namespace GoldTree.Core
 				Logging.WriteLine(DateTime.Now + ": " + logText);
 			}
 		}
+
 		internal static void LogCacheError(string logText)
 		{
 			try
@@ -141,26 +164,27 @@ namespace GoldTree.Core
 			Logging.WriteLine("Critical error saved");
 			Console.ForegroundColor = ConsoleColor.Gray;
 		}
+
 		internal static void LogDDoS(string logText)
 		{
-			try
-			{
-				FileStream fileStream = new FileStream("ddos.txt", FileMode.Append, FileAccess.Write);
-				byte[] bytes = Encoding.ASCII.GetBytes(string.Concat(new object[]
+            try
+            {
+                FileStream fileStream = new FileStream("ddos.txt", FileMode.Append, FileAccess.Write);
+                byte[] bytes = Encoding.ASCII.GetBytes(string.Concat(new object[]
 				{
 					DateTime.Now,
 					": ",
 					logText,
 					"\r\n\r\n"
 				}));
-				fileStream.Write(bytes, 0, bytes.Length);
-				fileStream.Close();
-			}
-			catch
-			{
-			}
+                fileStream.Write(bytes, 0, bytes.Length);
+                fileStream.Close();
+            }
+            catch { }
+
 			Logging.WriteLine(DateTime.Now + ": " + logText);
 		}
+
 		internal static void LogThreadException(string Exception, string Threadname)
 		{
 			try
@@ -202,14 +226,17 @@ namespace GoldTree.Core
 				Logging.WriteLine(DateTime.Now + ": " + Exception);
 			}
 		}
-		internal static void smethod_7()
+
+		internal static void Disable()
 		{
-			Logging.IsRunning = true;
+			Logging.IsDisabled = true;
 		}
+
 		internal static void smethod_8(string logText)
 		{
 			throw new NotImplementedException();
 		}
+
         internal static void LogItemError(string logText)
         {
             try
@@ -233,6 +260,7 @@ namespace GoldTree.Core
                 Logging.WriteLine(DateTime.Now + ": " + logText);
             }
         }
+
         internal static void LogItemUpdateError(string logText)
         {
             try
@@ -256,6 +284,7 @@ namespace GoldTree.Core
                 Logging.WriteLine(DateTime.Now + ": " + logText);
             }
         }
+
         internal static void LogSocketError(string logText)
         {
             try
@@ -276,6 +305,7 @@ namespace GoldTree.Core
             }
             Logging.WriteLine(DateTime.Now + ": " + logText);
         }
+
         internal static void LogRoomError(string logText)
         {
             try

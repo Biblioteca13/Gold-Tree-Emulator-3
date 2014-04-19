@@ -47,7 +47,7 @@ namespace GoldTree.HabboHotel.Navigators
 		}
 		public void method_0(DatabaseClient class6_0)
 		{
-			Logging.smethod_0("Loading Navigator..");
+			Logging.Write("Loading Navigator..");
 			this.list_0.Clear();
 			this.dictionary_0.Clear();
 			this.dictionary_1.Clear();
@@ -57,21 +57,21 @@ namespace GoldTree.HabboHotel.Navigators
 			{
 				foreach (DataRow dataRow in dataTable.Rows)
 				{
-					this.list_0.Add(new FlatCat((int)dataRow["Id"], (string)dataRow["caption"], (int)dataRow["min_rank"], GoldTree.smethod_3(dataRow["cantrade"].ToString())));
+					this.list_0.Add(new FlatCat((int)dataRow["Id"], (string)dataRow["caption"], (int)dataRow["min_rank"], GoldTree.StringToBoolean(dataRow["cantrade"].ToString())));
 				}
 			}
 			if (dataTable2 != null)
 			{
 				foreach (DataRow dataRow in dataTable2.Rows)
 				{
-					this.dictionary_0.Add((int)dataRow["Id"], new PublicItem((int)dataRow["Id"], int.Parse(dataRow["bannertype"].ToString()), (string)dataRow["caption"], (string)dataRow["image"], (dataRow["image_type"].ToString().ToLower() == "internal") ? PublicImageType.INTERNAL : PublicImageType.EXTERNAL, (uint)dataRow["room_id"], GoldTree.smethod_3(dataRow["category"].ToString()), (int)dataRow["category_parent_id"]));
+					this.dictionary_0.Add((int)dataRow["Id"], new PublicItem((int)dataRow["Id"], int.Parse(dataRow["bannertype"].ToString()), (string)dataRow["caption"], (string)dataRow["image"], (dataRow["image_type"].ToString().ToLower() == "internal") ? PublicImageType.INTERNAL : PublicImageType.EXTERNAL, (uint)dataRow["room_id"], GoldTree.StringToBoolean(dataRow["category"].ToString()), (int)dataRow["category_parent_id"]));
 					if (!this.dictionary_0[(int)dataRow["Id"]].bool_0)
 					{
 						this.dictionary_1.Add((int)dataRow["Id"], this.dictionary_0[(int)dataRow["Id"]]);
 					}
 				}
 			}
-			Logging.WriteLine("completed!");
+			Logging.WriteLine("completed!", ConsoleColor.Green);
 		}
 		public int method_1(int int_0)
 		{
@@ -277,7 +277,7 @@ namespace GoldTree.HabboHotel.Navigators
 					{
 						string_0 = string_0.Replace(" ", "");
 						@class.AddParamWithValue("query", string_0.Substring(6));
-						dataTable = @class.ReadDataTable("SELECT * FROM rooms WHERE owner = @query AND roomtype = 'private' ORDER BY users_now DESC LIMIT " + LicenseTools.Int32_4);
+						dataTable = @class.ReadDataTable("SELECT * FROM rooms WHERE owner = @query AND roomtype = 'private' ORDER BY users_now DESC LIMIT " + ServerConfiguration.RoomUserLimit);
 					}
 					else
 					{
@@ -318,7 +318,7 @@ namespace GoldTree.HabboHotel.Navigators
 			}
 			else
 			{
-				byte[] array = GoldTree.GetGame().method_15().method_1(int_0);
+				byte[] array = GoldTree.GetGame().GetNavigatorCache().method_1(int_0);
 				if (array != null)
 				{
 					result = array;

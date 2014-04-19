@@ -129,11 +129,11 @@ namespace GoldTree.HabboHotel.Rooms
 			this.CCTs = (string)Row["public_ccts"];
 			this.Score = (int)Row["score"];
 			this.Tags = new List<string>();
-			this.AllowPet = GoldTree.smethod_3(Row["allow_pets"].ToString());
-			this.AllowPetsEating = GoldTree.smethod_3(Row["allow_pets_eat"].ToString());
-			this.AllowWalkthrough = GoldTree.smethod_3(Row["allow_walkthrough"].ToString());
+			this.AllowPet = GoldTree.StringToBoolean(Row["allow_pets"].ToString());
+			this.AllowPetsEating = GoldTree.StringToBoolean(Row["allow_pets_eat"].ToString());
+			this.AllowWalkthrough = GoldTree.StringToBoolean(Row["allow_walkthrough"].ToString());
 			this.bool_3 = false;
-			this.Hidewall = GoldTree.smethod_3(Row["allow_hidewall"].ToString());
+			this.Hidewall = GoldTree.StringToBoolean(Row["allow_hidewall"].ToString());
 			this.Wallthick = (int)Row["wallthick"];
 			this.Floorthick = (int)Row["floorthick"];
 			this.Password = (string)Row["password"];

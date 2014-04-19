@@ -21,24 +21,30 @@ namespace GoldTree
     {
         public static readonly int build = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build;
         public const string string_0 = "localhost";
-        private static PacketManager class117_0;
+
+        private static PacketManager PacketManager;
+
         private static ConfigurationData Configuration;
+
         private static DatabaseManager DatabaseManager;
-        private static SocketsManager ConnectionManage;
+
+        private static SocketsManager SocketsManager;
         //private static ConnectionHandeling ConnectionManage;
         private static MusListener MusListener;
+
         private static Game Game;
+
         internal static DateTime ServerStarted;
+
         public string string_2 = GoldTree.smethod_1(14986.ToString());
-        public string string_3 = "LICENCE DELETED" + "licence" + Convert.ToChar(46).ToString() + "php" + Convert.ToChar(63).ToString();
-        public static string string_4 = "LICENCE DELETED" + "override" + Convert.ToChar(46).ToString() + "php";
+
         public static bool bool_0 = false;
         public static int int_1 = 0;
         public static int int_2 = 0;
         public static string string_5 = null;
-        public static string string_6;
-        public static string string_7;
+
         private static bool bool_1 = false;
+
         public static List<string> UserAdMessage;
         public static int UserAdType;
         public static string UserAdLink;
@@ -70,6 +76,42 @@ namespace GoldTree
                 GoldTree.Game = value;
             }
         }
+
+        public static PacketManager GetPacketManager()
+        {
+            return GoldTree.PacketManager;
+        }
+
+        public static ConfigurationData GetConfig()
+        {
+            return Configuration;
+        }
+
+        public static DatabaseManager GetDatabase()
+        {
+            return DatabaseManager;
+        }
+
+        public static Encoding GetDefaultEncoding()
+        {
+            return Encoding.Default;
+        }
+
+        public static SocketsManager GetSocketsManager()
+        {
+            return GoldTree.SocketsManager;
+        }
+
+        //public static ConnectionHandeling smethod_14()
+        //{
+        //    return GoldTree.ConnectionManage;
+        //}
+
+        internal static Game GetGame()
+        {
+            return Game;
+        }
+
         public static string smethod_0(string string_8)
         {
             MD5CryptoServiceProvider mD5CryptoServiceProvider = new MD5CryptoServiceProvider();
@@ -85,6 +127,7 @@ namespace GoldTree
             string text = stringBuilder.ToString();
             return text.ToUpper();
         }
+
         public static string smethod_1(string string_8)
         {
             byte[] bytes = Encoding.ASCII.GetBytes(string_8);
@@ -98,19 +141,16 @@ namespace GoldTree
             }
             return text;
         }
+
         public void Initialize()
         {
             GoldTree.ServerStarted = DateTime.Now;
 
             Console.Clear();
+
             Console.ForegroundColor = ConsoleColor.Red;
+
             Console.WriteLine();
-            //Console.WriteLine("        ______  _                       _          _______             "); //Based to phoenix
-            //Console.WriteLine("       (_____ \\| |                     (_)        (_______)            "); //Based to phoenix
-            //Console.WriteLine("        _____) ) | _   ___   ____ ____  _ _   _    _____   ____  _   _ "); //Based to phoenix
-            //Console.WriteLine("       |  ____/| || \\ / _ \\ / _  )  _ \\| ( \\ / )  |  ___) |    \\| | | |"); //Based to phoenix
-            //Console.WriteLine("       | |     | | | | |_| ( (/ /| | | | |) X (   | |_____| | | | |_| |"); //Based to phoenix
-            //Console.WriteLine("       |_|     |_| |_|\\___/ \\____)_| |_|_(_/ \\_)  |_______)_|_|_|\\____|"); //Based to phoenix
             Console.WriteLine("                      _______   _________   ______ ");
             Console.WriteLine("                     |  _____| |___   ___| | _____|");
             Console.WriteLine("                     | |  ___      | |     | |____");
@@ -118,29 +158,34 @@ namespace GoldTree
             Console.WriteLine("                     | |___| |     | |     | |____");
             Console.WriteLine("                     |_______|     |_|     |______|");
             Console.WriteLine();
+
             Console.ForegroundColor = ConsoleColor.White;
+
             Console.WriteLine("                  " + PrettyVersion);
             Console.WriteLine();
+            
             try
             {
                 UserAdMessage = new List<string>();
 
                 WebClient client2 = new WebClient();
+
                 Stream stream2 = client2.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradtype.txt");
                 StreamReader reader2 = new StreamReader(stream2);
+
                 String content2 = reader2.ReadLine();
 
                 try
                 {
                     UserAdType = int.Parse(content2);
                 }
-                catch
-                {
-                }
+                catch { }
 
                 WebClient client3 = new WebClient();
+
                 Stream stream3 = client3.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradmessage.txt");
                 StreamReader reader3 = new StreamReader(stream3);
+
                 string line2;
                 while ((line2 = reader3.ReadLine()) != null)
                 {
@@ -148,8 +193,10 @@ namespace GoldTree
                 }
 
                 WebClient client4 = new WebClient();
+
                 Stream stream4 = client4.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/useradlink.txt");
                 StreamReader reader4 = new StreamReader(stream4);
+
                 String content4 = reader4.ReadLine();
 
                 UserAdLink = content4;
@@ -159,15 +206,17 @@ namespace GoldTree
                     WebClient client = new WebClient();
                     Stream stream = client.OpenRead("https://raw.github.com/JunioriRetro/Gold-Tree-Emulator/master/consoleads.txt");
                     StreamReader reader = new StreamReader(stream);
+
                     string line;
                     while ((line = reader.ReadLine()) != null)
                     {
                         if (line.StartsWith(":"))
                         {
                             string[] Params = line.Split(new char[]
-			{
-				' '
-			});
+			                {
+				                ' '
+			                });
+
                             if (Params[0] == ":textcolor")
                             {
                                 if (!string.IsNullOrEmpty(Params[1]))
@@ -205,291 +254,253 @@ namespace GoldTree
             try
             {
                 GoldTree.Configuration = new ConfigurationData("config.conf");
+
                 DateTime now = DateTime.Now;
-                string_6 = GetConfig().data["GTE.username"];
-                string_7 = GetConfig().data["GTE.password"];
+
                 //Lookds = new Random().Next(Int32.MaxValue).ToString();
-                int num = string_6.Length * string_7.Length;
 
-                if (string_6 == "" || string_7 == "" || LicenseTools.Boolean_7)
-                {
-                    Console.WriteLine();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    GoldTree.Destroy("Invalid Licence details found #0001", false);
-                }
-                else
-                {
-                    LicenseTools.String_6 = GoldTree.string_6;
-                    LicenseTools.String_3 = GoldTree.string_7;
-                    string text = new Random().Next(Int32.MaxValue).ToString();
-                    text = "";
+                DatabaseServer dbServer = new DatabaseServer(GoldTree.GetConfig().data["db.hostname"], uint.Parse(GoldTree.GetConfig().data["db.port"]), GoldTree.GetConfig().data["db.username"], GoldTree.GetConfig().data["db.password"]);
+                Database database = new Database(GoldTree.GetConfig().data["db.name"], uint.Parse(GoldTree.GetConfig().data["db.pool.minsize"]), uint.Parse(GoldTree.GetConfig().data["db.pool.maxsize"]));
+                GoldTree.DatabaseManager = new DatabaseManager(dbServer, database);
 
-                    Console.WriteLine();
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    string str = new Random().Next(Int32.MaxValue).ToString();//text.Substring(32, 32);
-                    str = GoldTree.smethod_0(str + GoldTree.string_6);
-                    str = GoldTree.smethod_0(str + "4g");
-                    str = GoldTree.smethod_1(str + GoldTree.string_7);
-                    string b = GoldTree.smethod_0(num.ToString());
-
-                    DatabaseServer Message3_ = new DatabaseServer(GoldTree.GetConfig().data["db.hostname"], uint.Parse(GoldTree.GetConfig().data["db.port"]), GoldTree.GetConfig().data["db.username"], GoldTree.GetConfig().data["db.password"]);
-                    text = "r4r43mfgp3kkkr3mgprekw[gktp6ijhy[h]5h76ju6j7uj7";//text.Substring(64, 96);
-                    Database Message2_ = new Database(GoldTree.GetConfig().data["db.name"], uint.Parse(GoldTree.GetConfig().data["db.pool.minsize"]), uint.Parse(GoldTree.GetConfig().data["db.pool.maxsize"]));
-                    GoldTree.DatabaseManager = new DatabaseManager(Message3_, Message2_);
-
-                    try
-                    {
-                        using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
-                        {
-                            @class.ExecuteQuery("UPDATE users SET online = '0'");
-                            @class.ExecuteQuery("UPDATE rooms SET users_now = '0'");
-
-                            DataRow DataRow;
-                            DataRow = @class.ReadDataRow("SHOW COLUMNS FROM `items` WHERE field = 'fw_count'");
-
-                            DataRow DataRow2;
-                            DataRow2 = @class.ReadDataRow("SHOW COLUMNS FROM `items` WHERE field = 'extra_data'");
-
-                            if (DataRow != null || DataRow2 != null)
-                            {
-                                if (DoYouWantContinue("Remember get backups before continue! Do you want continue? [Y/N]"))
-                                {
-                                    if (DataRow != null)
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.Red;
-                                        Console.WriteLine("UPDATING ITEMS POSSIBLY TAKE A LONG TIME! DONT SHUTDOWN EMULATOR! PLEASE WAIT!");
-                                        Console.ForegroundColor = ConsoleColor.Gray;
-                                        Console.Write("Updating items (Fireworks) ...");
-                                        Dictionary<uint, int> newfwcount = new Dictionary<uint, int>();
-
-                                        DataTable dataTable = @class.ReadDataTable("SELECT Id, fw_count FROM items;");
-
-                                        int fails1 = 0;
-
-                                        if (dataTable != null)
-                                        {
-                                            foreach (DataRow dataRow in dataTable.Rows)
-                                            {
-                                                try
-                                                {
-                                                    if (dataRow != null && !string.IsNullOrEmpty(dataRow["Id"].ToString()) && !string.IsNullOrEmpty(dataRow["fw_count"].ToString()) && (uint)dataRow["Id"] > 0 && (int)dataRow["fw_count"] > 0)
-                                                    {
-                                                        uint id = (uint)dataRow["Id"];
-                                                        int wf_count = (int)dataRow["fw_count"];
-                                                        if (wf_count > 0)
-                                                        {
-                                                            newfwcount.Add(id, wf_count);
-                                                        }
-                                                    }
-                                                }
-                                                catch (Exception ex)
-                                                {
-                                                    Console.WriteLine("OOPS! Error when updating.. Firework count lost :( Lets continue...");
-                                                    Logging.LogItemUpdateError(ex.ToString());
-                                                    fails1++;
-                                                }
-
-                                            }
-                                        }
-
-                                        if (newfwcount != null)
-                                        {
-                                            foreach (KeyValuePair<uint, int> current in newfwcount)
-                                            {
-                                                try
-                                                {
-                                                    if (!string.IsNullOrEmpty(current.Key.ToString()) && !string.IsNullOrEmpty(current.Value.ToString()) && current.Key > 0 && current.Value > 0)
-                                                    {
-                                                        @class.AddParamWithValue("key", current.Key);
-                                                        @class.AddParamWithValue("value", current.Value);
-                                                        @class.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES (@key, @value)");
-                                                    }
-                                                }
-                                                catch (Exception ex)
-                                                {
-                                                    Console.WriteLine("OOPS! Error when updating.. Firework count lost :( Lets continue...");
-                                                    Logging.LogItemUpdateError(ex.ToString());
-                                                    fails1++;
-                                                }
-                                            }
-                                        }
-
-                                        if (fails1 > 0 && !DoYouWantContinue("Failed update " + fails1 + " item firework count. Do you want continue? YOU LOST THEIR ITEMS FIREWORK COUNT! [Y/N]"))
-                                        {
-                                            Logging.WriteLine("Press any key to shut down ...");
-                                            Console.ReadKey(true);
-                                            GoldTree.smethod_16();
-                                            Logging.WriteLine("Press any key to close window ...");
-                                            Console.ReadKey(true);
-                                            Environment.Exit(0);
-                                            return;
-                                        }
-
-                                        @class.ExecuteQuery("ALTER TABLE items DROP fw_count");
-
-                                        if (newfwcount != null)
-                                        {
-                                            newfwcount.Clear();
-                                        }
-
-                                        newfwcount = null;
-
-                                        Console.WriteLine("completed!");
-                                    }
-
-                                    if (DataRow2 != null)
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.Red;
-                                        Console.WriteLine("UPDATING ITEMS POSSIBLY TAKE A LONG TIME! DONT SHUTDOWN EMULATOR! PLEASE WAIT!");
-                                        Console.ForegroundColor = ConsoleColor.Gray;
-                                        Console.Write("Updating items (Extra data) ...");
-                                        Dictionary<uint, string> newextradata = new Dictionary<uint, string>();
-
-                                        DataTable dataTable2 = @class.ReadDataTable("SELECT Id, extra_data FROM items;");
-
-                                        int fails2 = 0;
-
-                                        if (dataTable2 != null)
-                                        {
-                                            foreach (DataRow dataRow in dataTable2.Rows)
-                                            {
-                                                try
-                                                {
-                                                    if (dataRow != null && !string.IsNullOrEmpty(dataRow["Id"].ToString()) && !string.IsNullOrEmpty(dataRow["extra_data"].ToString()) && (uint)dataRow["Id"] > 0)
-                                                    {
-                                                        uint id = (uint)dataRow["Id"];
-                                                        string extra_data = (string)dataRow["extra_data"];
-                                                        if (!string.IsNullOrEmpty(extra_data))
-                                                        {
-                                                            newextradata.Add(id, extra_data);
-                                                        }
-                                                    }
-                                                }
-                                                catch (Exception ex)
-                                                {
-                                                    Console.WriteLine("OOPS! Error when updating.. Extra data lost :( Lets continue...");
-                                                    Logging.LogItemUpdateError(ex.ToString());
-                                                    fails2++;
-                                                }
-                                            }
-                                        }
-
-                                        if (newextradata != null)
-                                        {
-                                            foreach (KeyValuePair<uint, string> current in newextradata)
-                                            {
-                                                try
-                                                {
-                                                    if (!string.IsNullOrEmpty(current.Key.ToString()) && !string.IsNullOrEmpty(current.Value.ToString()) && current.Key > 0)
-                                                    {
-                                                        @class.AddParamWithValue("key", current.Key);
-                                                        @class.AddParamWithValue("value", current.Value);
-                                                        @class.ExecuteQuery("INSERT INTO items_extra_data(item_id, extra_data) VALUES (@key, @value)");
-                                                    }
-                                                }
-                                                catch (Exception ex)
-                                                {
-                                                    Console.WriteLine("OOPS! Error when updating.. Extra data lost :( Lets continue...");
-                                                    Logging.LogItemUpdateError(ex.ToString());
-                                                    fails2++;
-                                                }
-                                            }
-                                        }
-
-                                        if (fails2 > 0 && !DoYouWantContinue("Failed update " + fails2 + " item extra data. Do you want continue? YOU LOST THEIR ITEMS EXTRA DATA! [Y/N]"))
-                                        {
-                                            Logging.WriteLine("Press any key to shut down ...");
-                                            Console.ReadKey(true);
-                                            GoldTree.smethod_16();
-                                            Logging.WriteLine("Press any key to close window ...");
-                                            Console.ReadKey(true);
-                                            Environment.Exit(0);
-                                            return;
-                                        }
-
-                                        @class.ExecuteQuery("ALTER TABLE items DROP extra_data");
-
-                                        if (newextradata != null)
-                                        {
-                                            newextradata.Clear();
-                                        }
-
-                                        newextradata = null;
-
-                                        Console.WriteLine("completed!");
-                                    }
-
-                                }
-                                else
-                                {
-                                    Logging.WriteLine("Press any key to shut down ...");
-                                    Console.ReadKey(true);
-                                    GoldTree.smethod_16();
-                                    Logging.WriteLine("Press any key to close window ...");
-                                    Console.ReadKey(true);
-                                    Environment.Exit(0);
-                                    return;
-                                }
-                            }
-                        }
-                        //GoldTree.ConnectionManage.method_7();
-                        GoldTree.Game.ContinueLoading();
-                    }
-                    catch
-                    {
-                    }
-
-                    LicenseTools.String_1 = text;
-                    GoldTree.Game = new Game(int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
-                    string text2 = LicenseTools.String_5 + GoldTree.smethod_0((LicenseTools.String_6.Length * 10).ToString());
-                    text2 += GoldTree.smethod_0((LicenseTools.String_3.Length % 10).ToString());
-
-                    GoldTree.class117_0 = new PacketManager();
-                    GoldTree.class117_0.Handshake();
-                    GoldTree.class117_0.Messenger();
-                    GoldTree.class117_0.Navigator();
-                    GoldTree.class117_0.RoomsAction();
-                    GoldTree.class117_0.RoomsAvatar();
-                    GoldTree.class117_0.RoomsChat();
-                    GoldTree.class117_0.RoomsEngine();
-                    GoldTree.class117_0.RoomsFurniture();
-                    GoldTree.class117_0.RoomsPets();
-                    GoldTree.class117_0.RoomsPools();
-                    GoldTree.class117_0.RoomsSession();
-                    GoldTree.class117_0.RoomsSettings();
-                    GoldTree.class117_0.Catalog();
-                    GoldTree.class117_0.Marketplace();
-                    GoldTree.class117_0.Recycler();
-                    GoldTree.class117_0.Quest();
-                    GoldTree.class117_0.InventoryAchievements();
-                    GoldTree.class117_0.InventoryAvatarFX();
-                    GoldTree.class117_0.InventoryBadges();
-                    GoldTree.class117_0.InventoryFurni();
-                    GoldTree.class117_0.InventoryPurse();
-                    GoldTree.class117_0.InventoryTrading();
-                    GoldTree.class117_0.Avatar();
-                    GoldTree.class117_0.Users();
-                    GoldTree.class117_0.Register();
-                    GoldTree.class117_0.Help();
-                    GoldTree.class117_0.Sound();
-                    GoldTree.class117_0.Wired();
-                    GoldTree.class117_0.Jukebox();
-                }
-
-                LicenseTools.int_12 = int.Parse(GoldTree.GetConfig().data["game.tcp.port"]);
-                LicenseTools.int_13 = int.Parse(GoldTree.GetConfig().data["mus.tcp.port"]);
                 try
                 {
-                    LicenseTools.ProxyIP = GetConfig().data["game.tcp.proxyip"];
+                    using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
+                    {
+                        dbClient.ExecuteQuery("UPDATE users SET online = '0'");
+                        dbClient.ExecuteQuery("UPDATE rooms SET users_now = '0'");
+
+                        DataRow DataRow;
+                        DataRow = dbClient.ReadDataRow("SHOW COLUMNS FROM `items` WHERE field = 'fw_count'");
+
+                        DataRow DataRow2;
+                        DataRow2 = dbClient.ReadDataRow("SHOW COLUMNS FROM `items` WHERE field = 'extra_data'");
+
+                        if (DataRow != null || DataRow2 != null)
+                        {
+                            if (DoYouWantContinue("Remember get backups before continue! Do you want continue? [Y/N]"))
+                            {
+                                if (DataRow != null)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("UPDATING ITEMS POSSIBLY TAKE A LONG TIME! DONT SHUTDOWN EMULATOR! PLEASE WAIT!");
+                                    Console.ForegroundColor = ConsoleColor.Gray;
+                                    Console.Write("Updating items (Fireworks) ...");
+                                    Dictionary<uint, int> newfwcount = new Dictionary<uint, int>();
+
+                                    DataTable dataTable = dbClient.ReadDataTable("SELECT Id, fw_count FROM items;");
+
+                                    int fails1 = 0;
+
+                                    if (dataTable != null)
+                                    {
+                                        foreach (DataRow dataRow in dataTable.Rows)
+                                        {
+                                            try
+                                            {
+                                                if (dataRow != null && !string.IsNullOrEmpty(dataRow["Id"].ToString()) && !string.IsNullOrEmpty(dataRow["fw_count"].ToString()) && (uint)dataRow["Id"] > 0 && (int)dataRow["fw_count"] > 0)
+                                                {
+                                                    uint id = (uint)dataRow["Id"];
+                                                    int wf_count = (int)dataRow["fw_count"];
+                                                    if (wf_count > 0)
+                                                    {
+                                                        newfwcount.Add(id, wf_count);
+                                                    }
+                                                }
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine("OOPS! Error when updating.. Firework count lost :( Lets continue...");
+                                                Logging.LogItemUpdateError(ex.ToString());
+                                                fails1++;
+                                            }
+
+                                        }
+                                    }
+
+                                    if (newfwcount != null)
+                                    {
+                                        foreach (KeyValuePair<uint, int> current in newfwcount)
+                                        {
+                                            try
+                                            {
+                                                if (!string.IsNullOrEmpty(current.Key.ToString()) && !string.IsNullOrEmpty(current.Value.ToString()) && current.Key > 0 && current.Value > 0)
+                                                {
+                                                    dbClient.AddParamWithValue("key", current.Key);
+                                                    dbClient.AddParamWithValue("value", current.Value);
+                                                    dbClient.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES (@key, @value)");
+                                                }
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine("OOPS! Error when updating.. Firework count lost :( Lets continue...");
+                                                Logging.LogItemUpdateError(ex.ToString());
+                                                fails1++;
+                                            }
+                                        }
+                                    }
+
+                                    if (fails1 > 0 && !DoYouWantContinue("Failed update " + fails1 + " item firework count. Do you want continue? YOU LOST THEIR ITEMS FIREWORK COUNT! [Y/N]"))
+                                    {
+                                        Logging.WriteLine("Press any key to shut down ...");
+                                        Console.ReadKey(true);
+                                        GoldTree.Destroy();
+                                        Logging.WriteLine("Press any key to close window ...");
+                                        Console.ReadKey(true);
+                                        Environment.Exit(0);
+                                        return;
+                                    }
+
+                                    dbClient.ExecuteQuery("ALTER TABLE items DROP fw_count");
+
+                                    if (newfwcount != null)
+                                    {
+                                        newfwcount.Clear();
+                                    }
+
+                                    newfwcount = null;
+
+                                    Console.WriteLine("completed!");
+                                }
+
+                                if (DataRow2 != null)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("UPDATING ITEMS POSSIBLY TAKE A LONG TIME! DONT SHUTDOWN EMULATOR! PLEASE WAIT!");
+                                    Console.ForegroundColor = ConsoleColor.Gray;
+                                    Console.Write("Updating items (Extra data) ...");
+                                    Dictionary<uint, string> newextradata = new Dictionary<uint, string>();
+
+                                    DataTable dataTable2 = dbClient.ReadDataTable("SELECT Id, extra_data FROM items;");
+
+                                    int fails2 = 0;
+
+                                    if (dataTable2 != null)
+                                    {
+                                        foreach (DataRow dataRow in dataTable2.Rows)
+                                        {
+                                            try
+                                            {
+                                                if (dataRow != null && !string.IsNullOrEmpty(dataRow["Id"].ToString()) && !string.IsNullOrEmpty(dataRow["extra_data"].ToString()) && (uint)dataRow["Id"] > 0)
+                                                {
+                                                    uint id = (uint)dataRow["Id"];
+                                                    string extra_data = (string)dataRow["extra_data"];
+                                                    if (!string.IsNullOrEmpty(extra_data))
+                                                    {
+                                                        newextradata.Add(id, extra_data);
+                                                    }
+                                                }
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine("OOPS! Error when updating.. Extra data lost :( Lets continue...");
+                                                Logging.LogItemUpdateError(ex.ToString());
+                                                fails2++;
+                                            }
+                                        }
+                                    }
+
+                                    if (newextradata != null)
+                                    {
+                                        foreach (KeyValuePair<uint, string> current in newextradata)
+                                        {
+                                            try
+                                            {
+                                                if (!string.IsNullOrEmpty(current.Key.ToString()) && !string.IsNullOrEmpty(current.Value.ToString()) && current.Key > 0)
+                                                {
+                                                    dbClient.AddParamWithValue("key", current.Key);
+                                                    dbClient.AddParamWithValue("value", current.Value);
+                                                    dbClient.ExecuteQuery("INSERT INTO items_extra_data(item_id, extra_data) VALUES (@key, @value)");
+                                                }
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                Console.WriteLine("OOPS! Error when updating.. Extra data lost :( Lets continue...");
+                                                Logging.LogItemUpdateError(ex.ToString());
+                                                fails2++;
+                                            }
+                                        }
+                                    }
+
+                                    if (fails2 > 0 && !DoYouWantContinue("Failed update " + fails2 + " item extra data. Do you want continue? YOU LOST THEIR ITEMS EXTRA DATA! [Y/N]"))
+                                    {
+                                        Logging.WriteLine("Press any key to shut down ...");
+                                        Console.ReadKey(true);
+                                        GoldTree.Destroy();
+                                        Logging.WriteLine("Press any key to close window ...");
+                                        Console.ReadKey(true);
+                                        Environment.Exit(0);
+                                        return;
+                                    }
+
+                                    dbClient.ExecuteQuery("ALTER TABLE items DROP extra_data");
+
+                                    if (newextradata != null)
+                                    {
+                                        newextradata.Clear();
+                                    }
+
+                                    newextradata = null;
+
+                                    Console.WriteLine("completed!");
+                                }
+
+                            }
+                            else
+                            {
+                                Logging.WriteLine("Press any key to shut down ...");
+                                Console.ReadKey(true);
+                                GoldTree.Destroy();
+                                Logging.WriteLine("Press any key to close window ...");
+                                Console.ReadKey(true);
+                                Environment.Exit(0);
+                                return;
+                            }
+                        }
+                    }
+                    //GoldTree.ConnectionManage.method_7();
+                    GoldTree.Game.ContinueLoading();
                 }
                 catch
                 {
                 }
+                GoldTree.Game = new Game(int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
 
-                GoldTree.MusListener = new MusListener(GoldTree.GetConfig().data["mus.tcp.bindip"], LicenseTools.int_13, GoldTree.GetConfig().data["mus.tcp.allowedaddr"].Split(new char[] { ';' }), 20);
-                GoldTree.ConnectionManage = new SocketsManager(LicenseTools.string_33, LicenseTools.int_12, int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
-                //ConnectionManage = new ConnectionHandeling(LicenseTools.int_12, int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]), int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]), true);
-                GoldTree.ConnectionManage.method_3().method_0();
+                GoldTree.PacketManager = new PacketManager();
+                GoldTree.PacketManager.Handshake();
+                GoldTree.PacketManager.Messenger();
+                GoldTree.PacketManager.Navigator();
+                GoldTree.PacketManager.RoomsAction();
+                GoldTree.PacketManager.RoomsAvatar();
+                GoldTree.PacketManager.RoomsChat();
+                GoldTree.PacketManager.RoomsEngine();
+                GoldTree.PacketManager.RoomsFurniture();
+                GoldTree.PacketManager.RoomsPets();
+                GoldTree.PacketManager.RoomsPools();
+                GoldTree.PacketManager.RoomsSession();
+                GoldTree.PacketManager.RoomsSettings();
+                GoldTree.PacketManager.Catalog();
+                GoldTree.PacketManager.Marketplace();
+                GoldTree.PacketManager.Recycler();
+                GoldTree.PacketManager.Quest();
+                GoldTree.PacketManager.InventoryAchievements();
+                GoldTree.PacketManager.InventoryAvatarFX();
+                GoldTree.PacketManager.InventoryBadges();
+                GoldTree.PacketManager.InventoryFurni();
+                GoldTree.PacketManager.InventoryPurse();
+                GoldTree.PacketManager.InventoryTrading();
+                GoldTree.PacketManager.Avatar();
+                GoldTree.PacketManager.Users();
+                GoldTree.PacketManager.Register();
+                GoldTree.PacketManager.Help();
+                GoldTree.PacketManager.Sound();
+                GoldTree.PacketManager.Wired();
+                GoldTree.PacketManager.Jukebox();
+
+                GoldTree.MusListener = new MusListener(GoldTree.GetConfig().data["mus.tcp.bindip"], int.Parse(GoldTree.GetConfig().data["mus.tcp.port"]), GoldTree.GetConfig().data["mus.tcp.allowedaddr"].Split(new char[] { ';' }), 20);
+                GoldTree.SocketsManager = new SocketsManager(GoldTree.GetConfig().data["game.tcp.bindip"], int.Parse(GoldTree.GetConfig().data["game.tcp.port"]), int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));
+                //ConnectionManage = new ConnectionHandeling(GoldTree.GetConfig().data["game.tcp.port"], int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]), int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]), true);
+                GoldTree.SocketsManager.method_3().method_0();
                 //ConnectionManage.init();
                 //ConnectionManage.Start();
 
@@ -523,13 +534,13 @@ namespace GoldTree
 
                 TimeSpan timeSpan = DateTime.Now - now;
                 Logging.WriteLine(string.Concat(new object[]
-					{
-						"Server -> READY! (",
-						timeSpan.Seconds,
-						" s, ",
-						timeSpan.Milliseconds,
-						" ms)"
-					}));
+				    {
+					    "Server -> READY! (",
+					    timeSpan.Seconds,
+					    " s, ",
+					    timeSpan.Milliseconds,
+					    " ms)"
+				    }));
                 Console.Beep();
             }
             catch (KeyNotFoundException KeyNotFoundException)
@@ -537,35 +548,35 @@ namespace GoldTree
                 Logging.WriteLine("Failed to boot, key not found: " + KeyNotFoundException);
                 Logging.WriteLine("Press any key to shut down ...");
                 Console.ReadKey(true);
-                GoldTree.smethod_16();
+                GoldTree.Destroy();
             }
             catch (InvalidOperationException ex)
             {
                 Logging.WriteLine("Failed to initialize GoldTreeEmulator: " + ex.Message);
                 Logging.WriteLine("Press any key to shut down ...");
                 Console.ReadKey(true);
-                GoldTree.smethod_16();
+                GoldTree.Destroy();
             }
         }
-        public static int smethod_2(string string_8)
+
+        public static int StringToInt(string str)
         {
-            return Convert.ToInt32(string_8);
+            return Convert.ToInt32(str);
         }
-        public static bool smethod_3(string string_8)
+
+        public static bool StringToBoolean(string str)
         {
-            return string_8 == "1";
+            return (str == "1" || str == "true");
         }
-        public static string smethod_4(bool bool_2)
+
+        public static string BooleanToString(bool b)
         {
-            if (bool_2)
-            {
+            if (b)
                 return "1";
-            }
             else
-            {
                 return "0";
-            }
         }
+
         public static int smethod_5(int int_3, int int_4)
         {
             RNGCryptoServiceProvider rNGCryptoServiceProvider = new RNGCryptoServiceProvider();
@@ -574,14 +585,17 @@ namespace GoldTree
             int seed = BitConverter.ToInt32(array, 0);
             return new Random(seed).Next(int_3, int_4 + 1);
         }
+
         public static double GetUnixTimestamp()
         {
             return (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
         }
+
         public static string FilterString(string str)
         {
             return DoFilter(str, false, false);
         }
+
         public static string DoFilter(string Input, bool bool_2, bool bool_3)
         {
             Input = Input.Replace(Convert.ToChar(1), ' ');
@@ -597,6 +611,7 @@ namespace GoldTree
             }
             return Input;
         }
+
         public static bool smethod_9(string string_8)
         {
             if (string.IsNullOrEmpty(string_8))
@@ -615,35 +630,8 @@ namespace GoldTree
                 return true;
             }
         }
-        public static PacketManager smethod_10()
-        {
-            return GoldTree.class117_0;
-        }
-        public static ConfigurationData GetConfig()
-        {
-            return Configuration;
-        }
-        public static DatabaseManager GetDatabase()
-        {
-            return DatabaseManager;
-        }
-        public static Encoding GetDefaultEncoding()
-        {
-            return Encoding.Default;
-        }
-        public static SocketsManager smethod_14()
-        {
-            return GoldTree.ConnectionManage;
-        }
-        //public static ConnectionHandeling smethod_14()
-        //{
-        //    return GoldTree.ConnectionManage;
-        //}
-        internal static Game GetGame()
-        {
-            return Game;
-        }
-        public static void smethod_16()
+
+        public static void Destroy()
         {
             Program.DeleteMenu(Program.GetSystemMenu(Program.GetConsoleWindow(), true), Program.SC_CLOSE, Program.MF_BYCOMMAND);
             Logging.WriteLine("Destroying GoldTreeEmu environment...");
@@ -652,13 +640,13 @@ namespace GoldTree
                 GoldTree.GetGame().ContinueLoading();
                 GoldTree.Game = null;
             }
-            if (GoldTree.smethod_14() != null)
+            if (GoldTree.GetSocketsManager() != null)
             {
                 Logging.WriteLine("Destroying connection manager.");
-                GoldTree.smethod_14().method_3().method_2();
+                GoldTree.GetSocketsManager().method_3().method_2();
                 //GoldTree.smethod_14().Destroy();
-                GoldTree.smethod_14().method_0();
-                GoldTree.ConnectionManage = null;
+                GoldTree.GetSocketsManager().method_0();
+                GoldTree.SocketsManager = null;
             }
             if (GoldTree.GetDatabase() != null)
             {
@@ -674,44 +662,44 @@ namespace GoldTree
             }
             Logging.WriteLine("Uninitialized successfully. Closing.");
         }
+
         internal static void smethod_17(string string_8)
         {
             try
             {
                 ServerMessage Message = new ServerMessage(139u);
                 Message.AppendStringWithBreak(string_8);
-                GoldTree.GetGame().GetClientManager().method_14(Message);
+                GoldTree.GetGame().GetClientManager().BroadcastMessage(Message);
             }
             catch
             {
             }
         }
-        internal static void smethod_18()
+        
+        internal static void Close()
         {
             GoldTree.Destroy("", true);
         }
+
         internal static void Destroy(string string_8, bool ExitWhenDone)
         {
             Program.DeleteMenu(Program.GetSystemMenu(Program.GetConsoleWindow(), true), Program.SC_CLOSE, Program.MF_BYCOMMAND);
-            LicenseTools.bool_16 = true;
+
             try
             {
                 Game.StopGameLoop();
             }
-            catch
-            {
-            }
+            catch { }
 
             try
             {
-                if (GoldTree.smethod_10() != null)
+                if (GoldTree.GetPacketManager() != null)
                 {
-                    GoldTree.smethod_10().Clear();
+                    GoldTree.GetPacketManager().Clear();
                 }
             }
-            catch
-            {
-            }
+            catch { }
+
             if (string_8 != "")
             {
                 if (GoldTree.bool_1)
@@ -719,7 +707,7 @@ namespace GoldTree
                     return;
                 }
                 Console.WriteLine(string_8);
-                Logging.smethod_7();
+                Logging.Disable();
                 GoldTree.smethod_17("ATTENTION:\r\nThe server is shutting down. All furniture placed in rooms/traded/bought after this message is on your own responsibillity.");
                 GoldTree.bool_1 = true;
                 Console.WriteLine("Server shutting down...");
@@ -732,7 +720,7 @@ namespace GoldTree
                 }
                 try
                 {
-                    GoldTree.smethod_14().method_3().method_1();
+                    GoldTree.GetSocketsManager().method_3().method_1();
                     //GoldTree.smethod_14().Destroy();
                     GoldTree.GetGame().GetClientManager().CloseAll();
                 }
@@ -752,7 +740,7 @@ namespace GoldTree
             }
             else
             {
-                Logging.smethod_7();
+                Logging.Disable();
                 GoldTree.bool_1 = true;
                 try
                 {
@@ -767,9 +755,9 @@ namespace GoldTree
                 }
                 try
                 {
-                    if (GoldTree.smethod_14() != null)
+                    if (GoldTree.GetSocketsManager() != null)
                     {
-                        GoldTree.smethod_14().method_3().method_1();
+                        GoldTree.GetSocketsManager().method_3().method_1();
                         //GoldTree.smethod_14().Destroy();
                         GoldTree.GetGame().GetClientManager().CloseAll();
                     }
@@ -777,7 +765,7 @@ namespace GoldTree
                 catch
                 {
                 }
-                if (ConnectionManage != null)
+                if (SocketsManager != null)
                 {
                     //GoldTree.ConnectionManage.method_7();
                 }

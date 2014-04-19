@@ -33,7 +33,7 @@ namespace GoldTree.HabboHotel.Users.Inventory
 			StringBuilder stringBuilder = new StringBuilder();
 			foreach (DataRow dataRow in dataTable_.Rows)
 			{
-				AvatarEffect @class = new AvatarEffect((int)dataRow["effect_id"], (int)dataRow["total_duration"], GoldTree.smethod_3(dataRow["is_activated"].ToString()), (double)dataRow["activated_stamp"]);
+				AvatarEffect @class = new AvatarEffect((int)dataRow["effect_id"], (int)dataRow["total_duration"], GoldTree.StringToBoolean(dataRow["is_activated"].ToString()), (double)dataRow["activated_stamp"]);
 				if (@class.Boolean_0)
 				{
 					stringBuilder.Append(string.Concat(new object[]

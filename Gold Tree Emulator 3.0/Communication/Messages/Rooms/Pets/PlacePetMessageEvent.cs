@@ -23,9 +23,9 @@ namespace GoldTree.Communication.Messages.Rooms.Pets
 					int num2 = Event.PopWiredInt32();
 					if (@class.method_30(num, num2, 0.0, true, false))
 					{
-						if (@class.Int32_2 >= LicenseTools.int_2)
+						if (@class.Int32_2 >= ServerConfiguration.PetsPerRoomLimit)
 						{
-							Session.SendNotif(GoldTreeEnvironment.smethod_1("error_maxpets") + LicenseTools.int_2);
+							Session.SendNotif(GoldTreeEnvironment.GetExternalText("error_maxpets") + ServerConfiguration.PetsPerRoomLimit);
 						}
 						else
 						{

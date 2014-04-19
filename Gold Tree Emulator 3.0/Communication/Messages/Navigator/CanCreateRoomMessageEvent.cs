@@ -9,10 +9,10 @@ namespace GoldTree.Communication.Messages.Navigator
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
 			ServerMessage Message = new ServerMessage(512u);
-			if (Session.GetHabbo().list_6.Count > LicenseTools.Int32_4)
+			if (Session.GetHabbo().list_6.Count > ServerConfiguration.RoomUserLimit)
 			{
 				Message.AppendBoolean(true);
-				Message.AppendInt32(LicenseTools.Int32_4);
+				Message.AppendInt32(ServerConfiguration.RoomUserLimit);
 			}
 			else
 			{

@@ -69,9 +69,9 @@ namespace GoldTree.HabboHotel.Rooms.Games
         private void CountTeamPoints()
         {
             this.room.GetGameManager().Reset();
-            for (int i = 0; i < room.RoomUser_0.Length; i++)
+            for (int i = 0; i < room.RoomUsers.Length; i++)
             {
-                RoomUser user = room.RoomUser_0[i];
+                RoomUser user = room.RoomUsers[i];
                 if (user != null)
                 {
                     if ((!user.IsBot && (user.team != Team.None)) && (user.GetClient() != null))
@@ -371,9 +371,9 @@ namespace GoldTree.HabboHotel.Rooms.Games
             this.ResetGameAfterStop();
             this.room.GetGameManager().UnlockGates();
             Team team = this.room.GetGameManager().getWinningTeam();
-            for (int i = 0; i < room.RoomUser_0.Length; i++)
+            for (int i = 0; i < room.RoomUsers.Length; i++)
             {
-                RoomUser user = room.RoomUser_0[i];
+                RoomUser user = room.RoomUsers[i];
                 if (user != null)
                 {
                     user.FreezeLives = 0;

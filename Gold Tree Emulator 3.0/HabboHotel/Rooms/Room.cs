@@ -54,10 +54,10 @@ namespace GoldTree.HabboHotel.Rooms
         private Timer timer_0;
         private bool bool_6;
         private bool bool_7;
-        internal RoomUser[] RoomUser_0;
+        internal RoomUser[] RoomUsers;
         public int int_7 = 0;
         private int int_8;
-        public RoomIcon class29_0;
+        public RoomIcon RoomIcon;
         public List<uint> UsersWithRights;
         internal bool bool_8;
         private Dictionary<uint, double> dictionary_0;
@@ -110,10 +110,10 @@ namespace GoldTree.HabboHotel.Rooms
         private bool bool_12;
         private bool[,] HeightOverride;
         public int CurrentPollId;
-        private RoomMusicController musicController;
+        private RoomMusicController MusicController;
         public bool frzTimer = false;
         internal TeamManager TeamManager;
-        private GameManager game;
+        private GameManager GameManager;
         private Freeze freeze;
         public List<int> InfobusAnswers;
         internal bool isCycling = false;
@@ -128,11 +128,11 @@ namespace GoldTree.HabboHotel.Rooms
         {
             get
             {
-                return this.class29_0;
+                return this.RoomIcon;
             }
             set
             {
-                this.class29_0 = value;
+                this.RoomIcon = value;
             }
         }
         internal bool Boolean_1
@@ -148,7 +148,7 @@ namespace GoldTree.HabboHotel.Rooms
         }
         internal bool GotMusicController()
         {
-            return (this.musicController != null);
+            return (this.MusicController != null);
         }
         public int Int32_0
         {
@@ -156,15 +156,15 @@ namespace GoldTree.HabboHotel.Rooms
             {
                 int num = 0;
                 int result;
-                if (this.RoomUser_0 == null)
+                if (this.RoomUsers == null)
                 {
                     result = 0;
                 }
                 else
                 {
-                    for (int i = 0; i < this.RoomUser_0.Length; i++)
+                    for (int i = 0; i < this.RoomUsers.Length; i++)
                     {
-                        if (this.RoomUser_0[i] != null && !this.RoomUser_0[i].IsBot && !this.RoomUser_0[i].isPet)
+                        if (this.RoomUsers[i] != null && !this.RoomUsers[i].IsBot && !this.RoomUsers[i].isPet)
                         {
                             num++;
                         }
@@ -245,9 +245,9 @@ namespace GoldTree.HabboHotel.Rooms
             get
             {
                 int num = 0;
-                for (int i = 0; i < this.RoomUser_0.Length; i++)
+                for (int i = 0; i < this.RoomUsers.Length; i++)
                 {
-                    RoomUser @class = this.RoomUser_0[i];
+                    RoomUser @class = this.RoomUsers[i];
                     if (@class != null && @class.isPet)
                     {
                         num++;
@@ -280,11 +280,11 @@ namespace GoldTree.HabboHotel.Rooms
         }
         internal RoomMusicController GetRoomMusicController()
         {
-            if (this.musicController == null)
+            if (this.MusicController == null)
             {
-                this.musicController = new RoomMusicController();
+                this.MusicController = new RoomMusicController();
             }
-            return this.musicController;
+            return this.MusicController;
         }
 
         internal void LoadMusic()
@@ -317,90 +317,88 @@ namespace GoldTree.HabboHotel.Rooms
                 this.GetRoomMusicController().AddDisk(diskItem);
             }
         }
-        public Room(uint uint_2, string string_10, string string_11, string string_12, string string_13, int int_17, int int_18, int int_19, string string_14, string string_15, int int_20, List<string> list_18, bool bool_13, bool bool_14, bool bool_15, bool bool_16, RoomIcon class29_1, string string_16, string string_17, string string_18, string string_19, RoomData class27_1, bool bool_17, int int_21, int int_22, uint uint_3)
+        public Room(uint uint_2, string name, string description, string type, string string_13, int int_17, int int_18, int int_19, string string_14, string string_15, int int_20, List<string> list_18, bool bool_13, bool bool_14, bool bool_15, bool bool_16, RoomIcon class29_1, string string_16, string string_17, string string_18, string string_19, RoomData class27_1, bool bool_17, int int_21, int int_22, uint uint_3)
         {
-            if (!(LicenseTools.String_0 == ""))
-            {
-                this.bool_12 = false;
-                this.uint_0 = uint_2;
-                this.Name = string_10;
-                this.Description = string_11;
-                this.Owner = string_13;
-                this.Category = int_17;
-                this.Type = string_12;
-                this.State = int_18;
-                this.UsersNow = 0;
-                this.UsersMax = int_19;
-                this.ModelName = string_14;
-                this.CCTs = string_15;
-                this.Score = int_20;
-                this.Tags = list_18;
-                this.AllowPet = bool_13;
-                this.AllowPetsEating = bool_14;
-                this.AllowWalkthrough = bool_15;
-                this.Hidewall = bool_16;
-                this.Wallthick = int_21;
-                this.Floorthick = int_22;
-                this.int_7 = 0;
-                this.RoomUser_0 = new RoomUser[500];
-                this.class29_0 = class29_1;
-                this.Password = string_16;
-                this.dictionary_0 = new Dictionary<uint, double>();
-                this.Event = null;
-                this.Wallpaper = string_17;
-                this.Floor = string_18;
-                this.Landscape = string_19;
-                this.hashtable_4 = new Hashtable();
-                this.hashtable_0 = new Hashtable();
-                this.list_2 = new List<Trade>();
-                this.class28_0 = GoldTree.GetGame().GetRoomManager().GetModel(this.ModelName, this.uint_0);
-                this.bool_6 = false;
-                this.bool_7 = false;
-                this.bool_5 = true;
-                this.class27_0 = class27_1;
-                this.bool_8 = bool_17;
-                this.list_17 = new List<GroupsManager>();
-                this.list_4 = new List<uint>();
-                this.list_5 = new List<RoomItem>();
-                this.list_9 = new List<RoomItem>();
-                this.list_7 = new List<RoomItem>();
-                this.list_6 = new List<RoomItem>();
-                this.list_8 = new List<RoomItem>();
-                this.list_10 = new List<RoomItem>();
-                this.list_11 = new List<RoomItem>();
-                this.list_12 = new List<RoomItem>();
-                this.list_13 = new List<RoomItem>();
-                this.int_10 = 0;
-                this.int_11 = 0;
-                this.int_9 = 0;
-                this.int_12 = 0;
-                this.int_13 = 0;
-                this.list_3 = new List<RoomItem>();
-                this.list_14 = new List<RoomItem>();
-                this.list_15 = new List<RoomItem>();
-                this.list_16 = new List<RoomItem>();
-                this.byte_0 = new byte[this.Class28_0.int_4, this.Class28_0.int_5];
-                this.double_1 = new double[this.Class28_0.int_4, this.Class28_0.int_5];
-                this.double_2 = new double[this.Class28_0.int_4, this.Class28_0.int_5];
-                //this.timer_0 = new Timer(new TimerCallback(this.method_32), null, 480, 480);
-                this.int_8 = 0;
-                this.bool_4 = false;
-                this.bool_9 = true;
-                this.bool_11 = false;
-                this.int_16 = 0;
-                this.int_15 = 4;
-                this.Achievement = uint_3;
-                this.bool_10 = false;
-                this.hashtable_1 = new Hashtable();
-                this.hashtable_2 = new Hashtable();
-                this.hashtable_3 = new Hashtable();
-                this.method_23();
-                this.method_25();
-                this.method_22();
-                this.LoadMusic();
-                this.InfobusAnswers = new List<int>();
-            }
+            this.bool_12 = false;
+            this.uint_0 = uint_2;
+            this.Name = name;
+            this.Description = description;
+            this.Owner = string_13;
+            this.Category = int_17;
+            this.Type = type;
+            this.State = int_18;
+            this.UsersNow = 0;
+            this.UsersMax = int_19;
+            this.ModelName = string_14;
+            this.CCTs = string_15;
+            this.Score = int_20;
+            this.Tags = list_18;
+            this.AllowPet = bool_13;
+            this.AllowPetsEating = bool_14;
+            this.AllowWalkthrough = bool_15;
+            this.Hidewall = bool_16;
+            this.Wallthick = int_21;
+            this.Floorthick = int_22;
+            this.int_7 = 0;
+            this.RoomUsers = new RoomUser[500];
+            this.RoomIcon = class29_1;
+            this.Password = string_16;
+            this.dictionary_0 = new Dictionary<uint, double>();
+            this.Event = null;
+            this.Wallpaper = string_17;
+            this.Floor = string_18;
+            this.Landscape = string_19;
+            this.hashtable_4 = new Hashtable();
+            this.hashtable_0 = new Hashtable();
+            this.list_2 = new List<Trade>();
+            this.class28_0 = GoldTree.GetGame().GetRoomManager().GetModel(this.ModelName, this.uint_0);
+            this.bool_6 = false;
+            this.bool_7 = false;
+            this.bool_5 = true;
+            this.class27_0 = class27_1;
+            this.bool_8 = bool_17;
+            this.list_17 = new List<GroupsManager>();
+            this.list_4 = new List<uint>();
+            this.list_5 = new List<RoomItem>();
+            this.list_9 = new List<RoomItem>();
+            this.list_7 = new List<RoomItem>();
+            this.list_6 = new List<RoomItem>();
+            this.list_8 = new List<RoomItem>();
+            this.list_10 = new List<RoomItem>();
+            this.list_11 = new List<RoomItem>();
+            this.list_12 = new List<RoomItem>();
+            this.list_13 = new List<RoomItem>();
+            this.int_10 = 0;
+            this.int_11 = 0;
+            this.int_9 = 0;
+            this.int_12 = 0;
+            this.int_13 = 0;
+            this.list_3 = new List<RoomItem>();
+            this.list_14 = new List<RoomItem>();
+            this.list_15 = new List<RoomItem>();
+            this.list_16 = new List<RoomItem>();
+            this.byte_0 = new byte[this.Class28_0.int_4, this.Class28_0.int_5];
+            this.double_1 = new double[this.Class28_0.int_4, this.Class28_0.int_5];
+            this.double_2 = new double[this.Class28_0.int_4, this.Class28_0.int_5];
+            //this.timer_0 = new Timer(new TimerCallback(this.method_32), null, 480, 480);
+            this.int_8 = 0;
+            this.bool_4 = false;
+            this.bool_9 = true;
+            this.bool_11 = false;
+            this.int_16 = 0;
+            this.int_15 = 4;
+            this.Achievement = uint_3;
+            this.bool_10 = false;
+            this.hashtable_1 = new Hashtable();
+            this.hashtable_2 = new Hashtable();
+            this.hashtable_3 = new Hashtable();
+            this.method_23();
+            this.method_25();
+            this.method_22();
+            this.LoadMusic();
+            this.InfobusAnswers = new List<int>();
         }
+
         public void method_0()
         {
             List<RoomBot> list = GoldTree.GetGame().GetBotManager().method_2(this.Id);
@@ -431,11 +429,11 @@ namespace GoldTree.HabboHotel.Rooms
         internal List<Pet> method_2()
         {
             List<Pet> list = new List<Pet>();
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                if (this.RoomUser_0[i] != null && this.RoomUser_0[i].isPet)
+                if (this.RoomUsers[i] != null && this.RoomUsers[i].isPet)
                 {
-                    list.Add(this.RoomUser_0[i].PetData);
+                    list.Add(this.RoomUsers[i].PetData);
                 }
             }
             return list;
@@ -449,7 +447,7 @@ namespace GoldTree.HabboHotel.Rooms
             int num = this.method_5();
             RoomUser user = new RoomUser(Convert.ToUInt32(num + 100000), this.Id, this.int_7++, true);
             user.int_20 = num;
-            this.RoomUser_0[num] = user;
+            this.RoomUsers[num] = user;
             if (Bot.x > 0 && Bot.y > 0 && Bot.x < this.Class28_0.int_4 && Bot.y < this.Class28_0.int_5)
             {
                 user.method_7(Bot.x, Bot.y, Bot.z);
@@ -485,7 +483,7 @@ namespace GoldTree.HabboHotel.Rooms
         }
         private int method_5()
         {
-            return Array.IndexOf<RoomUser>(this.RoomUser_0, null);
+            return Array.IndexOf<RoomUser>(this.RoomUsers, null);
         }
         public void method_6(int int_17, bool bool_13)
         {
@@ -497,21 +495,21 @@ namespace GoldTree.HabboHotel.Rooms
                 Message.AppendRawInt32(@class.VirtualId);
                 this.SendMessage(Message, null);
                 uint num = @class.uint_0;
-                for (int i = 0; i < this.RoomUser_0.Length; i++)
+                for (int i = 0; i < this.RoomUsers.Length; i++)
                 {
-                    RoomUser class2 = this.RoomUser_0[i];
+                    RoomUser class2 = this.RoomUsers[i];
                     if (class2 != null && class2.uint_0 == num)
                     {
-                        this.RoomUser_0[i] = null;
+                        this.RoomUsers[i] = null;
                     }
                 }
             }
         }
         public void method_7(RoomUser RoomUser_1, string string_10, bool bool_13)
         {
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                RoomUser @class = this.RoomUser_0[i];
+                RoomUser @class = this.RoomUsers[i];
                 if (@class != null && @class.IsBot)
                 {
                     if (bool_13)
@@ -1883,7 +1881,7 @@ namespace GoldTree.HabboHotel.Rooms
                                     }
                                     else
                                     {
-                                        RoomUser[] array = this.RoomUser_0;
+                                        RoomUser[] array = this.RoomUsers;
                                         for (int i = 0; i < array.Length; i++)
                                         {
                                             RoomUser class2 = array[i];
@@ -1970,7 +1968,7 @@ namespace GoldTree.HabboHotel.Rooms
                                         }
                                         else
                                         {
-                                            RoomUser[] array = this.RoomUser_0;
+                                            RoomUser[] array = this.RoomUsers;
                                             for (int i = 0; i < array.Length; i++)
                                             {
                                                 RoomUser class2 = array[i];
@@ -2004,7 +2002,7 @@ namespace GoldTree.HabboHotel.Rooms
                                         }
                                         else
                                         {
-                                            RoomUser[] array = this.RoomUser_0;
+                                            RoomUser[] array = this.RoomUsers;
                                             for (int i = 0; i < array.Length; i++)
                                             {
                                                 RoomUser class2 = array[i];
@@ -2059,7 +2057,7 @@ namespace GoldTree.HabboHotel.Rooms
                                             }
                                             else
                                             {
-                                                RoomUser[] array = this.RoomUser_0;
+                                                RoomUser[] array = this.RoomUsers;
                                                 for (int i = 0; i < array.Length; i++)
                                                 {
                                                     RoomUser class2 = array[i];
@@ -2663,9 +2661,9 @@ namespace GoldTree.HabboHotel.Rooms
             }
             if (!this.AllowWalkthrough)
             {
-                for (int k = 0; k < this.RoomUser_0.Length; k++)
+                for (int k = 0; k < this.RoomUsers.Length; k++)
                 {
-                    RoomUser class3 = this.RoomUser_0[k];
+                    RoomUser class3 = this.RoomUsers[k];
                     if (class3 != null)
                     {
                         this.byte_0[class3.int_3, class3.int_4] = 0;
@@ -3256,9 +3254,9 @@ namespace GoldTree.HabboHotel.Rooms
         }
         private void method_31(string string_10)
         {
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                RoomUser @class = this.RoomUser_0[i];
+                RoomUser @class = this.RoomUsers[i];
                 if (@class != null && !@class.IsBot)
                 {
                     @class.GetClient().SendNotif(string_10);
@@ -3334,13 +3332,13 @@ namespace GoldTree.HabboHotel.Rooms
                     }
                     List<uint> list = new List<uint>();
                     int num3 = 0;
-                    if (this.RoomUser_0 != null)
+                    if (this.RoomUsers != null)
                     {
                         try
                         {
-                            for (int i = 0; i < this.RoomUser_0.Length; i++)
+                            for (int i = 0; i < this.RoomUsers.Length; i++)
                             {
-                                RoomUser class3 = this.RoomUser_0[i];
+                                RoomUser class3 = this.RoomUsers[i];
                                 if (class3 != null)
                                 {
                                     num = 1;
@@ -3356,14 +3354,14 @@ namespace GoldTree.HabboHotel.Rooms
                                             }
                                         }
                                     }
-                                    if (this.musicController != null)
+                                    if (this.MusicController != null)
                                     {
-                                        this.musicController.Update(this);
+                                        this.MusicController.Update(this);
                                     }
                                     class3.int_1++;
                                     this.GetFreeze().CycleUser(class3);
                                     num = 2;
-                                    if (!class3.bool_8 && class3.int_1 >= LicenseTools.int_14)
+                                    if (!class3.bool_8 && class3.int_1 >= ServerConfiguration.SleepTimer)
                                     {
                                         class3.bool_8 = true;
                                         ServerMessage Message = new ServerMessage(486u);
@@ -3374,7 +3372,7 @@ namespace GoldTree.HabboHotel.Rooms
                                     num = 3;
                                     if (class3.GetClient() == null && !class3.IsBot)
                                     {
-                                        this.RoomUser_0[i] = null;
+                                        this.RoomUsers[i] = null;
                                         if (!class3.bool_1)
                                         {
                                             this.byte_0[class3.int_3, class3.int_4] = class3.byte_0;
@@ -3685,12 +3683,12 @@ namespace GoldTree.HabboHotel.Rooms
         }
         internal void method_34()
         {
-            if (!this.bool_7 && LicenseTools.bool_18)
+            if (!this.bool_7 && ServerConfiguration.UnloadCrashedRooms)
             {
                 this.bool_7 = true;
                 try
                 {
-                    this.method_31(GoldTreeEnvironment.smethod_1("error_roomunload"));
+                    this.method_31(GoldTreeEnvironment.GetExternalText("error_roomunload"));
                 }
                 catch
                 {
@@ -4019,11 +4017,11 @@ namespace GoldTree.HabboHotel.Rooms
         internal RoomUser method_43(int int_17, int int_18)
         {
             RoomUser result;
-            if (this.RoomUser_0 != null)
+            if (this.RoomUsers != null)
             {
-                for (int i = 0; i < this.RoomUser_0.Length; i++)
+                for (int i = 0; i < this.RoomUsers.Length; i++)
                 {
-                    RoomUser @class = this.RoomUser_0[i];
+                    RoomUser @class = this.RoomUsers[i];
                     if (@class != null && (@class.int_3 == int_17 && @class.int_4 == int_18))
                     {
                         result = @class;
@@ -4037,11 +4035,11 @@ namespace GoldTree.HabboHotel.Rooms
         internal RoomUser method_44(int int_17, int int_18)
         {
             RoomUser result;
-            if (this.RoomUser_0 != null)
+            if (this.RoomUsers != null)
             {
-                for (int i = 0; i < this.RoomUser_0.Length; i++)
+                for (int i = 0; i < this.RoomUsers.Length; i++)
                 {
-                    RoomUser @class = this.RoomUser_0[i];
+                    RoomUser @class = this.RoomUsers[i];
                     if (@class != null)
                     {
                         if (@class.int_3 == int_17 && @class.int_4 == int_18)
@@ -4117,7 +4115,7 @@ namespace GoldTree.HabboHotel.Rooms
                 }
                 int num = this.method_5();
                 @class.int_20 = num;
-                this.RoomUser_0[num] = @class;
+                this.RoomUsers[num] = @class;
                 if (!bool_13)
                 {
                     this.bool_10 = true;
@@ -4146,9 +4144,9 @@ namespace GoldTree.HabboHotel.Rooms
                 if (!bool_13)
                 {
                     this.method_51();
-                    for (int i = 0; i < this.RoomUser_0.Length; i++)
+                    for (int i = 0; i < this.RoomUsers.Length; i++)
                     {
-                        RoomUser class4 = this.RoomUser_0[i];
+                        RoomUser class4 = this.RoomUsers[i];
                         if (class4 != null && class4.IsBot)
                         {
                             class4.BotAI.OnUserEnterRoom(@class);
@@ -4315,7 +4313,7 @@ namespace GoldTree.HabboHotel.Rooms
                             RoomUser @class = this.GetRoomUserByHabbo(Session.GetHabbo().Id);
                             if (@class != null)
                             {
-                                this.RoomUser_0[@class.int_20] = null;
+                                this.RoomUsers[@class.int_20] = null;
                                 @class.int_20 = -1;
                                 this.byte_0[@class.int_3, @class.int_4] = @class.byte_0;
                             }
@@ -4371,9 +4369,9 @@ namespace GoldTree.HabboHotel.Rooms
                                 this.bool_10 = true;
                                 this.method_51();
                                 List<RoomUser> list = new List<RoomUser>();
-                                for (int i = 0; i < this.RoomUser_0.Length; i++)
+                                for (int i = 0; i < this.RoomUsers.Length; i++)
                                 {
-                                    RoomUser class2 = this.RoomUser_0[i];
+                                    RoomUser class2 = this.RoomUsers[i];
                                     if (class2 != null && class2.IsBot)
                                     {
                                         list.Add(class2);
@@ -4403,9 +4401,9 @@ namespace GoldTree.HabboHotel.Rooms
         public RoomUser method_48(uint uint_2)
         {
             RoomUser result;
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                RoomUser @class = this.RoomUser_0[i];
+                RoomUser @class = this.RoomUsers[i];
                 if (@class != null && @class.IsBot && @class.isPet && @class.PetData != null && @class.PetData.PetId == uint_2)
                 {
                     result = @class;
@@ -4441,9 +4439,9 @@ namespace GoldTree.HabboHotel.Rooms
         public RoomUser method_52(int int_17)
         {
             RoomUser result;
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                RoomUser @class = this.RoomUser_0[i];
+                RoomUser @class = this.RoomUsers[i];
                 if (@class != null && @class.VirtualId == int_17)
                 {
                     result = @class;
@@ -4456,9 +4454,9 @@ namespace GoldTree.HabboHotel.Rooms
         public RoomUser GetRoomUserByHabbo(uint uint_2)
         {
             RoomUser result;
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                RoomUser @class = this.RoomUser_0[i];
+                RoomUser @class = this.RoomUsers[i];
                 if (@class != null && !@class.IsBot && @class.uint_0 == uint_2)
                 {
                     result = @class;
@@ -4470,9 +4468,9 @@ namespace GoldTree.HabboHotel.Rooms
         }
         public void method_54()
         {
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                RoomUser @class = this.RoomUser_0[i];
+                RoomUser @class = this.RoomUsers[i];
                 if (@class != null && (!@class.IsBot && @class.class34_1 == null))
                 {
                     @class.DanceId = 1;
@@ -4485,9 +4483,9 @@ namespace GoldTree.HabboHotel.Rooms
         }
         public void method_55()
         {
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                RoomUser @class = this.RoomUser_0[i];
+                RoomUser @class = this.RoomUsers[i];
                 if (@class != null && (!@class.IsBot && @class.class34_1 == null) && (!@class.Statusses.ContainsKey("sit") && !@class.Statusses.ContainsKey("lay") && @class.int_8 != 1 && @class.int_8 != 3 && @class.int_8 != 5 && @class.int_8 != 7))
                 {
                     @class.AddStatus("sit", ((@class.double_0 + 1.0) / 2.0 - @class.double_0 * 0.5).ToString().Replace(",", "."));
@@ -4498,9 +4496,9 @@ namespace GoldTree.HabboHotel.Rooms
         public RoomUser method_56(string string_10)
         {
             RoomUser result;
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                RoomUser @class = this.RoomUser_0[i];
+                RoomUser @class = this.RoomUsers[i];
                 if (@class != null && !@class.IsBot && @class.GetClient() != null && @class.GetClient().GetHabbo() != null && @class.GetClient().GetHabbo().Username.ToLower() == string_10.ToLower())
                 {
                     result = @class;
@@ -4513,9 +4511,9 @@ namespace GoldTree.HabboHotel.Rooms
         public RoomUser method_57(string string_10)
         {
             RoomUser result;
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                RoomUser @class = this.RoomUser_0[i];
+                RoomUser @class = this.RoomUsers[i];
                 if (@class != null && @class.IsBot && @class.class34_0.Name.ToLower() == string_10.ToLower())
                 {
                     result = @class;
@@ -4530,13 +4528,13 @@ namespace GoldTree.HabboHotel.Rooms
             List<uint> list = new List<uint>();
             if (list_18 != null)
             {
-                if (this.RoomUser_0 == null)
+                if (this.RoomUsers == null)
                 {
                     return;
                 }
-                for (int i = 0; i < this.RoomUser_0.Length; i++)
+                for (int i = 0; i < this.RoomUsers.Length; i++)
                 {
-                    RoomUser @class = this.RoomUser_0[i];
+                    RoomUser @class = this.RoomUsers[i];
                     if (@class != null && !@class.IsBot)
                     {
                         GameClient class2 = @class.GetClient();
@@ -4553,12 +4551,12 @@ namespace GoldTree.HabboHotel.Rooms
         {
             try
             {
-                if (this.RoomUser_0 != null)
+                if (this.RoomUsers != null)
                 {
                     byte[] array = Message5_0.GetBytes();
-                    for (int i = 0; i < this.RoomUser_0.Length; i++)
+                    for (int i = 0; i < this.RoomUsers.Length; i++)
                     {
-                        RoomUser @class = this.RoomUser_0[i];
+                        RoomUser @class = this.RoomUsers[i];
                         if (@class != null && !@class.IsBot)
                         {
                             GameClient class2 = @class.GetClient();
@@ -4585,9 +4583,9 @@ namespace GoldTree.HabboHotel.Rooms
             try
             {
                 byte[] array = Message5_0.GetBytes();
-                for (int i = 0; i < this.RoomUser_0.Length; i++)
+                for (int i = 0; i < this.RoomUsers.Length; i++)
                 {
-                    RoomUser @class = this.RoomUser_0[i];
+                    RoomUser @class = this.RoomUsers[i];
                     if (@class != null && !@class.IsBot)
                     {
                         GameClient class2 = @class.GetClient();
@@ -4613,9 +4611,9 @@ namespace GoldTree.HabboHotel.Rooms
             try
             {
                 byte[] array = Message5_0.GetBytes();
-                for (int i = 0; i < this.RoomUser_0.Length; i++)
+                for (int i = 0; i < this.RoomUsers.Length; i++)
                 {
-                    RoomUser @class = this.RoomUser_0[i];
+                    RoomUser @class = this.RoomUsers[i];
                     if (@class != null && !@class.IsBot)
                     {
                         GameClient class2 = @class.GetClient();
@@ -5522,17 +5520,17 @@ namespace GoldTree.HabboHotel.Rooms
                         this.Tags.Clear();
                     }
                     this.Tags = null;
-                    if (this.RoomUser_0 != null)
+                    if (this.RoomUsers != null)
                     {
-                        Array.Clear(this.RoomUser_0, 0, this.RoomUser_0.Length);
+                        Array.Clear(this.RoomUsers, 0, this.RoomUsers.Length);
                     }
-                    this.RoomUser_0 = null;
-                    this.class29_0 = null;
+                    this.RoomUsers = null;
+                    this.RoomIcon = null;
                     if (this.UsersWithRights != null)
                     {
                         this.UsersWithRights.Clear();
                     }
-                    this.class29_0 = null;
+                    this.RoomIcon = null;
                     if (this.dictionary_0 != null)
                     {
                         this.dictionary_0.Clear();
@@ -5557,11 +5555,11 @@ namespace GoldTree.HabboHotel.Rooms
                         this.list_2.Clear();
                     }
                     this.list_2 = null;
-                    if (this.musicController != null)
+                    if (this.MusicController != null)
                     {
-                        this.musicController.UnLinkRoomOutputItem();
+                        this.MusicController.UnLinkRoomOutputItem();
                     }
-                    this.musicController = null;
+                    this.MusicController = null;
                     if (this.InfobusAnswers != null)
                     {
                         this.InfobusAnswers.Clear();
@@ -5573,9 +5571,9 @@ namespace GoldTree.HabboHotel.Rooms
         public ServerMessage method_67(bool bool_13)
         {
             List<RoomUser> list = new List<RoomUser>();
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                RoomUser @class = this.RoomUser_0[i];
+                RoomUser @class = this.RoomUsers[i];
                 if (@class != null)
                 {
                     if (!bool_13)
@@ -6221,9 +6219,9 @@ namespace GoldTree.HabboHotel.Rooms
         }
         public void method_83()
         {
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                RoomUser @class = this.RoomUser_0[i];
+                RoomUser @class = this.RoomUsers[i];
                 if (@class != null)
                 {
                     this.method_87(@class, true, true);
@@ -7464,9 +7462,9 @@ namespace GoldTree.HabboHotel.Rooms
         }
         internal void method_101()
         {
-            for (int i = 0; i < this.RoomUser_0.Length; i++)
+            for (int i = 0; i < this.RoomUsers.Length; i++)
             {
-                RoomUser @class = this.RoomUser_0[i];
+                RoomUser @class = this.RoomUsers[i];
                 if (@class != null)
                 {
                     @class.int_10 = @class.int_3;
@@ -7492,11 +7490,11 @@ namespace GoldTree.HabboHotel.Rooms
 
         internal GameManager GetGameManager()
         {
-            if (this.game == null)
+            if (this.GameManager == null)
             {
-                this.game = new GameManager(this);
+                this.GameManager = new GameManager(this);
             }
-            return this.game;
+            return this.GameManager;
         }
 
         internal Freeze GetFreeze()

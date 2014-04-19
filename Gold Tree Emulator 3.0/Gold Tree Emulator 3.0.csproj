@@ -472,6 +472,7 @@
     <Compile Include="Net\SocketsConnection.cs" />
     <Compile Include="Net\SocketsListener.cs" />
     <Compile Include="Net\SocketsManager.cs" />
+    <Compile Include="Core\ServerConfiguration.cs" />
     <Compile Include="Storage\Database.cs" />
     <Compile Include="Storage\DatabaseClient.cs" />
     <Compile Include="Storage\DatabaseException.cs" />
@@ -480,7 +481,6 @@
     <Compile Include="Util\Base64Encoding.cs" />
     <Compile Include="Util\ByteUtility.cs" />
     <Compile Include="Util\EncryptionUtility.cs" />
-    <Compile Include="Util\LicenseTools.cs" />
     <Compile Include="Util\OldEncoding.cs" />
     <Compile Include="Util\WireEncoding.cs" />
     <Compile Include="TimedLock.cs" />

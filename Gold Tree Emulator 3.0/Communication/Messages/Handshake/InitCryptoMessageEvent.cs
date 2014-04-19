@@ -8,7 +8,7 @@ namespace GoldTree.Communication.Messages.Handshake
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
 			Interface @interface;
-			if (GoldTree.smethod_10().Handle(1817u, out @interface))
+			if (GoldTree.GetPacketManager().Handle(1817u, out @interface))
 			{
 				@interface.Handle(Session, null);
 			}

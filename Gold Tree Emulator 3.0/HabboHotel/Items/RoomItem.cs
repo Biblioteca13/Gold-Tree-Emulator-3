@@ -966,10 +966,10 @@ namespace GoldTree.HabboHotel.Items
                             }
                             break;
                         case "wf_act_moveuser":
-                            if (this.dictionary_1.Count > 0 && this.method_8().RoomUser_0 != null)
+                            if (this.dictionary_1.Count > 0 && this.method_8().RoomUsers != null)
                             {
                                 int num4 = 0;
-                                RoomUser[] RoomUser_ = this.method_8().RoomUser_0;
+                                RoomUser[] RoomUser_ = this.method_8().RoomUsers;
                                 for (int i = 0; i < RoomUser_.Length; i++)
                                 {
                                     RoomUser class4 = RoomUser_[i];

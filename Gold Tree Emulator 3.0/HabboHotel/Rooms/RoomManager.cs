@@ -54,7 +54,7 @@ namespace GoldTree.HabboHotel.Rooms
 		}
 		internal void method_0()
 		{
-			Logging.smethod_0("Loading Room Cache..");
+			Logging.Write("Loading Room Cache..");
 			this.list_3 = new List<RoomData>();
 			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 			{
@@ -67,7 +67,7 @@ namespace GoldTree.HabboHotel.Rooms
 					}
 				}
 			}
-			Logging.WriteLine("completed!");
+			Logging.WriteLine("completed!", ConsoleColor.Green);
 		}
 		private bool method_1(uint uint_0)
 		{
@@ -250,7 +250,7 @@ namespace GoldTree.HabboHotel.Rooms
 		}
 		public void method_8(DatabaseClient class6_0)
 		{
-			Logging.smethod_0("Loading Room Models..");
+			Logging.Write("Loading Room Models..");
 			this.Models.Clear();
 			DataTable dataTable = class6_0.ReadDataTable("SELECT Id,door_x,door_y,door_z,door_dir,heightmap,public_items,club_only FROM room_models");
 			if (dataTable != null)
@@ -258,9 +258,9 @@ namespace GoldTree.HabboHotel.Rooms
 				foreach (DataRow dataRow in dataTable.Rows)
 				{
 					string text = (string)dataRow["Id"];
-					this.Models.Add(text, new RoomModel(text, (int)dataRow["door_x"], (int)dataRow["door_y"], (double)dataRow["door_z"], (int)dataRow["door_dir"], (string)dataRow["heightmap"], (string)dataRow["public_items"], GoldTree.smethod_3(dataRow["club_only"].ToString())));
+					this.Models.Add(text, new RoomModel(text, (int)dataRow["door_x"], (int)dataRow["door_y"], (double)dataRow["door_z"], (int)dataRow["door_dir"], (string)dataRow["heightmap"], (string)dataRow["public_items"], GoldTree.StringToBoolean(dataRow["club_only"].ToString())));
 				}
-				Logging.WriteLine("completed!");
+				Logging.WriteLine("completed!", ConsoleColor.Green);
 			}
 		}
 		private RoomModel method_9(uint uint_0)

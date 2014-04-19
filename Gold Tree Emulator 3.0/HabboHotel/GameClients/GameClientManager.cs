@@ -18,68 +18,73 @@ namespace GoldTree.HabboHotel.GameClients
 	internal sealed class GameClientManager
 	{
 		private Task task_0;
-		private GameClient[] Session;
+		private GameClient[] Clients;
+
 		private Hashtable hashtable_0;
 		private Hashtable hashtable_1;
-		private Timer timer_0;
-        private List<SocketConnection> list_0;
-        //private List<ConnectionInformation> list_0;
+
+		private Timer DisposeTimer;
+
+        private List<SocketConnection> DisposeQueue;
+
 		public int ClientCount
 		{
 			get
 			{
-				int result;
-				if (this.Session == null)
-				{
-					result = 0;
-				}
-				else
-				{
-					int num = 0;
-					for (int i = 0; i < this.Session.Length; i++)
-					{
-						if (this.Session[i] != null && this.Session[i].GetHabbo() != null && !string.IsNullOrEmpty(this.Session[i].GetHabbo().Username))
-						{
-							num++;
-						}
-					}
-					num++;
-					result = num;
-				}
-				return result;
+                if (this.Clients == null)
+                    return 0;
+
+                int num = 0;
+
+                for (int i = 0; i < this.Clients.Length; i++)
+                {
+                    if (this.Clients[i] != null && this.Clients[i].GetHabbo() != null && !string.IsNullOrEmpty(this.Clients[i].GetHabbo().Username))
+                    {
+                        num++;
+                    }
+                }
+
+                return num;
 			}
 		}
-		public GameClientManager(int int_0)
+
+		public GameClientManager(int clientCapacity)
 		{
 			this.hashtable_0 = new Hashtable();
 			this.hashtable_1 = new Hashtable();
-			this.Session = new GameClient[int_0];
-            this.list_0 = new List<SocketConnection>();
-            //this.list_0 = new List<ConnectionInformation>();
-			this.timer_0 = new Timer(new TimerCallback(this.method_4), null, 500, 500);
+
+			this.Clients = new GameClient[clientCapacity];
+
+            this.DisposeQueue = new List<SocketConnection>();
+			this.DisposeTimer = new Timer(new TimerCallback(this.DisposeTimerCallback), null, 500, 500);
 		}
+
 		public void method_0(uint uint_0, string string_0, GameClient class16_1)
 		{
 			this.hashtable_0[uint_0] = class16_1;
 			this.hashtable_1[string_0.ToLower()] = class16_1;
 		}
+
 		public void method_1(uint uint_0, string string_0)
 		{
 			this.hashtable_0[uint_0] = null;
 			this.hashtable_1[string_0.ToLower()] = null;
 		}
-		public GameClient method_2(uint uint_0)
+
+		public GameClient method_2(uint id)
 		{
 			GameClient result;
-			if (this.Session == null || this.hashtable_0 == null)
+
+			if (this.Clients == null || this.hashtable_0 == null)
 			{
 				result = null;
 			}
+
 			else
 			{
-				if (this.hashtable_0.ContainsKey(uint_0))
+				if (this.hashtable_0.ContainsKey(id))
 				{
-					result = (GameClient)this.hashtable_0[uint_0];
+					result = (GameClient)this.hashtable_0[id];
 				}
 				else
 				{
@@ -88,10 +93,11 @@ namespace GoldTree.HabboHotel.GameClients
 			}
 			return result;
 		}
+
 		public GameClient GetClientByHabbo(string string_0)
 		{
 			GameClient result;
-			if (this.Session == null || this.hashtable_1 == null || string.IsNullOrEmpty(string_0))
+			if (this.Clients == null || this.hashtable_1 == null || string.IsNullOrEmpty(string_0))
 			{
 				result = null;
 			}
@@ -108,14 +114,14 @@ namespace GoldTree.HabboHotel.GameClients
 			}
 			return result;
 		}
-		private void method_4(object object_0)
+
+		private void DisposeTimerCallback(object sender)
 		{
 			try
 			{
-                List<SocketConnection> list = this.list_0;
-                this.list_0 = new List<SocketConnection>();
-                //List<ConnectionInformation> list = this.list_0;
-                //this.list_0 = new List<ConnectionInformation>();
+                List<SocketConnection> list = this.DisposeQueue;
+                this.DisposeQueue = new List<SocketConnection>();
+
 				if (list != null)
 				{
                     foreach (SocketConnection current in list)
@@ -134,13 +140,15 @@ namespace GoldTree.HabboHotel.GameClients
                 Logging.LogThreadException(ex.ToString(), "Disconnector task");
 			}
 		}
+
         internal void method_5(SocketConnection Message1_0)
         {
-            if (!this.list_0.Contains(Message1_0))
+            if (!this.DisposeQueue.Contains(Message1_0))
             {
-                this.list_0.Add(Message1_0);
+                this.DisposeQueue.Add(Message1_0);
             }
         }
+
         //internal void method_5(SocketConnection Message1_0)
         //{
         //    if (!this.list_0.Contains(Message1_0))
@@ -148,6 +156,7 @@ namespace GoldTree.HabboHotel.GameClients
         //        this.list_0.Add(Message1_0);
         //    }
         //}
+
         //internal void method_5(ConnectionInformation Message1_0)
         //{
         //    if (!this.list_0.Contains(Message1_0))
@@ -155,15 +164,17 @@ namespace GoldTree.HabboHotel.GameClients
         //        this.list_0.Add(Message1_0);
         //    }
         //}
+
 		public void method_6()
 		{
 		}
+
 		public GameClient method_7(uint uint_0)
 		{
 			GameClient result;
 			try
 			{
-				result = this.Session[(int)((UIntPtr)uint_0)];
+				result = this.Clients[(int)((UIntPtr)uint_0)];
 			}
 			catch
 			{
@@ -171,11 +182,13 @@ namespace GoldTree.HabboHotel.GameClients
 			}
 			return result;
 		}
+
         internal void method_8(uint uint_0, ref SocketConnection Message1_0)
         {
-            this.Session[(int)((UIntPtr)uint_0)] = new GameClient(uint_0, ref Message1_0);
-            this.Session[(int)((UIntPtr)uint_0)].method_3();
+            this.Clients[(int)((UIntPtr)uint_0)] = new GameClient(uint_0, ref Message1_0);
+            this.Clients[(int)((UIntPtr)uint_0)].method_3();
         }
+
 		public void method_9(uint uint_0)
 		{
 			GameClient @class = this.method_7(uint_0);
@@ -183,9 +196,10 @@ namespace GoldTree.HabboHotel.GameClients
 			{
                 //GoldTree.smethod_14().method_6(uint_0);
 				@class.method_11();
-				this.Session[(int)((UIntPtr)uint_0)] = null;
+				this.Clients[(int)((UIntPtr)uint_0)] = null;
 			}
 		}
+
 		public void method_10()
 		{
 			if (this.task_0 == null)
@@ -194,6 +208,7 @@ namespace GoldTree.HabboHotel.GameClients
 				this.task_0.Start();
 			}
 		}
+
 		public void method_11()
 		{
 			if (this.task_0 != null)
@@ -201,13 +216,16 @@ namespace GoldTree.HabboHotel.GameClients
 				this.task_0 = null;
 			}
 		}
+
 		private void method_12()
 		{
 			int num = int.Parse(GoldTree.GetConfig().data["client.ping.interval"]);
+
 			if (num <= 100)
 			{
 				throw new ArgumentException("Invalid configuration value for ping interval! Must be above 100 miliseconds.");
 			}
+
 			while (true)
 			{
 				try
@@ -215,9 +233,9 @@ namespace GoldTree.HabboHotel.GameClients
 					ServerMessage Message = new ServerMessage(50u);
 					List<GameClient> list = new List<GameClient>();
 					List<GameClient> list2 = new List<GameClient>();
-					for (int i = 0; i < this.Session.Length; i++)
+					for (int i = 0; i < this.Clients.Length; i++)
 					{
-						GameClient @class = this.Session[i];
+						GameClient @class = this.Clients[i];
 						if (@class != null)
 						{
 							if (@class.bool_0)
@@ -263,9 +281,9 @@ namespace GoldTree.HabboHotel.GameClients
 		}
 		internal void method_13()
 		{
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null)
 				{
 					try
@@ -278,21 +296,20 @@ namespace GoldTree.HabboHotel.GameClients
 				}
 			}
 		}
-		internal void method_14(ServerMessage Message5_0)
+		internal void BroadcastMessage(ServerMessage message)
 		{
-			byte[] byte_ = Message5_0.GetBytes();
-			for (int i = 0; i < this.Session.Length; i++)
+			byte[] bytes = message.GetBytes();
+
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
-				if (@class != null)
+				GameClient client = this.Clients[i];
+				if (client != null)
 				{
-					try
-					{
-						@class.GetConnection().SendData(byte_);
-					}
-					catch
-					{
-					}
+                    try
+                    {
+                        client.GetConnection().SendData(bytes);
+                    }
+                    catch { }
 				}
 			}
 		}
@@ -300,9 +317,9 @@ namespace GoldTree.HabboHotel.GameClients
 		{
 			byte[] byte_ = Message5_0.GetBytes();
 			byte[] byte_2 = Message5_1.GetBytes();
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null)
 				{
 					try
@@ -326,9 +343,9 @@ namespace GoldTree.HabboHotel.GameClients
 		{
 			byte[] byte_ = Message5_0.GetBytes();
 			byte[] byte_2 = Message5_1.GetBytes();
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null)
 				{
 					try
@@ -354,9 +371,9 @@ namespace GoldTree.HabboHotel.GameClients
 		internal void method_17(GameClient class16_1, ServerMessage Message5_0)
 		{
 			byte[] byte_ = Message5_0.GetBytes();
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null && @class != class16_1)
 				{
 					try
@@ -374,9 +391,9 @@ namespace GoldTree.HabboHotel.GameClients
 		}
 		internal void method_18(int int_0)
 		{
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null && @class.GetHabbo() != null)
 				{
                     try
@@ -414,9 +431,9 @@ namespace GoldTree.HabboHotel.GameClients
 		}
 		internal void method_19(int int_0, bool bool_0)
 		{
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null && @class.GetHabbo() != null)
 				{
                     try
@@ -454,9 +471,9 @@ namespace GoldTree.HabboHotel.GameClients
 		}
 		internal void method_20(int int_0, bool bool_0)
 		{
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null && @class.GetHabbo() != null)
 				{
                     try
@@ -494,9 +511,9 @@ namespace GoldTree.HabboHotel.GameClients
 		}
 		internal void method_21(string string_0)
 		{
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null && @class.GetHabbo() != null)
 				{
 					try
@@ -512,9 +529,9 @@ namespace GoldTree.HabboHotel.GameClients
 		}
 		public void method_22(ServerMessage Message5_0, string string_0)
 		{
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null)
 				{
 					try
@@ -532,9 +549,9 @@ namespace GoldTree.HabboHotel.GameClients
 		}
 		public void method_23()
 		{
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null && (@class.GetHabbo() != null && @class.GetHabbo().method_24() != null))
 				{
 					@class.GetHabbo().method_24().method_7();
@@ -547,9 +564,9 @@ namespace GoldTree.HabboHotel.GameClients
 			bool flag = false;
 			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 			{
-				for (int i = 0; i < this.Session.Length; i++)
+				for (int i = 0; i < this.Clients.Length; i++)
 				{
-					GameClient class2 = this.Session[i];
+					GameClient class2 = this.Clients[i];
 					if (class2 != null && class2.GetHabbo() != null)
 					{
 						try
@@ -579,9 +596,9 @@ namespace GoldTree.HabboHotel.GameClients
 			Console.WriteLine("Closing server connections...");
 			try
 			{
-				for (int i = 0; i < this.Session.Length; i++)
+				for (int i = 0; i < this.Clients.Length; i++)
 				{
-					GameClient class2 = this.Session[i];
+					GameClient class2 = this.Clients[i];
 					if (class2 != null && class2.GetConnection() != null)
 					{
 						try
@@ -598,14 +615,14 @@ namespace GoldTree.HabboHotel.GameClients
 			{
 				Logging.smethod_8(ex.ToString());
 			}
-			Array.Clear(this.Session, 0, this.Session.Length);
+			Array.Clear(this.Clients, 0, this.Clients.Length);
 			Console.WriteLine("Connections closed!");
 		}
 		public void method_25(uint uint_0)
 		{
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null && @class.GetHabbo() != null && @class.GetHabbo().Id == uint_0)
 				{
 					@class.method_12();
@@ -667,9 +684,9 @@ namespace GoldTree.HabboHotel.GameClients
 		public void method_28()
 		{
 			Dictionary<GameClient, ModerationBanException> dictionary = new Dictionary<GameClient, ModerationBanException>();
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null)
 				{
 					try
@@ -688,19 +705,16 @@ namespace GoldTree.HabboHotel.GameClients
 				current.Key.method_12();
 			}
 		}
+
 		public void method_29()
 		{
 			try
 			{
-				if (this.Session != null)
+				if (this.Clients != null)
 				{
-					if (GoldTree.string_5 == "127.0.0.1")
+					for (int i = 0; i < this.Clients.Length; i++)
 					{
-						LicenseTools.bool_15 = true;
-					}
-					for (int i = 0; i < this.Session.Length; i++)
-					{
-						GameClient @class = this.Session[i];
+						GameClient @class = this.Clients[i];
 						if (@class != null && (@class.GetHabbo() != null && GoldTree.GetGame().GetPixelManager().method_2(@class)))
 						{
 							GoldTree.GetGame().GetPixelManager().method_3(@class);
@@ -713,6 +727,7 @@ namespace GoldTree.HabboHotel.GameClients
                 Logging.LogThreadException(ex.ToString(), "GCMExt.CheckPixelUpdates task");
 			}
 		}
+
 		internal List<ServerMessage> method_30()
 		{
 			List<ServerMessage> list = new List<ServerMessage>();
@@ -720,9 +735,9 @@ namespace GoldTree.HabboHotel.GameClients
 			ServerMessage Message = new ServerMessage();
 			Message.Init(161u);
 			Message.AppendStringWithBreak("Users online:\r");
-			for (int i = 0; i < this.Session.Length; i++)
+			for (int i = 0; i < this.Clients.Length; i++)
 			{
-				GameClient @class = this.Session[i];
+				GameClient @class = this.Clients[i];
 				if (@class != null && @class.GetHabbo() != null)
 				{
 					if (num > 20)
@@ -745,9 +760,10 @@ namespace GoldTree.HabboHotel.GameClients
 			list.Add(Message);
 			return list;
 		}
+
 		internal void method_31(GameClient class16_1, string string_0, string string_1)
 		{
-            if (LicenseTools.Boolean_5)
+            if (ServerConfiguration.EnableCommandLog)
 			{
 				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 				{

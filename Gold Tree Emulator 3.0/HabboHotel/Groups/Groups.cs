@@ -14,14 +14,14 @@ namespace GoldTree
 		}
 		public static void smethod_0(DatabaseClient class6_0)
 		{
-            Logging.smethod_0("Loading groups...");
+            Logging.Write("Loading groups...");
 			Groups.smethod_1();
 			DataTable dataTable = class6_0.ReadDataTable("SELECT * FROM groups;");
 			foreach (DataRow dataRow in dataTable.Rows)
 			{
 				Groups.GroupsManager.Add((int)dataRow["Id"], new GroupsManager((int)dataRow["Id"], dataRow, class6_0));
 			}
-			Logging.WriteLine("completed!");
+			Logging.WriteLine("completed!", ConsoleColor.Green);
 		}
 		public static void smethod_1()
 		{

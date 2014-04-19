@@ -31,7 +31,7 @@ namespace GoldTree.Communication.Messages.Navigator
                 using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                 {
                     Owner = dbClient.ReadString("SELECT owner FROM rooms WHERE id = '" + Room.Id + "'");
-                    dbClient.ExecuteQuery("INSERT INTO `navigator_publics` (`bannertype`, `caption`, `room_id`, `category_parent_id`, `image`, `image_type`) VALUES ('1', '" + Room.Name + "', '" + Room.Id + "', '" + LicenseTools.int_16 + "', 'officialrooms_hq/staffpickfolder.gif', 'external')");
+                    dbClient.ExecuteQuery("INSERT INTO `navigator_publics` (`bannertype`, `caption`, `room_id`, `category_parent_id`, `image`, `image_type`) VALUES ('1', '" + Room.Name + "', '" + Room.Id + "', '" + ServerConfiguration.StaffPicksID + "', 'officialrooms_hq/staffpickfolder.gif', 'external')");
                 }
 
                 GameClient RoomOwner = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Owner);
@@ -56,9 +56,9 @@ namespace GoldTree.Communication.Messages.Navigator
                     }
                 }
 
-                using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                 {
-                    GoldTree.GetGame().GetNavigator().method_0(class5);
+                    GoldTree.GetGame().GetNavigator().method_0(dbClient);
                 }
 
                 Session.SendNotif("Room added to Staff Picks successfully.");
@@ -72,9 +72,9 @@ namespace GoldTree.Communication.Messages.Navigator
                     dbClient.ExecuteQuery("DELETE FROM `navigator_publics` WHERE (`room_id`='" + Room.Id + "')");
                 }
 
-                using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                 {
-                    GoldTree.GetGame().GetNavigator().method_0(class5);
+                    GoldTree.GetGame().GetNavigator().method_0(dbClient);
                 }
 
                 Session.SendNotif("Room removed from Staff Picks successfully.");

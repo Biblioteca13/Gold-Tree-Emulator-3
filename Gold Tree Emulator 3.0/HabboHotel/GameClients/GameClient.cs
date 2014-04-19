@@ -127,13 +127,13 @@ namespace GoldTree.HabboHotel.GameClients
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     string str = "";
-                    if (LicenseTools.Boolean_2)
+                    if (ServerConfiguration.EnableSSO)
                     {
-                        str = GoldTreeEnvironment.smethod_1("emu_sso_wrong_secure") + "(" + this.GetConnection().String_0 + ")";
+                        str = GoldTreeEnvironment.GetExternalText("emu_sso_wrong_secure") + "(" + this.GetConnection().String_0 + ")";
                         //str = GoldTreeEnvironment.smethod_1("emu_sso_wrong_secure") + "(" + ip + ")";
                     }
                     ServerMessage Message = new ServerMessage(161u);
-                    Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("emu_sso_wrong") + str);
+                    Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("emu_sso_wrong") + str);
                     this.GetConnection().SendMessage(Message);
                     Console.ForegroundColor = ConsoleColor.Gray;
                     this.method_12();
@@ -187,7 +187,7 @@ namespace GoldTree.HabboHotel.GameClients
                 return;
             }
 
-			if (this.GetHabbo().Vip || LicenseTools.Boolean_3)
+			if (this.GetHabbo().Vip || ServerConfiguration.HabboClubForClothes)
 			{
 				Message2.AppendInt32(2);
 			}
@@ -220,7 +220,7 @@ namespace GoldTree.HabboHotel.GameClients
 					}
 					else
 					{
-                        if (this.GetHabbo().Vip || LicenseTools.Boolean_3 || this.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
+                        if (this.GetHabbo().Vip || ServerConfiguration.HabboClubForClothes || this.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
 						{
 							Message2.AppendInt32(2);
 						}
@@ -346,9 +346,9 @@ namespace GoldTree.HabboHotel.GameClients
             {
             }
 
-			if (LicenseTools.String_4 != "")
+			if (ServerConfiguration.MOTD != "")
 			{
-				this.SendNotif(LicenseTools.String_4, 2);
+				this.SendNotif(ServerConfiguration.MOTD, 2);
 			}
 			for (uint num = (uint)GoldTree.GetGame().GetRoleManager().method_9(); num > 1u; num -= 1u)
 			{
@@ -537,7 +537,7 @@ namespace GoldTree.HabboHotel.GameClients
 							{
 							}
 							Interface @interface;
-							if (GoldTree.smethod_10().Handle(@class.Id, out @interface))
+							if (GoldTree.GetPacketManager().Handle(@class.Id, out @interface))
 							{
                                 try
                                 {

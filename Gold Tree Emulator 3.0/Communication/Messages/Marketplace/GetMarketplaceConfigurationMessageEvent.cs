@@ -12,11 +12,11 @@ namespace GoldTree.Communication.Messages.Marketplace
 			TimeSpan timeSpan = now - GoldTree.ServerStarted;
 			ServerMessage Message = new ServerMessage(612u);
 			Message.AppendBoolean(true);
-			Message.AppendInt32(LicenseTools.int_1);
+			Message.AppendInt32(ServerConfiguration.MarketplaceTax);
 			Message.AppendInt32(1);
 			Message.AppendInt32(5);
 			Message.AppendInt32(1);
-			Message.AppendInt32(LicenseTools.int_0);
+			Message.AppendInt32(ServerConfiguration.MarketplacePriceLimit);
 			Message.AppendInt32(48);
 			Message.AppendInt32(timeSpan.Days);
 			Session.SendMessage(Message);

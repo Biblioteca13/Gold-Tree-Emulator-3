@@ -34,114 +34,114 @@ namespace GoldTree.HabboHotel.Support
 				}
 			}
 			Message.AppendUInt(6u);
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1"));
 			Message.AppendUInt(8u);
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_problem1"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_solution1"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_problem2"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_solution2"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_problem3"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_solution3"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_problem4"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_solution4"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_problem5"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_solution5"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_problem6"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_solution6"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_problem7"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_solution7"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_problem8"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category1_solution8"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_problem1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_solution1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_problem2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_solution2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_problem3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_solution3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_problem4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_solution4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_problem5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_solution5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_problem6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_solution6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_problem7"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_solution7"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_problem8"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category1_solution8"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2"));
 			Message.AppendUInt(8u);
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_problem1"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_solution1"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_problem2"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_solution2"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_problem3"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_solution3"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_problem4"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_solution4"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_problem5"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_solution5"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_problem6"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_solution6"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_problem7"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_solution7"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_problem8"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category2_solution8"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_problem1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_solution1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_problem2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_solution2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_problem3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_solution3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_problem4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_solution4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_problem5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_solution5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_problem6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_solution6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_problem7"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_solution7"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_problem8"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category2_solution8"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3"));
 			Message.AppendUInt(8u);
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_problem1"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_solution1"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_problem2"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_solution2"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_problem3"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_solution3"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_problem4"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_solution4"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_problem5"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_solution5"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_problem6"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_solution6"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_problem7"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_solution7"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_problem8"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category3_solution8"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_problem1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_solution1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_problem2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_solution2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_problem3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_solution3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_problem4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_solution4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_problem5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_solution5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_problem6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_solution6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_problem7"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_solution7"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_problem8"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category3_solution8"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4"));
 			Message.AppendUInt(8u);
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_problem1"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_solution1"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_problem2"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_solution2"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_problem3"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_solution3"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_problem4"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_solution4"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_problem5"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_solution5"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_problem6"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_solution6"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_problem7"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_solution7"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_problem8"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category4_solution8"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_problem1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_solution1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_problem2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_solution2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_problem3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_solution3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_problem4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_solution4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_problem5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_solution5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_problem6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_solution6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_problem7"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_solution7"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_problem8"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category4_solution8"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5"));
 			Message.AppendUInt(8u);
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_problem1"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_solution1"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_problem2"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_solution2"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_problem3"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_solution3"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_problem4"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_solution4"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_problem5"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_solution5"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_problem6"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_solution6"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_problem7"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_solution7"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_problem8"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category5_solution8"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_problem1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_solution1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_problem2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_solution2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_problem3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_solution3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_problem4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_solution4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_problem5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_solution5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_problem6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_solution6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_problem7"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_solution7"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_problem8"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category5_solution8"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6"));
 			Message.AppendUInt(8u);
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_problem1"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_solution1"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_problem2"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_solution2"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_problem3"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_solution3"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_problem4"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_solution4"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_problem5"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_solution5"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_problem6"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_solution6"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_problem7"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_solution7"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_problem8"));
-			Message.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mod_tool_category6_solution8"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_problem1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_solution1"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_problem2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_solution2"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_problem3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_solution3"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_problem4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_solution4"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_problem5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_solution5"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_problem6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_solution6"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_problem7"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_solution7"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_problem8"));
+			Message.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mod_tool_category6_solution8"));
 			Message.AppendStringWithBreak("");
 			Message.AppendStringWithBreak("");
 			Message.AppendStringWithBreak("");
@@ -162,7 +162,7 @@ namespace GoldTree.HabboHotel.Support
 		}
 		public void method_1(DatabaseClient class6_0)
 		{
-			Logging.smethod_0("Loading Pre-set Help Messages..");
+			Logging.Write("Loading Pre-set Help Messages..");
 			this.UserMessagePresets.Clear();
 			this.RoomMessagePresets.Clear();
 			DataTable dataTable = class6_0.ReadDataTable("SELECT type,message FROM moderation_presets WHERE enabled = '1'");
@@ -187,12 +187,12 @@ namespace GoldTree.HabboHotel.Support
 						}
 					}
 				}
-				Logging.WriteLine("completed!");
+				Logging.WriteLine("completed!", ConsoleColor.Green);
 			}
 		}
 		public void method_2(DatabaseClient class6_0)
 		{
-			Logging.smethod_0("Loading Current Help Tickets..");
+			Logging.Write("Loading Current Help Tickets..");
 			DataTable dataTable = class6_0.ReadDataTable("SELECT Id,score,type,status,sender_id,reported_id,moderator_id,message,room_id,room_name,timestamp FROM moderation_tickets WHERE status = 'open' OR status = 'picked'");
 			if (dataTable != null)
 			{
@@ -205,7 +205,7 @@ namespace GoldTree.HabboHotel.Support
 					}
 					this.Tickets.Add(@class);
 				}
-				Logging.WriteLine("completed!");
+				Logging.WriteLine("completed!", ConsoleColor.Green);
 			}
 		}
 		public void method_3(GameClient Session, int int_0, uint uint_0, string string_0)
@@ -373,8 +373,8 @@ namespace GoldTree.HabboHotel.Support
 				}
 				if (bool_2)
 				{
-					@class.Name = GoldTreeEnvironment.smethod_1("mod_inappropriate_roomname");
-					@class.Description = GoldTreeEnvironment.smethod_1("mod_inappropriate_roomdesc");
+					@class.Name = GoldTreeEnvironment.GetExternalText("mod_inappropriate_roomname");
+					@class.Description = GoldTreeEnvironment.GetExternalText("mod_inappropriate_roomdesc");
 					@class.Tags.Clear();
 					using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 					{
@@ -393,9 +393,9 @@ namespace GoldTree.HabboHotel.Support
 				if (bool_0)
 				{
 					List<RoomUser> list = new List<RoomUser>();
-					for (int i = 0; i < @class.RoomUser_0.Length; i++)
+					for (int i = 0; i < @class.RoomUsers.Length; i++)
 					{
-						RoomUser class3 = @class.RoomUser_0[i];
+						RoomUser class3 = @class.RoomUsers[i];
 						if (class3 != null && (class3 != null && !class3.IsBot && class3.GetClient().GetHabbo().Rank < Session.GetHabbo().Rank))
 						{
 							list.Add(class3);
@@ -415,9 +415,9 @@ namespace GoldTree.HabboHotel.Support
 			{
 				StringBuilder stringBuilder = new StringBuilder();
 				int num = 0;
-				for (int i = 0; i < @class.RoomUser_0.Length; i++)
+				for (int i = 0; i < @class.RoomUsers.Length; i++)
 				{
-					RoomUser class2 = @class.RoomUser_0[i];
+					RoomUser class2 = @class.RoomUsers[i];
 					if (class2 != null && !class2.IsBot)
 					{
 						class2.GetClient().SendNotif(string_0, 0);
@@ -512,7 +512,7 @@ namespace GoldTree.HabboHotel.Support
 			{
 				if (@class.GetHabbo().Rank >= Session.GetHabbo().Rank)
 				{
-					Session.SendNotif(GoldTreeEnvironment.smethod_1("mod_error_permission_kick"));
+					Session.SendNotif(GoldTreeEnvironment.GetExternalText("mod_error_permission_kick"));
 				}
 				else
 				{
@@ -539,7 +539,7 @@ namespace GoldTree.HabboHotel.Support
 			{
 				if (bool_0 && @class.GetHabbo().Rank >= Session.GetHabbo().Rank)
 				{
-					Session.SendNotif(GoldTreeEnvironment.smethod_1("mod_error_permission_caution"));
+					Session.SendNotif(GoldTreeEnvironment.GetExternalText("mod_error_permission_caution"));
 					bool_0 = false;
 				}
 				@class.SendNotif(string_0, 0);
@@ -559,7 +559,7 @@ namespace GoldTree.HabboHotel.Support
 			{
 				if (@class.GetHabbo().Rank >= Session.GetHabbo().Rank)
 				{
-					Session.SendNotif(GoldTreeEnvironment.smethod_1("mod_error_permission_ban"));
+					Session.SendNotif(GoldTreeEnvironment.GetExternalText("mod_error_permission_ban"));
 				}
 				else
 				{

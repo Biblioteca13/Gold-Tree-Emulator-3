@@ -17,25 +17,36 @@ namespace GoldTree
             CTRL_LOGOFF_EVENT = 5,
             CTRL_SHUTDOWN_EVENT = 6
         }
+
         private static bool bool_0 = false;
+
         private static EventHandler delegate0_0;
+
         static ConsoleKeyInfo ConsoleKeyInfo;
+
         [DllImport("Kernel32")]
         private static extern bool SetConsoleCtrlHandler(Program.EventHandler handler, bool add);
+
         [DllImport("user32.dll")]
         public static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
+
         [DllImport("user32.dll")]
         public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+
         [DllImport("kernel32.dll", ExactSpelling = true)]
         public static extern IntPtr GetConsoleWindow();
+
         public const int MF_BYCOMMAND = 0x00000000;
         public const int SC_CLOSE = 0xF060;
+
         [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.ControlAppDomain)]
         public static void Main(string[] args)
         {
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += new UnhandledExceptionEventHandler(Program.smethod_0);
+
             Program.delegate0_0 = (Program.EventHandler)Delegate.Combine(Program.delegate0_0, new Program.EventHandler(Program.smethod_1));
+
             Program.SetConsoleCtrlHandler(Program.delegate0_0, true);
 
             if (DownloadNewVersion())
@@ -50,13 +61,7 @@ namespace GoldTree
                 Program.bool_0 = true;
                 DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_BYCOMMAND);
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine();
-                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE (Esc) BUTTON ~~~");
-                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE (Esc) BUTTON ~~~");
-                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE (Esc) BUTTON ~~~");
-                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE (Esc) BUTTON ~~~");
-                Console.WriteLine("~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE (Esc) BUTTON ~~~");
-                Console.WriteLine();
+                Console.WriteLine("\r\n~~~ IF YOU WANT CLOSE EMULATOR PLEASE PRESS ESCAPE (Esc) BUTTON ~~~\r\n");
                 Console.ForegroundColor = ConsoleColor.Gray;
             }
             catch (Exception ex)
@@ -68,7 +73,7 @@ namespace GoldTree
         }
         private static void smethod_0(object sender, UnhandledExceptionEventArgs e)
         {
-            Logging.smethod_7();
+            Logging.Disable();
             Exception ex = (Exception)e.ExceptionObject;
             Logging.LogCriticalException(ex.ToString());
         }
@@ -77,7 +82,7 @@ namespace GoldTree
             DeleteMenu(GetSystemMenu(GetConsoleWindow(), true), SC_CLOSE, MF_BYCOMMAND);
             if (Program.bool_0)
             {
-                Logging.smethod_7();
+                Logging.Disable();
                 Console.Clear();
                 Console.WriteLine("The server is saving users furniture, rooms, etc. WAIT FOR THE SERVER TO CLOSE, DO NOT EXIT THE PROCESS IN TASK MANAGER!!");
                 GoldTree.Destroy("", true);
@@ -152,8 +157,10 @@ namespace GoldTree
         public static void Wait()
         {
             ConsoleKeyInfo = Console.ReadKey();
+
             if (ConsoleKeyInfo.Key == ConsoleKey.Escape)
                 smethod_1(CtrlType.CTRL_CLOSE_EVENT);
+
             Wait();
         }
     }

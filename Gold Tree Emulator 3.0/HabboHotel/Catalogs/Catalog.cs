@@ -29,7 +29,7 @@ namespace GoldTree.HabboHotel.Catalogs
 		}
 		public void method_0(DatabaseClient class6_0)
 		{
-			Logging.smethod_0("Loading Catalogue..");
+			Logging.Write("Loading Catalogue..");
 			this.dictionary_0 = new Dictionary<int, CatalogPage>();
 			this.list_0 = new List<EcotronReward>();
             DataTable dataTable = class6_0.ReadDataTable("SELECT * FROM catalog_pages WHERE order_num >= '0' ORDER BY order_num ASC");
@@ -54,7 +54,7 @@ namespace GoldTree.HabboHotel.Catalogs
 					{
                         string BadgeID = dataRow["BadgeID"].ToString();
                         if (string.IsNullOrEmpty(BadgeID) || string.IsNullOrWhiteSpace(BadgeID)) BadgeID = string.Empty;
-                        hashtable.Add((uint)dataRow["Id"], new CatalogItem((uint)dataRow["Id"], (string)dataRow["catalog_name"], (string)dataRow["item_ids"], (int)dataRow["cost_credits"], (int)dataRow["cost_pixels"], (int)dataRow["cost_snow"], (int)dataRow["amount"], (int)dataRow["page_id"], GoldTree.smethod_2(dataRow["vip"].ToString()), (uint)dataRow["achievement"], (int)dataRow["song_id"], BadgeID));
+                        hashtable.Add((uint)dataRow["Id"], new CatalogItem((uint)dataRow["Id"], (string)dataRow["catalog_name"], (string)dataRow["item_ids"], (int)dataRow["cost_credits"], (int)dataRow["cost_pixels"], (int)dataRow["cost_snow"], (int)dataRow["amount"], (int)dataRow["page_id"], GoldTree.StringToInt(dataRow["vip"].ToString()), (uint)dataRow["achievement"], (int)dataRow["song_id"], BadgeID));
 					}
 				}
 			}
@@ -72,7 +72,7 @@ namespace GoldTree.HabboHotel.Catalogs
 					{
 						bool_2 = true;
 					}
-					this.dictionary_0.Add((int)dataRow["Id"], new CatalogPage((int)dataRow["Id"], (int)dataRow["parent_id"], (string)dataRow["caption"], bool_, bool_2, (uint)dataRow["min_rank"], GoldTree.smethod_3(dataRow["club_only"].ToString()), (int)dataRow["icon_color"], (int)dataRow["icon_image"], (string)dataRow["page_layout"], (string)dataRow["page_headline"], (string)dataRow["page_teaser"], (string)dataRow["page_special"], (string)dataRow["page_text1"], (string)dataRow["page_text2"], (string)dataRow["page_text_details"], (string)dataRow["page_text_teaser"], (string)dataRow["page_link_description"], (string)dataRow["page_link_pagename"], ref hashtable));
+					this.dictionary_0.Add((int)dataRow["Id"], new CatalogPage((int)dataRow["Id"], (int)dataRow["parent_id"], (string)dataRow["caption"], bool_, bool_2, (uint)dataRow["min_rank"], GoldTree.StringToBoolean(dataRow["club_only"].ToString()), (int)dataRow["icon_color"], (int)dataRow["icon_image"], (string)dataRow["page_layout"], (string)dataRow["page_headline"], (string)dataRow["page_teaser"], (string)dataRow["page_special"], (string)dataRow["page_text1"], (string)dataRow["page_text2"], (string)dataRow["page_text_details"], (string)dataRow["page_text_teaser"], (string)dataRow["page_link_description"], (string)dataRow["page_link_pagename"], ref hashtable));
 				}
 			}
             if (dataTable4 != null)
@@ -89,7 +89,7 @@ namespace GoldTree.HabboHotel.Catalogs
                     {
                         bool_2 = true;
                     }
-                    this.dictionary_0.Add((int)dataRow["Id"], new CatalogPage((int)dataRow["Id"], (int)dataRow["parent_id"], (string)dataRow["caption"], bool_, bool_2, (uint)dataRow["min_rank"], GoldTree.smethod_3(dataRow["club_only"].ToString()), (int)dataRow["icon_color"], (int)dataRow["icon_image"], (string)dataRow["page_layout"], (string)dataRow["page_headline"], (string)dataRow["page_teaser"], (string)dataRow["page_special"], (string)dataRow["page_text1"], (string)dataRow["page_text2"], (string)dataRow["page_text_details"], (string)dataRow["page_text_teaser"], (string)dataRow["page_link_description"], (string)dataRow["page_link_pagename"], ref hashtable));
+                    this.dictionary_0.Add((int)dataRow["Id"], new CatalogPage((int)dataRow["Id"], (int)dataRow["parent_id"], (string)dataRow["caption"], bool_, bool_2, (uint)dataRow["min_rank"], GoldTree.StringToBoolean(dataRow["club_only"].ToString()), (int)dataRow["icon_color"], (int)dataRow["icon_image"], (string)dataRow["page_layout"], (string)dataRow["page_headline"], (string)dataRow["page_teaser"], (string)dataRow["page_special"], (string)dataRow["page_text1"], (string)dataRow["page_text2"], (string)dataRow["page_text_details"], (string)dataRow["page_text_teaser"], (string)dataRow["page_link_description"], (string)dataRow["page_link_pagename"], ref hashtable));
                 }
             }
 			if (dataTable2 != null)
@@ -99,11 +99,11 @@ namespace GoldTree.HabboHotel.Catalogs
 					this.list_0.Add(new EcotronReward((uint)dataRow["Id"], (uint)dataRow["display_id"], (uint)dataRow["item_id"], (uint)dataRow["reward_level"]));
 				}
 			}
-			Logging.WriteLine("completed!");
+			Logging.WriteLine("completed!", ConsoleColor.Green);
 		}
 		internal void method_1()
 		{
-			Logging.smethod_0("Loading Catalogue Cache..");
+			Logging.Write("Loading Catalogue Cache..");
 			int num = GoldTree.GetGame().GetRoleManager().dictionary_2.Count + 1;
 			this.Message5_0 = new ServerMessage[num];
 			for (int i = 1; i < num; i++)
@@ -114,7 +114,7 @@ namespace GoldTree.HabboHotel.Catalogs
 			{
 				current.method_0();
 			}
-			Logging.WriteLine("completed!");
+			Logging.WriteLine("completed!", ConsoleColor.Green);
 		}
 		public CatalogItem method_2(uint uint_1)
 		{
@@ -658,7 +658,7 @@ namespace GoldTree.HabboHotel.Catalogs
                         }
                         Session.SendMessage(Message2);
                         ServerMessage Message3 = new ServerMessage(2u);
-                        if (Session.GetHabbo().Vip || LicenseTools.Boolean_3)
+                        if (Session.GetHabbo().Vip || ServerConfiguration.HabboClubForClothes)
                         {
                             Message3.AppendInt32(2);
                         }
@@ -691,7 +691,7 @@ namespace GoldTree.HabboHotel.Catalogs
                                 }
                                 else
                                 {
-                                    if (Session.GetHabbo().Vip || LicenseTools.Boolean_3 || Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
+                                    if (Session.GetHabbo().Vip || ServerConfiguration.HabboClubForClothes || Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
                                     {
                                         Message3.AppendInt32(2);
                                     }

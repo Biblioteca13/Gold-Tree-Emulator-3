@@ -18,7 +18,7 @@ namespace GoldTree.Communication.Messages.Marketplace
 			}
 			if (dataRow == null || (string)dataRow["state"] != "1" || (double)dataRow["timestamp"] <= GoldTree.GetGame().GetCatalog().method_22().method_3())
 			{
-				Session.SendNotif(GoldTreeEnvironment.smethod_1("marketplace_error_expired"));
+				Session.SendNotif(GoldTreeEnvironment.GetExternalText("marketplace_error_expired"));
 			}
 			else
 			{
@@ -29,7 +29,7 @@ namespace GoldTree.Communication.Messages.Marketplace
 					{
 						if (Session.GetHabbo().Credits < (int)dataRow["total_price"])
 						{
-							Session.SendNotif(GoldTreeEnvironment.smethod_1("marketplace_error_credits"));
+							Session.SendNotif(GoldTreeEnvironment.GetExternalText("marketplace_error_credits"));
 							return;
 						}
 						Session.GetHabbo().Credits -= (int)dataRow["total_price"];

@@ -22,7 +22,7 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
 					{
 						num++;
 						Message.AppendInt32(num);
-						Message.AppendInt32(int.Parse(GoldTree.smethod_4(current.BackgroundOnly)) + 1);
+						Message.AppendInt32(int.Parse(GoldTree.BooleanToString(current.BackgroundOnly)) + 1);
 						Message.AppendStringWithBreak(current.ColorCode);
 						Message.AppendInt32(current.ColorIntensity);
 					}

@@ -143,7 +143,7 @@ namespace GoldTree.HabboHotel.Users.UserDataManagement
                 {
                     @class.AddParamWithValue("auth_ticket", string_0);
                     string str = "";
-                    if (LicenseTools.Boolean_2)
+                    if (ServerConfiguration.EnableSSO)
                     {
                         str = "AND ip_last = '" + string_1 + "' ";
                     }
@@ -175,7 +175,7 @@ namespace GoldTree.HabboHotel.Users.UserDataManagement
                             this.dataTable_8 = @class.ReadDataTable("SELECT users.Id,users.username,users.motto,users.look,users.last_online FROM users JOIN messenger_friendships ON users.Id = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + num + "'");
                             this.dataTable_9 = @class.ReadDataTable("SELECT messenger_requests.Id,messenger_requests.from_id,users.username FROM users JOIN messenger_requests ON users.Id = messenger_requests.from_id WHERE messenger_requests.to_id = '" + num + "'");
                             @class.AddParamWithValue("name", (string)this.dataRow_0["username"]);
-                            this.dataTable_10 = @class.ReadDataTable("SELECT * FROM rooms WHERE owner = @name ORDER BY Id ASC LIMIT " + LicenseTools.Int32_4);
+                            this.dataTable_10 = @class.ReadDataTable("SELECT * FROM rooms WHERE owner = @name ORDER BY Id ASC LIMIT " + ServerConfiguration.RoomUserLimit);
                             this.dataTable_11 = @class.ReadDataTable("SELECT Id, user_id, room_id, name, type, race, color, expirience, energy, nutrition, respect, createstamp, x, y, z FROM user_pets WHERE user_id = " + num + " AND room_id = 0");
                             this.dataTable_12 = @class.ReadDataTable("SELECT friend_stream.id, friend_stream.type, friend_stream.userid, friend_stream.gender, friend_stream.look, friend_stream.time, friend_stream.data, friend_stream.data_extra FROM friend_stream JOIN messenger_friendships ON friend_stream.userid = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + num + "' ORDER BY friend_stream.time DESC LIMIT 15");
                             @class.ExecuteQuery(string.Concat(new object[]
@@ -230,7 +230,7 @@ namespace GoldTree.HabboHotel.Users.UserDataManagement
 						this.dataTable_8 = @class.ReadDataTable("SELECT users.Id,users.username,users.motto,users.look,users.last_online FROM users JOIN messenger_friendships ON users.Id = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + num + "'");
 						this.dataTable_9 = @class.ReadDataTable("SELECT messenger_requests.Id,messenger_requests.from_id,users.username FROM users JOIN messenger_requests ON users.Id = messenger_requests.from_id WHERE messenger_requests.to_id = '" + num + "'");
 						@class.AddParamWithValue("name", (string)this.dataRow_0["username"]);
-						this.dataTable_10 = @class.ReadDataTable("SELECT * FROM rooms WHERE owner = @name ORDER BY Id ASC LIMIT " + LicenseTools.Int32_4);
+						this.dataTable_10 = @class.ReadDataTable("SELECT * FROM rooms WHERE owner = @name ORDER BY Id ASC LIMIT " + ServerConfiguration.RoomUserLimit);
                         this.dataTable_12 = @class.ReadDataTable("SELECT friend_stream.id, friend_stream.type, friend_stream.userid, friend_stream.gender, friend_stream.look, friend_stream.time, friend_stream.data, friend_stream.data_extra FROM friend_stream JOIN messenger_friendships ON friend_stream.userid = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + num + "' ORDER BY friend_stream.time DESC LIMIT 15");
 					}
 				}

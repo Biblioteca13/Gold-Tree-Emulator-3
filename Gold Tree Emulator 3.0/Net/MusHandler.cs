@@ -307,9 +307,9 @@ namespace GoldTree.Net
 						if (class4 != null)
 						{
 							string string_2 = text2.Substring(num3.ToString().Length + 1);
-							for (int i = 0; i < class4.RoomUser_0.Length; i++)
+							for (int i = 0; i < class4.RoomUsers.Length; i++)
 							{
-								RoomUser class5 = class4.RoomUser_0[i];
+								RoomUser class5 = class4.RoomUsers[i];
 								if (class5 != null)
 								{
 									class5.GetClient().SendNotif(string_2);
@@ -346,7 +346,7 @@ namespace GoldTree.Net
 					case 16:
 						using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 						{
-							GoldTree.GetGame().method_17(class2);
+							GoldTree.GetGame().LoadServerSettings(class2);
 							goto IL_C70;
 						}
 					case 17:
@@ -393,7 +393,7 @@ namespace GoldTree.Net
 					case 25:
 					{
 						ServerMessage Message2 = new ServerMessage(808u);
-						Message2.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mus_ha_title"));
+						Message2.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mus_ha_title"));
 						Message2.AppendStringWithBreak(text2);
 						ServerMessage Message3 = new ServerMessage(161u);
 						Message3.AppendStringWithBreak(text2);
@@ -410,14 +410,14 @@ namespace GoldTree.Net
 						ServerMessage Message4 = new ServerMessage(161u);
 						Message4.AppendStringWithBreak(string.Concat(new string[]
 						{
-							GoldTreeEnvironment.smethod_1("mus_hal_title"),
+							GoldTreeEnvironment.GetExternalText("mus_hal_title"),
 							"\r\n",
 							text5,
 							"\r\n-",
-							GoldTreeEnvironment.smethod_1("mus_hal_tail")
+							GoldTreeEnvironment.GetExternalText("mus_hal_tail")
 						}));
 						Message4.AppendStringWithBreak(text4);
-						GoldTree.GetGame().GetClientManager().method_14(Message4);
+						GoldTree.GetGame().GetClientManager().BroadcastMessage(Message4);
 						goto IL_C70;
 					}
 					case 27:
@@ -432,7 +432,7 @@ namespace GoldTree.Net
 						@class.GetHabbo().Figure = (string)dataRow["look"];
 						@class.GetHabbo().Gender = dataRow["gender"].ToString().ToLower();
 						@class.GetHabbo().Motto = GoldTree.FilterString((string)dataRow["motto"]);
-						@class.GetHabbo().BlockNewFriends = GoldTree.smethod_3(dataRow["block_newfriends"].ToString());
+						@class.GetHabbo().BlockNewFriends = GoldTree.StringToBoolean(dataRow["block_newfriends"].ToString());
 						ServerMessage Message5 = new ServerMessage(266u);
 						Message5.AppendInt32(-1);
 						Message5.AppendStringWithBreak(@class.GetHabbo().Figure);
@@ -477,7 +477,7 @@ namespace GoldTree.Net
 						GoldTree.GetGame().GetCatalog().method_0(class2);
 					}
 					GoldTree.GetGame().GetCatalog().method_1();
-					GoldTree.GetGame().GetClientManager().method_14(new ServerMessage(441u));
+					GoldTree.GetGame().GetClientManager().BroadcastMessage(new ServerMessage(441u));
 					goto IL_C70;
 					IL_34E:
 					num2 = uint.Parse(text2.Split(new char[]
@@ -507,7 +507,7 @@ namespace GoldTree.Net
 						goto IL_C70;
 					}
 					IL_602:
-					GoldTree.smethod_18();
+					GoldTree.Close();
 					goto IL_C70;
 					IL_633:
 					@class = GoldTree.GetGame().GetClientManager().method_2(uint.Parse(text2));
@@ -547,7 +547,7 @@ namespace GoldTree.Net
 					})[0];
 					text5 = text2.Substring(text6.Length + 1);
 					ServerMessage Message8 = new ServerMessage(808u);
-					Message8.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("mus_alert_title"));
+					Message8.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("mus_alert_title"));
 					Message8.AppendStringWithBreak(text5);
 					GoldTree.GetGame().GetClientManager().method_2(uint.Parse(text6)).SendMessage(Message8);
 				}

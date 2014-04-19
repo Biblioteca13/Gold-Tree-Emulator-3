@@ -9,7 +9,7 @@ namespace GoldTree.Communication.Messages.Navigator
 	{
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
-			if (Session.GetHabbo().list_6.Count <= LicenseTools.Int32_4)
+			if (Session.GetHabbo().list_6.Count <= ServerConfiguration.RoomUserLimit)
 			{
 				string string_ = GoldTree.FilterString(Event.PopFixedString());
 				string string_2 = Event.PopFixedString();

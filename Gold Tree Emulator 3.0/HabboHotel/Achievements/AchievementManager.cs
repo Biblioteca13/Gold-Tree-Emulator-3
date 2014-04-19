@@ -19,14 +19,14 @@ namespace GoldTree.HabboHotel.Achievements
 		}
 		public static void smethod_0(DatabaseClient class6_0)
 		{
-            Logging.smethod_0("Loading Achievements..");
+            Logging.Write("Loading Achievements..");
 			AchievementManager.dictionary_0.Clear();
 			DataTable dataTable = class6_0.ReadDataTable("SELECT * FROM achievements");
 			if (dataTable != null)
 			{
 				foreach (DataRow dataRow in dataTable.Rows)
 				{
-                    AchievementManager.dictionary_0.Add((uint)dataRow["Id"], new Achievement((uint)dataRow["Id"], (string)dataRow["type"], (int)dataRow["levels"], (string)dataRow["badge"], (int)dataRow["pixels_base"], (double)dataRow["pixels_multiplier"], GoldTree.smethod_3(dataRow["dynamic_badgelevel"].ToString()), (int)dataRow["score_base"], (int)dataRow["pixels_base"]));
+                    AchievementManager.dictionary_0.Add((uint)dataRow["Id"], new Achievement((uint)dataRow["Id"], (string)dataRow["type"], (int)dataRow["levels"], (string)dataRow["badge"], (int)dataRow["pixels_base"], (double)dataRow["pixels_multiplier"], GoldTree.StringToBoolean(dataRow["dynamic_badgelevel"].ToString()), (int)dataRow["score_base"], (int)dataRow["pixels_base"]));
 				}
 				AchievementManager.dictionary_1.Clear();
 				dataTable = class6_0.ReadDataTable("SELECT * FROM badges");
@@ -36,7 +36,7 @@ namespace GoldTree.HabboHotel.Achievements
 					{
 						AchievementManager.dictionary_1.Add((string)dataRow["badge"], (uint)dataRow["Id"]);
 					}
-					Logging.WriteLine("completed!");
+					Logging.WriteLine("completed!", ConsoleColor.Green);
 				}
 			}
 		}

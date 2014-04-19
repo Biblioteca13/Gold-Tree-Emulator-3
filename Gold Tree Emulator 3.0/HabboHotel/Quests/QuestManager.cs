@@ -18,7 +18,7 @@ namespace GoldTree.HabboHotel.Quests
 		}
 		public void method_0()
 		{
-            Logging.smethod_0("Loading Quests..");
+            Logging.Write("Loading Quests..");
 			this.Quests.Clear();
 			DataTable dataTable = null;
             DataTable dataTable2 = null;
@@ -37,14 +37,14 @@ namespace GoldTree.HabboHotel.Quests
 						this.Quests.Add(class2);
 					}
 				}
-				//Logging.WriteLine("completed!");
+				//Logging.WriteLine("completed!", ConsoleColor.Green);
 			}
 
             if (dataTable2 != null)
             {
                 QuestsCount = dataTable2.Rows.Count;
 
-                Logging.WriteLine("completed!");
+                Logging.WriteLine("completed!", ConsoleColor.Green);
             }
 		}
 		public void ProgressUserQuest(uint uint_0, GameClient Session)

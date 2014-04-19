@@ -53,7 +53,7 @@ namespace GoldTree.HabboHotel.Misc
                                             {
                                                 string str = GoldTree.GetConfig().data["shutdown-warning-alert"];
                                                 ServerMessage Message2 = new ServerMessage(808u);
-                                                Message2.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("cmd_ha_title"));
+                                                Message2.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("cmd_ha_title"));
                                                 Message2.AppendStringWithBreak(str + "\r\n- " + "Hotel");
                                                 ServerMessage Message3 = new ServerMessage(161u);
                                                 Message3.AppendStringWithBreak(str + "\r\n- " + "Hotel");

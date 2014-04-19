@@ -15,8 +15,8 @@ namespace GoldTree.HabboHotel.RoomBots
 		}
 		public override void OnSelfEnterRoom()
 		{
-			base.GetRoomUser().method_1(null, GoldTreeEnvironment.smethod_1("guidebot_welcome1"), true);
-			base.GetRoomUser().method_1(null, GoldTreeEnvironment.smethod_1("guidebot_welcome2"), false);
+			base.GetRoomUser().method_1(null, GoldTreeEnvironment.GetExternalText("guidebot_welcome1"), true);
+			base.GetRoomUser().method_1(null, GoldTreeEnvironment.GetExternalText("guidebot_welcome2"), false);
 		}
 		public override void OnSelfLeaveRoom(bool bool_0)
 		{

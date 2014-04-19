@@ -30,7 +30,7 @@ namespace GoldTree.HabboHotel.Catalogs
 		public void method_1(GameClient Session, uint uint_0, int int_0)
 		{
 			UserItem @class = Session.GetHabbo().method_23().method_10(uint_0);
-			if (@class == null || int_0 > LicenseTools.int_0 || !this.method_0(@class))
+			if (@class == null || int_0 > ServerConfiguration.MarketplacePriceLimit || !this.method_0(@class))
 			{
 				ServerMessage Message = new ServerMessage(610u);
 				Message.AppendBoolean(false);
@@ -79,7 +79,7 @@ namespace GoldTree.HabboHotel.Catalogs
 		public int method_2(float float_0)
 		{
 			double num = (double)(float_0 / 100f);
-			return (int)Math.Ceiling((double)((float)(num * (double)LicenseTools.int_1)));
+			return (int)Math.Ceiling((double)((float)(num * (double)ServerConfiguration.MarketplaceTax)));
 		}
 		internal double method_3()
 		{

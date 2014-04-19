@@ -97,7 +97,7 @@ namespace GoldTree.HabboHotel.Rooms
 		{
 			get
 			{
-				return !this.IsBot && this.int_1 >= LicenseTools.int_15;
+				return !this.IsBot && this.int_1 >= ServerConfiguration.KickTimer;
 			}
 		}
 		internal bool Boolean_3
@@ -161,7 +161,7 @@ namespace GoldTree.HabboHotel.Rooms
 				this.Unidle();
 				if (!this.IsBot && this.GetClient().GetHabbo().bool_3)
 				{
-					this.GetClient().SendNotif(GoldTreeEnvironment.smethod_1("error_muted"));
+					this.GetClient().SendNotif(GoldTreeEnvironment.GetExternalText("error_muted"));
 				}
 				else
 				{
@@ -285,7 +285,7 @@ namespace GoldTree.HabboHotel.Rooms
                                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 							}
 						}
-                        if (LicenseTools.Boolean_4 && !this.IsBot && !this.GetClient().GetHabbo().isJuniori)
+                        if (ServerConfiguration.EnableChatlog && !this.IsBot && !this.GetClient().GetHabbo().isJuniori)
 						{
 							using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 							{

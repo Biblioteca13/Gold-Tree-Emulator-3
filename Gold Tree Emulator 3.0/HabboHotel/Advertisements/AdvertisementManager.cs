@@ -14,7 +14,7 @@ namespace GoldTree.HabboHotel.Advertisements
 		}
 		public void method_0(DatabaseClient class6_0)
 		{
-            Logging.smethod_0("Loading Room Adverts..");
+            Logging.Write("Loading Room Adverts..");
 			this.RoomAdvertisements.Clear();
 			DataTable dataTable = class6_0.ReadDataTable("SELECT * FROM room_ads WHERE enabled = '1'");
 			if (dataTable != null)
@@ -23,7 +23,7 @@ namespace GoldTree.HabboHotel.Advertisements
 				{
 					this.RoomAdvertisements.Add(new RoomAdvertisement((uint)dataRow["Id"], (string)dataRow["ad_image"], (string)dataRow["ad_link"], (int)dataRow["views"], (int)dataRow["views_limit"]));
 				}
-				Logging.WriteLine("completed!");
+				Logging.WriteLine("completed!", ConsoleColor.Green);
 			}
 		}
 		public RoomAdvertisement method_1()

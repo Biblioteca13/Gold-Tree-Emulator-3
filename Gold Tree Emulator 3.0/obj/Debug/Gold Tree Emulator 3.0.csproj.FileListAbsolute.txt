@@ -36,3 +36,9 @@ C:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\obj\Debug\Gol
 C:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\obj\Debug\Gold Tree Emulator 3.0.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\bin\Debug\Gold Tree Emulator 3.0.exe
 C:\Users\Administrator\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\bin\Debug\Gold Tree Emulator 3.0.pdb
+C:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\bin\Debug\Gold Tree Emulator 3.0.exe.config
+C:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\obj\Debug\Gold Tree Emulator 3.0.exe
+C:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\obj\Debug\Gold Tree Emulator 3.0.pdb
+C:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\obj\Debug\Gold Tree Emulator 3.0.csprojResolveAssemblyReference.cache
+C:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\bin\Debug\Gold Tree Emulator 3.0.exe
+C:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\bin\Debug\Gold Tree Emulator 3.0.pdb

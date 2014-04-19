@@ -584,7 +584,7 @@ namespace GoldTree.HabboHotel.Users
 		}
 		internal void method_10(uint RoomId)
 		{
-			if (LicenseTools.Boolean_6)
+			if (ServerConfiguration.EnableRoomLog)
 			{
 				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 				{
@@ -613,7 +613,7 @@ namespace GoldTree.HabboHotel.Users
 		{
 			try
 			{
-				if (LicenseTools.Boolean_6)
+				if (ServerConfiguration.EnableRoomLog)
 				{
 					using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 					{
@@ -847,9 +847,9 @@ namespace GoldTree.HabboHotel.Users
 			{
 				dataRow = @class.ReadDataRow("SELECT vip FROM users WHERE Id = '" + this.Id + "' LIMIT 1;");
 			}
-			this.Vip = GoldTree.smethod_3(dataRow["vip"].ToString());
+			this.Vip = GoldTree.StringToBoolean(dataRow["vip"].ToString());
 			ServerMessage Message = new ServerMessage(2u);
-			if (this.Vip || LicenseTools.Boolean_3)
+			if (this.Vip || ServerConfiguration.HabboClubForClothes)
 			{
 				Message.AppendInt32(2);
 			}
@@ -882,7 +882,7 @@ namespace GoldTree.HabboHotel.Users
 					}
 					else
 					{
-						if (this.Vip || LicenseTools.Boolean_3 || this.GetSubscriptionManager().HasSubscription("habbo_club"))
+						if (this.Vip || ServerConfiguration.HabboClubForClothes || this.GetSubscriptionManager().HasSubscription("habbo_club"))
 						{
 							Message.AppendInt32(2);
 						}

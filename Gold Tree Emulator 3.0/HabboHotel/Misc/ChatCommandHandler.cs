@@ -27,13 +27,13 @@ namespace GoldTree.HabboHotel.Misc
         private static List<string> list_3;
         public static void smethod_0(DatabaseClient class6_0)
         {
-            Logging.smethod_0("Loading Chat Filter..");
+            Logging.Write("Loading Chat Filter..");
             ChatCommandHandler.list_0 = new List<string>();
             ChatCommandHandler.list_1 = new List<string>();
             ChatCommandHandler.list_2 = new List<int>();
             ChatCommandHandler.list_3 = new List<string>();
             ChatCommandHandler.InitWords(class6_0);
-            Logging.WriteLine("completed!");
+            Logging.WriteLine("completed!", ConsoleColor.Green);
         }
         public static void InitWords(DatabaseClient dbClient)
         {
@@ -48,7 +48,7 @@ namespace GoldTree.HabboHotel.Misc
                 {
                     ChatCommandHandler.list_0.Add(dataRow["word"].ToString());
                     ChatCommandHandler.list_1.Add(dataRow["replacement"].ToString());
-                    ChatCommandHandler.list_2.Add(GoldTree.smethod_2(dataRow["strict"].ToString()));
+                    ChatCommandHandler.list_2.Add(GoldTree.StringToInt(dataRow["strict"].ToString()));
                 }
             }
             DataTable dataTable2 = dbClient.ReadDataTable("SELECT * FROM linkfilter;");
@@ -62,7 +62,7 @@ namespace GoldTree.HabboHotel.Misc
         }
         public static bool InitLinks(string URLs)
         {
-            if (LicenseTools.String_2 == "disabled")
+            if (ServerConfiguration.EnableExternalLinks == "disabled")
             {
                 return false;
             }
@@ -74,17 +74,17 @@ namespace GoldTree.HabboHotel.Misc
                     {
                         if (URLs.Contains(current))
                         {
-                            if (LicenseTools.String_2 == "whitelist")
+                            if (ServerConfiguration.EnableExternalLinks == "whitelist")
                             {
                                 return true;
                             }
-                            if (!(LicenseTools.String_2 == "blacklist"))
+                            if (!(ServerConfiguration.EnableExternalLinks == "blacklist"))
                             {
                             }
                         }
                     }
                 }
-                return (URLs.StartsWith("http://") || URLs.StartsWith("www.") || (URLs.StartsWith("https://") && LicenseTools.String_2 == "blacklist") || (LicenseTools.String_2 == "whitelist" && false));
+                return (URLs.StartsWith("http://") || URLs.StartsWith("www.") || (URLs.StartsWith("https://") && ServerConfiguration.EnableExternalLinks == "blacklist") || (ServerConfiguration.EnableExternalLinks == "whitelist" && false));
             }
         }
         public static string smethod_3(string string_0)
@@ -486,9 +486,9 @@ namespace GoldTree.HabboHotel.Misc
                                 {
                                     int num5 = int.Parse(Params[1]);
                                     GoldTree.GetGame().GetClientManager().method_18(num5);
-                                    using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                    using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                     {
-                                        class5.ExecuteQuery("UPDATE users SET credits = credits + " + num5);
+                                        dbClient.ExecuteQuery("UPDATE users SET credits = credits + " + num5);
                                     }
                                 }
                                 catch
@@ -506,9 +506,9 @@ namespace GoldTree.HabboHotel.Misc
                                 {
                                     int num5 = int.Parse(Params[1]);
                                     GoldTree.GetGame().GetClientManager().method_19(num5, false);
-                                    using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                    using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                     {
-                                        class5.ExecuteQuery("UPDATE users SET activity_points = activity_points + " + num5);
+                                        dbClient.ExecuteQuery("UPDATE users SET activity_points = activity_points + " + num5);
                                     }
                                 }
                                 catch
@@ -526,9 +526,9 @@ namespace GoldTree.HabboHotel.Misc
                                 {
                                     int num5 = int.Parse(Params[1]);
                                     GoldTree.GetGame().GetClientManager().method_20(num5, false);
-                                    using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                    using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                     {
-                                        class5.ExecuteQuery("UPDATE users SET vip_points = vip_points + " + num5);
+                                        dbClient.ExecuteQuery("UPDATE users SET vip_points = vip_points + " + num5);
                                     }
                                 }
                                 catch
@@ -548,14 +548,14 @@ namespace GoldTree.HabboHotel.Misc
                                 ServerMessage Message = new ServerMessage(161u);
                                 Message.AppendStringWithBreak(string.Concat(new string[]
 							{
-								GoldTreeEnvironment.smethod_1("cmd_hal_title"),
+								GoldTreeEnvironment.GetExternalText("cmd_hal_title"),
 								"\r\n",
 								text3,
 								"\r\n-",
 								Session.GetHabbo().Username
 							}));
                                 Message.AppendStringWithBreak(text2);
-                                GoldTree.GetGame().GetClientManager().method_14(Message);
+                                GoldTree.GetGame().GetClientManager().BroadcastMessage(Message);
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
@@ -565,7 +565,7 @@ namespace GoldTree.HabboHotel.Misc
                             {
                                 string str = Input.Substring(3);
                                 ServerMessage Message2 = new ServerMessage(808u);
-                                Message2.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("cmd_ha_title"));
+                                Message2.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("cmd_ha_title"));
                                 Message2.AppendStringWithBreak(str + "\r\n- " + Session.GetHabbo().Username);
                                 ServerMessage Message3 = new ServerMessage(161u);
                                 Message3.AppendStringWithBreak(str + "\r\n- " + Session.GetHabbo().Username);
@@ -899,9 +899,9 @@ namespace GoldTree.HabboHotel.Misc
                                     return false;
                                 }
                                 string string_ = ChatCommandHandler.MergeParams(Params, 1);
-                                for (int i = 0; i < class2.RoomUser_0.Length; i++)
+                                for (int i = 0; i < class2.RoomUsers.Length; i++)
                                 {
-                                    RoomUser class6 = class2.RoomUser_0[i];
+                                    RoomUser class6 = class2.RoomUsers[i];
                                     if (class6 != null)
                                     {
                                         class6.GetClient().SendNotif(string_);
@@ -919,11 +919,11 @@ namespace GoldTree.HabboHotel.Misc
                             {
                                 return false;
                             }
-                            for (int i = 0; i < Session.GetHabbo().CurrentRoom.RoomUser_0.Length; i++)
+                            for (int i = 0; i < Session.GetHabbo().CurrentRoom.RoomUsers.Length; i++)
                             {
                                 try
                                 {
-                                    RoomUser class6 = Session.GetHabbo().CurrentRoom.RoomUser_0[i];
+                                    RoomUser class6 = Session.GetHabbo().CurrentRoom.RoomUsers[i];
                                     if (class6 != null)
                                     {
                                         if (!class6.IsBot)
@@ -962,9 +962,9 @@ namespace GoldTree.HabboHotel.Misc
                                 {
                                     flag = false;
                                 }
-                                for (int i = 0; i < class2.RoomUser_0.Length; i++)
+                                for (int i = 0; i < class2.RoomUsers.Length; i++)
                                 {
-                                    RoomUser class7 = class2.RoomUser_0[i];
+                                    RoomUser class7 = class2.RoomUsers[i];
                                     if (class7 != null && class7.GetClient().GetHabbo().Rank < Session.GetHabbo().Rank)
                                     {
                                         if (!flag)
@@ -1016,7 +1016,7 @@ namespace GoldTree.HabboHotel.Misc
                             if (Session.GetHabbo().HasFuse("cmd_shutdown"))
                             {
                                 Logging.LogCriticalException("User " + Session.GetHabbo().Username + " shut down the server " + DateTime.Now.ToString());
-                                Task task = new Task(new Action(GoldTree.smethod_18));
+                                Task task = new Task(new Action(GoldTree.Close));
                                 task.Start();
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -1061,7 +1061,7 @@ namespace GoldTree.HabboHotel.Misc
                                     }
                                     if (a == "up")
                                     {
-                                        if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                        if (ServerConfiguration.PreventDoorPush)
                                         {
                                             if (!(class6.int_3 == class2.Class28_0.int_0 && class6.int_4 - 1 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                 class4.MoveTo(class6.int_3, class6.int_4 - 1);
@@ -1075,7 +1075,7 @@ namespace GoldTree.HabboHotel.Misc
                                     }
                                     if (a == "right")
                                     {
-                                        if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                        if (ServerConfiguration.PreventDoorPush)
                                         {
                                             if (!(class6.int_3 + 1 == class2.Class28_0.int_0 && class6.int_4 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                 class4.MoveTo(class6.int_3 + 1, class6.int_4);
@@ -1089,7 +1089,7 @@ namespace GoldTree.HabboHotel.Misc
                                     }
                                     if (a == "down")
                                     {
-                                        if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                        if (ServerConfiguration.PreventDoorPush)
                                         {
                                             if (!(class6.int_3 == class2.Class28_0.int_0 && class6.int_4 + 1 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                 class4.MoveTo(class6.int_3, class6.int_4 + 1);
@@ -1103,7 +1103,7 @@ namespace GoldTree.HabboHotel.Misc
                                     }
                                     if (a == "left")
                                     {
-                                        if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                        if (ServerConfiguration.PreventDoorPush)
                                         {
                                             if (!(class6.int_3 - 1 == class2.Class28_0.int_0 && class6.int_4 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                 class4.MoveTo(class6.int_3 - 1, class6.int_4);
@@ -1215,9 +1215,9 @@ namespace GoldTree.HabboHotel.Misc
                         case 55:
                             if (Session.GetHabbo().HasFuse("cmd_update_achievements"))
                             {
-                                using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    AchievementManager.smethod_0(class5);
+                                    AchievementManager.smethod_0(dbClient);
                                 }
                                 return true;
                             }
@@ -1225,9 +1225,9 @@ namespace GoldTree.HabboHotel.Misc
                         case 56:
                             if (Session.GetHabbo().HasFuse("cmd_update_bans"))
                             {
-                                using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    GoldTree.GetGame().GetBanManager().method_0(class5);
+                                    GoldTree.GetGame().GetBanManager().method_0(dbClient);
                                 }
                                 GoldTree.GetGame().GetClientManager().method_28();
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
@@ -1237,9 +1237,9 @@ namespace GoldTree.HabboHotel.Misc
                         case 57:
                             if (Session.GetHabbo().HasFuse("cmd_update_bots"))
                             {
-                                using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    GoldTree.GetGame().GetBotManager().method_0(class5);
+                                    GoldTree.GetGame().GetBotManager().method_0(dbClient);
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -1248,12 +1248,12 @@ namespace GoldTree.HabboHotel.Misc
                         case 58:
                             if (Session.GetHabbo().HasFuse("cmd_update_catalogue"))
                             {
-                                using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    GoldTree.GetGame().GetCatalog().method_0(class5);
+                                    GoldTree.GetGame().GetCatalog().method_0(dbClient);
                                 }
                                 GoldTree.GetGame().GetCatalog().method_1();
-                                GoldTree.GetGame().GetClientManager().method_14(new ServerMessage(441u));
+                                GoldTree.GetGame().GetClientManager().BroadcastMessage(new ServerMessage(441u));
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
                             }
@@ -1261,9 +1261,9 @@ namespace GoldTree.HabboHotel.Misc
                         case 59:
                             if (Session.GetHabbo().HasFuse("cmd_update_filter"))
                             {
-                                using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    ChatCommandHandler.InitWords(class5);
+                                    ChatCommandHandler.InitWords(dbClient);
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -1272,9 +1272,9 @@ namespace GoldTree.HabboHotel.Misc
                         case 60:
                             if (Session.GetHabbo().HasFuse("cmd_update_items"))
                             {
-                                using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    GoldTree.GetGame().GetItemManager().method_0(class5);
+                                    GoldTree.GetGame().GetItemManager().method_0(dbClient);
                                 }
                                 Session.SendNotif("Item defenitions reloaded successfully.");
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
@@ -1284,10 +1284,10 @@ namespace GoldTree.HabboHotel.Misc
                         case 61:
                             if (Session.GetHabbo().HasFuse("cmd_update_navigator"))
                             {
-                                using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    GoldTree.GetGame().GetNavigator().method_0(class5);
-                                    GoldTree.GetGame().GetRoomManager().method_8(class5);
+                                    GoldTree.GetGame().GetNavigator().method_0(dbClient);
+                                    GoldTree.GetGame().GetRoomManager().method_8(dbClient);
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -1296,9 +1296,9 @@ namespace GoldTree.HabboHotel.Misc
                         case 62:
                             if (Session.GetHabbo().HasFuse("cmd_update_permissions"))
                             {
-                                using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    GoldTree.GetGame().GetRoleManager().method_0(class5);
+                                    GoldTree.GetGame().GetRoleManager().method_0(dbClient);
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -1307,9 +1307,9 @@ namespace GoldTree.HabboHotel.Misc
                         case 63:
                             if (Session.GetHabbo().HasFuse("cmd_update_settings"))
                             {
-                                using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    GoldTree.GetGame().method_17(class5);
+                                    GoldTree.GetGame().LoadServerSettings(dbClient);
                                 }
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -1403,9 +1403,9 @@ namespace GoldTree.HabboHotel.Misc
                         case 65:
                             if (Session.GetHabbo().HasFuse("cmd_update_texts"))
                             {
-                                using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    GoldTreeEnvironment.smethod_0(class5);
+                                    GoldTreeEnvironment.LoadExternalTexts(dbClient);
                                 }
                                 return true;
                             }
@@ -1439,7 +1439,7 @@ namespace GoldTree.HabboHotel.Misc
                         case 87:
                             if (Session.GetHabbo().HasFuse("cmd_vipha"))
                             {
-                                if (GoldTree.GetUnixTimestamp() - Session.GetHabbo().vipha_last >= LicenseTools.vipha_interval)
+                                if (GoldTree.GetUnixTimestamp() - Session.GetHabbo().vipha_last >= ServerConfiguration.VIPHotelAlertInterval)
                                 {
                                     Session.GetHabbo().vipha_last = GoldTree.GetUnixTimestamp();
                                     using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
@@ -1449,7 +1449,7 @@ namespace GoldTree.HabboHotel.Misc
                                     }
                                     string str = Input.Substring(6);
                                     ServerMessage Message2 = new ServerMessage(808u);
-                                    Message2.AppendStringWithBreak(GoldTreeEnvironment.smethod_1("cmd_vipha_title"));
+                                    Message2.AppendStringWithBreak(GoldTreeEnvironment.GetExternalText("cmd_vipha_title"));
                                     Message2.AppendStringWithBreak(str + "\r\n- " + Session.GetHabbo().Username);
                                     ServerMessage Message3 = new ServerMessage(161u);
                                     Message3.AppendStringWithBreak(str + "\r\n- " + Session.GetHabbo().Username);
@@ -1459,7 +1459,7 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                                 else
                                 {
-                                    Session.SendNotif("You need wait: " + (int)((Session.GetHabbo().vipha_last - GoldTree.GetUnixTimestamp() + LicenseTools.vipha_interval) / 60) + " minute!");
+                                    Session.SendNotif("You need wait: " + (int)((Session.GetHabbo().vipha_last - GoldTree.GetUnixTimestamp() + ServerConfiguration.VIPHotelAlertInterval) / 60) + " minute!");
                                     return true;
                                 }
                             }
@@ -1473,11 +1473,11 @@ namespace GoldTree.HabboHotel.Misc
                             {
                                 return false;
                             }
-                            for (int i = 0; i < Session.GetHabbo().CurrentRoom.RoomUser_0.Length; i++)
+                            for (int i = 0; i < Session.GetHabbo().CurrentRoom.RoomUsers.Length; i++)
                             {
                                 try
                                 {
-                                    RoomUser class6 = Session.GetHabbo().CurrentRoom.RoomUser_0[i];
+                                    RoomUser class6 = Session.GetHabbo().CurrentRoom.RoomUsers[i];
                                     if (class6 != null)
                                     {
                                         if (!class6.IsBot)
@@ -1503,7 +1503,7 @@ namespace GoldTree.HabboHotel.Misc
                         case 97:
                             if (Session.GetHabbo().HasFuse("cmd_viphal"))
                             {
-                                if (GoldTree.GetUnixTimestamp() - Session.GetHabbo().viphal_last >= LicenseTools.viphal_interval)
+                                if (GoldTree.GetUnixTimestamp() - Session.GetHabbo().viphal_last >= ServerConfiguration.VIPHotelAlertLinkInterval)
                                 {
                                     Session.GetHabbo().viphal_last = GoldTree.GetUnixTimestamp();
                                     using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
@@ -1518,21 +1518,21 @@ namespace GoldTree.HabboHotel.Misc
                                     ServerMessage Message = new ServerMessage(161u);
                                     Message.AppendStringWithBreak(string.Concat(new string[]
 							{
-								GoldTreeEnvironment.smethod_1("cmd_viphal_title"),
+								GoldTreeEnvironment.GetExternalText("cmd_viphal_title"),
 								"\r\n",
 								text3,
 								"\r\n-",
 								Session.GetHabbo().Username
 							}));
                                     Message.AppendStringWithBreak(text2);
-                                    GoldTree.GetGame().GetClientManager().method_14(Message);
+                                    GoldTree.GetGame().GetClientManager().BroadcastMessage(Message);
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 }
 
                                 else
                                 {
-                                    Session.SendNotif("You need wait: " + (int)((Session.GetHabbo().viphal_last - GoldTree.GetUnixTimestamp() + LicenseTools.viphal_interval) / 60) + " minute!");
+                                    Session.SendNotif("You need wait: " + (int)((Session.GetHabbo().viphal_last - GoldTree.GetUnixTimestamp() + ServerConfiguration.VIPHotelAlertLinkInterval) / 60) + " minute!");
                                     return true;
                                 }
                             }
@@ -1565,7 +1565,7 @@ namespace GoldTree.HabboHotel.Misc
                                     goto IL_3F91;
                                 case 9:
                                     Session.GetHabbo().method_23().method_0();
-                                    Session.SendNotif(GoldTreeEnvironment.smethod_1("cmd_emptyitems_success"));
+                                    Session.SendNotif(GoldTreeEnvironment.GetExternalText("cmd_emptyitems_success"));
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                     return true;
                                 case 10:
@@ -1579,11 +1579,11 @@ namespace GoldTree.HabboHotel.Misc
                                         }
                                         else
                                         {
-                                            using (DatabaseClient class5 = GoldTree.GetDatabase().GetClient())
+                                            using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                             {
-                                                class5.AddParamWithValue("usrname", Params[1]);
-                                                int num8 = int.Parse(class5.ReadString("SELECT Id FROM users WHERE username = @usrname LIMIT 1;"));
-                                                class5.ExecuteQuery("DELETE FROM items WHERE user_id = '" + num8 + "' AND room_id = 0;");
+                                                dbClient.AddParamWithValue("usrname", Params[1]);
+                                                int num8 = int.Parse(dbClient.ReadString("SELECT Id FROM users WHERE username = @usrname LIMIT 1;"));
+                                                dbClient.ExecuteQuery("DELETE FROM items WHERE user_id = '" + num8 + "' AND room_id = 0;");
                                                 Session.SendNotif("Inventory cleared! (Database)");
                                             }
                                         }
@@ -1593,14 +1593,14 @@ namespace GoldTree.HabboHotel.Misc
                                     return false;
                                 case 12:
                                     {
-                                        if (!(LicenseTools.Boolean_11 || Session.GetHabbo().HasFuse("cmd_flagme")))
+                                        if (!(ServerConfiguration.UnknownBoolean3 || Session.GetHabbo().HasFuse("cmd_flagme")))
                                         {
-                                            Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_disabled"));
+                                            Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                             return true;
                                         }
                                         if (!(Session.GetHabbo().Vip || Session.GetHabbo().HasFuse("cmd_flagme")))
                                         {
-                                            Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_permission_vip"));
+                                            Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_permission_vip"));
                                             return true;
                                         }
                                         ServerMessage Message5_ = new ServerMessage(573u);
@@ -1608,14 +1608,14 @@ namespace GoldTree.HabboHotel.Misc
                                         return true;
                                     }
                                 case 13:
-                                    if (!(LicenseTools.Boolean_9 || Session.GetHabbo().HasFuse("cmd_follow")))
+                                    if (!(ServerConfiguration.UnknownBoolean9 || Session.GetHabbo().HasFuse("cmd_follow")))
                                     {
-                                        Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_disabled"));
+                                        Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                         return true;
                                     }
                                     if (!(Session.GetHabbo().Vip || Session.GetHabbo().HasFuse("cmd_follow")))
                                     {
-                                        Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_permission_vip"));
+                                        Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_permission_vip"));
                                         return true;
                                     }
                                     TargetClient = GoldTree.GetGame().GetClientManager().GetClientByHabbo(Params[1]);
@@ -1643,14 +1643,14 @@ namespace GoldTree.HabboHotel.Misc
                         {
                             case 28:
                                 {
-                                    if (!(LicenseTools.Boolean_12 || Session.GetHabbo().HasFuse("cmd_mimic")))
+                                    if (!(ServerConfiguration.UnknownBoolean7 || Session.GetHabbo().HasFuse("cmd_mimic")))
                                     {
-                                        Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_disabled"));
+                                        Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                         return true;
                                     }
                                     if (!(Session.GetHabbo().Vip || Session.GetHabbo().HasFuse("cmd_mimic")))
                                     {
-                                        Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_permission_vip"));
+                                        Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_permission_vip"));
                                         return true;
                                     }
                                     string text = Params[1];
@@ -1666,14 +1666,14 @@ namespace GoldTree.HabboHotel.Misc
                                 }
                             case 29:
                                 {
-                                    if (!(LicenseTools.Boolean_13 || Session.GetHabbo().HasFuse("cmd_moonwalk")))
+                                    if (!(ServerConfiguration.UnknownBoolean8 || Session.GetHabbo().HasFuse("cmd_moonwalk")))
                                     {
-                                        Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_disabled"));
+                                        Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                         return true;
                                     }
                                     if (!(Session.GetHabbo().Vip || Session.GetHabbo().HasFuse("cmd_moonwalk")))
                                     {
-                                        Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_permission_vip"));
+                                        Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_permission_vip"));
                                         return true;
                                     }
                                     class2 = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
@@ -1704,14 +1704,14 @@ namespace GoldTree.HabboHotel.Misc
                                         case 36:
                                             try
                                             {
-                                                if (!(LicenseTools.Boolean_10 || Session.GetHabbo().HasFuse("cmd_pull")))
+                                                if (!(ServerConfiguration.UnknownBoolean2 || Session.GetHabbo().HasFuse("cmd_pull")))
                                                 {
-                                                    Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_disabled"));
+                                                    Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                                     return true;
                                                 }
                                                 if (!(Session.GetHabbo().Vip || Session.GetHabbo().HasFuse("cmd_pull")))
                                                 {
-                                                    Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_permission_vip"));
+                                                    Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_permission_vip"));
                                                     return true;
                                                 }
                                                 string a = "down";
@@ -1750,7 +1750,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     if (a == "up")
                                                     {
-                                                        if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                                        if (ServerConfiguration.PreventDoorPush)
                                                         {
                                                             if (!(class6.int_3 == class2.Class28_0.int_0 && class6.int_4 - 1 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                                 class4.MoveTo(class6.int_3, class6.int_4 - 1);
@@ -1764,7 +1764,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     if (a == "right")
                                                     {
-                                                        if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                                        if (ServerConfiguration.PreventDoorPush)
                                                         {
                                                             if (!(class6.int_3 + 1 == class2.Class28_0.int_0 && class6.int_4 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                                 class4.MoveTo(class6.int_3 + 1, class6.int_4);
@@ -1778,7 +1778,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     if (a == "down")
                                                     {
-                                                        if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                                        if (ServerConfiguration.PreventDoorPush)
                                                         {
                                                             if (!(class6.int_3 == class2.Class28_0.int_0 && class6.int_4 + 1 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                                 class4.MoveTo(class6.int_3, class6.int_4 + 1);
@@ -1792,7 +1792,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     if (a == "left")
                                                     {
-                                                        if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                                        if (ServerConfiguration.PreventDoorPush)
                                                         {
                                                             if (!(class6.int_3 - 1 == class2.Class28_0.int_0 && class6.int_4 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                                 class4.MoveTo(class6.int_3 - 1, class6.int_4);
@@ -1827,12 +1827,12 @@ namespace GoldTree.HabboHotel.Misc
                                                 RoomUser class4 = class2.method_57(text);
                                                 if (class6.class34_1 != null)
                                                 {
-                                                    Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_ride_err_riding"));
+                                                    Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_ride_err_riding"));
                                                     return true;
                                                 }
                                                 if (!class4.IsBot || class4.PetData.Type != 13u)
                                                 {
-                                                    Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_ride_err_nothorse"));
+                                                    Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_ride_err_nothorse"));
                                                     return true;
                                                 }
                                                 bool arg_40EB_0;
@@ -1853,7 +1853,7 @@ namespace GoldTree.HabboHotel.Misc
                                             IL_40EB:
                                                 if (arg_40EB_0)
                                                 {
-                                                    Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_ride_err_toofar"));
+                                                    Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_ride_err_toofar"));
                                                     return true;
                                                 }
                                                 if (class4.class34_0.RoomUser_0 == null)
@@ -1871,11 +1871,11 @@ namespace GoldTree.HabboHotel.Misc
                                                     class6.Statusses.Clear();
                                                     class4.Statusses.Clear();
                                                     Session.GetHabbo().method_24().method_2(77, true);
-                                                    Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_ride_instr_getoff"));
+                                                    Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_ride_instr_getoff"));
                                                     class2.method_22();
                                                     return true;
                                                 }
-                                                Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_ride_err_tooslow"));
+                                                Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_ride_err_tooslow"));
                                                 return true;
                                             }
                                         case 88:
@@ -1944,7 +1944,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     if (a == "up")
                                                     {
-                                                        if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                                        if (ServerConfiguration.PreventDoorPush)
                                                         {
                                                             if (Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                             {
@@ -1979,7 +1979,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     if (a == "right")
                                                     {
-                                                        if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                                        if (ServerConfiguration.PreventDoorPush)
                                                         {
                                                             if (Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                             {
@@ -2014,7 +2014,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     if (a == "down")
                                                     {
-                                                        if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                                        if (ServerConfiguration.PreventDoorPush)
                                                         {
                                                             if (Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                             {
@@ -2049,7 +2049,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     }
                                                     if (a == "left")
                                                     {
-                                                        if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                                        if (ServerConfiguration.PreventDoorPush)
                                                         {
                                                             if (Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                             {
@@ -2097,319 +2097,319 @@ namespace GoldTree.HabboHotel.Misc
                                                         string text7 = "Your Commands:\r\r";
                                                         if (Session.GetHabbo().HasFuse("cmd_update_settings"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_update_settings_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_update_settings_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_update_bans"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_update_bans_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_update_bans_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_update_permissions"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_update_permissions_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_update_permissions_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_update_filter"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_update_filter_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_update_filter_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_update_bots"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_update_bots_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_update_bots_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_update_catalogue"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_update_catalogue_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_update_catalogue_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_update_items"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_update_items_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_update_items_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_update_navigator"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_update_navigator_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_update_navigator_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_update_achievements"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_update_achievements_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_update_achievements_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_award"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_award_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_award_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_coords"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_coords_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_coords_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_override"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_override_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_override_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_teleport"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_teleport_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_teleport_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_coins"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_coins_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_coins_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_pixels"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_pixels_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_pixels_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_points"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_points_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_points_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_alert"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_alert_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_alert_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_motd"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_motd_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_motd_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_roomalert"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_roomalert_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_roomalert_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_ha"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_ha_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_ha_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_hal"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_hal_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_hal_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_freeze"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_freeze_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_freeze_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_enable"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_enable_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_enable_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_roommute"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_roommute_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_roommute_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_setspeed"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_setspeed_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_setspeed_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_globalcredits"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_globalcredits_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_globalcredits_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_globalpixels"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_globalpixels_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_globalpixels_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_globalpoints"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_globalpoints_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_globalpoints_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_masscredits"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_masscredits_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_masscredits_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_masspixels"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_masspixels_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_masspixels_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_masspoints"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_masspoints_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_masspoints_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_givebadge"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_givebadge_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_givebadge_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_removebadge"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_removebadge_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_removebadge_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_summon"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_summon_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_summon_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_roombadge"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_roombadge_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_roombadge_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_massbadge"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_massbadge_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_massbadge_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_userinfo"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_userinfo_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_userinfo_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_shutdown"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_shutdown_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_shutdown_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_invisible"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_invisible_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_invisible_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_ban"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_ban_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_ban_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_superban"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_superban_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_superban_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_ipban"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_ipban_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_ipban_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_kick"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_kick_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_kick_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_roomkick"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_roomkick_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_roomkick_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_mute"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_mute_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_mute_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_unmute"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_unmute_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_unmute_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_sa"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_sa_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_sa_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_spull"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_spull_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_spull_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_empty"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_empty_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_empty_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_update_texts"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_update_texts_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_update_texts_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_dance"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_dance_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_dance_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_rave"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_rave_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_rave_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_roll"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_roll_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_roll_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_control"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_control_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_control_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_makesay"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_makesay_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_makesay_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_sitdown"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_sitdown_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_sitdown_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_lay"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_lay_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_lay_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_startquestion"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_startquestion_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_startquestion_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_handitem"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_handitem_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_handitem_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_vipha"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_vipha_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_vipha_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_spush"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_spush_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_spush_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().HasFuse("cmd_roomeffect"))
                                                         {
-                                                            text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_roomeffect_desc") + "\r\r";
+                                                            text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_roomeffect_desc") + "\r\r";
                                                         }
                                                         if (Session.GetHabbo().Vip)
                                                         {
-                                                            if (LicenseTools.Boolean_13 || Session.GetHabbo().HasFuse("cmd_moonwalk"))
+                                                            if (ServerConfiguration.UnknownBoolean8 || Session.GetHabbo().HasFuse("cmd_moonwalk"))
                                                             {
-                                                                text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_moonwalk_desc") + "\r\r";
+                                                                text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_moonwalk_desc") + "\r\r";
                                                             }
-                                                            if (LicenseTools.Boolean_12 || Session.GetHabbo().HasFuse("cmd_mimi"))
+                                                            if (ServerConfiguration.UnknownBoolean7 || Session.GetHabbo().HasFuse("cmd_mimi"))
                                                             {
-                                                                text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_mimic_desc") + "\r\r";
+                                                                text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_mimic_desc") + "\r\r";
                                                             }
-                                                            if (LicenseTools.Boolean_9 || Session.GetHabbo().HasFuse("cmd_follow"))
+                                                            if (ServerConfiguration.UnknownBoolean9 || Session.GetHabbo().HasFuse("cmd_follow"))
                                                             {
-                                                                text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_follow_desc") + "\r\r";
+                                                                text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_follow_desc") + "\r\r";
                                                             }
-                                                            if (LicenseTools.Boolean_8 || Session.GetHabbo().HasFuse("cmd_push"))
+                                                            if (ServerConfiguration.UnknownBoolean1 || Session.GetHabbo().HasFuse("cmd_push"))
                                                             {
-                                                                text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_push_desc") + "\r\r";
+                                                                text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_push_desc") + "\r\r";
                                                             }
-                                                            if (LicenseTools.Boolean_10 || Session.GetHabbo().HasFuse("cmd_pull"))
+                                                            if (ServerConfiguration.UnknownBoolean2 || Session.GetHabbo().HasFuse("cmd_pull"))
                                                             {
-                                                                text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_pull_desc") + "\r\r";
+                                                                text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_pull_desc") + "\r\r";
                                                             }
-                                                            if (LicenseTools.Boolean_11 || Session.GetHabbo().HasFuse("cmd_flagme"))
+                                                            if (ServerConfiguration.UnknownBoolean3 || Session.GetHabbo().HasFuse("cmd_flagme"))
                                                             {
-                                                                text7 = text7 + GoldTreeEnvironment.smethod_1("cmd_flagme_desc") + "\r\r";
+                                                                text7 = text7 + GoldTreeEnvironment.GetExternalText("cmd_flagme_desc") + "\r\r";
                                                             }
                                                         }
                                                         string text8 = "";
-                                                        if (LicenseTools.Boolean_0)
+                                                        if (ServerConfiguration.EnableRedeemCredits)
                                                         {
-                                                            text8 = text8 + GoldTreeEnvironment.smethod_1("cmd_redeemcreds_desc") + "\r\r";
+                                                            text8 = text8 + GoldTreeEnvironment.GetExternalText("cmd_redeemcreds_desc") + "\r\r";
                                                         }
                                                         string text9 = "";
-                                                        if (LicenseTools.bool_21)
+                                                        if (ServerConfiguration.EnableRedeemPixels)
                                                         {
-                                                            text9 = text9 + GoldTreeEnvironment.smethod_1("cmd_redeempixel_desc") + "\r\r";
+                                                            text9 = text9 + GoldTreeEnvironment.GetExternalText("cmd_redeempixel_desc") + "\r\r";
                                                         }
                                                         string redeemshell = "";
-                                                        if (LicenseTools.bool_22)
+                                                        if (ServerConfiguration.EnableRedeemShells)
                                                         {
-                                                            redeemshell = redeemshell + GoldTreeEnvironment.smethod_1("cmd_redeemshell_desc") + "\r\r";
+                                                            redeemshell = redeemshell + GoldTreeEnvironment.GetExternalText("cmd_redeemshell_desc") + "\r\r";
                                                         }
                                                         string text11 = text7;
                                                         text7 = string.Concat(new string[]
 									{
 										text11,
 										"- - - - - - - - - - - \r\r",
-										GoldTreeEnvironment.smethod_1("cmd_about_desc"),
+										GoldTreeEnvironment.GetExternalText("cmd_about_desc"),
 										"\r\r",
-										GoldTreeEnvironment.smethod_1("cmd_pickall_desc"),
+										GoldTreeEnvironment.GetExternalText("cmd_pickall_desc"),
 										"\r\r",
-										GoldTreeEnvironment.smethod_1("cmd_unload_desc"),
+										GoldTreeEnvironment.GetExternalText("cmd_unload_desc"),
 										"\r\r",
-										GoldTreeEnvironment.smethod_1("cmd_disablediagonal_desc"),
+										GoldTreeEnvironment.GetExternalText("cmd_disablediagonal_desc"),
 										"\r\r",
-										GoldTreeEnvironment.smethod_1("cmd_setmax_desc"),
+										GoldTreeEnvironment.GetExternalText("cmd_setmax_desc"),
 										"\r\r",
 										text8,
                                         text9,
                                         redeemshell,
-										GoldTreeEnvironment.smethod_1("cmd_ride_desc"),
+										GoldTreeEnvironment.GetExternalText("cmd_ride_desc"),
 										"\r\r",
-										GoldTreeEnvironment.smethod_1("cmd_buy_desc"),
+										GoldTreeEnvironment.GetExternalText("cmd_buy_desc"),
 										"\r\r",
-										GoldTreeEnvironment.smethod_1("cmd_emptypets_desc"),
+										GoldTreeEnvironment.GetExternalText("cmd_emptypets_desc"),
 										"\r\r",
-										GoldTreeEnvironment.smethod_1("cmd_emptyitems_desc")
+										GoldTreeEnvironment.GetExternalText("cmd_emptyitems_desc")
 									});
                                                         Session.SendNotif(text7, 2);
                                                         return true;
@@ -2419,9 +2419,9 @@ namespace GoldTree.HabboHotel.Misc
                                                 case 69:
                                                     {
                                                         StringBuilder stringBuilder2 = new StringBuilder();
-                                                        for (int i = 0; i < Session.GetHabbo().CurrentRoom.RoomUser_0.Length; i++)
+                                                        for (int i = 0; i < Session.GetHabbo().CurrentRoom.RoomUsers.Length; i++)
                                                         {
-                                                            class6 = Session.GetHabbo().CurrentRoom.RoomUser_0[i];
+                                                            class6 = Session.GetHabbo().CurrentRoom.RoomUsers[i];
                                                             if (class6 != null)
                                                             {
                                                                 stringBuilder2.Append(string.Concat(new object[]
@@ -2620,7 +2620,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     return true;
                                                 case 83:
                                                     Session.GetHabbo().method_23().method_2();
-                                                    Session.SendNotif(GoldTreeEnvironment.smethod_1("cmd_emptypets_success"));
+                                                    Session.SendNotif(GoldTreeEnvironment.GetExternalText("cmd_emptypets_success"));
                                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                                     return true;
                                                 case 85:
@@ -2721,7 +2721,7 @@ namespace GoldTree.HabboHotel.Misc
                                                         Session.GetHabbo().method_28("Command unavailable while trading!");
                                                         return true;
                                                     }
-                                                    if (LicenseTools.bool_21)
+                                                    if (ServerConfiguration.EnableRedeemPixels)
                                                     {
                                                         Session.GetHabbo().method_23().RedeemPixel(Session);
                                                     }
@@ -2738,7 +2738,7 @@ namespace GoldTree.HabboHotel.Misc
                                                         Session.GetHabbo().method_28("Command unavailable while trading!");
                                                         return true;
                                                     }
-                                                    if (LicenseTools.bool_22)
+                                                    if (ServerConfiguration.EnableRedeemShells)
                                                     {
                                                         Session.GetHabbo().method_23().RedeemShell(Session);
                                                     }
@@ -2753,14 +2753,14 @@ namespace GoldTree.HabboHotel.Misc
                                     }
                                     try
                                     {
-                                        if (!(LicenseTools.Boolean_8 || Session.GetHabbo().HasFuse("cmd_push")))
+                                        if (!(ServerConfiguration.UnknownBoolean1 || Session.GetHabbo().HasFuse("cmd_push")))
                                         {
-                                            Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_disabled"));
+                                            Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                             return true;
                                         }
                                         if (!(Session.GetHabbo().Vip || Session.GetHabbo().HasFuse("cmd_push")))
                                         {
-                                            Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_permission_vip"));
+                                            Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_permission_vip"));
                                             return true;
                                         }
                                         string a = "down";
@@ -2822,7 +2822,7 @@ namespace GoldTree.HabboHotel.Misc
                                             }
                                             if (a == "up")
                                             {
-                                                if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                                if (ServerConfiguration.PreventDoorPush)
                                                 {
                                                     if ((!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 - 1 == class2.Class28_0.int_1)) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                     {
@@ -2836,7 +2836,7 @@ namespace GoldTree.HabboHotel.Misc
                                             }
                                             if (a == "right")
                                             {
-                                                if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                                if (ServerConfiguration.PreventDoorPush)
                                                 {
                                                     if (!(class4.int_3 + 1 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                         class4.MoveTo(class4.int_3 + 1, class4.int_4);
@@ -2848,7 +2848,7 @@ namespace GoldTree.HabboHotel.Misc
                                             }
                                             if (a == "down")
                                             {
-                                                if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                                if (ServerConfiguration.PreventDoorPush)
                                                 {
                                                     if (!(class4.int_3 == class2.Class28_0.int_0 && class4.int_4 + 1 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                         class4.MoveTo(class4.int_3, class4.int_4 + 1);
@@ -2860,7 +2860,7 @@ namespace GoldTree.HabboHotel.Misc
                                             }
                                             if (a == "left")
                                             {
-                                                if (LicenseTools.DisableOtherUsersToMovingOtherUsersToDoor)
+                                                if (ServerConfiguration.PreventDoorPush)
                                                 {
                                                     if (!(class4.int_3 - 1 == class2.Class28_0.int_0 && class4.int_4 == class2.Class28_0.int_1) || Session.GetHabbo().HasFuse("acc_moveotheruserstodoor"))
                                                         class4.MoveTo(class4.int_3 - 1, class4.int_4);
@@ -2885,13 +2885,13 @@ namespace GoldTree.HabboHotel.Misc
                                         Session.GetHabbo().method_28("Command unavailable while trading");
                                         return true;
                                     }
-                                    if (LicenseTools.Boolean_0)
+                                    if (ServerConfiguration.EnableRedeemCredits)
                                     {
                                         Session.GetHabbo().method_23().method_1(Session);
                                     }
                                     else
                                     {
-                                        Session.GetHabbo().method_28(GoldTreeEnvironment.smethod_1("cmd_error_disabled"));
+                                        Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("cmd_error_disabled"));
                                     }
                                     return true;
                                 }
@@ -2903,7 +2903,7 @@ namespace GoldTree.HabboHotel.Misc
                     int num9 = GoldTree.GetGame().GetClientManager().ClientCount + -1;
                     int int32_ = GoldTree.GetGame().GetRoomManager().LoadedRoomsCount;
                     string text10 = "";
-                    if (LicenseTools.bool_19)
+                    if (ServerConfiguration.ShowUsersAndRoomsInAbout)
                     {
                         text10 = string.Concat(new object[]
 						{
@@ -2917,9 +2917,7 @@ namespace GoldTree.HabboHotel.Misc
 					{
 						"Gold Tree Emulator 3.0\n\nThanks/Credits;\nJuniori [Project Leader] \nSojobo [Phoenix Emu]\nMatty [Phoenix Emu]\nRoy [Uber Emu]\n\n",
 						GoldTree.PrettyVersion,
-						"\nLicenced to: ",
-						GoldTree.string_6,
-						"\n\nUptime: ",
+						"\nUptime: ",
 						timeSpan.Days,
 						" days, ",
 						timeSpan.Hours,

@@ -15,7 +15,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
             if (Session != null && Session.GetHabbo() != null)
             {
                 Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
-                if (@class != null && @class.method_26(Session) && (LicenseTools.Boolean_1 || !(@class.Owner != Session.GetHabbo().Username)))
+                if (@class != null && @class.method_26(Session) && (ServerConfiguration.AllowFurniDrops || !(@class.Owner != Session.GetHabbo().Username)))
                 {
                     string text = Event.PopFixedString();
                     string[] array = text.Split(new char[]

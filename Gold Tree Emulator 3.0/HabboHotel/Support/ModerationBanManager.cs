@@ -17,7 +17,7 @@ namespace GoldTree.HabboHotel.Support
 		}
 		public void method_0(DatabaseClient class6_0)
 		{
-            Logging.smethod_0("Loading bans..");
+            Logging.Write("Loading bans..");
 			this.list_0.Clear();
 			DataTable dataTable = class6_0.ReadDataTable("SELECT bantype,value,reason,expire FROM bans WHERE expire > '" + GoldTree.GetUnixTimestamp() + "'");
 			if (dataTable != null)
@@ -31,7 +31,7 @@ namespace GoldTree.HabboHotel.Support
 					}
 					this.list_0.Add(new ModerationBan(Type, (string)dataRow["value"], (string)dataRow["reason"], (double)dataRow["expire"]));
 				}
-				Logging.WriteLine("completed!");
+				Logging.WriteLine("completed!", ConsoleColor.Green);
 			}
 		}
 		public void method_1(GameClient Session)
@@ -63,7 +63,7 @@ namespace GoldTree.HabboHotel.Support
 				if (bool_0)
 				{
 					enum4_ = ModerationBanType.IP;
-					if (!LicenseTools.bool_20)
+					if (!ServerConfiguration.IPLastBan)
 					{
                         text = Session.GetConnection().String_0;
                         //text = Session.GetConnection().getIp();

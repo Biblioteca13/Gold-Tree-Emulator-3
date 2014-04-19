@@ -13,9 +13,9 @@ namespace GoldTree.Communication.Messages.Rooms.Action
 			Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
             if (@class != null && @class.CheckRights(Session, true))
 			{
-				for (int i = 0; i < @class.RoomUser_0.Length; i++)
+				for (int i = 0; i < @class.RoomUsers.Length; i++)
 				{
-					RoomUser class2 = @class.RoomUser_0[i];
+					RoomUser class2 = @class.RoomUsers[i];
 					if (class2 != null && (class2.IsBot && class2.class34_0.AiType == AIType.const_1))
 					{
 						ServerMessage Message = new ServerMessage(33u);

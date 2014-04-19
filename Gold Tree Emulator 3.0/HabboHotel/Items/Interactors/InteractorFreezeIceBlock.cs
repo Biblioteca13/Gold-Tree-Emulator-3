@@ -303,9 +303,9 @@ namespace GoldTree.HabboHotel.Items.Interactors
         {
             if (Item.method_8().frzTimer == true)
             {
-                for (int i = 0; i < Item.method_8().RoomUser_0.Length; i++)
+                for (int i = 0; i < Item.method_8().RoomUsers.Length; i++)
                 {
-                    RoomUser User2 = Item.method_8().RoomUser_0[i];
+                    RoomUser User2 = Item.method_8().RoomUsers[i];
                     if (User2 != null)
                     {
                         if (User2.int_3 == Item2.Int32_0 && User2.int_4 == Item2.Int32_1)

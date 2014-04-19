@@ -24,7 +24,7 @@ namespace GoldTree
 			{
 				throw new ArgumentException();
 			}
-			this.Enabled = GoldTree.smethod_3(Row["enabled"].ToString());
+			this.Enabled = GoldTree.StringToBoolean(Row["enabled"].ToString());
 			this.CurrentPreset = (int)Row["current_preset"];
 			this.Presets = new List<MoodlightPreset>();
 			this.Presets.Add(this.method_3((string)Row["preset_one"]));
@@ -82,7 +82,7 @@ namespace GoldTree
 						" = '@color,",
 						int_2,
 						",",
-						GoldTree.smethod_4(bool_1),
+						GoldTree.BooleanToString(bool_1),
 						"' WHERE item_id = '",
 						this.ItemId,
 						"' LIMIT 1"
@@ -103,7 +103,7 @@ namespace GoldTree
 			{
 				array[0] = "#000000";
 			}
-			return new MoodlightPreset(array[0], int.Parse(array[1]), GoldTree.smethod_3(array[2]));
+			return new MoodlightPreset(array[0], int.Parse(array[1]), GoldTree.StringToBoolean(array[2]));
 		}
 		public MoodlightPreset method_4(int int_1)
 		{
