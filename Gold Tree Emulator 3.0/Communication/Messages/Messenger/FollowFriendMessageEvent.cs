@@ -16,7 +16,7 @@ namespace GoldTree.Communication.Messages.Messenger
 				if (class2 != null && Session != null && Session.GetHabbo() != null && class2 != Session.GetHabbo().CurrentRoom)
 				{
 					ServerMessage Message = new ServerMessage(286u);
-					Message.AppendBoolean(class2.Boolean_3);
+					Message.AppendBoolean(class2.IsPublic);
 					Message.AppendUInt(class2.Id);
 					Session.SendMessage(Message);
 				}

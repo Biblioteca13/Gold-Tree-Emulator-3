@@ -1130,7 +1130,7 @@ namespace GoldTree.HabboHotel.Misc
                                 if (TargetClient != null && TargetClient.GetHabbo().CurrentRoom != Session.GetHabbo().CurrentRoom)
                                 {
                                     ServerMessage Message5 = new ServerMessage(286u);
-                                    Message5.AppendBoolean(Session.GetHabbo().CurrentRoom.Boolean_3);
+                                    Message5.AppendBoolean(Session.GetHabbo().CurrentRoom.IsPublic);
                                     Message5.AppendUInt(Session.GetHabbo().CurrentRoomId);
                                     TargetClient.SendMessage(Message5);
                                     TargetClient.SendNotif(Session.GetHabbo().Username + " has summoned you to them");
@@ -1622,7 +1622,7 @@ namespace GoldTree.HabboHotel.Misc
                                     if (TargetClient != null && TargetClient.GetHabbo().InRoom && Session.GetHabbo().CurrentRoom != TargetClient.GetHabbo().CurrentRoom && !TargetClient.GetHabbo().HideInRom)
                                     {
                                         ServerMessage Message5 = new ServerMessage(286u);
-                                        Message5.AppendBoolean(TargetClient.GetHabbo().CurrentRoom.Boolean_3);
+                                        Message5.AppendBoolean(TargetClient.GetHabbo().CurrentRoom.IsPublic);
                                         Message5.AppendUInt(TargetClient.GetHabbo().CurrentRoomId);
                                         Session.SendMessage(Message5);
                                     }

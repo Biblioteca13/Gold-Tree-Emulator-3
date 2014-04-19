@@ -88,7 +88,6 @@ namespace GoldTree.HabboHotel.Rooms
         public int int_10;
         public int int_11;
         public int int_12;
-        public int int_13;
         private bool bool_10;
         public List<RoomItem> list_14;
         public List<RoomItem> list_15;
@@ -117,6 +116,7 @@ namespace GoldTree.HabboHotel.Rooms
         private Freeze freeze;
         public List<int> InfobusAnswers;
         internal bool isCycling = false;
+
         public bool Boolean_0
         {
             get
@@ -124,6 +124,7 @@ namespace GoldTree.HabboHotel.Rooms
                 return this.Event != null;
             }
         }
+
         public RoomIcon myIcon
         {
             get
@@ -135,6 +136,7 @@ namespace GoldTree.HabboHotel.Rooms
                 this.RoomIcon = value;
             }
         }
+
         internal bool Boolean_1
         {
             get
@@ -146,10 +148,12 @@ namespace GoldTree.HabboHotel.Rooms
                 this.bool_11 = value;
             }
         }
+
         internal bool GotMusicController()
         {
             return (this.MusicController != null);
         }
+
         public int Int32_0
         {
             get
@@ -174,6 +178,7 @@ namespace GoldTree.HabboHotel.Rooms
                 return result;
             }
         }
+
         public int Int32_1
         {
             get
@@ -181,6 +186,7 @@ namespace GoldTree.HabboHotel.Rooms
                 return this.Tags.Count;
             }
         }
+
         public RoomModel Class28_0
         {
             get
@@ -188,6 +194,7 @@ namespace GoldTree.HabboHotel.Rooms
                 return this.class28_0;
             }
         }
+
         public uint Id
         {
             get
@@ -195,6 +202,7 @@ namespace GoldTree.HabboHotel.Rooms
                 return this.uint_0;
             }
         }
+
         public Hashtable Hashtable_0
         {
             get
@@ -211,6 +219,7 @@ namespace GoldTree.HabboHotel.Rooms
                 return result;
             }
         }
+
         public Hashtable Hashtable_1
         {
             get
@@ -218,11 +227,12 @@ namespace GoldTree.HabboHotel.Rooms
                 return this.hashtable_4.Clone() as Hashtable;
             }
         }
+
         public bool Boolean_2
         {
             get
             {
-                if (this.Boolean_3)
+                if (this.IsPublic)
                 {
                     return false;
                 }
@@ -233,13 +243,15 @@ namespace GoldTree.HabboHotel.Rooms
                 }
             }
         }
-        public bool Boolean_3
+
+        public bool IsPublic
         {
             get
             {
                 return this.Type == "public";
             }
         }
+
         public int Int32_2
         {
             get
@@ -317,6 +329,7 @@ namespace GoldTree.HabboHotel.Rooms
                 this.GetRoomMusicController().AddDisk(diskItem);
             }
         }
+
         public Room(uint uint_2, string name, string description, string type, string string_13, int int_17, int int_18, int int_19, string string_14, string string_15, int int_20, List<string> list_18, bool bool_13, bool bool_14, bool bool_15, bool bool_16, RoomIcon class29_1, string string_16, string string_17, string string_18, string string_19, RoomData class27_1, bool bool_17, int int_21, int int_22, uint uint_3)
         {
             this.bool_12 = false;
@@ -372,7 +385,6 @@ namespace GoldTree.HabboHotel.Rooms
             this.int_11 = 0;
             this.int_9 = 0;
             this.int_12 = 0;
-            this.int_13 = 0;
             this.list_3 = new List<RoomItem>();
             this.list_14 = new List<RoomItem>();
             this.list_15 = new List<RoomItem>();
@@ -1364,7 +1376,7 @@ namespace GoldTree.HabboHotel.Rooms
                                     return;
                                 }
                                 ServerMessage Message2 = new ServerMessage(286u);
-                                Message2.AppendBoolean(class3.Boolean_3);
+                                Message2.AppendBoolean(class3.IsPublic);
                                 Message2.AppendUInt(Convert.ToUInt32(string_11));
                                 RoomUser_1.GetClient().SendMessage(Message2);
                                 return;
@@ -4337,7 +4349,7 @@ namespace GoldTree.HabboHotel.Rooms
                                     @class.GetClient().GetHabbo().method_24().int_0 = -1;
                                 }
                                 this.byte_0[@class.int_3, @class.int_4] = @class.byte_0;
-                                if (!this.Boolean_3)
+                                if (!this.IsPublic)
                                 {
                                     ServerMessage Message2 = new ServerMessage(700u);
                                     Message2.AppendBoolean(false);

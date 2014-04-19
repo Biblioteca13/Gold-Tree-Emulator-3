@@ -55,7 +55,7 @@ namespace GoldTree.Communication.Messages.Messenger
 			else
 			{
 				ServerMessage Message2 = new ServerMessage(286u);
-				Message2.AppendBoolean(@class.Boolean_3);
+				Message2.AppendBoolean(@class.IsPublic);
 				Message2.AppendUInt(@class.Id);
 				Session.SendMessage(Message2);
 				ServerMessage Message3 = new ServerMessage(831u);

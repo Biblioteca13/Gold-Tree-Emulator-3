@@ -493,7 +493,7 @@ namespace GoldTree.Net
 					if (class7 != null)
 					{
 						ServerMessage Message7 = new ServerMessage(286u);
-						Message7.AppendBoolean(class4.Boolean_3);
+						Message7.AppendBoolean(class4.IsPublic);
 						Message7.AppendUInt(num3);
 						class7.SendMessage(Message7);
 						goto IL_C70;

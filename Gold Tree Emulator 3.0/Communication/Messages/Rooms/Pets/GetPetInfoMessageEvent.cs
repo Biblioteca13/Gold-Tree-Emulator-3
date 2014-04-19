@@ -12,7 +12,7 @@ namespace GoldTree.Communication.Messages.Rooms.Pets
 		{
 			uint num = Event.PopWiredUInt();
 			Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
-			if (@class != null && !@class.Boolean_3)
+			if (@class != null && !@class.IsPublic)
 			{
 				RoomUser class2 = @class.method_48(num);
 				if (class2 == null || class2.PetData == null)

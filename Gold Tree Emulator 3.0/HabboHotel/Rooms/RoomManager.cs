@@ -507,7 +507,7 @@ namespace GoldTree.HabboHotel.Rooms
 			{
 				foreach (Room @class in class26_.Values)
 				{
-					if (@class != null && @class.Int32_0 > 0 && !@class.Boolean_3)
+					if (@class != null && @class.Int32_0 > 0 && !@class.IsPublic)
 					{
 						dictionary.Add(@class, @class.Int32_0);
 					}

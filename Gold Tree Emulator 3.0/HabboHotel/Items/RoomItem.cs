@@ -35,7 +35,6 @@ namespace GoldTree.HabboHotel.Items
 		internal string string_4;
 		internal string string_5;
 		internal string string_6;
-		internal int int_0;
 		private Dictionary<int, AffectedTile> dictionary_0;
 		private int int_1;
 		private int int_2;
@@ -357,7 +356,6 @@ namespace GoldTree.HabboHotel.Items
             this.string_4 = "";
             this.string_5 = "";
             this.string_6 = "";
-            this.int_0 = 0;
             this.FireWorkCount = 0;
             this.dictionary_1 = new Dictionary<RoomUser, int>();
             this.Item = GoldTree.GetGame().GetItemManager().method_2(uint_7);
@@ -490,650 +488,631 @@ namespace GoldTree.HabboHotel.Items
 			}
 			return result;
 		}
-		internal void method_2()
-		{
-			this.int_4--;
-			if (this.int_4 <= 0)
-			{
-				this.bool_1 = false;
-				this.int_4 = 0;
-				if (this.bool_0 && this.int_0 > 0)
-				{
-					this.int_0 += 500;
-					this.method_8().int_13 += 500;
-					this.bool_1 = true;
-					if (this.int_0 > SongManager.GetSong(Convert.ToInt32(this.ExtraData)).Length)
-					{
-						ServerMessage Message = new ServerMessage(327u);
-						Message.AppendInt32(7);
-						Message.AppendInt32(6);
-						Message.AppendInt32(7);
-						Message.AppendInt32(0);
-						Message.AppendInt32(0);
-						this.method_8().SendMessage(Message, null);
-						this.int_0 = 1;
-						this.method_8().int_13 = 0;
-					}
-				}
-				else
-				{
-					string text = this.GetBaseItem().InteractionType.ToLower();
-                    switch (text)
-                    {
-                        case "onewaygate":
+        internal void method_2()
+        {
+            this.int_4--;
+            if (this.int_4 <= 0)
+            {
+                this.bool_1 = false;
+                this.int_4 = 0;
+                string text = this.GetBaseItem().InteractionType.ToLower();
+                switch (text)
+                {
+                    case "onewaygate":
+                        {
+                            RoomUser @class = null;
+                            if (this.uint_3 > 0u)
                             {
-                                RoomUser @class = null;
-                                if (this.uint_3 > 0u)
-                                {
-                                    @class = this.method_8().GetRoomUserByHabbo(this.uint_3);
-                                }
-                                if (@class != null && @class.int_3 == this.int_1 && @class.int_4 == this.int_2 && this.string_2 != "tried")
-                                {
-                                    this.ExtraData = "1";
-                                    this.string_2 = "tried";
-                                    @class.method_6();
-                                    @class.method_4(this.GStruct1_2);
-                                    this.ReqUpdate(0);
-                                    this.UpdateState(false, true);
-                                }
-                                else
-                                {
-                                    if ((@class != null && ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_2)) || this.string_2 == "tried")
-                                    {
-                                        this.string_2 = "";
-                                        this.ExtraData = "0";
-                                        this.uint_3 = 0u;
-                                        this.UpdateState(false, true);
-                                        this.method_8().method_22();
-                                    }
-                                    else
-                                    {
-                                        if (this.ExtraData == "1")
-                                        {
-                                            this.ExtraData = "0";
-                                            this.UpdateState(false, true);
-                                        }
-                                    }
-                                }
-                                if (@class == null)
-                                {
-                                    this.uint_3 = 0u;
-                                }
-                                break;
+                                @class = this.method_8().GetRoomUserByHabbo(this.uint_3);
                             }
-                        case "teleport":
+                            if (@class != null && @class.int_3 == this.int_1 && @class.int_4 == this.int_2 && this.string_2 != "tried")
                             {
-                                bool flag = false;
-                                bool flag2 = false;
-                                if (this.uint_3 > 0u)
-                                {
-                                    RoomUser @class = this.method_8().GetRoomUserByHabbo(this.uint_3);
-                                    if (@class != null)
-                                    {
-                                        if (ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_0))
-                                        {
-                                            @class.bool_1 = false;
-                                            if (@class.int_19 == -1)
-                                            {
-                                                @class.int_19 = 1;
-                                            }
-                                            if (TeleHandler.smethod_2(this.uint_0))
-                                            {
-                                                flag2 = true;
-
-                                                if (this.GetBaseItem().Name == "xmas10_fireplace")
-                                                {
-                                                    string look = @class.GetClient().GetHabbo().Figure;
-
-                                                    string[] lissut = look.Split('.');
-
-                                                    if (look.Contains("ha-"))
-                                                    {
-                                                        look = look.Replace("" + lissut[Array.FindIndex(lissut, row => row.Contains("ha-"))], "ha-1006-62");
-
-                                                    }
-                                                    else
-                                                    {
-                                                        look = look + ".ha-1006-62";
-                                                    }
-                                                    @class.GetClient().GetHabbo().Figure = GoldTree.FilterString(look.ToLower());
-
-                                                    using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
-                                                    {
-                                                        dbClient.AddParamWithValue("look", look);
-                                                        dbClient.ExecuteQuery("UPDATE users SET look =  @look WHERE id = " + @class.GetClient().GetHabbo().Id);
-                                                    }
-
-                                                    ServerMessage serverMessage = new ServerMessage(266u);
-                                                    serverMessage.AppendInt32(-1);
-                                                    serverMessage.AppendStringWithBreak(@class.GetClient().GetHabbo().Figure);
-                                                    serverMessage.AppendStringWithBreak(@class.GetClient().GetHabbo().Gender.ToLower());
-                                                    serverMessage.AppendStringWithBreak(@class.GetClient().GetHabbo().Motto);
-                                                    serverMessage.AppendInt32(@class.GetClient().GetHabbo().AchievementScore);
-                                                    serverMessage.AppendStringWithBreak("");
-                                                    @class.GetClient().SendMessage(serverMessage);
-                                                }
-
-                                                if (@class.int_19 == 0)
-                                                {
-                                                    uint num2 = TeleHandler.smethod_0(this.uint_0);
-                                                    uint num3 = TeleHandler.smethod_1(num2);
-                                                    if (num3 == this.uint_1)
-                                                    {
-                                                        RoomItem class2 = this.method_8().method_28(num2);
-                                                        if (class2 == null)
-                                                        {
-                                                            @class.method_6();
-                                                        }
-                                                        else
-                                                        {
-                                                            @class.method_7(class2.Int32_0, class2.Int32_1, class2.Double_0);
-                                                            @class.method_9(class2.int_3);
-                                                            class2.ExtraData = "2";
-                                                            class2.UpdateState(false, true);
-                                                            class2.uint_4 = this.uint_3;
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (!@class.IsBot)
-                                                        {
-                                                            GoldTree.GetGame().GetRoomManager().method_5(new TeleUserData(@class.GetClient().method_1(), @class.GetClient().GetHabbo(), num3, num2));
-                                                        }
-                                                    }
-                                                    this.uint_3 = 0u;
-                                                }
-                                                else
-                                                {
-                                                    @class.int_19--;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                @class.method_6();
-                                                this.uint_3 = 0u;
-                                                @class.method_4(this.GStruct1_1);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_1) && @class.RoomItem_0 == this)
-                                            {
-                                                @class.bool_1 = true;
-                                                flag = true;
-                                                if (@class.bool_6 && (@class.int_10 != this.int_1 || @class.int_11 != this.int_2))
-                                                {
-                                                    @class.method_3(true);
-                                                }
-                                                @class.bool_0 = false;
-                                                @class.bool_1 = true;
-                                                @class.method_4(this.GStruct1_0);
-                                            }
-                                            else
-                                            {
-                                                this.uint_3 = 0u;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        this.uint_3 = 0u;
-                                    }
-                                }
-                                if (this.uint_4 > 0u)
-                                {
-                                    RoomUser class3 = this.method_8().GetRoomUserByHabbo(this.uint_4);
-                                    if (class3 != null)
-                                    {
-                                        flag = true;
-                                        class3.method_6();
-                                        if (ThreeDCoord.smethod_0(class3.GStruct1_0, this.GStruct1_0))
-                                        {
-                                            class3.method_4(this.GStruct1_1);
-                                        }
-                                    }
-                                    this.uint_4 = 0u;
-                                }
-                                if (flag)
-                                {
-                                    if (this.ExtraData != "1")
-                                    {
-                                        this.ExtraData = "1";
-                                        this.UpdateState(false, true);
-                                    }
-                                }
-                                else
-                                {
-                                    if (flag2)
-                                    {
-                                        if (this.ExtraData != "2")
-                                        {
-                                            this.ExtraData = "2";
-                                            this.UpdateState(false, true);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (this.ExtraData != "0")
-                                        {
-                                            this.ExtraData = "0";
-                                            this.UpdateState(false, true);
-                                        }
-                                    }
-                                }
-                                this.ReqUpdate(1);
-                                break;
-                            }
-                        case "hopper":
-                            {
-                                bool flag = false;
-                                bool flag2 = false;
-                                if (this.uint_3 > 0u)
-                                {
-                                    RoomUser @class = this.method_8().GetRoomUserByHabbo(this.uint_3);
-                                    if (@class != null)
-                                    {
-                                        if (ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_0))
-                                        {
-                                            @class.bool_1 = false;
-                                            if (@class.int_19 == -1)
-                                            {
-                                                @class.int_19 = 1;
-                                            }
-                                            if (HopperHandler.smethod_2(this.uint_0))
-                                            {
-                                                flag2 = true;
-                                                if (@class.int_19 == 0)
-                                                {
-                                                    uint num2 = HopperHandler.smethod_0(this.uint_0);
-                                                    uint num3 = HopperHandler.smethod_1(num2);
-                                                    if (num3 == this.uint_1)
-                                                    {
-                                                        RoomItem class2 = this.method_8().method_28(num2);
-                                                        if (class2 == null)
-                                                        {
-                                                            @class.method_6();
-                                                        }
-                                                        else
-                                                        {
-                                                            @class.method_7(class2.Int32_0, class2.Int32_1, class2.Double_0);
-                                                            @class.method_9(class2.int_3);
-                                                            class2.ExtraData = "2";
-                                                            class2.UpdateState(false, true);
-                                                            class2.uint_4 = this.uint_3;
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (!@class.IsBot)
-                                                        {
-                                                            GoldTree.GetGame().GetRoomManager().method_5(new TeleUserData(@class.GetClient().method_1(), @class.GetClient().GetHabbo(), num3, num2));
-                                                        }
-                                                    }
-                                                    this.uint_3 = 0u;
-                                                }
-                                                else
-                                                {
-                                                    @class.int_19--;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                @class.method_6();
-                                                this.uint_3 = 0u;
-                                                @class.method_4(this.GStruct1_1);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_1) && @class.RoomItem_0 == this)
-                                            {
-                                                @class.bool_1 = true;
-                                                flag = true;
-                                                if (@class.bool_6 && (@class.int_10 != this.int_1 || @class.int_11 != this.int_2))
-                                                {
-                                                    @class.method_3(true);
-                                                }
-                                                @class.bool_0 = false;
-                                                @class.bool_1 = true;
-                                                @class.method_4(this.GStruct1_0);
-                                            }
-                                            else
-                                            {
-                                                this.uint_3 = 0u;
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        this.uint_3 = 0u;
-                                    }
-                                }
-                                if (this.uint_4 > 0u)
-                                {
-                                    RoomUser class3 = this.method_8().GetRoomUserByHabbo(this.uint_4);
-                                    if (class3 != null)
-                                    {
-                                        flag = true;
-                                        class3.method_6();
-                                        if (ThreeDCoord.smethod_0(class3.GStruct1_0, this.GStruct1_0))
-                                        {
-                                            class3.method_4(this.GStruct1_1);
-                                        }
-                                    }
-                                    this.uint_4 = 0u;
-                                }
-                                if (flag)
-                                {
-                                    if (this.ExtraData != "1")
-                                    {
-                                        this.ExtraData = "1";
-                                        this.UpdateState(false, true);
-                                    }
-                                }
-                                else
-                                {
-                                    if (flag2)
-                                    {
-                                        if (this.ExtraData != "2")
-                                        {
-                                            this.ExtraData = "2";
-                                            this.UpdateState(false, true);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (this.ExtraData != "0")
-                                        {
-                                            this.ExtraData = "0";
-                                            this.UpdateState(false, true);
-                                        }
-                                    }
-                                }
-                                this.ReqUpdate(1);
-                                break;
-                            }
-                        case "bottle":
-                            {
-                                int num = GoldTree.smethod_5(0, 7);
-                                this.ExtraData = num.ToString();
-                                this.method_4();
-                                break;
-                            }
-                        case "dice":
-                            try
-                            {
-                                RoomUser @class = this.method_8().GetRoomUserByHabbo(this.uint_3);
-                                if (@class.GetClient().GetHabbo().int_1 > 0)
-                                {
-                                    this.ExtraData = @class.GetClient().GetHabbo().int_1.ToString();
-                                    @class.GetClient().GetHabbo().int_1 = 0;
-                                }
-                                else
-                                {
-                                    int num = GoldTree.smethod_5(1, 6);
-                                    this.ExtraData = num.ToString();
-                                }
-                            }
-                            catch
-                            {
-                                int num = GoldTree.smethod_5(1, 6);
-                                this.ExtraData = num.ToString();
-                            }
-                            this.method_4();
-                            break;
-                        case "habbowheel":
-                            {
-                                int num = GoldTree.smethod_5(1, 10);
-                                this.ExtraData = num.ToString();
-                                this.method_4();
-                                break;
-                            }
-                        case "loveshuffler":
-                            if (this.ExtraData == "0")
-                            {
-                                int num = GoldTree.smethod_5(1, 4);
-                                this.ExtraData = num.ToString();
-                                this.ReqUpdate(20);
+                                this.ExtraData = "1";
+                                this.string_2 = "tried";
+                                @class.method_6();
+                                @class.method_4(this.GStruct1_2);
+                                this.ReqUpdate(0);
+                                this.UpdateState(false, true);
                             }
                             else
                             {
-                                if (this.ExtraData != "-1")
+                                if ((@class != null && ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_2)) || this.string_2 == "tried")
                                 {
-                                    this.ExtraData = "-1";
+                                    this.string_2 = "";
+                                    this.ExtraData = "0";
+                                    this.uint_3 = 0u;
+                                    this.UpdateState(false, true);
+                                    this.method_8().method_22();
+                                }
+                                else
+                                {
+                                    if (this.ExtraData == "1")
+                                    {
+                                        this.ExtraData = "0";
+                                        this.UpdateState(false, true);
+                                    }
                                 }
                             }
-                            this.UpdateState(false, true);
-                            break;
-                        case "alert":
-                            if (this.ExtraData == "1")
+                            if (@class == null)
                             {
-                                this.ExtraData = "0";
-                                this.UpdateState(false, true);
+                                this.uint_3 = 0u;
                             }
                             break;
-                        case "vendingmachine":
-                            if (this.ExtraData == "1")
+                        }
+                    case "teleport":
+                        {
+                            bool flag = false;
+                            bool flag2 = false;
+                            if (this.uint_3 > 0u)
                             {
                                 RoomUser @class = this.method_8().GetRoomUserByHabbo(this.uint_3);
                                 if (@class != null)
                                 {
-                                    @class.method_6();
-                                    int int_ = this.GetBaseItem().VendingIds[GoldTree.smethod_5(0, this.GetBaseItem().VendingIds.Count - 1)];
-                                    @class.CarryItem(int_);
-                                }
-                                this.uint_3 = 0u;
-                                this.ExtraData = "0";
-                                this.UpdateState(false, true);
-                            }
-                            break;
-                        case "wf_trg_onsay":
-                        case "wf_trg_enterroom":
-                        case "wf_trg_furnistate":
-                        case "wf_trg_onfurni":
-                        case "wf_trg_offfurni":
-                        case "wf_trg_gameend":
-                        case "wf_trg_gamestart":
-                        case "wf_trg_atscore":
-                        case "wf_act_saymsg":
-                        case "wf_act_togglefurni":
-                        case "wf_act_givepoints":
-                        case "wf_act_moverotate":
-                        case "wf_act_matchfurni":
-                        case "wf_act_give_phx":
-                        case "wf_cnd_trggrer_on_frn":
-                        case "wf_cnd_furnis_hv_avtrs":
-                        case "wf_cnd_has_furni_on":
-                        case "wf_cnd_match_snapshot":
-                        case "wf_cnd_phx":
-                        case "bb_teleport":
-                            if (this.ExtraData == "1")
-                            {
-                                this.ExtraData = "0";
-                                this.UpdateState(false, true);
-                            }
-                            break;
-                        case "wf_trg_timer":
-                            if (this.ExtraData == "1")
-                            {
-                                this.ExtraData = "0";
-                                this.UpdateState(false, true);
-                            }
-                            if (this.string_2.Length > 0)
-                            {
-                                this.method_8().method_15(this);
-                                this.ReqUpdate(Convert.ToInt32(Convert.ToDouble(this.string_2) * 2.0));
-                            }
-                            break;
-                        case "wf_act_moveuser":
-                            if (this.dictionary_1.Count > 0 && this.method_8().RoomUsers != null)
-                            {
-                                int num4 = 0;
-                                RoomUser[] RoomUser_ = this.method_8().RoomUsers;
-                                for (int i = 0; i < RoomUser_.Length; i++)
-                                {
-                                    RoomUser class4 = RoomUser_[i];
-                                    if (class4 != null)
+                                    if (ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_0))
                                     {
-                                        if (class4.IsBot)
+                                        @class.bool_1 = false;
+                                        if (@class.int_19 == -1)
                                         {
-                                            this.dictionary_1.Remove(class4);
+                                            @class.int_19 = 1;
                                         }
-                                        if (this.dictionary_1.ContainsKey(class4))
+                                        if (TeleHandler.smethod_2(this.uint_0))
                                         {
-                                            if (this.dictionary_1[class4] > 0)
+                                            flag2 = true;
+
+                                            if (this.GetBaseItem().Name == "xmas10_fireplace")
                                             {
-                                                if (this.dictionary_1[class4] == 10 && !class4.IsBot && class4 != null && class4.GetClient() != null && class4.GetClient().GetHabbo() != null)
+                                                string look = @class.GetClient().GetHabbo().Figure;
+
+                                                string[] lissut = look.Split('.');
+
+                                                if (look.Contains("ha-"))
                                                 {
-                                                    class4.GetClient().GetHabbo().method_24().method_2(4, true);
+                                                    look = look.Replace("" + lissut[Array.FindIndex(lissut, row => row.Contains("ha-"))], "ha-1006-62");
+
                                                 }
-                                                Dictionary<RoomUser, int> dictionary;
-                                                RoomUser key;
-                                                (dictionary = this.dictionary_1)[key = class4] = dictionary[key] - 1;
-                                                num4++;
+                                                else
+                                                {
+                                                    look = look + ".ha-1006-62";
+                                                }
+                                                @class.GetClient().GetHabbo().Figure = GoldTree.FilterString(look.ToLower());
+
+                                                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
+                                                {
+                                                    dbClient.AddParamWithValue("look", look);
+                                                    dbClient.ExecuteQuery("UPDATE users SET look =  @look WHERE id = " + @class.GetClient().GetHabbo().Id);
+                                                }
+
+                                                ServerMessage serverMessage = new ServerMessage(266u);
+                                                serverMessage.AppendInt32(-1);
+                                                serverMessage.AppendStringWithBreak(@class.GetClient().GetHabbo().Figure);
+                                                serverMessage.AppendStringWithBreak(@class.GetClient().GetHabbo().Gender.ToLower());
+                                                serverMessage.AppendStringWithBreak(@class.GetClient().GetHabbo().Motto);
+                                                serverMessage.AppendInt32(@class.GetClient().GetHabbo().AchievementScore);
+                                                serverMessage.AppendStringWithBreak("");
+                                                @class.GetClient().SendMessage(serverMessage);
+                                            }
+
+                                            if (@class.int_19 == 0)
+                                            {
+                                                uint num2 = TeleHandler.smethod_0(this.uint_0);
+                                                uint num3 = TeleHandler.smethod_1(num2);
+                                                if (num3 == this.uint_1)
+                                                {
+                                                    RoomItem class2 = this.method_8().method_28(num2);
+                                                    if (class2 == null)
+                                                    {
+                                                        @class.method_6();
+                                                    }
+                                                    else
+                                                    {
+                                                        @class.method_7(class2.Int32_0, class2.Int32_1, class2.Double_0);
+                                                        @class.method_9(class2.int_3);
+                                                        class2.ExtraData = "2";
+                                                        class2.UpdateState(false, true);
+                                                        class2.uint_4 = this.uint_3;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (!@class.IsBot)
+                                                    {
+                                                        GoldTree.GetGame().GetRoomManager().method_5(new TeleUserData(@class.GetClient().method_1(), @class.GetClient().GetHabbo(), num3, num2));
+                                                    }
+                                                }
+                                                this.uint_3 = 0u;
                                             }
                                             else
                                             {
-                                                this.dictionary_1.Remove(class4);
-                                                class4.GetClient().GetHabbo().method_24().method_2(0, true);
-
-                                                if (class4.team != Team.None && class4.game == Rooms.Games.Game.Freeze)
+                                                @class.int_19--;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @class.method_6();
+                                            this.uint_3 = 0u;
+                                            @class.method_4(this.GStruct1_1);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_1) && @class.RoomItem_0 == this)
+                                        {
+                                            @class.bool_1 = true;
+                                            flag = true;
+                                            if (@class.bool_6 && (@class.int_10 != this.int_1 || @class.int_11 != this.int_2))
+                                            {
+                                                @class.method_3(true);
+                                            }
+                                            @class.bool_0 = false;
+                                            @class.bool_1 = true;
+                                            @class.method_4(this.GStruct1_0);
+                                        }
+                                        else
+                                        {
+                                            this.uint_3 = 0u;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    this.uint_3 = 0u;
+                                }
+                            }
+                            if (this.uint_4 > 0u)
+                            {
+                                RoomUser class3 = this.method_8().GetRoomUserByHabbo(this.uint_4);
+                                if (class3 != null)
+                                {
+                                    flag = true;
+                                    class3.method_6();
+                                    if (ThreeDCoord.smethod_0(class3.GStruct1_0, this.GStruct1_0))
+                                    {
+                                        class3.method_4(this.GStruct1_1);
+                                    }
+                                }
+                                this.uint_4 = 0u;
+                            }
+                            if (flag)
+                            {
+                                if (this.ExtraData != "1")
+                                {
+                                    this.ExtraData = "1";
+                                    this.UpdateState(false, true);
+                                }
+                            }
+                            else
+                            {
+                                if (flag2)
+                                {
+                                    if (this.ExtraData != "2")
+                                    {
+                                        this.ExtraData = "2";
+                                        this.UpdateState(false, true);
+                                    }
+                                }
+                                else
+                                {
+                                    if (this.ExtraData != "0")
+                                    {
+                                        this.ExtraData = "0";
+                                        this.UpdateState(false, true);
+                                    }
+                                }
+                            }
+                            this.ReqUpdate(1);
+                            break;
+                        }
+                    case "hopper":
+                        {
+                            bool flag = false;
+                            bool flag2 = false;
+                            if (this.uint_3 > 0u)
+                            {
+                                RoomUser @class = this.method_8().GetRoomUserByHabbo(this.uint_3);
+                                if (@class != null)
+                                {
+                                    if (ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_0))
+                                    {
+                                        @class.bool_1 = false;
+                                        if (@class.int_19 == -1)
+                                        {
+                                            @class.int_19 = 1;
+                                        }
+                                        if (HopperHandler.smethod_2(this.uint_0))
+                                        {
+                                            flag2 = true;
+                                            if (@class.int_19 == 0)
+                                            {
+                                                uint num2 = HopperHandler.smethod_0(this.uint_0);
+                                                uint num3 = HopperHandler.smethod_1(num2);
+                                                if (num3 == this.uint_1)
                                                 {
-                                                    int FreezeEffect = ((int)class4.team) + 39;
-                                                    if (class4.GetClient().GetHabbo().method_24().int_0 != FreezeEffect)
+                                                    RoomItem class2 = this.method_8().method_28(num2);
+                                                    if (class2 == null)
                                                     {
-                                                        class4.GetClient().GetHabbo().method_24().method_2(FreezeEffect, true);
+                                                        @class.method_6();
+                                                    }
+                                                    else
+                                                    {
+                                                        @class.method_7(class2.Int32_0, class2.Int32_1, class2.Double_0);
+                                                        @class.method_9(class2.int_3);
+                                                        class2.ExtraData = "2";
+                                                        class2.UpdateState(false, true);
+                                                        class2.uint_4 = this.uint_3;
                                                     }
                                                 }
-
-                                                else if (class4.team != Team.None && class4.game == Rooms.Games.Game.BattleBanzai)
+                                                else
                                                 {
-                                                    int FreezeEffect = ((int)class4.team) + 32;
-                                                    if (class4.GetClient().GetHabbo().method_24().int_0 != FreezeEffect)
+                                                    if (!@class.IsBot)
                                                     {
-                                                        class4.GetClient().GetHabbo().method_24().method_2(FreezeEffect, true);
+                                                        GoldTree.GetGame().GetRoomManager().method_5(new TeleUserData(@class.GetClient().method_1(), @class.GetClient().GetHabbo(), num3, num2));
                                                     }
+                                                }
+                                                this.uint_3 = 0u;
+                                            }
+                                            else
+                                            {
+                                                @class.int_19--;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @class.method_6();
+                                            this.uint_3 = 0u;
+                                            @class.method_4(this.GStruct1_1);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (ThreeDCoord.smethod_0(@class.GStruct1_0, this.GStruct1_1) && @class.RoomItem_0 == this)
+                                        {
+                                            @class.bool_1 = true;
+                                            flag = true;
+                                            if (@class.bool_6 && (@class.int_10 != this.int_1 || @class.int_11 != this.int_2))
+                                            {
+                                                @class.method_3(true);
+                                            }
+                                            @class.bool_0 = false;
+                                            @class.bool_1 = true;
+                                            @class.method_4(this.GStruct1_0);
+                                        }
+                                        else
+                                        {
+                                            this.uint_3 = 0u;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    this.uint_3 = 0u;
+                                }
+                            }
+                            if (this.uint_4 > 0u)
+                            {
+                                RoomUser class3 = this.method_8().GetRoomUserByHabbo(this.uint_4);
+                                if (class3 != null)
+                                {
+                                    flag = true;
+                                    class3.method_6();
+                                    if (ThreeDCoord.smethod_0(class3.GStruct1_0, this.GStruct1_0))
+                                    {
+                                        class3.method_4(this.GStruct1_1);
+                                    }
+                                }
+                                this.uint_4 = 0u;
+                            }
+                            if (flag)
+                            {
+                                if (this.ExtraData != "1")
+                                {
+                                    this.ExtraData = "1";
+                                    this.UpdateState(false, true);
+                                }
+                            }
+                            else
+                            {
+                                if (flag2)
+                                {
+                                    if (this.ExtraData != "2")
+                                    {
+                                        this.ExtraData = "2";
+                                        this.UpdateState(false, true);
+                                    }
+                                }
+                                else
+                                {
+                                    if (this.ExtraData != "0")
+                                    {
+                                        this.ExtraData = "0";
+                                        this.UpdateState(false, true);
+                                    }
+                                }
+                            }
+                            this.ReqUpdate(1);
+                            break;
+                        }
+                    case "bottle":
+                        {
+                            int num = GoldTree.smethod_5(0, 7);
+                            this.ExtraData = num.ToString();
+                            this.method_4();
+                            break;
+                        }
+                    case "dice":
+                        try
+                        {
+                            RoomUser @class = this.method_8().GetRoomUserByHabbo(this.uint_3);
+                            if (@class.GetClient().GetHabbo().int_1 > 0)
+                            {
+                                this.ExtraData = @class.GetClient().GetHabbo().int_1.ToString();
+                                @class.GetClient().GetHabbo().int_1 = 0;
+                            }
+                            else
+                            {
+                                int num = GoldTree.smethod_5(1, 6);
+                                this.ExtraData = num.ToString();
+                            }
+                        }
+                        catch
+                        {
+                            int num = GoldTree.smethod_5(1, 6);
+                            this.ExtraData = num.ToString();
+                        }
+                        this.method_4();
+                        break;
+                    case "habbowheel":
+                        {
+                            int num = GoldTree.smethod_5(1, 10);
+                            this.ExtraData = num.ToString();
+                            this.method_4();
+                            break;
+                        }
+                    case "loveshuffler":
+                        if (this.ExtraData == "0")
+                        {
+                            int num = GoldTree.smethod_5(1, 4);
+                            this.ExtraData = num.ToString();
+                            this.ReqUpdate(20);
+                        }
+                        else
+                        {
+                            if (this.ExtraData != "-1")
+                            {
+                                this.ExtraData = "-1";
+                            }
+                        }
+                        this.UpdateState(false, true);
+                        break;
+                    case "alert":
+                        if (this.ExtraData == "1")
+                        {
+                            this.ExtraData = "0";
+                            this.UpdateState(false, true);
+                        }
+                        break;
+                    case "vendingmachine":
+                        if (this.ExtraData == "1")
+                        {
+                            RoomUser @class = this.method_8().GetRoomUserByHabbo(this.uint_3);
+                            if (@class != null)
+                            {
+                                @class.method_6();
+                                int int_ = this.GetBaseItem().VendingIds[GoldTree.smethod_5(0, this.GetBaseItem().VendingIds.Count - 1)];
+                                @class.CarryItem(int_);
+                            }
+
+                            this.uint_3 = 0u;
+                            this.ExtraData = "0";
+                            this.UpdateState(false, true);
+                        }
+                        break;
+
+                    case "wf_trg_onsay":
+                    case "wf_trg_enterroom":
+                    case "wf_trg_furnistate":
+                    case "wf_trg_onfurni":
+                    case "wf_trg_offfurni":
+                    case "wf_trg_gameend":
+                    case "wf_trg_gamestart":
+                    case "wf_trg_atscore":
+                    case "wf_act_saymsg":
+                    case "wf_act_togglefurni":
+                    case "wf_act_givepoints":
+                    case "wf_act_moverotate":
+                    case "wf_act_matchfurni":
+                    case "wf_act_give_phx":
+                    case "wf_cnd_trggrer_on_frn":
+                    case "wf_cnd_furnis_hv_avtrs":
+                    case "wf_cnd_has_furni_on":
+                    case "wf_cnd_match_snapshot":
+                    case "wf_cnd_phx":
+                    case "bb_teleport":
+                        if (this.ExtraData == "1")
+                        {
+                            this.ExtraData = "0";
+                            this.UpdateState(false, true);
+                        }
+                        break;
+                    case "wf_trg_timer":
+                        if (this.ExtraData == "1")
+                        {
+                            this.ExtraData = "0";
+                            this.UpdateState(false, true);
+                        }
+                        if (this.string_2.Length > 0)
+                        {
+                            this.method_8().method_15(this);
+                            this.ReqUpdate(Convert.ToInt32(Convert.ToDouble(this.string_2) * 2.0));
+                        }
+                        break;
+                    case "wf_act_moveuser":
+                        if (this.dictionary_1.Count > 0 && this.method_8().RoomUsers != null)
+                        {
+                            int num4 = 0;
+                            RoomUser[] RoomUser_ = this.method_8().RoomUsers;
+                            for (int i = 0; i < RoomUser_.Length; i++)
+                            {
+                                RoomUser class4 = RoomUser_[i];
+                                if (class4 != null)
+                                {
+                                    if (class4.IsBot)
+                                    {
+                                        this.dictionary_1.Remove(class4);
+                                    }
+                                    if (this.dictionary_1.ContainsKey(class4))
+                                    {
+                                        if (this.dictionary_1[class4] > 0)
+                                        {
+                                            if (this.dictionary_1[class4] == 10 && !class4.IsBot && class4 != null && class4.GetClient() != null && class4.GetClient().GetHabbo() != null)
+                                            {
+                                                class4.GetClient().GetHabbo().method_24().method_2(4, true);
+                                            }
+                                            Dictionary<RoomUser, int> dictionary;
+                                            RoomUser key;
+                                            (dictionary = this.dictionary_1)[key = class4] = dictionary[key] - 1;
+                                            num4++;
+                                        }
+                                        else
+                                        {
+                                            this.dictionary_1.Remove(class4);
+                                            class4.GetClient().GetHabbo().method_24().method_2(0, true);
+
+                                            if (class4.team != Team.None && class4.game == Rooms.Games.Game.Freeze)
+                                            {
+                                                int FreezeEffect = ((int)class4.team) + 39;
+                                                if (class4.GetClient().GetHabbo().method_24().int_0 != FreezeEffect)
+                                                {
+                                                    class4.GetClient().GetHabbo().method_24().method_2(FreezeEffect, true);
+                                                }
+                                            }
+
+                                            else if (class4.team != Team.None && class4.game == Rooms.Games.Game.BattleBanzai)
+                                            {
+                                                int FreezeEffect = ((int)class4.team) + 32;
+                                                if (class4.GetClient().GetHabbo().method_24().int_0 != FreezeEffect)
+                                                {
+                                                    class4.GetClient().GetHabbo().method_24().method_2(FreezeEffect, true);
                                                 }
                                             }
                                         }
                                     }
                                 }
-                                if (num4 > 0)
-                                {
-                                    this.ReqUpdate(0);
-                                }
-                                else
-                                {
-                                    this.dictionary_1.Clear();
-                                }
                             }
-                            break;
-                        case "counter":
-                            if (this.bool_0 && this.string_2 != "1")
+                            if (num4 > 0)
                             {
-                                this.ExtraData = Convert.ToString(Convert.ToInt32(this.ExtraData) - 1);
-                                if (Convert.ToInt32(this.ExtraData) <= 0)
-                                {
-                                    this.ExtraData = "0";
-                                    this.bool_0 = false;
-                                    this.method_8().method_89(0, this, true);
+                                this.ReqUpdate(0);
+                            }
+                            else
+                            {
+                                this.dictionary_1.Clear();
+                            }
+                        }
+                        break;
+                    case "counter":
+                        if (this.bool_0 && this.string_2 != "1")
+                        {
+                            this.ExtraData = Convert.ToString(Convert.ToInt32(this.ExtraData) - 1);
+                            if (Convert.ToInt32(this.ExtraData) <= 0)
+                            {
+                                this.ExtraData = "0";
+                                this.bool_0 = false;
+                                this.method_8().method_89(0, this, true);
 
-                                    foreach (RoomItem Item in this.method_8().Hashtable_0.Values)
+                                foreach (RoomItem Item in this.method_8().Hashtable_0.Values)
+                                {
+                                    if (Item.GetBaseItem().Name == "bb_apparatus")
                                     {
-                                        if (Item.GetBaseItem().Name == "bb_apparatus")
-                                        {
-                                            Item.ExtraData = "0";
-                                            Item.UpdateState(false, true);
-                                            Item.ReqUpdate(1);
-                                        }
+                                        Item.ExtraData = "0";
+                                        Item.UpdateState(false, true);
+                                        Item.ReqUpdate(1);
                                     }
                                 }
-                                this.UpdateState(true, true);
-                                this.string_2 = "1";
+                            }
+                            this.UpdateState(true, true);
+                            this.string_2 = "1";
+                            this.ReqUpdate(1);
+                        }
+                        else
+                        {
+                            if (this.bool_0)
+                            {
+                                this.string_2 = "0";
                                 this.ReqUpdate(1);
                             }
-                            else
+                        }
+                        break;
+                    case "freeze_counter":
+                        if (this.method_8().frzTimer && this.string_2 != "1")
+                        {
+                            this.ExtraData = Convert.ToString(Convert.ToInt32(this.ExtraData) - 1);
+                            if (Convert.ToInt32(this.ExtraData) <= 0)
                             {
-                                if (this.bool_0)
-                                {
-                                    this.string_2 = "0";
-                                    this.ReqUpdate(1);
-                                }
+                                this.ExtraData = "0";
+                                this.method_8().frzTimer = false;
+                                this.method_8().GetFreeze().StopGame();
                             }
-                            break;
-                        case "freeze_counter":
-                            if (this.method_8().frzTimer && this.string_2 != "1")
+                            this.UpdateState(true, true);
+                            this.string_2 = "1";
+                            this.ReqUpdate(1);
+                        }
+                        else
+                        {
+                            if (this.method_8().frzTimer)
                             {
-                                this.ExtraData = Convert.ToString(Convert.ToInt32(this.ExtraData) - 1);
-                                if (Convert.ToInt32(this.ExtraData) <= 0)
-                                {
-                                    this.ExtraData = "0";
-                                    this.method_8().frzTimer = false;
-                                    this.method_8().GetFreeze().StopGame();
-                                }
-                                this.UpdateState(true, true);
-                                this.string_2 = "1";
+                                this.string_2 = "0";
                                 this.ReqUpdate(1);
                             }
-                            else
+                        }
+                        break;
+                    case "wf_trg_attime":
+                        if (!this.WiredAtTimeNeedReset)
+                        {
+                            if (this.WiredAtTimeTimer < 0)
                             {
-                                if (this.method_8().frzTimer)
-                                {
-                                    this.string_2 = "0";
-                                    this.ReqUpdate(1);
-                                }
+                                this.WiredAtTimeTimer = 0;
                             }
-                            break;
-                        case "wf_trg_attime":
-                            if (!this.WiredAtTimeNeedReset)
-                            {
-                                if (this.WiredAtTimeTimer < 0)
-                                {
-                                    this.WiredAtTimeTimer = 0;
-                                }
-                                this.WiredAtTimeTimer += 0.5;
-                                this.method_8().method_16(this);
-                                this.ReqUpdate(1);
-                            }
-                            else
-                            {
-                                this.WiredAtTimeNeedReset = true;
-                            }
-                            break;
-                        case "wf_cnd_time_more_than":
-                            if (!this.WiredNeedReset)
-                            {
-                                if (this.WiredCounter >= double.Parse(this.string_2, CultureInfo.InvariantCulture))
-                                {
-                                    this.WiredNeedReset = true;
-                                }
-                                this.WiredCounter += 0.5;
-                                this.ReqUpdate(1);
-                            }
-                            else
+                            this.WiredAtTimeTimer += 0.5;
+                            this.method_8().method_16(this);
+                            this.ReqUpdate(1);
+                        }
+                        else
+                        {
+                            this.WiredAtTimeNeedReset = true;
+                        }
+                        break;
+                    case "wf_cnd_time_more_than":
+                        if (!this.WiredNeedReset)
+                        {
+                            if (this.WiredCounter >= double.Parse(this.string_2, CultureInfo.InvariantCulture))
                             {
                                 this.WiredNeedReset = true;
                             }
-                            break;
-                        case "wf_cnd_time_less_than":
-                            if (!this.WiredNeedReset)
-                            {
-                                if (this.WiredCounter >= double.Parse(this.string_2, CultureInfo.InvariantCulture))
-                                {
-                                    this.WiredNeedReset = true;
-                                }
-                                this.WiredCounter += 0.5;
-                                this.ReqUpdate(1);
-                            }
-                            else
+                            this.WiredCounter += 0.5;
+                            this.ReqUpdate(1);
+                        }
+                        else
+                        {
+                            this.WiredNeedReset = true;
+                        }
+                        break;
+                    case "wf_cnd_time_less_than":
+                        if (!this.WiredNeedReset)
+                        {
+                            if (this.WiredCounter >= double.Parse(this.string_2, CultureInfo.InvariantCulture))
                             {
                                 this.WiredNeedReset = true;
                             }
-                            break;
-                    }
-				}
-			}
-		}
+                            this.WiredCounter += 0.5;
+                            this.ReqUpdate(1);
+                        }
+                        else
+                        {
+                            this.WiredNeedReset = true;
+                        }
+                        break;
+                }
+            }
+        }
 		internal void ReqUpdate(int int_5)
 		{
 			this.int_4 = int_5;

@@ -143,7 +143,7 @@ namespace GoldTree.HabboHotel.SoundMachine
                     this.mSongQueuePosition = 0;
                 }
                 this.mSong = this.mPlaylist[this.mSongQueuePosition];
-                this.mSongLength = mSong.SongData.Length / 1000;
+                this.mSongLength = this.mSong.SongData.Length / 1000;
                 this.mStartedPlayingTimestamp = GoldTree.GetUnixTimestamp();
                 mBroadcastNeeded = true;
             }
@@ -172,11 +172,21 @@ namespace GoldTree.HabboHotel.SoundMachine
 
         public void Start(int SongRequest)
         {
+            if (!(SongRequest >= 0))
+            {
+                SongRequest = 0;
+            }
+
             this.mIsPlaying = true;
             this.mSongQueuePosition = SongRequest - 1;
             this.SetNextSong();
-            this.mRoomOutputItem.ExtraData = "1";
-            this.mRoomOutputItem.UpdateState(true, true);
+            if (this.mRoomOutputItem != null)
+            {
+                this.mRoomOutputItem.ExtraData = "1";
+                this.mRoomOutputItem.bool_0 = true;
+                this.mRoomOutputItem.bool_1 = true;
+                this.mRoomOutputItem.UpdateState(true, true);
+            }
         }
 
         public void SetNextSong()
@@ -194,6 +204,7 @@ namespace GoldTree.HabboHotel.SoundMachine
             if (this.mRoomOutputItem != null)
             {
                 this.mRoomOutputItem.ExtraData = "0";
+                this.mRoomOutputItem.bool_0 = false;
                 this.mRoomOutputItem.UpdateState(true, true);
             }
         }
