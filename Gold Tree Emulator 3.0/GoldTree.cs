@@ -328,7 +328,7 @@ namespace GoldTree
                                                 {
                                                     dbClient.AddParamWithValue("fkey" + current.Key, current.Key);
                                                     dbClient.AddParamWithValue("fvalue" + current.Value, current.Value);
-                                                    dbClient.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES (@fkey " + current.Key + ", @fvalue " + current.Value + ")");
+                                                    dbClient.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES (@fkey" + current.Key + ", @fvalue" + current.Value + ")");
                                                 }
                                             }
                                             catch (Exception ex)
@@ -410,7 +410,7 @@ namespace GoldTree
                                                 {
                                                     dbClient.AddParamWithValue("ekey" + current.Key, current.Key);
                                                     dbClient.AddParamWithValue("evalue" + current.Value, current.Value);
-                                                    dbClient.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES (@ekey " + current.Key + ", @evalue " + current.Value + ")");
+                                                    dbClient.ExecuteQuery("INSERT INTO items_extra_data(item_id, extra_data) VALUES (@ekey" + current.Key + ", @evalue" + current.Value + ")");
                                                 }
                                             }
                                             catch (Exception ex)
