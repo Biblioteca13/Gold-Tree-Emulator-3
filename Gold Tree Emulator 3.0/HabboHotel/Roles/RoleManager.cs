@@ -1416,6 +1416,7 @@ namespace GoldTree.HabboHotel.Roles
                 }
                 break;
 			}
+
 			result = false;
 			return result;
 		}

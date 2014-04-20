@@ -696,7 +696,7 @@ namespace GoldTree
             GoldTree.Destroy("", true);
         }
 
-        internal static void Destroy(string string_8, bool ExitWhenDone)
+        internal static void Destroy(string string_8, bool ExitWhenDone, bool waitExit = false)
         {
             Program.DeleteMenu(Program.GetSystemMenu(Program.GetConsoleWindow(), true), Program.SC_CLOSE, Program.MF_BYCOMMAND);
 
@@ -792,13 +792,21 @@ namespace GoldTree
             }
             if (ExitWhenDone)
             {
+                if (waitExit)
+                {
+                    Console.WriteLine("Press any key to exit..");
+                    Console.ReadKey();
+                }
+
                 Environment.Exit(0);
             }
         }
-        public static bool smethod_20(int int_3, int int_4)
+
+        public static bool CanBeDividedBy(int i, int j)
         {
-            return int_3 % int_4 == 0;
+            return i % j == 0;
         }
+
         public static DateTime TimestampToDate(double timestamp)
         {
             DateTime result = new DateTime(1970, 1, 1, 0, 0, 0, 0);

@@ -29,7 +29,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 				{
 					if (class2.bool_0)
 					{
-						class2.method_4(RoomItem_0.GStruct1_0);
+						class2.MoveTo(RoomItem_0.GStruct1_0);
 					}
 				}
 				else

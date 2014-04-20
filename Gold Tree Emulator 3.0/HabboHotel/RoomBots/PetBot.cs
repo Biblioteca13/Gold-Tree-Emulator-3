@@ -194,7 +194,7 @@ namespace GoldTree.HabboHotel.RoomBots
 									GoldTreeEnvironment.GetExternalText("pet_response_confused7")
 								};
 								Random random = new Random();
-								@class.method_1(null, array[random.Next(0, array.Length - 1)], false);
+								@class.HandleSpeech(null, array[random.Next(0, array.Length - 1)], false);
 							}
 							else
 							{
@@ -202,7 +202,7 @@ namespace GoldTree.HabboHotel.RoomBots
 								{
 								case 1:
 									@class.PetData.AddExpirience(10, -25);
-									@class.method_1(null, GoldTreeEnvironment.GetExternalText("pet_response_sleep"), false);
+									@class.HandleSpeech(null, GoldTreeEnvironment.GetExternalText("pet_response_sleep"), false);
 									@class.Statusses.Add("lay", @class.double_0.ToString());
 									break;
 								case 2:
@@ -300,7 +300,7 @@ namespace GoldTree.HabboHotel.RoomBots
 									break;
 								case 10:
 									@class.PetData.AddExpirience(25, 25);
-									@class.method_1(null, GoldTreeEnvironment.GetExternalText("pet_response_silent"), false);
+									@class.HandleSpeech(null, GoldTreeEnvironment.GetExternalText("pet_response_silent"), false);
 									this.int_2 = 120;
 									break;
 								case 11:
@@ -334,7 +334,7 @@ namespace GoldTree.HabboHotel.RoomBots
 							if (@class.PetData.Energy < 10)
 							{
 								Random random2 = new Random();
-								@class.method_1(null, array2[random2.Next(0, array2.Length - 1)], false);
+								@class.HandleSpeech(null, array2[random2.Next(0, array2.Length - 1)], false);
 								if (@class.PetData.Type != 13u)
 								{
 									@class.Statusses.Add("lay", @class.double_0.ToString());
@@ -350,7 +350,7 @@ namespace GoldTree.HabboHotel.RoomBots
 							else
 							{
 								Random random2 = new Random();
-								@class.method_1(null, array3[random2.Next(0, array3.Length - 1)], false);
+								@class.HandleSpeech(null, array3[random2.Next(0, array3.Length - 1)], false);
 							}
 						}
 						@class.UpdateNeeded = true;
@@ -556,52 +556,52 @@ namespace GoldTree.HabboHotel.RoomBots
 					switch (@class.PetData.Type)
 					{
 					case 0u:
-						@class.method_1(null, array[random.Next(0, array.Length - 1)], false);
+						@class.HandleSpeech(null, array[random.Next(0, array.Length - 1)], false);
 						break;
 					case 1u:
-						@class.method_1(null, array2[random.Next(0, array2.Length - 1)], false);
+						@class.HandleSpeech(null, array2[random.Next(0, array2.Length - 1)], false);
 						break;
 					case 2u:
-						@class.method_1(null, array3[random.Next(0, array3.Length - 1)], false);
+						@class.HandleSpeech(null, array3[random.Next(0, array3.Length - 1)], false);
 						break;
 					case 3u:
-						@class.method_1(null, array4[random.Next(0, array4.Length - 1)], false);
+						@class.HandleSpeech(null, array4[random.Next(0, array4.Length - 1)], false);
 						break;
 					case 4u:
-						@class.method_1(null, array5[random.Next(0, array5.Length - 1)], false);
+						@class.HandleSpeech(null, array5[random.Next(0, array5.Length - 1)], false);
 						break;
 					case 5u:
-						@class.method_1(null, array6[random.Next(0, array6.Length - 1)], false);
+						@class.HandleSpeech(null, array6[random.Next(0, array6.Length - 1)], false);
 						break;
 					case 6u:
-						@class.method_1(null, array7[random.Next(0, array7.Length - 1)], false);
+						@class.HandleSpeech(null, array7[random.Next(0, array7.Length - 1)], false);
 						break;
 					case 7u:
-						@class.method_1(null, array8[random.Next(0, array8.Length - 1)], false);
+						@class.HandleSpeech(null, array8[random.Next(0, array8.Length - 1)], false);
 						break;
 					case 8u:
-						@class.method_1(null, array9[random.Next(0, array9.Length - 1)], false);
+						@class.HandleSpeech(null, array9[random.Next(0, array9.Length - 1)], false);
 						break;
 					case 9u:
-						@class.method_1(null, array10[random.Next(0, array10.Length - 1)], false);
+						@class.HandleSpeech(null, array10[random.Next(0, array10.Length - 1)], false);
 						break;
 					case 10u:
-						@class.method_1(null, array11[random.Next(0, array11.Length - 1)], false);
+						@class.HandleSpeech(null, array11[random.Next(0, array11.Length - 1)], false);
 						break;
 					case 11u:
-						@class.method_1(null, array12[random.Next(0, array12.Length - 1)], false);
+						@class.HandleSpeech(null, array12[random.Next(0, array12.Length - 1)], false);
 						break;
 					case 12u:
-						@class.method_1(null, array13[random.Next(0, array13.Length - 1)], false);
+						@class.HandleSpeech(null, array13[random.Next(0, array13.Length - 1)], false);
 						break;
 					case 13u:
-						@class.method_1(null, array14[random.Next(0, array14.Length - 1)], false);
+						@class.HandleSpeech(null, array14[random.Next(0, array14.Length - 1)], false);
 						break;
 					case 14u:
-						@class.method_1(null, array15[random.Next(0, array15.Length - 1)], false);
+						@class.HandleSpeech(null, array15[random.Next(0, array15.Length - 1)], false);
 						break;
 					default:
-						@class.method_1(null, array16[random.Next(0, array16.Length - 1)], false);
+						@class.HandleSpeech(null, array16[random.Next(0, array16.Length - 1)], false);
 						break;
 					}
 				}

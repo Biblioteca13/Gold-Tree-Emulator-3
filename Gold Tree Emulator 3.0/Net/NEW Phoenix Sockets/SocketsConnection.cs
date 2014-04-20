@@ -87,7 +87,7 @@ namespace GoldTree.Net
                 }
                 catch
                 {
-                    GoldTree.GetGame().GetClientManager().method_5(this);
+                    GoldTree.GetGame().GetClientManager().DisposeConnection(this);
                 }
             }
         }

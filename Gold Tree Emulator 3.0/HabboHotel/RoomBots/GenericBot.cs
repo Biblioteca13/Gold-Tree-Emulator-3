@@ -51,12 +51,12 @@ namespace GoldTree.HabboHotel.RoomBots
 							}
 							else
 							{
-								base.GetRoomUser().method_1(null, text, true);
+								base.GetRoomUser().HandleSpeech(null, text, true);
 							}
 						}
 						else
 						{
-							base.GetRoomUser().method_1(null, text, false);
+							base.GetRoomUser().HandleSpeech(null, text, false);
 						}
 					}
 					if (@class.ServeId >= 1)
@@ -76,7 +76,7 @@ namespace GoldTree.HabboHotel.RoomBots
 				if (base.method_3().list_0.Count > 0)
 				{
 					RandomSpeech @class = base.method_3().method_3();
-					base.GetRoomUser().method_1(null, @class.Message, @class.Shout);
+					base.GetRoomUser().HandleSpeech(null, @class.Message, @class.Shout);
 				}
 				this.int_2 = GoldTree.smethod_5(10, 300);
 			}

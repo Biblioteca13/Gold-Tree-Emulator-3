@@ -157,6 +157,7 @@ namespace GoldTree.HabboHotel.Rooms
 			this.bool_12 = Invisible;
 			this.string_0 = "";
 		}
+
 		public void Unidle()
 		{
 			this.int_1 = 0;
@@ -166,15 +167,18 @@ namespace GoldTree.HabboHotel.Rooms
 				ServerMessage Message = new ServerMessage(486u);
 				Message.AppendInt32(this.VirtualId);
 				Message.AppendBoolean(false);
-				this.method_17().SendMessage(Message, null);
+				this.GetRoom().SendMessage(Message, null);
 			}
 		}
-		internal void method_1(GameClient Session, string string_1, bool bool_13)
+
+		internal void HandleSpeech(GameClient Session, string string_1, bool bool_13)
 		{
 			string object_ = string_1;
-			if (Session == null || (Session.GetHabbo().HasFuse("ignore_roommute") || !this.method_17().bool_4))
+
+			if (Session == null || (Session.GetHabbo().HasFuse("ignore_roommute") || !this.GetRoom().bool_4))
 			{
 				this.Unidle();
+
 				if (!this.IsBot && this.GetClient().GetHabbo().IsMuted)
 				{
 					this.GetClient().SendNotification(GoldTreeEnvironment.GetExternalText("error_muted"));
@@ -211,7 +215,7 @@ namespace GoldTree.HabboHotel.Rooms
 						{
 							string_1 = ChatCommandHandler.smethod_4(string_1);
 						}
-						if (!this.method_17().method_9(this, string_1))
+						if (!this.GetRoom().method_9(this, string_1))
 						{
 							ServerMessage Message2 = new ServerMessage(num);
 							Message2.AppendInt32(this.VirtualId);
@@ -275,15 +279,15 @@ namespace GoldTree.HabboHotel.Rooms
 							{
 								Message2.AppendStringWithBreak(string_1);
 							}
-							Message2.AppendInt32(this.method_2(string_1));
+							Message2.AppendInt32(this.ParseEmoticon(string_1));
 							Message2.AppendBoolean(false);
 							if (!this.IsBot)
 							{
-								this.method_17().method_58(Message2, Session.GetHabbo().list_2, Session.GetHabbo().Id);
+								this.GetRoom().method_58(Message2, Session.GetHabbo().list_2, Session.GetHabbo().Id);
 							}
 							else
 							{
-								this.method_17().SendMessage(Message2, null);
+								this.GetRoom().SendMessage(Message2, null);
 							}
 						}
 						else
@@ -295,7 +299,7 @@ namespace GoldTree.HabboHotel.Rooms
 						}
 						if (!this.IsBot)
 						{
-							this.method_17().method_7(this, string_1, bool_13);
+							this.GetRoom().method_7(this, string_1, bool_13);
                             if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "CHAT_WITH_SOMEONE")
 							{
                                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
@@ -311,7 +315,7 @@ namespace GoldTree.HabboHotel.Rooms
 									"INSERT INTO chatlogs (user_id,room_id,hour,minute,timestamp,message,user_name,full_date) VALUES ('",
 									Session.GetHabbo().Id,
 									"','",
-									this.method_17().Id,
+									this.GetRoom().Id,
 									"','",
 									DateTime.Now.Hour,
 									"','",
@@ -328,7 +332,8 @@ namespace GoldTree.HabboHotel.Rooms
 				}
 			}
 		}
-		internal int method_2(string string_1)
+
+		internal int ParseEmoticon(string string_1)
 		{
 			string_1 = string_1.ToLower();
 			int result;
@@ -363,6 +368,7 @@ namespace GoldTree.HabboHotel.Rooms
 			}
 			return result;
 		}
+
 		internal void method_3(bool bool_13)
 		{
 			this.bool_6 = false;
@@ -379,42 +385,47 @@ namespace GoldTree.HabboHotel.Rooms
 				this.UpdateNeeded = true;
 			}
 		}
-		internal void method_4(ThreeDCoord gstruct1_0)
+
+		internal void MoveTo(ThreeDCoord position)
 		{
-			this.MoveTo(gstruct1_0.x, gstruct1_0.y);
+			this.MoveTo(position.x, position.y);
 		}
-		internal void MoveTo(int int_21, int int_22)
+
+		internal void MoveTo(int x, int y)
 		{
-			if (this.method_17().method_92(int_21, int_22) && !this.method_17().method_96(int_21, int_22))
+			if (this.GetRoom().method_92(x, y) && !this.GetRoom().method_96(x, y))
 			{
 				this.Unidle();
 				this.bool_6 = true;
 				this.bool_10 = true;
-				this.int_17 = int_21;
-				this.int_18 = int_22;
-				if (int_21 >= this.method_17().RoomModel.int_4 || int_22 >= this.method_17().RoomModel.int_5)
+				this.int_17 = x;
+				this.int_18 = y;
+				if (x >= this.GetRoom().RoomModel.int_4 || y >= this.GetRoom().RoomModel.int_5)
 				{
-					this.int_10 = int_21;
-					this.int_11 = int_22;
+					this.int_10 = x;
+					this.int_11 = y;
 				}
 				else
 				{
-					this.int_10 = this.method_17().gstruct1_0[int_21, int_22].x;
-					this.int_11 = this.method_17().gstruct1_0[int_21, int_22].y;
+					this.int_10 = this.GetRoom().gstruct1_0[x, y].x;
+					this.int_11 = this.GetRoom().gstruct1_0[x, y].y;
 				}
 			}
 		}
+
 		internal void method_6()
 		{
 			this.bool_1 = false;
 			this.bool_0 = true;
 		}
+
 		internal void method_7(int int_21, int int_22, double double_2)
 		{
 			this.int_3 = int_21;
 			this.int_4 = int_22;
 			this.double_0 = double_2;
 		}
+
         public void CarryItem(int int_21)
 		{
 			this.CarryItemID = int_21;
@@ -436,8 +447,9 @@ namespace GoldTree.HabboHotel.Rooms
 			ServerMessage Message = new ServerMessage(482u);
 			Message.AppendInt32(this.VirtualId);
 			Message.AppendInt32(int_21);
-			this.method_17().SendMessage(Message, null);
+			this.GetRoom().SendMessage(Message, null);
 		}
+
 		public void method_9(int int_21)
 		{
 			this.method_10(int_21, false);
@@ -501,17 +513,20 @@ namespace GoldTree.HabboHotel.Rooms
 		{
 			this.Statusses[string_1] = string_2;
 		}
-		public void method_12(string string_1)
+
+		public void RemoveStatus(string string_1)
 		{
 			if (this.Statusses.ContainsKey(string_1))
 			{
 				this.Statusses.Remove(string_1);
 			}
 		}
-		public void method_13()
+
+		public void ClearStatuses()
 		{
 			this.Statusses = new Dictionary<string, string>();
 		}
+
 		public void method_14(ServerMessage Message5_0)
 		{
 			if (Message5_0 != null && !this.bool_11)
@@ -592,6 +607,7 @@ namespace GoldTree.HabboHotel.Rooms
 				Message5_0.AppendStringWithBreak("/");
 			}
 		}
+
 		public GameClient GetClient()
 		{
 			GameClient result;
@@ -609,7 +625,8 @@ namespace GoldTree.HabboHotel.Rooms
 			}
 			return result;
 		}
-		private Room method_17()
+
+		private Room GetRoom()
 		{
 			return GoldTree.GetGame().GetRoomManager().GetRoom(this.RoomId);
 		}

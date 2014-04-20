@@ -42,7 +42,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 			{
 				if (ThreeDCoord.smethod_1(@class.Position, RoomItem_0.GStruct1_1) && @class.bool_0)
 				{
-					@class.method_4(RoomItem_0.GStruct1_1);
+					@class.MoveTo(RoomItem_0.GStruct1_1);
 				}
 				else
 				{
@@ -55,7 +55,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 							@class.method_3(true);
 						}
 						@class.bool_1 = true;
-						@class.method_4(RoomItem_0.GStruct1_0);
+						@class.MoveTo(RoomItem_0.GStruct1_0);
 						RoomItem_0.ReqUpdate(3);
 					}
 				}

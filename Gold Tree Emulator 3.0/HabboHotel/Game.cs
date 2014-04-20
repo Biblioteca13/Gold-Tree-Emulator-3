@@ -116,8 +116,8 @@ namespace GoldTree.HabboHotel
             catch (MySql.Data.MySqlClient.MySqlException e)
             {
                 Logging.WriteLine("failed!", ConsoleColor.Red);
-                Logging.WriteLine(e.Message + " Check the given configuration details in config.confn\r\n", ConsoleColor.Yellow);
-                GoldTree.Destroy("", false);
+                Logging.WriteLine(e.Message + " Check the given configuration details in config.conf\r\n", ConsoleColor.Yellow);
+                GoldTree.Destroy("", true, true);
 
                 return;
             }

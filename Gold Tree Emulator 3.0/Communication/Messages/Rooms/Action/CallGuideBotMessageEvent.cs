@@ -38,7 +38,7 @@ namespace GoldTree.Communication.Messages.Rooms.Action
 					RoomUser class4 = @class.method_56(@class.Owner);
 					if (class4 != null)
 					{
-						class3.method_4(class4.Position);
+						class3.MoveTo(class4.Position);
 						class3.method_9(Class107.smethod_0(class3.int_3, class3.int_4, class4.int_3, class4.int_4));
 					}
                     Session.GetHabbo().CallGuideBotAchievementsCompleted();

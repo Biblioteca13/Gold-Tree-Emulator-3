@@ -282,7 +282,7 @@ namespace GoldTree.HabboHotel.Rooms
 				TradeUser @class = this.class65_0[i];
 				if (@class != null && @class.method_0() != null)
 				{
-					@class.method_0().method_12("trd");
+					@class.method_0().RemoveStatus("trd");
 					@class.method_0().UpdateNeeded = true;
 				}
 			}
@@ -296,7 +296,7 @@ namespace GoldTree.HabboHotel.Rooms
 				TradeUser @class = this.class65_0[i];
 				if (@class != null && @class.method_0() != null)
 				{
-					@class.method_0().method_12("trd");
+					@class.method_0().RemoveStatus("trd");
 					@class.method_0().UpdateNeeded = true;
 				}
 			}

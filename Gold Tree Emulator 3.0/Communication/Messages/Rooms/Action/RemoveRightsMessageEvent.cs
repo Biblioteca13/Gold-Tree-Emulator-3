@@ -35,7 +35,7 @@ namespace GoldTree.Communication.Messages.Rooms.Action
 					if (class2 != null && !class2.IsBot)
 					{
 						class2.GetClient().SendMessage(new ServerMessage(43u));
-						class2.method_12("flatctrl");
+						class2.RemoveStatus("flatctrl");
 						class2.UpdateNeeded = true;
 					}
 					ServerMessage Message = new ServerMessage(511u);

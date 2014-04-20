@@ -15,8 +15,8 @@ namespace GoldTree.HabboHotel.RoomBots
 		}
 		public override void OnSelfEnterRoom()
 		{
-			base.GetRoomUser().method_1(null, GoldTreeEnvironment.GetExternalText("guidebot_welcome1"), true);
-			base.GetRoomUser().method_1(null, GoldTreeEnvironment.GetExternalText("guidebot_welcome2"), false);
+			base.GetRoomUser().HandleSpeech(null, GoldTreeEnvironment.GetExternalText("guidebot_welcome1"), true);
+			base.GetRoomUser().HandleSpeech(null, GoldTreeEnvironment.GetExternalText("guidebot_welcome2"), false);
 		}
 		public override void OnSelfLeaveRoom(bool bool_0)
 		{
@@ -57,12 +57,12 @@ namespace GoldTree.HabboHotel.RoomBots
 							}
 							else
 							{
-								base.GetRoomUser().method_1(null, text, true);
+								base.GetRoomUser().HandleSpeech(null, text, true);
 							}
 						}
 						else
 						{
-							base.GetRoomUser().method_1(null, text, false);
+							base.GetRoomUser().HandleSpeech(null, text, false);
 						}
 					}
 					if (@class.ServeId >= 1)
@@ -82,7 +82,7 @@ namespace GoldTree.HabboHotel.RoomBots
 				if (base.method_3() != null && base.method_3().list_0.Count > 0)
 				{
 					RandomSpeech @class = base.method_3().method_3();
-					base.GetRoomUser().method_1(null, @class.Message, @class.Shout);
+					base.GetRoomUser().HandleSpeech(null, @class.Message, @class.Shout);
 				}
 				this.int_2 = GoldTree.smethod_5(0, 150);
 			}

@@ -510,7 +510,7 @@ namespace GoldTree.HabboHotel.Items
                                 this.ExtraData = "1";
                                 this.string_2 = "tried";
                                 @class.method_6();
-                                @class.method_4(this.GStruct1_2);
+                                @class.MoveTo(this.GStruct1_2);
                                 this.ReqUpdate(0);
                                 this.UpdateState(false, true);
                             }
@@ -630,7 +630,7 @@ namespace GoldTree.HabboHotel.Items
                                         {
                                             @class.method_6();
                                             this.uint_3 = 0u;
-                                            @class.method_4(this.GStruct1_1);
+                                            @class.MoveTo(this.GStruct1_1);
                                         }
                                     }
                                     else
@@ -645,7 +645,7 @@ namespace GoldTree.HabboHotel.Items
                                             }
                                             @class.bool_0 = false;
                                             @class.bool_1 = true;
-                                            @class.method_4(this.GStruct1_0);
+                                            @class.MoveTo(this.GStruct1_0);
                                         }
                                         else
                                         {
@@ -667,7 +667,7 @@ namespace GoldTree.HabboHotel.Items
                                     class3.method_6();
                                     if (ThreeDCoord.smethod_0(class3.Position, this.GStruct1_0))
                                     {
-                                        class3.method_4(this.GStruct1_1);
+                                        class3.MoveTo(this.GStruct1_1);
                                     }
                                 }
                                 this.uint_4 = 0u;
@@ -759,7 +759,7 @@ namespace GoldTree.HabboHotel.Items
                                         {
                                             @class.method_6();
                                             this.uint_3 = 0u;
-                                            @class.method_4(this.GStruct1_1);
+                                            @class.MoveTo(this.GStruct1_1);
                                         }
                                     }
                                     else
@@ -774,7 +774,7 @@ namespace GoldTree.HabboHotel.Items
                                             }
                                             @class.bool_0 = false;
                                             @class.bool_1 = true;
-                                            @class.method_4(this.GStruct1_0);
+                                            @class.MoveTo(this.GStruct1_0);
                                         }
                                         else
                                         {
@@ -796,7 +796,7 @@ namespace GoldTree.HabboHotel.Items
                                     class3.method_6();
                                     if (ThreeDCoord.smethod_0(class3.Position, this.GStruct1_0))
                                     {
-                                        class3.method_4(this.GStruct1_1);
+                                        class3.MoveTo(this.GStruct1_1);
                                     }
                                 }
                                 this.uint_4 = 0u;

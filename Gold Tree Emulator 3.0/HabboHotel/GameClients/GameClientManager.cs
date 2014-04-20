@@ -141,11 +141,11 @@ namespace GoldTree.HabboHotel.GameClients
 			}
 		}
 
-        internal void method_5(SocketConnection Message1_0)
+        internal void DisposeConnection(SocketConnection connection)
         {
-            if (!this.DisposeQueue.Contains(Message1_0))
+            if (!this.DisposeQueue.Contains(connection))
             {
-                this.DisposeQueue.Add(Message1_0);
+                this.DisposeQueue.Add(connection);
             }
         }
 
@@ -169,17 +169,19 @@ namespace GoldTree.HabboHotel.GameClients
 		{
 		}
 
-		public GameClient method_7(uint uint_0)
+		public GameClient GetClientById(uint id)
 		{
 			GameClient result;
+
 			try
 			{
-				result = this.Clients[(int)((UIntPtr)uint_0)];
+				result = this.Clients[(int)((UIntPtr)id)];
 			}
 			catch
 			{
 				result = null;
 			}
+
 			return result;
 		}
 
@@ -191,7 +193,7 @@ namespace GoldTree.HabboHotel.GameClients
 
 		public void method_9(uint uint_0)
 		{
-			GameClient @class = this.method_7(uint_0);
+			GameClient @class = this.GetClientById(uint_0);
 			if (@class != null)
 			{
                 //GoldTree.smethod_14().method_6(uint_0);

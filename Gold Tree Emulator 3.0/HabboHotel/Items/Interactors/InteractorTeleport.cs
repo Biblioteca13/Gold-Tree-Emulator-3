@@ -75,7 +75,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 					{
 						try
 						{
-							@class.method_4(RoomItem_0.GStruct1_1);
+							@class.MoveTo(RoomItem_0.GStruct1_1);
 						}
 						catch
 						{

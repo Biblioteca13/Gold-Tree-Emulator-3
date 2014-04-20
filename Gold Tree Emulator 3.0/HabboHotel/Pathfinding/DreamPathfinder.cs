@@ -26,7 +26,10 @@ namespace GoldTree.HabboHotel.Pathfinding
 
         internal static double GetDistance(int x1, int y1, int x2, int y2)
         {
-            return Math.Sqrt(Math.Pow((double)(x1 - x2), 2.0) + Math.Pow((double)(y1 - y2), 2.0));
+            int xDiff = x2 - x1;
+            int yDiff = y2 - y1;
+
+            return Math.Sqrt((double)(xDiff * xDiff) + (double)(yDiff * yDiff));
         }
 
         internal static SquarePoint GetNextStep(int pUserX, int pUserY, int pUserTargetX, int pUserTargetY, byte[,] pGameMap, double[,] pHeight, double[,] double_1, double[,] double_2, int MaxX, int MaxY, bool pUserOverride, bool pDiagonal, bool[,] iHeightOverride)

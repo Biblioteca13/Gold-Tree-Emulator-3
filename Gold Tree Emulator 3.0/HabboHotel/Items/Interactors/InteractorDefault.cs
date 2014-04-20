@@ -35,7 +35,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 					{
 						if (@class.bool_0)
 						{
-							@class.method_4(RoomItem_0.GStruct1_0);
+							@class.MoveTo(RoomItem_0.GStruct1_0);
 							return;
 						}
 						return;

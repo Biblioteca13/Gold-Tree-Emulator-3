@@ -3466,7 +3466,7 @@ namespace GoldTree.HabboHotel.Rooms
                                             class3.RoomBot.RoomUser_0.int_4 = class3.int_13;
                                             class3.RoomBot.RoomUser_0.double_0 = class3.double_1 + 1.0;
                                             class3.RoomBot.RoomUser_0.bool_4 = false;
-                                            class3.RoomBot.RoomUser_0.method_12("mv");
+                                            class3.RoomBot.RoomUser_0.RemoveStatus("mv");
                                             if (class3.int_3 == this.RoomModel.int_0 && class3.int_4 == this.RoomModel.int_1 && !list.Contains(class3.RoomBot.RoomUser_0.UId))
                                             {
                                                 list.Add(class3.RoomBot.RoomUser_0.UId);
@@ -3502,7 +3502,7 @@ namespace GoldTree.HabboHotel.Rooms
                                             num = 12;
                                             int int32_ = @struct.X;
                                             int int32_2 = @struct.Y;
-                                            class3.method_12("mv");
+                                            class3.RemoveStatus("mv");
                                             double num4 = this.method_84(int32_, int32_2, this.method_93(int32_, int32_2));
                                             class3.Statusses.Remove("lay");
                                             class3.Statusses.Remove("sit");
@@ -3614,11 +3614,11 @@ namespace GoldTree.HabboHotel.Rooms
                                         }
                                         num = 12;
                                         class3.bool_6 = false;
-                                        class3.method_12("mv");
+                                        class3.RemoveStatus("mv");
                                         class3.bool_10 = false;
                                         if (class3.IsBot && class3.RoomBot.RoomUser_0 != null)
                                         {
-                                            class3.RoomBot.RoomUser_0.method_12("mv");
+                                            class3.RoomBot.RoomUser_0.RemoveStatus("mv");
                                             class3.RoomBot.RoomUser_0.bool_6 = false;
                                             class3.RoomBot.RoomUser_0.bool_10 = false;
                                             class3.RoomBot.RoomUser_0.UpdateNeeded = true;
@@ -3632,11 +3632,11 @@ namespace GoldTree.HabboHotel.Rooms
                                         if (class3.Statusses.ContainsKey("mv") && class3.class34_1 == null)
                                         {
                                             num = 18;
-                                            class3.method_12("mv");
+                                            class3.RemoveStatus("mv");
                                             class3.UpdateNeeded = true;
                                             if (class3.IsBot && class3.RoomBot.RoomUser_0 != null)
                                             {
-                                                class3.RoomBot.RoomUser_0.method_12("mv");
+                                                class3.RoomBot.RoomUser_0.RemoveStatus("mv");
                                                 class3.RoomBot.RoomUser_0.UpdateNeeded = true;
                                             }
                                         }
@@ -4506,6 +4506,7 @@ namespace GoldTree.HabboHotel.Rooms
             result = null;
             return result;
         }
+
         public RoomUser GetRoomUserByHabbo(uint uint_2)
         {
             RoomUser result;
@@ -4521,7 +4522,8 @@ namespace GoldTree.HabboHotel.Rooms
             result = null;
             return result;
         }
-        public void method_54()
+
+        public void Rave()
         {
             for (int i = 0; i < this.RoomUsers.Length; i++)
             {
@@ -7524,7 +7526,7 @@ namespace GoldTree.HabboHotel.Rooms
                 {
                     @class.int_10 = @class.int_3;
                     @class.int_11 = @class.int_4;
-                    @class.method_13();
+                    @class.ClearStatuses();
                     @class.method_3(false);
                 }
             }

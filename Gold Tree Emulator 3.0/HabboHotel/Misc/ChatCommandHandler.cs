@@ -1042,7 +1042,7 @@ namespace GoldTree.HabboHotel.Misc
                                         Session.GetHabbo().method_28("You cannot pull yourself");
                                         return true;
                                     }
-                                    class6.method_1(Session, "*pulls " + TargetClient.GetHabbo().Username + " to them*", false);
+                                    class6.HandleSpeech(Session, "*pulls " + TargetClient.GetHabbo().Username + " to them*", false);
                                     if (class6.int_8 == 0)
                                     {
                                         a = "up";
@@ -1731,7 +1731,7 @@ namespace GoldTree.HabboHotel.Misc
                                                 }
                                                 if (TargetClient.GetHabbo().CurrentRoomId == Session.GetHabbo().CurrentRoomId && Math.Abs(class6.int_3 - class4.int_3) < 3 && Math.Abs(class6.int_4 - class4.int_4) < 3)
                                                 {
-                                                    class6.method_1(Session, "*pulls " + TargetClient.GetHabbo().Username + " to them*", false);
+                                                    class6.HandleSpeech(Session, "*pulls " + TargetClient.GetHabbo().Username + " to them*", false);
                                                     if (class6.int_8 == 0)
                                                     {
                                                         a = "up";
@@ -1925,7 +1925,7 @@ namespace GoldTree.HabboHotel.Misc
                                             IL_3DD2:
                                                 if (!arg_3DD2_0)
                                                 {
-                                                    class6.method_1(Session, "*pushes " + TargetClient.GetHabbo().Username + "*", false);
+                                                    class6.HandleSpeech(Session, "*pushes " + TargetClient.GetHabbo().Username + "*", false);
                                                     if (class6.int_8 == 0)
                                                     {
                                                         a = "up";
@@ -2470,7 +2470,7 @@ namespace GoldTree.HabboHotel.Misc
                                                     if (Session.GetHabbo().IsJuniori || Session.GetHabbo().HasFuse("cmd_rave"))
                                                     {
                                                         class2 = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
-                                                        class2.method_54();
+                                                        class2.Rave();
                                                         return true;
                                                     }
                                                     return false;
@@ -2523,7 +2523,7 @@ namespace GoldTree.HabboHotel.Misc
                                                                 return false;
                                                             }
                                                             RoomUser roomUser = class2.GetRoomUserByHabbo(TargetClient.GetHabbo().Id);
-                                                            roomUser.method_1(TargetClient, Input.Substring(9 + text2.Length), false);
+                                                            roomUser.HandleSpeech(TargetClient, Input.Substring(9 + text2.Length), false);
                                                             return true;
                                                         }
                                                         return false;
@@ -2803,7 +2803,7 @@ namespace GoldTree.HabboHotel.Misc
                                     IL_3DD2:
                                         if (!arg_3DD2_0)
                                         {
-                                            class6.method_1(Session, "*pushes " + TargetClient.GetHabbo().Username + "*", false);
+                                            class6.HandleSpeech(Session, "*pushes " + TargetClient.GetHabbo().Username + "*", false);
                                             if (class6.int_8 == 0)
                                             {
                                                 a = "up";

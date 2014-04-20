@@ -14,7 +14,7 @@ namespace GoldTree.Communication.Messages.Rooms.Chat
 				RoomUser class2 = @class.GetRoomUserByHabbo(Session.GetHabbo().Id);
 				if (class2 != null)
 				{
-					class2.method_1(Session, GoldTree.FilterString(Event.PopFixedString()), true);
+					class2.HandleSpeech(Session, GoldTree.FilterString(Event.PopFixedString()), true);
 				}
 			}
 		}

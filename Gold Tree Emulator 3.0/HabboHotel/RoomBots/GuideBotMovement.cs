@@ -37,7 +37,7 @@ namespace GoldTree.HabboHotel.RoomBots
 				if (base.method_3().list_0.Count > 0)
 				{
 					RandomSpeech @class = base.method_3().method_3();
-					base.GetRoomUser().method_1(null, @class.Message, @class.Shout);
+					base.GetRoomUser().HandleSpeech(null, @class.Message, @class.Shout);
 				}
 				this.int_2 = GoldTree.smethod_5(10, 300);
 			}
