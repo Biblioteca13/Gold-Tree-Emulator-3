@@ -329,8 +329,8 @@ namespace GoldTree
                                                 if (!string.IsNullOrEmpty(current.Key.ToString()) && !string.IsNullOrEmpty(current.Value.ToString()) && current.Key > 0 && current.Value > 0)
                                                 {
                                                     dbClient.AddParamWithValue("fkey" + current.Key, current.Key);
-                                                    dbClient.AddParamWithValue("fvalue" + current.Value, current.Value);
-                                                    dbClient.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES (@fkey" + current.Key + ", @fvalue" + current.Value + ")");
+                                                    dbClient.AddParamWithValue("fvalue" + current.Key, current.Value);
+                                                    dbClient.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES (@fkey" + current.Key + ", @fvalue" + current.Key + ")");
                                                 }
                                             }
                                             catch (Exception ex)
@@ -413,8 +413,8 @@ namespace GoldTree
                                                 if (!string.IsNullOrEmpty(current.Key.ToString()) && !string.IsNullOrEmpty(current.Value.ToString()) && current.Key > 0)
                                                 {
                                                     dbClient.AddParamWithValue("ekey" + current.Key, current.Key);
-                                                    dbClient.AddParamWithValue("evalue" + current.Value, current.Value);
-                                                    dbClient.ExecuteQuery("INSERT INTO items_extra_data(item_id, extra_data) VALUES (@ekey" + current.Key + ", @evalue" + current.Value + ")");
+                                                    dbClient.AddParamWithValue("evalue" + current.Key, current.Value);
+                                                    dbClient.ExecuteQuery("INSERT INTO items_extra_data(item_id, extra_data) VALUES (@ekey" + current.Key + ", @evalue" + current.Key + ")");
                                                 }
                                             }
                                             catch (Exception ex)

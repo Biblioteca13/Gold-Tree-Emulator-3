@@ -2918,7 +2918,7 @@ namespace GoldTree.HabboHotel.Misc
                     }
                     Session.method_10(string.Concat(new object[]
 					{
-						"Gold Tree Emulator 3.0\n\nThanks/Credits;\nJuniori [Project Leader] \nSojobo [Phoenix Emu]\nMatty [Phoenix Emu]\nRoy [Uber Emu]\n\n",
+						"Gold Tree Emulator 3.0\n\nThanks/Credits;\nJuniori [Project Leader] \nBustanity [Code cleanup]\nSojobo [Phoenix Emu]\nMatty [Phoenix Emu]\nRoy [Uber Emu]\n\n",
 						GoldTree.PrettyVersion,
 						"\nUptime: ",
 						timeSpan.Days,
