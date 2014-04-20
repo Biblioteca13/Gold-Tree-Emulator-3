@@ -288,6 +288,8 @@ namespace GoldTree
                                     Console.Write("Updating items (Fireworks) ...");
                                     Dictionary<uint, int> newfwcount = new Dictionary<uint, int>();
 
+                                    dbClient.ExecuteQuery("CREATE TABLE IF NOT EXISTS `items_firework` (`item_id` int(10) unsigned NOT NULL, `fw_count` int(10) NOT NULL, PRIMARY KEY (`item_id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
+
                                     DataTable dataTable = dbClient.ReadDataTable("SELECT Id, fw_count FROM items;");
 
                                     int fails1 = 0;
@@ -370,6 +372,8 @@ namespace GoldTree
                                     Console.ForegroundColor = ConsoleColor.Gray;
                                     Console.Write("Updating items (Extra data) ...");
                                     Dictionary<uint, string> newextradata = new Dictionary<uint, string>();
+
+                                    dbClient.ExecuteQuery("CREATE TABLE IF NOT EXISTS `items_extra_data` (`item_id` int(10) unsigned NOT NULL, `extra_data` text NOT NULL, PRIMARY KEY (`item_id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
 
                                     DataTable dataTable2 = dbClient.ReadDataTable("SELECT Id, extra_data FROM items;");
 
