@@ -171,9 +171,11 @@ namespace GoldTree.HabboHotel.Rooms
 			}
 		}
 
-		internal void HandleSpeech(GameClient Session, string string_1, bool bool_13)
+		internal void HandleSpeech(GameClient Session, string str, bool bool_13)
 		{
-			string object_ = string_1;
+			string object_ = str;
+
+            string linkRegex = @"((http|https):\/\/|www.)?[a-zA-Z0-9\-\.]+(com|co.uk|org|net|eu|cf|info|ml)\b";
 
 			if (Session == null || (Session.GetHabbo().HasFuse("ignore_roommute") || !this.GetRoom().bool_4))
 			{
@@ -185,7 +187,7 @@ namespace GoldTree.HabboHotel.Rooms
 				}
 				else
 				{
-					if (!string_1.StartsWith(":") || Session == null || !ChatCommandHandler.smethod_5(Session, string_1.Substring(1)))
+					if (!str.StartsWith(":") || Session == null || !ChatCommandHandler.smethod_5(Session, str.Substring(1)))
 					{
 						uint num = 24u;
 						if (bool_13)
@@ -211,20 +213,35 @@ namespace GoldTree.HabboHotel.Rooms
 							Session.GetHabbo().dateTime_0 = DateTime.Now;
 							Session.GetHabbo().int_23++;
 						}
+
 						if (!this.IsBot && !Session.GetHabbo().IsJuniori)
-						{
-							string_1 = ChatCommandHandler.smethod_4(string_1);
-						}
-						if (!this.GetRoom().method_9(this, string_1))
+							str = ChatCommandHandler.smethod_4(str);
+
+						if (!this.GetRoom().method_9(this, str))
 						{
 							ServerMessage Message2 = new ServerMessage(num);
 							Message2.AppendInt32(this.VirtualId);
-							if (string_1.Contains("http://") || string_1.Contains("www.") || string_1.Contains("https://"))
+
+
+                            if (GoldTree.GetConfig().data["anti.ads.enable"] == "1")
+                            {
+                                if (Session.GetHabbo().Rank <= uint.Parse(GoldTree.GetConfig().data["anti.ads.rank"]))
+                                {
+                                    if (System.Text.RegularExpressions.Regex.IsMatch(str, linkRegex, System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                    {
+                                        Session.SendNotification(GoldTree.GetConfig().data["anti.ads.msg"]);
+                                        return;
+                                    }
+                                }
+                            }
+
+							if (str.Contains("http://") || str.Contains("www.") || str.Contains("https://"))
 							{
-								string[] array = string_1.Split(new char[]
+								string[] array = str.Split(new char[]
 								{
 									' '
 								});
+
 								int num2 = 0;
 								string text = "";
 								string text2 = "";
@@ -254,12 +271,16 @@ namespace GoldTree.HabboHotel.Rooms
 										text2 = text2 + " " + text3;
 									}
 								}
-								string_1 = text2;
+
+								text = text2;
+
 								string[] array3 = text.Split(new char[]
 								{
 									','
 								});
-								Message2.AppendStringWithBreak(string_1);
+
+								Message2.AppendStringWithBreak(text);
+
 								if (array3.Length > 0)
 								{
 									Message2.AppendBoolean(false);
@@ -277,34 +298,31 @@ namespace GoldTree.HabboHotel.Rooms
 							}
 							else
 							{
-								Message2.AppendStringWithBreak(string_1);
+								Message2.AppendStringWithBreak(str);
 							}
-							Message2.AppendInt32(this.ParseEmoticon(string_1));
+
+							Message2.AppendInt32(ParseEmoticon(str));
 							Message2.AppendBoolean(false);
+
 							if (!this.IsBot)
-							{
 								this.GetRoom().method_58(Message2, Session.GetHabbo().list_2, Session.GetHabbo().Id);
-							}
 							else
-							{
 								this.GetRoom().SendMessage(Message2, null);
-							}
 						}
 						else
 						{
 							if (!this.IsBot)
-							{
-								Session.GetHabbo().Whisper(string_1);
-							}
+								Session.GetHabbo().Whisper(str);
 						}
+
 						if (!this.IsBot)
 						{
-							this.GetRoom().method_7(this, string_1, bool_13);
+							this.GetRoom().method_7(this, str, bool_13);
+
                             if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "CHAT_WITH_SOMEONE")
-							{
                                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
-							}
 						}
+
                         if (ServerConfiguration.EnableChatlog && !this.IsBot && !this.GetClient().GetHabbo().IsJuniori)
 						{
 							using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())

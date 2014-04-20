@@ -10,14 +10,14 @@ namespace GoldTree.Communication.Messages.Rooms.Chat
         {
             if (Session != null && Session.GetHabbo() != null)
             {
-                Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
-                if (@class != null)
+                Room room = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
+
+                if (room != null)
                 {
-                    RoomUser class2 = @class.GetRoomUserByHabbo(Session.GetHabbo().Id);
-                    if (class2 != null)
-                    {
-                        class2.HandleSpeech(Session, GoldTree.FilterString(Event.PopFixedString()), false);
-                    }
+                    RoomUser user = room.GetRoomUserByHabbo(Session.GetHabbo().Id);
+
+                    if (user != null)
+                        user.HandleSpeech(Session, GoldTree.FilterString(Event.PopFixedString()), false);
                 }
             }
         }
