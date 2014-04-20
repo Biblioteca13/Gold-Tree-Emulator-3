@@ -82,10 +82,11 @@ namespace GoldTree.HabboHotel.Users
 		public uint CurrentQuestId;
 		public int CurrentQuestProgress;
 
-		public int int_6;
-		public int int_7;
-		public int int_8;
-		public int int_9;
+		public int BuilderLevel;
+		public int SocialLevel;
+		public int IdentityLevel;
+		public int ExplorerLevel;
+
 		public uint uint_7;
 
 		public int NewbieStatus;
@@ -108,17 +109,14 @@ namespace GoldTree.HabboHotel.Users
 
 		public int RoomVisits;
 
-		public int int_15;
-		public int int_16;
+		public int OnlineTime;
+		public int LoginTimestamp;
 
 		public int Respect;
 		public int RespectGiven;
 
 		public int GiftsGiven;
 		public int GiftsReceived;
-
-		public int int_21;
-		public int int_22;
 
 		private UserDataFactory UserDataFactory;
 
@@ -194,7 +192,7 @@ namespace GoldTree.HabboHotel.Users
 			{
 				this.bool_16 = true;
                 this.Online = false;
-				int num = (int)GoldTree.GetUnixTimestamp() - this.int_16;
+				int num = (int)GoldTree.GetUnixTimestamp() - this.LoginTimestamp;
 				string text = string.Concat(new object[]
 				{
 					"UPDATE users SET last_online = UNIX_TIMESTAMP(), online = '0', activity_points_lastupdate = '",
@@ -346,30 +344,37 @@ namespace GoldTree.HabboHotel.Users
             this.FriendStreamEnabled = FriendStream;
 
 			DataRow dataRow = null;
-			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+			using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 			{
-				@class.AddParamWithValue("user_id", UserId);
-				dataRow = @class.ReadDataRow("SELECT * FROM user_stats WHERE Id = @user_id LIMIT 1");
+				dbClient.AddParamWithValue("user_id", UserId);
+
+				dataRow = dbClient.ReadDataRow("SELECT * FROM user_stats WHERE Id = @user_id LIMIT 1");
+
 				if (dataRow == null)
 				{
-					@class.ExecuteQuery("INSERT INTO user_stats (Id) VALUES ('" + UserId + "')");
-					dataRow = @class.ReadDataRow("SELECT * FROM user_stats WHERE Id = @user_id LIMIT 1");
+					dbClient.ExecuteQuery("INSERT INTO user_stats (Id) VALUES ('" + UserId + "')");
+					dataRow = dbClient.ReadDataRow("SELECT * FROM user_stats WHERE Id = @user_id LIMIT 1");
 				}
-				this.dataTable_0 = @class.ReadDataTable("SELECT * FROM group_memberships WHERE userid = @user_id");
+
+				this.dataTable_0 = dbClient.ReadDataTable("SELECT * FROM group_memberships WHERE userid = @user_id");
+
 				IEnumerator enumerator;
 				if (this.dataTable_0 != null)
 				{
 					enumerator = this.dataTable_0.Rows.GetEnumerator();
+
 					try
 					{
 						while (enumerator.MoveNext())
 						{
 							DataRow dataRow2 = (DataRow)enumerator.Current;
 							GroupsManager class2 = Groups.smethod_2((int)dataRow2["groupid"]);
+
 							if (class2 == null)
 							{
-								DataTable dataTable = @class.ReadDataTable("SELECT * FROM groups WHERE Id = " + (int)dataRow2["groupid"] + " LIMIT 1;");
+								DataTable dataTable = dbClient.ReadDataTable("SELECT * FROM groups WHERE Id = " + (int)dataRow2["groupid"] + " LIMIT 1;");
 								IEnumerator enumerator2 = dataTable.Rows.GetEnumerator();
+
 								try
 								{
 									while (enumerator2.MoveNext())
@@ -377,7 +382,7 @@ namespace GoldTree.HabboHotel.Users
 										DataRow dataRow3 = (DataRow)enumerator2.Current;
 										if (!Groups.GroupsManager.ContainsKey((int)dataRow3["Id"]))
 										{
-											Groups.GroupsManager.Add((int)dataRow3["Id"], new GroupsManager((int)dataRow3["Id"], dataRow3, @class));
+											Groups.GroupsManager.Add((int)dataRow3["Id"], new GroupsManager((int)dataRow3["Id"], dataRow3, dbClient));
 										}
 									}
 									continue;
@@ -391,6 +396,7 @@ namespace GoldTree.HabboHotel.Users
 									}
 								}
 							}
+
 							if (!class2.list_0.Contains((int)UserId))
 							{
 								class2.method_0((int)UserId);
@@ -405,23 +411,23 @@ namespace GoldTree.HabboHotel.Users
 							disposable.Dispose();
 						}
 					}
+
 					int num = (int)dataRow["groupid"];
 					GroupsManager class3 = Groups.smethod_2(num);
+
 					if (class3 != null)
-					{
 						this.int_0 = num;
-					}
 					else
-					{
 						this.int_0 = 0;
-					}
 				}
 				else
 				{
 					this.int_0 = 0;
 				}
-				DataTable dataTable2 = @class.ReadDataTable("SELECT groupid FROM group_requests WHERE userid = '" + UserId + "';");
+
+				DataTable dataTable2 = dbClient.ReadDataTable("SELECT groupid FROM group_requests WHERE userid = '" + UserId + "';");
 				enumerator = dataTable2.Rows.GetEnumerator();
+
 				try
 				{
 					while (enumerator.MoveNext())
@@ -439,39 +445,56 @@ namespace GoldTree.HabboHotel.Users
 					}
 				}
 			}
+
 			this.RoomVisits = (int)dataRow["RoomVisits"];
-			this.int_16 = (int)GoldTree.GetUnixTimestamp();
-			this.int_15 = (int)dataRow["OnlineTime"];
+			this.LoginTimestamp = (int)GoldTree.GetUnixTimestamp();
+			this.OnlineTime = (int)dataRow["OnlineTime"];
 			this.Respect = (int)dataRow["Respect"];
+
 			this.RespectGiven = (int)dataRow["RespectGiven"];
 			this.GiftsGiven = (int)dataRow["GiftsGiven"];
+
             this.FireworkPixelLoadedCount = (int)dataRow["fireworks"];
+
 			this.GiftsReceived = (int)dataRow["GiftsReceived"];
-			this.int_21 = (int)dataRow["DailyRespectPoints"];
-			this.int_22 = (int)dataRow["DailyPetRespectPoints"];
+
+			this.RespectPoints = (int)dataRow["DailyRespectPoints"];
+			this.PetRespectPoints = (int)dataRow["DailyPetRespectPoints"];
+
 			this.AchievementScore = (int)dataRow["AchievementScore"];
+
 			this.CompletedQuests = new List<uint>();
+
 			this.uint_7 = 0u;
+
 			this.CurrentQuestId = (uint)dataRow["quest_id"];
 			this.CurrentQuestProgress = (int)dataRow["quest_progress"];
-			this.int_6 = (int)dataRow["lev_builder"];
-			this.int_8 = (int)dataRow["lev_identity"];
-			this.int_7 = (int)dataRow["lev_social"];
-			this.int_9 = (int)dataRow["lev_explore"];
+
+			this.BuilderLevel = (int)dataRow["lev_builder"];
+			this.IdentityLevel = (int)dataRow["lev_identity"];
+			this.SocialLevel = (int)dataRow["lev_social"];
+			this.ExplorerLevel = (int)dataRow["lev_explore"];
+
             this.RegularVisitor = (int)dataRow["RegularVisitor"];
+
             this.FootballGoalScorer = (int)dataRow["FootballGoalScorer"];
             this.FootballGoalHost = (int)dataRow["FootballGoalHost"];
+
             this.TilesLocked = (int)dataRow["TilesLocked"];
+
             this.StaffPicks = (int)dataRow["staff_picks"];
+
 			if (Session != null)
 			{
 				this.SubscriptionManager = new SubscriptionManager(UserId, userDataFactory);
 				this.BadgeComponent = new BadgeComponent(UserId, userDataFactory);
                 this.InventoryComponent = new InventoryComponent(UserId, Session, userDataFactory);
 				this.EffectsInventoryComponent = new AvatarEffectsInventoryComponent(UserId, Session, userDataFactory);
+
 				this.bool_8 = false;
 				this.bool_9 = false;
-				foreach (DataRow dataRow3 in userDataFactory.DataTable_10.Rows)
+
+				foreach (DataRow dataRow3 in userDataFactory.GetRooms().Rows)
 				{
 					this.OwnedRooms.Add(GoldTree.GetGame().GetRoomManager().method_17((uint)dataRow3["Id"], dataRow3));
 				}
@@ -531,6 +554,7 @@ namespace GoldTree.HabboHotel.Users
 				this.int_0 = 0;
 			}
 		}
+
 		internal void method_1(DatabaseClient class6_0)
 		{
 			this.OwnedRooms.Clear();
@@ -541,14 +565,16 @@ namespace GoldTree.HabboHotel.Users
 				this.OwnedRooms.Add(GoldTree.GetGame().GetRoomManager().method_17((uint)dataRow["Id"], dataRow));
 			}
 		}
+
 		public void method_2(UserDataFactory class12_1)
 		{
-			this.method_8(class12_1);
-			this.method_5(class12_1);
-			this.method_6(class12_1);
-			this.method_7(class12_1);
+			this.LoadAchievements(class12_1);
+			this.LoadFavorites(class12_1);
+			this.LoadIgnores(class12_1);
+			this.LoadTags(class12_1);
 			this.LoadQuests();
 		}
+
 		public bool HasFuse(string string_7)
 		{
 			if (GoldTree.GetGame().GetRoleManager().method_3(this.Id))
@@ -560,6 +586,7 @@ namespace GoldTree.HabboHotel.Users
 				return GoldTree.GetGame().GetRoleManager().method_1(this.Rank, string_7);
 			}
 		}
+
 		public int method_4()
 		{
 			if (this.IsJuniori)
@@ -571,27 +598,32 @@ namespace GoldTree.HabboHotel.Users
 				return GoldTree.GetGame().GetRoleManager().method_2(this.Rank);
 			}
 		}
-		public void method_5(UserDataFactory class12_1)
+
+		public void LoadFavorites(UserDataFactory class12_1)
 		{
 			this.list_1.Clear();
-			DataTable dataTable_ = class12_1.DataTable_1;
+
+			DataTable dataTable_ = class12_1.GetFavorites();
 			foreach (DataRow dataRow in dataTable_.Rows)
 			{
 				this.list_1.Add((uint)dataRow["room_id"]);
 			}
 		}
-		public void method_6(UserDataFactory class12_1)
+
+		public void LoadIgnores(UserDataFactory userdata)
 		{
-			DataTable dataTable_ = class12_1.DataTable_2;
+			DataTable dataTable_ = userdata.GetIgnores();
 			foreach (DataRow dataRow in dataTable_.Rows)
 			{
 				this.list_2.Add((uint)dataRow["ignore_id"]);
 			}
 		}
-		public void method_7(UserDataFactory class12_1)
+
+		public void LoadTags(UserDataFactory userdata)
 		{
 			this.list_3.Clear();
-			DataTable dataTable_ = class12_1.DataTable_3;
+
+			DataTable dataTable_ = userdata.GetTags();
 			foreach (DataRow dataRow in dataTable_.Rows)
 			{
 				this.list_3.Add((string)dataRow["tag"]);
@@ -601,9 +633,11 @@ namespace GoldTree.HabboHotel.Users
                 this.TagAchievementsCompleted();
 			}
 		}
-        public void method_8(UserDataFactory class12_1)
+
+        public void LoadAchievements(UserDataFactory userdata)
         {
-            DataTable dataTable = class12_1.DataTable_0;
+            DataTable dataTable = userdata.GetAchievements();
+
             if (dataTable != null)
             {
                 foreach (DataRow dataRow in dataTable.Rows)
@@ -615,19 +649,23 @@ namespace GoldTree.HabboHotel.Users
                 }
             }
         }
-		public void method_9()
+
+		public void Dispose()
 		{
 			if (!this.bool_9)
 			{
 				this.bool_9 = true;
+
 				GoldTree.GetGame().GetClientManager().method_1(this.Id, this.Username);
+
 				if (!this.bool_16)
 				{
 					this.bool_16 = true;
                     this.Online = false;
-                    using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+
+                    using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                     {
-                        @class.ExecuteQuery(string.Concat(new object[]
+                        dbClient.ExecuteQuery(string.Concat(new object[]
 						{
 							"UPDATE users SET last_online = UNIX_TIMESTAMP(), users.online = '0', activity_points = '",
 							this.ActivityPoints,
@@ -639,8 +677,10 @@ namespace GoldTree.HabboHotel.Users
 							this.Id,
 							"' LIMIT 1;"
 						}));
-                        int num = (int)GoldTree.GetUnixTimestamp() - this.int_16;
-                        @class.ExecuteQuery(string.Concat(new object[]
+
+                        int num = (int)GoldTree.GetUnixTimestamp() - this.LoginTimestamp;
+
+                        dbClient.ExecuteQuery(string.Concat(new object[]
 						{
 							"UPDATE user_stats SET RoomVisits = '",
 							this.RoomVisits,
@@ -668,36 +708,39 @@ namespace GoldTree.HabboHotel.Users
 						}));
                     }
 				}
+
                 if (this.InRoom && this.CurrentRoom != null)
-				{
 					this.CurrentRoom.method_47(this.Session, false, false);
-				}
+
 				if (this.Messenger != null)
 				{
 					this.Messenger.bool_0 = true;
 					this.Messenger.method_5(true);
 					this.Messenger = null;
 				}
+
 				if (this.SubscriptionManager != null)
 				{
-					this.SubscriptionManager.method_0();
+                    this.SubscriptionManager.GetSubscriptions().Clear();
 					this.SubscriptionManager = null;
 				}
-                this.InventoryComponent.method_18();
+
+                this.InventoryComponent.SavePets();
 			}
 		}
-		internal void method_10(uint RoomId)
+
+		internal void SendToRoom(uint roomId)
 		{
 			if (ServerConfiguration.EnableRoomLog)
 			{
-				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+				using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 				{
-					@class.ExecuteQuery(string.Concat(new object[]
+					dbClient.ExecuteQuery(string.Concat(new object[]
 					{
 						"INSERT INTO user_roomvisits (user_id,room_id,entry_timestamp,exit_timestamp,hour,minute) VALUES ('",
 						this.Id,
 						"','",
-						RoomId,
+						roomId,
 						"',UNIX_TIMESTAMP(),'0','",
 						DateTime.Now.Hour,
 						"','",
@@ -706,22 +749,24 @@ namespace GoldTree.HabboHotel.Users
 					}));
 				}
 			}
-			this.CurrentRoomId = RoomId;
+
+			this.CurrentRoomId = roomId;
+
             if (this.CurrentQuestId > 0 && this.CurrentRoom.Owner != this.Username && GoldTree.GetGame().GetQuestManager().GetQuestAction(this.CurrentQuestId) == "ENTEROTHERSROOM")
-			{
                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(this.CurrentQuestId, this.GetClient());
-			}
+
 			this.Messenger.method_5(false);
 		}
-		public void method_11()
+
+		public void RemoveFromRoom()
 		{
-			try
-			{
-				if (ServerConfiguration.EnableRoomLog)
-				{
-					using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
-					{
-						@class.ExecuteQuery(string.Concat(new object[]
+            try
+            {
+                if (ServerConfiguration.EnableRoomLog)
+                {
+                    using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+                    {
+                        @class.ExecuteQuery(string.Concat(new object[]
 						{
 							"UPDATE user_roomvisits SET exit_timestamp = UNIX_TIMESTAMP() WHERE room_id = '",
 							this.CurrentRoomId,
@@ -729,44 +774,51 @@ namespace GoldTree.HabboHotel.Users
 							this.Id,
 							"' ORDER BY entry_timestamp DESC LIMIT 1"
 						}));
-					}
-				}
-			}
-			catch
-			{
-			}
+                    }
+                }
+            }
+            catch { }
+
 			this.CurrentRoomId = 0u;
+
 			if (this.Messenger != null)
-			{
 				this.Messenger.method_5(false);
-			}
 		}
+
 		public void method_12()
 		{
 			if (this.GetMessenger() == null)
 			{
 				this.Messenger = new HabboMessenger(this.Id);
+
 				this.Messenger.method_0(this.UserDataFactory);
 				this.Messenger.method_1(this.UserDataFactory);
-				GameClient @class = this.GetClient();
-				if (@class != null)
+
+				GameClient client = this.GetClient();
+
+				if (client != null)
 				{
-					@class.SendMessage(this.Messenger.method_21());
-					@class.SendMessage(this.Messenger.method_23());
+					client.SendMessage(this.Messenger.method_21());
+					client.SendMessage(this.Messenger.method_23());
+
 					this.Messenger.method_5(true);
 				}
 			}
 		}
-		public void method_13(bool bool_17)
+
+		public void UpdateCredits(bool updateDatabase)
 		{
 			ServerMessage Message = new ServerMessage(6u);
+
 			Message.AppendStringWithBreak(this.Credits + ".0");
+
 			this.Session.SendMessage(Message);
-			if (bool_17)
+
+			if (updateDatabase)
 			{
-				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+				using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 				{
-					@class.ExecuteQuery(string.Concat(new object[]
+					dbClient.ExecuteQuery(string.Concat(new object[]
 					{
 						"UPDATE users SET credits = '",
 						this.Credits,
@@ -778,20 +830,21 @@ namespace GoldTree.HabboHotel.Users
 			}
 		}
 
-		public void method_14(bool bool_17, bool bool_18)
+		public void UpdateVipPoints(bool getPoints, bool updateDatabase)
 		{
-			if (bool_17)
+			if (getPoints)
 			{
-				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+				using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 				{
-					this.VipPoints = @class.ReadInt32("SELECT vip_points FROM users WHERE Id = '" + this.Id + "' LIMIT 1;");
+					this.VipPoints = dbClient.ReadInt32("SELECT vip_points FROM users WHERE Id = '" + this.Id + "' LIMIT 1;");
 				}
 			}
-			if (bool_18)
+
+			if (updateDatabase)
 			{
-				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+				using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 				{
-					@class.ExecuteQuery(string.Concat(new object[]
+					dbClient.ExecuteQuery(string.Concat(new object[]
 					{
 						"UPDATE users SET vip_points = '",
 						this.VipPoints,
@@ -801,17 +854,19 @@ namespace GoldTree.HabboHotel.Users
 					}));
 				}
 			}
+
 			this.method_16(0);
 		}
 
-		public void method_15(bool bool_17)
+		public void UpdateActivityPoints(bool updateDatabase)
 		{
 			this.method_16(0);
-			if (bool_17)
+
+			if (updateDatabase)
 			{
-				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+				using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 				{
-					@class.ExecuteQuery(string.Concat(new object[]
+					dbClient.ExecuteQuery(string.Concat(new object[]
 					{
 						"UPDATE users SET activity_points = '",
 						this.ActivityPoints,
@@ -857,7 +912,7 @@ namespace GoldTree.HabboHotel.Users
 			this.Session.SendMessage(Message5);
 		}
 
-		public void method_17()
+		public void Mute()
 		{
 			if (!this.IsMuted)
 			{
@@ -866,12 +921,9 @@ namespace GoldTree.HabboHotel.Users
 			}
 		}
 
-		public void method_18()
+		public void UnMute()
 		{
-			if (this.IsMuted)
-			{
-				this.IsMuted = false;
-			}
+			this.IsMuted = false;
 		}
 
 		public void LoadQuests()
@@ -891,57 +943,75 @@ namespace GoldTree.HabboHotel.Users
 			}
 		}
 
-		public void method_26(bool bool_17, GameClient class16_1)
+		public void UpdateLook(bool getFromDatabase, GameClient client)
 		{
 			ServerMessage Message = new ServerMessage(266u);
+
 			Message.AppendInt32(-1);
-			Message.AppendStringWithBreak(class16_1.GetHabbo().Figure);
-			Message.AppendStringWithBreak(class16_1.GetHabbo().Gender.ToLower());
-			Message.AppendStringWithBreak(class16_1.GetHabbo().Motto);
-			Message.AppendInt32(class16_1.GetHabbo().AchievementScore);
+
+			Message.AppendStringWithBreak(client.GetHabbo().Figure);
+			Message.AppendStringWithBreak(client.GetHabbo().Gender.ToLower());
+			Message.AppendStringWithBreak(client.GetHabbo().Motto);
+
+			Message.AppendInt32(client.GetHabbo().AchievementScore);
+
 			Message.AppendStringWithBreak("");
-			class16_1.SendMessage(Message);
-            if (class16_1.GetHabbo().InRoom)
+
+			client.SendMessage(Message);
+
+            if (client.GetHabbo().InRoom)
 			{
-				Room class14_ = class16_1.GetHabbo().CurrentRoom;
-				if (class14_ != null)
+				Room room = client.GetHabbo().CurrentRoom;
+
+				if (room != null)
 				{
-					RoomUser @class = class14_.GetRoomUserByHabbo(class16_1.GetHabbo().Id);
-					if (@class != null)
+					RoomUser roomUser = room.GetRoomUserByHabbo(client.GetHabbo().Id);
+
+					if (roomUser != null)
 					{
-						if (bool_17)
+						if (getFromDatabase)
 						{
 							DataRow dataRow = null;
 							using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 							{
-								class2.AddParamWithValue("userid", class16_1.GetHabbo().Id);
+								class2.AddParamWithValue("userid", client.GetHabbo().Id);
 								dataRow = class2.ReadDataRow("SELECT * FROM users WHERE Id = @userid LIMIT 1");
 							}
-							class16_1.GetHabbo().Motto = GoldTree.FilterString((string)dataRow["motto"]);
-							class16_1.GetHabbo().Figure = GoldTree.FilterString((string)dataRow["look"]);
+							client.GetHabbo().Motto = GoldTree.FilterString((string)dataRow["motto"]);
+							client.GetHabbo().Figure = GoldTree.FilterString((string)dataRow["look"]);
 						}
+
 						ServerMessage Message2 = new ServerMessage(266u);
-						Message2.AppendInt32(@class.VirtualId);
-						Message2.AppendStringWithBreak(class16_1.GetHabbo().Figure);
-						Message2.AppendStringWithBreak(class16_1.GetHabbo().Gender.ToLower());
-						Message2.AppendStringWithBreak(class16_1.GetHabbo().Motto);
-						Message2.AppendInt32(class16_1.GetHabbo().AchievementScore);
+
+						Message2.AppendInt32(roomUser.VirtualId);
+
+						Message2.AppendStringWithBreak(client.GetHabbo().Figure);
+						Message2.AppendStringWithBreak(client.GetHabbo().Gender.ToLower());
+						Message2.AppendStringWithBreak(client.GetHabbo().Motto);
+
+						Message2.AppendInt32(client.GetHabbo().AchievementScore);
+
 						Message2.AppendStringWithBreak("");
-						class14_.SendMessage(Message2, null);
+
+						room.SendMessage(Message2, null);
 					}
 				}
 			}
 		}
 
-		public void method_27()
+		public void UpdateRights()
 		{
 			DataRow dataRow;
+
 			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 			{
 				dataRow = @class.ReadDataRow("SELECT vip FROM users WHERE Id = '" + this.Id + "' LIMIT 1;");
 			}
+
 			this.IsVIP = GoldTree.StringToBoolean(dataRow["vip"].ToString());
+
 			ServerMessage Message = new ServerMessage(2u);
+
 			if (this.IsVIP || ServerConfiguration.HabboClubForClothes)
 			{
 				Message.AppendInt32(2);
@@ -990,16 +1060,20 @@ namespace GoldTree.HabboHotel.Users
 			this.GetClient().SendMessage(Message);
 		}
 
-		public void method_28(string string_7)
+		public void Whisper(string str)
 		{
-			Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(this.CurrentRoomId);
-			if (@class != null)
+			Room room = GoldTree.GetGame().GetRoomManager().GetRoom(this.CurrentRoomId);
+
+			if (room != null)
 			{
-				RoomUser class2 = @class.GetRoomUserByHabbo(this.Id);
+				RoomUser roomUser = room.GetRoomUserByHabbo(this.Id);
+
 				ServerMessage Message = new ServerMessage(25u);
-				Message.AppendInt32(class2.VirtualId);
-				Message.AppendStringWithBreak(string_7);
+
+				Message.AppendInt32(roomUser.VirtualId);
+				Message.AppendStringWithBreak(str);
 				Message.AppendBoolean(false);
+
 				this.GetClient().SendMessage(Message);
 			}
 		}
@@ -1182,7 +1256,7 @@ namespace GoldTree.HabboHotel.Users
 
         public void CheckTotalTimeOnlineAchievements()
         {
-            int Count = int_15;
+            int Count = OnlineTime;
 
             if (Count <= 0)
             {

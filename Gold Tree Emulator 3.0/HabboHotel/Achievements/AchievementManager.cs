@@ -143,10 +143,10 @@ namespace GoldTree.HabboHotel.Achievements
 				{
 					int num = AchievementManager.smethod_2(@class.Dynamic_badgelevel, @class.PixelMultiplier, int_0);
 					int num2 = AchievementManager.smethod_2(@class.ScoreBase, @class.PixelMultiplier, int_0);
-					using (TimedLock.Lock(Session.GetHabbo().GetBadgeComponent().List_0))
+					using (TimedLock.Lock(Session.GetHabbo().GetBadgeComponent().GetBadges()))
 					{
 						List<string> list = new List<string>();
-						foreach (Badge current in Session.GetHabbo().GetBadgeComponent().List_0)
+						foreach (Badge current in Session.GetHabbo().GetBadgeComponent().GetBadges())
 						{
 							if (current.Code.StartsWith(@class.BadgeCode))
 							{
@@ -155,10 +155,10 @@ namespace GoldTree.HabboHotel.Achievements
 						}
 						foreach (string current2 in list)
 						{
-							Session.GetHabbo().GetBadgeComponent().method_6(current2);
+							Session.GetHabbo().GetBadgeComponent().RemoveBadge(current2);
 						}
 					}
-					Session.GetHabbo().GetBadgeComponent().method_2(Session, AchievementManager.smethod_3(@class.BadgeCode, int_0, @class.DynamicBadgeLevel), true);
+					Session.GetHabbo().GetBadgeComponent().SendBadge(Session, AchievementManager.smethod_3(@class.BadgeCode, int_0, @class.DynamicBadgeLevel), true);
 					if (Session.GetHabbo().dictionary_0.ContainsKey(@class.Id))
 					{
 						Session.GetHabbo().dictionary_0[@class.Id] = int_0;
@@ -778,7 +778,7 @@ namespace GoldTree.HabboHotel.Achievements
                 case 14:
                     return Habbo.PetBuyed;
                 case 15:
-                    return Habbo.int_15 / 60;
+                    return Habbo.OnlineTime / 60;
                 case 16:
                     return Habbo.GetSubscriptionManager().CalculateHCSubscription(Habbo);
                 case 17:

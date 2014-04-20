@@ -10,34 +10,39 @@ namespace GoldTree.Communication.Messages.Rooms.Pets
 {
 	internal sealed class PlacePetMessageEvent : Interface
 	{
-		public void Handle(GameClient Session, ClientMessage Event)
+		public void Handle(GameClient session, ClientMessage message)
 		{
-			Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
-            if (@class != null && (@class.AllowPet || @class.CheckRights(Session, true)))
+			Room room = GoldTree.GetGame().GetRoomManager().GetRoom(session.GetHabbo().CurrentRoomId);
+
+            if (room != null && (room.AllowPet || room.CheckRights(session, true)))
 			{
-				uint uint_ = Event.PopWiredUInt();
-				Pet class2 = Session.GetHabbo().GetInventoryComponent().method_4(uint_);
-				if (class2 != null && !class2.PlacedInRoom)
+				uint petId = message.PopWiredUInt();
+
+				Pet pet = session.GetHabbo().GetInventoryComponent().GetPetById(petId);
+
+				if (pet != null && !pet.PlacedInRoom)
 				{
-					int num = Event.PopWiredInt32();
-					int num2 = Event.PopWiredInt32();
-					if (@class.method_30(num, num2, 0.0, true, false))
+					int num = message.PopWiredInt32();
+					int num2 = message.PopWiredInt32();
+
+					if (room.method_30(num, num2, 0.0, true, false))
 					{
-						if (@class.PetCount >= ServerConfiguration.PetsPerRoomLimit)
+						if (room.PetCount >= ServerConfiguration.PetsPerRoomLimit)
 						{
-							Session.SendNotification(GoldTreeEnvironment.GetExternalText("error_maxpets") + ServerConfiguration.PetsPerRoomLimit);
+							session.SendNotification(GoldTreeEnvironment.GetExternalText("error_maxpets") + ServerConfiguration.PetsPerRoomLimit);
 						}
 						else
 						{
-							class2.PlacedInRoom = true;
-							class2.RoomId = @class.Id;
+							pet.PlacedInRoom = true;
+							pet.RoomId = room.Id;
+
 							List<RandomSpeech> list = new List<RandomSpeech>();
 							List<BotResponse> list2 = new List<BotResponse>();
-							@class.method_4(new RoomBot(class2.PetId, class2.RoomId, AIType.const_0, "freeroam", class2.Name, "", class2.Look, num, num2, 0, 0, 0, 0, 0, 0, ref list, ref list2, 0), class2);
-                            if (@class.CheckRights(Session, true))
-							{
-								Session.GetHabbo().GetInventoryComponent().method_6(class2.PetId, @class.Id);
-							}
+
+							room.method_4(new RoomBot(pet.PetId, pet.RoomId, AIType.const_0, "freeroam", pet.Name, "", pet.Look, num, num2, 0, 0, 0, 0, 0, 0, ref list, ref list2, 0), pet);
+                            
+                            if (room.CheckRights(session, true))
+                                session.GetHabbo().GetInventoryComponent().RemovePetById(pet.PetId);
 						}
 					}
 				}

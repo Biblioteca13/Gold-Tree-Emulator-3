@@ -12,44 +12,36 @@ namespace GoldTree.Net
     {
         public delegate void GDelegate0(ref byte[] Data);
         private bool bool_0;
-        private readonly uint uint_0;
-        private byte[] byte_0;
+
+        public readonly uint Id;
+
+        private byte[] Buffer;
+
         private AsyncCallback asyncCallback_0;
         private AsyncCallback asyncCallback_1;
         private SocketConnection.GDelegate0 gdelegate0_0;
-        private string string_0;
 
-        public uint UInt32_0
-        {
-            get
-            {
-                return this.uint_0;
-            }
-        }
-
-        public string String_0
-        {
-            get
-            {
-                return this.string_0;
-            }
-        }
+        public string Address;
 
         public SocketConnection(uint pSockID, SocketInformation socketInformation_0)
             : base(socketInformation_0)
         {
             this.bool_0 = false;
-            this.uint_0 = pSockID;
-            this.string_0 = base.RemoteEndPoint.ToString().Split(new char[] { ':' })[0];
+            this.Id = pSockID;
+
+            this.Address = base.RemoteEndPoint.ToString().Split(new char[] { ':' })[0];
         }
 
-        internal void method_0(SocketConnection.GDelegate0 gdelegate0_1)
+        internal void Initialise(SocketConnection.GDelegate0 gdelegate0_1)
         {
-            this.byte_0 = new byte[1024];
-            this.asyncCallback_0 = new AsyncCallback(this.method_7);
-            this.asyncCallback_1 = new AsyncCallback(this.method_3);
+            this.Buffer = new byte[1024];
+
+            this.asyncCallback_0 = new AsyncCallback(this.OnReceive);
+            this.asyncCallback_1 = new AsyncCallback(this.OnSend);
+
             this.gdelegate0_0 = gdelegate0_1;
-            this.method_6();
+
+            this.BeginReceive();
         }
 
         public static string smethod_0(string string_1)
@@ -69,8 +61,8 @@ namespace GoldTree.Net
         {
             try
             {
-                this.Dispose();
-                GoldTree.GetGame().GetClientManager().method_9(this.uint_0);
+                this.Close();
+                GoldTree.GetGame().GetClientManager().method_9(this.Id);
             }
             catch
             {
@@ -92,13 +84,13 @@ namespace GoldTree.Net
             }
         }
 
-        private void method_3(IAsyncResult iasyncResult_0)
+        private void OnSend(IAsyncResult ar)
         {
             if (!this.bool_0)
             {
                 try
                 {
-                    base.EndSend(iasyncResult_0);
+                    base.EndSend(ar);
                 }
                 catch
                 {
@@ -106,24 +98,27 @@ namespace GoldTree.Net
                 }
             }
         }
-        public void method_4(string string_1)
+
+        public void SendMessage(string str)
         {
-            this.SendData(GoldTree.GetDefaultEncoding().GetBytes(string_1));
+            this.SendData(GoldTree.GetDefaultEncoding().GetBytes(str));
         }
-        public void SendMessage(ServerMessage Message)
+
+        public void SendMessage(ServerMessage message)
         {
-            if (Message != null)
+            if (message != null)
             {
-                this.SendData(Message.GetBytes());
+                this.SendData(message.GetBytes());
             }
         }
-        private void method_6()
+
+        private void BeginReceive()
         {
             if (!this.bool_0)
             {
                 try
                 {
-                    base.BeginReceive(this.byte_0, 0, 0x400, SocketFlags.None, this.asyncCallback_0, this);
+                    base.BeginReceive(this.Buffer, 0, 0x400, SocketFlags.None, this.asyncCallback_0, this);
                 }
                 catch (Exception)
                 {
@@ -131,31 +126,34 @@ namespace GoldTree.Net
                 }
             }
         }
-        private void method_7(IAsyncResult iasyncResult_0)
+
+        private void OnReceive(IAsyncResult ar)
         {
             if (!this.bool_0)
             {
                 try
                 {
                     int num = 0;
+
                     try
                     {
-                        num = base.EndReceive(iasyncResult_0);
+                        num = base.EndReceive(ar);
                     }
                     catch
                     {
                         this.method_1();
                         return;
                     }
+
                     if (num < 0)
                     {
                         this.method_1();
                     }
                     else
                     {
-                        byte[] array = ByteUtility.ChompBytes(this.byte_0, 0, num);
+                        byte[] array = ByteUtility.ChompBytes(this.Buffer, 0, num);
                         this.method_8(ref array);
-                        this.method_6();
+                        this.BeginReceive();
                     }
                 }
                 catch
@@ -164,6 +162,7 @@ namespace GoldTree.Net
                 }
             }
         }
+
         private void method_8(ref byte[] byte_1)
         {
             if (this.gdelegate0_0 != null)
@@ -171,12 +170,8 @@ namespace GoldTree.Net
                 this.gdelegate0_0(ref byte_1);
             }
         }
-        public new void Dispose()
-        {
-            this.method_9(true);
-            GC.SuppressFinalize(this);
-        }
-        private void method_9(bool bool_1)
+
+        private new void Dispose(bool bool_1)
         {
             if (!this.bool_0 && bool_1)
             {
@@ -190,21 +185,21 @@ namespace GoldTree.Net
                 catch
                 {
                 }
-                Array.Clear(this.byte_0, 0, this.byte_0.Length);
-                this.byte_0 = null;
+                Array.Clear(this.Buffer, 0, this.Buffer.Length);
+                this.Buffer = null;
                 this.asyncCallback_0 = null;
                 this.gdelegate0_0 = null;
-                GoldTree.GetSocketsManager().method_6(this.uint_0);
-                AntiDDosSystem.FreeConnection(this.string_0);
+                GoldTree.GetSocketsManager().method_6(this.Id);
+                AntiDDosSystem.FreeConnection(this.Address);
 
                 if (GoldTree.GetConfig().data["emu.messages.connections"] == "1")
                 {
                     Console.WriteLine(string.Concat(new object[]
                                     {
                                         ">> Connection Dropped [",
-                                        this.uint_0,
+                                        this.Id,
                                         "] from [",
-                                        this.String_0,
+                                        this.Address,
                                         "]"
                                     }));
                 }

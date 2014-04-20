@@ -356,12 +356,12 @@ namespace GoldTree.HabboHotel.Catalogs
 								if (class2.int_0 > 0)
 								{
 									Session.GetHabbo().Credits -= class2.int_0;
-									Session.GetHabbo().method_13(true);
+									Session.GetHabbo().UpdateCredits(true);
 								}
 								if (class2.int_1 > 0 && int_ == 0)
 								{
 									Session.GetHabbo().ActivityPoints -= class2.int_1;
-									Session.GetHabbo().method_15(true);
+									Session.GetHabbo().UpdateActivityPoints(true);
 								}
 								else
 								{
@@ -369,7 +369,7 @@ namespace GoldTree.HabboHotel.Catalogs
 									{
 										Session.GetHabbo().VipPoints -= class2.int_1;
 										Session.GetHabbo().method_16(0);
-										Session.GetHabbo().method_14(false, true);
+										Session.GetHabbo().UpdateVipPoints(false, true);
 									}
 								}
 								ServerMessage Message3 = new ServerMessage(67u);
@@ -450,7 +450,7 @@ namespace GoldTree.HabboHotel.Catalogs
 									}
                                     if (!string.IsNullOrEmpty(class2.BadgeID))
                                     {
-                                        Session.GetHabbo().GetBadgeComponent().method_2(Session, class2.BadgeID, true);
+                                        Session.GetHabbo().GetBadgeComponent().SendBadge(Session, class2.BadgeID, true);
                                     }
 									return true;
 								}
@@ -583,7 +583,7 @@ namespace GoldTree.HabboHotel.Catalogs
 							{
 								't'
 							})[1]), array[1], array[2]);
-                                Session.GetHabbo().GetInventoryComponent().method_7(class15_);
+                                Session.GetHabbo().GetInventoryComponent().AddPet(class15_);
                                 Session.GetHabbo().GetInventoryComponent().method_11(num, 320u, "0", bool_0);
                             }
                         IL_4EA:
@@ -637,7 +637,7 @@ namespace GoldTree.HabboHotel.Catalogs
                         Message2.AppendStringWithBreak("habbo_club");
                         if (Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
                         {
-                            double num3 = (double)Session.GetHabbo().GetSubscriptionManager().method_1("habbo_club").Int32_0;
+                            double num3 = (double)Session.GetHabbo().GetSubscriptionManager().GetSubscriptionByType("habbo_club").ExpirationTime;
                             double num4 = num3 - GoldTree.GetUnixTimestamp();
                             int num5 = (int)Math.Ceiling(num4 / 86400.0);
                             int num6 = num5 / 31;

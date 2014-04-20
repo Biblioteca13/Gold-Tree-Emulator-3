@@ -12,7 +12,7 @@ namespace GoldTree.Communication.Messages.Users
 			Message.AppendStringWithBreak(text.ToLower());
             if (Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_vip"))
 			{
-				double num = (double)Session.GetHabbo().GetSubscriptionManager().method_1("habbo_vip").Int32_0;
+				double num = (double)Session.GetHabbo().GetSubscriptionManager().GetSubscriptionByType("habbo_vip").ExpirationTime;
 				double num2 = num - GoldTree.GetUnixTimestamp();
 				int num3 = (int)Math.Ceiling(num2 / 86400.0);
 				int num4 = num3 / 31;
@@ -33,7 +33,7 @@ namespace GoldTree.Communication.Messages.Users
 			{
                 if (Session.GetHabbo().GetSubscriptionManager().HasSubscription(text))
 				{
-					double num = (double)Session.GetHabbo().GetSubscriptionManager().method_1(text).Int32_0;
+					double num = (double)Session.GetHabbo().GetSubscriptionManager().GetSubscriptionByType(text).ExpirationTime;
 					double num2 = num - GoldTree.GetUnixTimestamp();
 					int num3 = (int)Math.Ceiling(num2 / 86400.0);
 					int num4 = num3 / 31;

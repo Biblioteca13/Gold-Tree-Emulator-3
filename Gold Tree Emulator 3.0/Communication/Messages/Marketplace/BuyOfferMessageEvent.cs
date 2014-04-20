@@ -33,7 +33,7 @@ namespace GoldTree.Communication.Messages.Marketplace
 							return;
 						}
 						Session.GetHabbo().Credits -= (int)dataRow["total_price"];
-						Session.GetHabbo().method_13(true);
+						Session.GetHabbo().UpdateCredits(true);
 					}
 					GoldTree.GetGame().GetCatalog().method_9(Session, class2, 1, (string)dataRow["extra_data"], false, (uint)dataRow["furni_id"]);
 					using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())

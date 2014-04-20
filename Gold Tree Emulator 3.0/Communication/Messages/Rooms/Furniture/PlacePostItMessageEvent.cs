@@ -27,7 +27,7 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
 						{
 							array[0] = array[0].Replace("-", "");
 						}
-						UserItem class2 = Session.GetHabbo().GetInventoryComponent().method_10(uint_);
+						UserItem class2 = Session.GetHabbo().GetInventoryComponent().GetItemById(uint_);
 						if (class2 != null)
 						{
 							if (array[0].StartsWith(":"))

@@ -24,7 +24,7 @@ namespace GoldTree.Communication.Messages.SoundMachine
                     if (roomMusicController.PlaylistSize < roomMusicController.PlaylistCapacity)
                     {
                         int num = Event.PopWiredInt32();
-                        UserItem item = Session.GetHabbo().GetInventoryComponent().method_10((uint)num);
+                        UserItem item = Session.GetHabbo().GetInventoryComponent().GetItemById((uint)num);
                         if ((item != null) && (item.method_1().InteractionType == "musicdisc"))
                         {
                             SongItem diskItem = new SongItem(item);

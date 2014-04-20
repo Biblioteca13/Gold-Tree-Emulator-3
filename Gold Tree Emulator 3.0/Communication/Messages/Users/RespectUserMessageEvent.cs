@@ -10,12 +10,12 @@ namespace GoldTree.Communication.Messages.Users
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
 			Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
-			if (@class != null && Session.GetHabbo().int_21 > 0)
+			if (@class != null && Session.GetHabbo().RespectPoints > 0)
 			{
 				RoomUser class2 = @class.GetRoomUserByHabbo(Event.PopWiredUInt());
 				if (class2 != null && class2.GetClient().GetHabbo().Id != Session.GetHabbo().Id && !class2.IsBot)
 				{
-					Session.GetHabbo().int_21--;
+					Session.GetHabbo().RespectPoints--;
 					Session.GetHabbo().RespectGiven++;
 					class2.GetClient().GetHabbo().Respect++;
 					using (DatabaseClient class3 = GoldTree.GetDatabase().GetClient())

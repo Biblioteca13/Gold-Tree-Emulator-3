@@ -221,7 +221,7 @@ namespace GoldTree.HabboHotel.Rooms
 			List<UserItem> list_2 = this.method_1(this.uint_2).OfferedItems;
 			foreach (UserItem current in list_)
 			{
-				if (this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().method_10(current.uint_0) == null)
+				if (this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().GetItemById(current.uint_0) == null)
 				{
 					this.method_1(this.uint_1).method_1().SendNotification("Trade failed.");
 					this.method_1(this.uint_2).method_1().SendNotification("Trade failed.");
@@ -230,15 +230,15 @@ namespace GoldTree.HabboHotel.Rooms
 			}
 			foreach (UserItem current in list_2)
 			{
-				if (this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().method_10(current.uint_0) == null)
+				if (this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().GetItemById(current.uint_0) == null)
 				{
 					this.method_1(this.uint_1).method_1().SendNotification("Trade failed.");
 					this.method_1(this.uint_2).method_1().SendNotification("Trade failed.");
 					return;
 				}
 			}
-			this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().method_18();
-			this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().method_18();
+			this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().SavePets();
+			this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().SavePets();
 			foreach (UserItem current in list_)
 			{
 				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())

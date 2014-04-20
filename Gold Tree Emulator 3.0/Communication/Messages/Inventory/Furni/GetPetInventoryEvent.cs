@@ -9,7 +9,7 @@ namespace GoldTree.Communication.Messages.Inventory.Furni
 		{
 			if (Session.GetHabbo().GetInventoryComponent() != null)
 			{
-				Session.SendMessage(Session.GetHabbo().GetInventoryComponent().method_15());
+				Session.SendMessage(Session.GetHabbo().GetInventoryComponent().ComposePetInventoryListMessage());
 			}
 		}
 	}

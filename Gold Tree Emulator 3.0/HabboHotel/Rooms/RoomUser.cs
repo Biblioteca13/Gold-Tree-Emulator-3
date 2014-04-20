@@ -294,7 +294,7 @@ namespace GoldTree.HabboHotel.Rooms
 						{
 							if (!this.IsBot)
 							{
-								Session.GetHabbo().method_28(string_1);
+								Session.GetHabbo().Whisper(string_1);
 							}
 						}
 						if (!this.IsBot)

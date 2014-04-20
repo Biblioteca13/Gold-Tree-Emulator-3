@@ -17,7 +17,7 @@ namespace GoldTree.Communication.Messages.Recycler
 				{
 					for (int i = 0; i < num; i++)
 					{
-						UserItem @class = Session.GetHabbo().GetInventoryComponent().method_10(Event.PopWiredUInt());
+						UserItem @class = Session.GetHabbo().GetInventoryComponent().GetItemById(Event.PopWiredUInt());
 						if (@class == null || !@class.method_1().AllowRecycle)
 						{
 							return;

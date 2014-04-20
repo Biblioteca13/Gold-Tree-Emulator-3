@@ -282,7 +282,7 @@ namespace GoldTree.Net
 						Habbo class3 = GoldTree.GetGame().GetClientManager().method_2(Convert.ToUInt32(text2)).GetHabbo();
 						if (class3 != null)
 						{
-							class3.method_27();
+							class3.UpdateRights();
 							goto IL_C70;
 						}
 						goto IL_C70;
@@ -368,7 +368,7 @@ namespace GoldTree.Net
 						client = GoldTree.GetGame().GetClientManager().method_2(uint.Parse(text2));
 						if (client != null)
 						{
-							client.GetHabbo().method_14(true, false);
+							client.GetHabbo().UpdateVipPoints(true, false);
 							goto IL_C70;
 						}
 						goto IL_C70;
@@ -532,7 +532,7 @@ namespace GoldTree.Net
 							int_3 = (int)class2.ReadDataRow("SELECT credits FROM users WHERE id = '" + client.GetHabbo().Id + "' LIMIT 1")[0];
 						}
 						client.GetHabbo().Credits = int_3;
-						client.GetHabbo().method_13(false);
+						client.GetHabbo().UpdateCredits(false);
 						goto IL_C70;
 					}
 					goto IL_C70;
@@ -546,7 +546,7 @@ namespace GoldTree.Net
 							int_4 = (int)class2.ReadDataRow("SELECT activity_points FROM users WHERE id = '" + client.GetHabbo().Id + "' LIMIT 1")[0];
 						}
 						client.GetHabbo().ActivityPoints = int_4;
-						client.GetHabbo().method_15(false);
+						client.GetHabbo().UpdateActivityPoints(false);
 						goto IL_C70;
 					}
 					goto IL_C70;

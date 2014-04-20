@@ -16,8 +16,8 @@ namespace GoldTree.Communication.Messages.Handshake
 			Message.AppendStringWithBreak(Session.GetHabbo().RealName);
 			Message.AppendBoolean(false);
 			Message.AppendInt32(Session.GetHabbo().Respect);
-			Message.AppendInt32(Session.GetHabbo().int_21);
-			Message.AppendInt32(Session.GetHabbo().int_22);
+			Message.AppendInt32(Session.GetHabbo().RespectPoints);
+			Message.AppendInt32(Session.GetHabbo().PetRespectPoints);
 			Message.AppendBoolean(false);
 			Session.SendMessage(Message);
 		}

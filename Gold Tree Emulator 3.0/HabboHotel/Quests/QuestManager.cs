@@ -105,22 +105,22 @@ namespace GoldTree.HabboHotel.Quests
                             }
                             else
                             {
-                                int_ = Session.GetHabbo().int_9;
+                                int_ = Session.GetHabbo().ExplorerLevel;
                             }
 						}
 						else
 						{
-							int_ = Session.GetHabbo().int_8;
+							int_ = Session.GetHabbo().IdentityLevel;
 						}
 					}
 					else
 					{
-						int_ = Session.GetHabbo().int_6;
+						int_ = Session.GetHabbo().BuilderLevel;
 					}
 				}
 				else
 				{
-					int_ = Session.GetHabbo().int_7;
+					int_ = Session.GetHabbo().SocialLevel;
 				}
 			}
 			if (this.method_3(int_, text) != 0u)
@@ -223,22 +223,22 @@ namespace GoldTree.HabboHotel.Quests
                             }
                             else
                             {
-                                Session.GetHabbo().int_9++;
+                                Session.GetHabbo().ExplorerLevel++;
                             }
 						}
 						else
 						{
-							Session.GetHabbo().int_7++;
+							Session.GetHabbo().SocialLevel++;
 						}
 					}
 					else
 					{
-						Session.GetHabbo().int_6++;
+						Session.GetHabbo().BuilderLevel++;
 					}
 				}
 				else
 				{
-					Session.GetHabbo().int_8++;
+					Session.GetHabbo().IdentityLevel++;
 				}
 			}
 			Session.GetHabbo().LoadQuests();
@@ -249,7 +249,7 @@ namespace GoldTree.HabboHotel.Quests
 			Message.AppendInt32(1);
 			Session.SendMessage(Message);
 			Session.GetHabbo().ActivityPoints += class2.PixelReward;
-			Session.GetHabbo().method_15(true);
+			Session.GetHabbo().UpdateActivityPoints(true);
 			Session.GetHabbo().CurrentQuestProgress = 0;
 		}
 		public void method_9(GameClient Session, ServerMessage Message5_0)
@@ -311,19 +311,19 @@ namespace GoldTree.HabboHotel.Quests
 						}
 					}
 				}
-				if (current.Type.ToLower() == "room_builder" && num2 < Session.GetHabbo().int_6)
+				if (current.Type.ToLower() == "room_builder" && num2 < Session.GetHabbo().BuilderLevel)
 				{
 					num2 = current.Level;
 				}
-				if (current.Type.ToLower() == "social" && num < Session.GetHabbo().int_7)
+				if (current.Type.ToLower() == "social" && num < Session.GetHabbo().SocialLevel)
 				{
 					num = current.Level;
 				}
-				if (current.Type.ToLower() == "identity" && num3 < Session.GetHabbo().int_8)
+				if (current.Type.ToLower() == "identity" && num3 < Session.GetHabbo().IdentityLevel)
 				{
 					num3 = current.Level;
 				}
-				if (current.Type.ToLower() == "explore" && num4 < Session.GetHabbo().int_9)
+				if (current.Type.ToLower() == "explore" && num4 < Session.GetHabbo().ExplorerLevel)
 				{
 					num4 = current.Level;
 				}
@@ -331,22 +331,22 @@ namespace GoldTree.HabboHotel.Quests
                 {
                     num4 = current.Level;
                 }
-				if (current.Type.ToLower() == "room_builder" && !flag2 && current.Level == this.GetHighestLevelForType("room_builder") && Session.GetHabbo().int_6 == this.GetHighestLevelForType("room_builder"))
+				if (current.Type.ToLower() == "room_builder" && !flag2 && current.Level == this.GetHighestLevelForType("room_builder") && Session.GetHabbo().BuilderLevel == this.GetHighestLevelForType("room_builder"))
 				{
 					current.Serialize(Message5_0, Session, false);
 					flag2 = true;
 				}
-				if (current.Type.ToLower() == "social" && !flag && current.Level == this.GetHighestLevelForType("social") && Session.GetHabbo().int_7 == this.GetHighestLevelForType("room_social"))
+				if (current.Type.ToLower() == "social" && !flag && current.Level == this.GetHighestLevelForType("social") && Session.GetHabbo().SocialLevel == this.GetHighestLevelForType("room_social"))
 				{
 					current.Serialize(Message5_0, Session, false);
 					flag = true;
 				}
-				if (current.Type.ToLower() == "identity" && !flag3 && current.Level == this.GetHighestLevelForType("identity") && Session.GetHabbo().int_8 == this.GetHighestLevelForType("identity"))
+				if (current.Type.ToLower() == "identity" && !flag3 && current.Level == this.GetHighestLevelForType("identity") && Session.GetHabbo().IdentityLevel == this.GetHighestLevelForType("identity"))
 				{
 					current.Serialize(Message5_0, Session, false);
 					flag3 = true;
 				}
-				if (current.Type.ToLower() == "explore" && !flag4 && current.Level == this.GetHighestLevelForType("explore") && Session.GetHabbo().int_9 == this.GetHighestLevelForType("explore"))
+				if (current.Type.ToLower() == "explore" && !flag4 && current.Level == this.GetHighestLevelForType("explore") && Session.GetHabbo().ExplorerLevel == this.GetHighestLevelForType("explore"))
 				{
 					current.Serialize(Message5_0, Session, false);
 					flag4 = true;
@@ -356,22 +356,22 @@ namespace GoldTree.HabboHotel.Quests
                     current.Serialize(Message5_0, Session, false);
                     flag5 = true;
                 }
-				if (current.Type.ToLower() == "room_builder" && !flag2 && current.Level == Session.GetHabbo().int_6 + 1)
+				if (current.Type.ToLower() == "room_builder" && !flag2 && current.Level == Session.GetHabbo().BuilderLevel + 1)
 				{
 					current.Serialize(Message5_0, Session, false);
 					flag2 = true;
 				}
-				if (current.Type.ToLower() == "social" && !flag && current.Level == Session.GetHabbo().int_7 + 1)
+				if (current.Type.ToLower() == "social" && !flag && current.Level == Session.GetHabbo().SocialLevel + 1)
 				{
 					current.Serialize(Message5_0, Session, false);
 					flag = true;
 				}
-				if (current.Type.ToLower() == "identity" && !flag3 && current.Level == Session.GetHabbo().int_8 + 1)
+				if (current.Type.ToLower() == "identity" && !flag3 && current.Level == Session.GetHabbo().IdentityLevel + 1)
 				{
 					current.Serialize(Message5_0, Session, false);
 					flag3 = true;
 				}
-				if (current.Type.ToLower() == "explore" && !flag4 && current.Level == Session.GetHabbo().int_9 + 1)
+				if (current.Type.ToLower() == "explore" && !flag4 && current.Level == Session.GetHabbo().ExplorerLevel + 1)
 				{
 					current.Serialize(Message5_0, Session, false);
 					flag4 = true;

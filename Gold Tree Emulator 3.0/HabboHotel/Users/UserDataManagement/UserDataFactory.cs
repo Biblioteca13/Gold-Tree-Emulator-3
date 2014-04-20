@@ -7,146 +7,115 @@ namespace GoldTree.HabboHotel.Users.UserDataManagement
 {
 	internal sealed class UserDataFactory
 	{
-		private bool bool_0;
-		private DataRow dataRow_0;
-		private DataTable dataTable_0;
-		private DataTable dataTable_1;
-		private DataTable dataTable_2;
-		private DataTable dataTable_3;
-		private DataTable dataTable_4;
-		private DataTable dataTable_5;
-		private DataTable dataTable_6;
-		private DataTable dataTable_7;
-		private DataTable dataTable_8;
-		private DataTable dataTable_9;
-		private DataTable dataTable_10;
-		private DataTable dataTable_11;
-        private DataTable dataTable_12;
-		internal bool Boolean_0
+		public bool Validated;
+
+		private DataRow UserData;
+		private DataTable Achievements;
+		private DataTable Favorites;
+		private DataTable Ignores;
+		private DataTable Tags;
+		private DataTable Subscriptions;
+		private DataTable Badges;
+		private DataTable Items;
+		private DataTable Effects;
+		private DataTable Friends;
+		private DataTable FriendRequests;
+		private DataTable Rooms;
+		private DataTable Pets;
+        private DataTable FriendStream;
+
+		public DataRow GetUserData()
 		{
-			get
-			{
-				return this.bool_0;
-			}
+			return UserData;
 		}
-		internal DataRow DataRow_0
+
+		public DataTable GetAchievements()
 		{
-			get
-			{
-				return this.dataRow_0;
-			}
+			return Achievements;
 		}
-		internal DataTable DataTable_0
+
+		public DataTable GetFavorites()
 		{
-			get
-			{
-				return this.dataTable_0;
-			}
+			return Favorites;
 		}
-		internal DataTable DataTable_1
+
+		public DataTable GetIgnores()
 		{
-			get
-			{
-				return this.dataTable_1;
-			}
+			return Ignores;
 		}
-		internal DataTable DataTable_2
+
+		public DataTable GetTags()
 		{
-			get
-			{
-				return this.dataTable_2;
-			}
+			return Tags;
 		}
-		internal DataTable DataTable_3
+
+		public DataTable GetSubscriptions()
 		{
-			get
-			{
-				return this.dataTable_3;
-			}
+            return Subscriptions;
 		}
-		internal DataTable DataTable_4
+
+		public DataTable GetBadges()
 		{
-			get
-			{
-				return this.dataTable_4;
-			}
+            return Badges;
 		}
-		internal DataTable DataTable_5
+
+		public DataTable GetItems()
 		{
-			get
-			{
-				return this.dataTable_5;
-			}
+            return Items;
 		}
-		internal DataTable DataTable_6
+
+		public DataTable GetEffects()
 		{
-			get
-			{
-				return this.dataTable_6;
-			}
+            return Effects;
 		}
-		internal DataTable DataTable_7
+
+		public DataTable GetFriends()
 		{
-			get
-			{
-				return this.dataTable_7;
-			}
+			return Friends;
 		}
-		internal DataTable DataTable_8
+
+		public DataTable GetFriendRequests()
 		{
-			get
-			{
-				return this.dataTable_8;
-			}
+            return FriendRequests;
 		}
-		internal DataTable DataTable_9
+
+		public DataTable GetRooms()
 		{
-			get
-			{
-				return this.dataTable_9;
-			}
+            return Rooms;
 		}
-		internal DataTable DataTable_10
-		{
-			get
-			{
-				return this.dataTable_10;
-			}
-			set
-			{
-				this.dataTable_10 = value;
-			}
-		}
-		internal DataTable DataTable_11
-		{
-			get
-			{
-				return this.dataTable_11;
-			}
-		}
-        internal DataTable DataTable_12
+
+        public void SetRooms(DataTable table)
         {
-            get
-            {
-                return this.dataTable_12;
-            }
+            Rooms = table;
         }
-		public UserDataFactory(string string_0, string string_1, bool bool_1)
+
+		public DataTable GetPets()
 		{
-            if (string.IsNullOrEmpty(string_0))
+			return Pets;
+		}
+
+        public DataTable GetFriendStream()
+        {
+            return FriendStream;
+        }
+
+		public UserDataFactory(string ssoTicket, string ipAddress, bool getAllData)
+		{
+            if (string.IsNullOrEmpty(ssoTicket))
             {
-                this.bool_0 = false;
+                this.Validated = false;
             }
             else
             {
-                using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+                using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                 {
-                    @class.AddParamWithValue("auth_ticket", string_0);
+                    dbClient.AddParamWithValue("auth_ticket", ssoTicket);
+
                     string str = "";
+
                     if (ServerConfiguration.EnableSSO)
-                    {
-                        str = "AND ip_last = '" + string_1 + "' ";
-                    }
+                        str = "AND ip_last = '" + ipAddress + "' ";
+
                     try
                     {
                         if (int.Parse(GoldTree.GetConfig().data["debug"]) == 1)
@@ -154,89 +123,102 @@ namespace GoldTree.HabboHotel.Users.UserDataManagement
                             str = "";
                         }
                     }
-                    catch
+                    catch { }
+
+                    this.UserData = dbClient.ReadDataRow("SELECT * FROM users WHERE auth_ticket = @auth_ticket " + str + " LIMIT 1;");
+
+                    if (this.UserData != null)
                     {
-                    }
-                    this.dataRow_0 = @class.ReadDataRow("SELECT * FROM users WHERE auth_ticket = @auth_ticket " + str + " LIMIT 1;");
-                    if (this.dataRow_0 != null)
-                    {
-                        this.bool_0 = true;
-                        uint num = (uint)this.dataRow_0["Id"];
-                        if (bool_1)
+                        this.Validated = true;
+
+                        uint id = (uint)this.UserData["Id"];
+
+                        if (getAllData)
                         {
-                            this.dataTable_0 = @class.ReadDataTable("SELECT achievement_id,achievement_level FROM user_achievements WHERE user_id = '" + num + "'");
-                            this.dataTable_1 = @class.ReadDataTable("SELECT room_id FROM user_favorites WHERE user_id = '" + num + "'");
-                            this.dataTable_2 = @class.ReadDataTable("SELECT ignore_id FROM user_ignores WHERE user_id = '" + num + "'");
-                            this.dataTable_3 = @class.ReadDataTable("SELECT tag FROM user_tags WHERE user_id = '" + num + "'");
-                            this.dataTable_4 = @class.ReadDataTable("SELECT subscription_id, timestamp_activated, timestamp_expire FROM user_subscriptions WHERE user_id = '" + num + "'");
-                            this.dataTable_5 = @class.ReadDataTable("SELECT user_badges.badge_id,user_badges.badge_slot FROM user_badges WHERE user_id = " + num);
-                            this.dataTable_6 = @class.ReadDataTable("SELECT items.Id,items.base_item,items_extra_data.extra_data FROM items LEFT JOIN items_extra_data ON items_extra_data.item_id = items.Id WHERE room_id = 0 AND user_id = " + num);
-                            this.dataTable_7 = @class.ReadDataTable("SELECT user_effects.effect_id,user_effects.total_duration,user_effects.is_activated,user_effects.activated_stamp FROM user_effects WHERE user_id =  " + num);
-                            this.dataTable_8 = @class.ReadDataTable("SELECT users.Id,users.username,users.motto,users.look,users.last_online FROM users JOIN messenger_friendships ON users.Id = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + num + "'");
-                            this.dataTable_9 = @class.ReadDataTable("SELECT messenger_requests.Id,messenger_requests.from_id,users.username FROM users JOIN messenger_requests ON users.Id = messenger_requests.from_id WHERE messenger_requests.to_id = '" + num + "'");
-                            @class.AddParamWithValue("name", (string)this.dataRow_0["username"]);
-                            this.dataTable_10 = @class.ReadDataTable("SELECT * FROM rooms WHERE owner = @name ORDER BY Id ASC LIMIT " + ServerConfiguration.RoomUserLimit);
-                            this.dataTable_11 = @class.ReadDataTable("SELECT Id, user_id, room_id, name, type, race, color, expirience, energy, nutrition, respect, createstamp, x, y, z FROM user_pets WHERE user_id = " + num + " AND room_id = 0");
-                            this.dataTable_12 = @class.ReadDataTable("SELECT friend_stream.id, friend_stream.type, friend_stream.userid, friend_stream.gender, friend_stream.look, friend_stream.time, friend_stream.data, friend_stream.data_extra FROM friend_stream JOIN messenger_friendships ON friend_stream.userid = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + num + "' ORDER BY friend_stream.time DESC LIMIT 15");
-                            @class.ExecuteQuery(string.Concat(new object[]
-                        {
-                            "UPDATE users SET online = '1', auth_ticket = '' WHERE Id = '",
-                            num,
-                            "' LIMIT 1; UPDATE user_info SET login_timestamp = '",
-                            GoldTree.GetUnixTimestamp(),
-                            "' WHERE user_id = '",
-                            num,
-                            "' LIMIT 1;"
-                        }));
-                        //    @class.ExecuteQuery(string.Concat(new object[]
-                        //{
-                        //    "UPDATE users SET online = '1'" + /*auth_ticket = ''*/ "WHERE Id = '",
-                        //    num,
-                        //    "' LIMIT 1; UPDATE user_info SET login_timestamp = '",
-                        //    GoldTree.GetUnixTimestamp(),
-                        //    "' WHERE user_id = '",
-                        //    num,
-                        //    "' LIMIT 1;"
-                        //}));
+                            this.Achievements = dbClient.ReadDataTable("SELECT achievement_id,achievement_level FROM user_achievements WHERE user_id = '" + id + "'");
+                            this.Favorites = dbClient.ReadDataTable("SELECT room_id FROM user_favorites WHERE user_id = '" + id + "'");
+                            this.Ignores = dbClient.ReadDataTable("SELECT ignore_id FROM user_ignores WHERE user_id = '" + id + "'");
+                            this.Tags = dbClient.ReadDataTable("SELECT tag FROM user_tags WHERE user_id = '" + id + "'");
+                            this.Subscriptions = dbClient.ReadDataTable("SELECT subscription_id, timestamp_activated, timestamp_expire FROM user_subscriptions WHERE user_id = '" + id + "'");
+                            this.Badges = dbClient.ReadDataTable("SELECT user_badges.badge_id,user_badges.badge_slot FROM user_badges WHERE user_id = " + id);
+                            this.Items = dbClient.ReadDataTable("SELECT items.Id,items.base_item,items_extra_data.extra_data FROM items LEFT JOIN items_extra_data ON items_extra_data.item_id = items.Id WHERE room_id = 0 AND user_id = " + id);
+                            this.Effects = dbClient.ReadDataTable("SELECT user_effects.effect_id,user_effects.total_duration,user_effects.is_activated,user_effects.activated_stamp FROM user_effects WHERE user_id =  " + id);
+                            this.Friends = dbClient.ReadDataTable("SELECT users.Id,users.username,users.motto,users.look,users.last_online FROM users JOIN messenger_friendships ON users.Id = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + id + "'");
+                            this.FriendRequests = dbClient.ReadDataTable("SELECT messenger_requests.Id,messenger_requests.from_id,users.username FROM users JOIN messenger_requests ON users.Id = messenger_requests.from_id WHERE messenger_requests.to_id = '" + id + "'");
+                            
+                            dbClient.AddParamWithValue("name", (string)this.UserData["username"]);
+                            
+                            this.Rooms = dbClient.ReadDataTable("SELECT * FROM rooms WHERE owner = @name ORDER BY Id ASC LIMIT " + ServerConfiguration.RoomUserLimit);
+                            this.Pets = dbClient.ReadDataTable("SELECT Id, user_id, room_id, name, type, race, color, expirience, energy, nutrition, respect, createstamp, x, y, z FROM user_pets WHERE user_id = " + id + " AND room_id = 0");
+                            this.FriendStream = dbClient.ReadDataTable("SELECT friend_stream.id, friend_stream.type, friend_stream.userid, friend_stream.gender, friend_stream.look, friend_stream.time, friend_stream.data, friend_stream.data_extra FROM friend_stream JOIN messenger_friendships ON friend_stream.userid = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + id + "' ORDER BY friend_stream.time DESC LIMIT 15");
+                            
+                            dbClient.ExecuteQuery(string.Concat(new object[]
+                            {
+                                "UPDATE users SET online = '1', auth_ticket = '' WHERE Id = '",
+                                id,
+                                "' LIMIT 1; UPDATE user_info SET login_timestamp = '",
+                                GoldTree.GetUnixTimestamp(),
+                                "' WHERE user_id = '",
+                                id,
+                                "' LIMIT 1;"
+                            }));
+
+                            //    @class.ExecuteQuery(string.Concat(new object[]
+                            //{
+                            //    "UPDATE users SET online = '1'" + /*auth_ticket = ''*/ "WHERE Id = '",
+                            //    num,
+                            //    "' LIMIT 1; UPDATE user_info SET login_timestamp = '",
+                            //    GoldTree.GetUnixTimestamp(),
+                            //    "' WHERE user_id = '",
+                            //    num,
+                            //    "' LIMIT 1;"
+                            //}));
                         }
                     }
                     else
                     {
-                        this.bool_0 = false;
+                        this.Validated = false;
                     }
                 }
 			}
 		}
-		public UserDataFactory(string string_0, bool bool_1)
+
+		public UserDataFactory(string username, bool getAllData)
 		{
-			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+			using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 			{
-				@class.AddParamWithValue("username", string_0);
-				this.dataRow_0 = @class.ReadDataRow("SELECT * FROM users WHERE username = @username LIMIT 1;");
-				if (this.dataRow_0 != null)
+				dbClient.AddParamWithValue("username", username);
+				this.UserData = dbClient.ReadDataRow("SELECT * FROM users WHERE username = @username LIMIT 1;");
+
+				if (this.UserData != null)
 				{
-					this.bool_0 = true;
-					uint num = (uint)this.dataRow_0["Id"];
-					if (bool_1)
+					this.Validated = true;
+
+					uint id = (uint)this.UserData["Id"];
+
+					if (getAllData)
 					{
-						this.dataTable_0 = @class.ReadDataTable("SELECT achievement_id,achievement_level FROM user_achievements WHERE user_id = '" + num + "'");
-						this.dataTable_1 = @class.ReadDataTable("SELECT room_id FROM user_favorites WHERE user_id = '" + num + "'");
-						this.dataTable_2 = @class.ReadDataTable("SELECT ignore_id FROM user_ignores WHERE user_id = '" + num + "'");
-						this.dataTable_3 = @class.ReadDataTable("SELECT tag FROM user_tags WHERE user_id = '" + num + "'");
-						this.dataTable_4 = @class.ReadDataTable("SELECT subscription_id, timestamp_activated, timestamp_expire FROM user_subscriptions WHERE user_id = '" + num + "'");
-						this.dataTable_5 = @class.ReadDataTable("SELECT user_badges.badge_id,user_badges.badge_slot FROM user_badges WHERE user_id = " + num);
-						this.dataTable_6 = @class.ReadDataTable("SELECT items.Id,items.base_item,items_extra_data.extra_data FROM items LEFT JOIN items_extra_data ON items_extra_data.item_id = items.Id WHERE room_id = 0 AND user_id = " + num);
-						this.dataTable_7 = @class.ReadDataTable("SELECT user_effects.effect_id,user_effects.total_duration,user_effects.is_activated,user_effects.activated_stamp FROM user_effects WHERE user_id =  " + num);
-						this.dataTable_8 = @class.ReadDataTable("SELECT users.Id,users.username,users.motto,users.look,users.last_online FROM users JOIN messenger_friendships ON users.Id = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + num + "'");
-						this.dataTable_9 = @class.ReadDataTable("SELECT messenger_requests.Id,messenger_requests.from_id,users.username FROM users JOIN messenger_requests ON users.Id = messenger_requests.from_id WHERE messenger_requests.to_id = '" + num + "'");
-						@class.AddParamWithValue("name", (string)this.dataRow_0["username"]);
-						this.dataTable_10 = @class.ReadDataTable("SELECT * FROM rooms WHERE owner = @name ORDER BY Id ASC LIMIT " + ServerConfiguration.RoomUserLimit);
-                        this.dataTable_12 = @class.ReadDataTable("SELECT friend_stream.id, friend_stream.type, friend_stream.userid, friend_stream.gender, friend_stream.look, friend_stream.time, friend_stream.data, friend_stream.data_extra FROM friend_stream JOIN messenger_friendships ON friend_stream.userid = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + num + "' ORDER BY friend_stream.time DESC LIMIT 15");
+						this.Achievements = dbClient.ReadDataTable("SELECT achievement_id,achievement_level FROM user_achievements WHERE user_id = '" + id + "'");
+						this.Favorites = dbClient.ReadDataTable("SELECT room_id FROM user_favorites WHERE user_id = '" + id + "'");
+						this.Ignores = dbClient.ReadDataTable("SELECT ignore_id FROM user_ignores WHERE user_id = '" + id + "'");
+						this.Tags = dbClient.ReadDataTable("SELECT tag FROM user_tags WHERE user_id = '" + id + "'");
+						this.Subscriptions = dbClient.ReadDataTable("SELECT subscription_id, timestamp_activated, timestamp_expire FROM user_subscriptions WHERE user_id = '" + id + "'");
+						this.Badges = dbClient.ReadDataTable("SELECT user_badges.badge_id,user_badges.badge_slot FROM user_badges WHERE user_id = " + id);
+						this.Items = dbClient.ReadDataTable("SELECT items.Id,items.base_item,items_extra_data.extra_data FROM items LEFT JOIN items_extra_data ON items_extra_data.item_id = items.Id WHERE room_id = 0 AND user_id = " + id);
+						this.Effects = dbClient.ReadDataTable("SELECT user_effects.effect_id,user_effects.total_duration,user_effects.is_activated,user_effects.activated_stamp FROM user_effects WHERE user_id =  " + id);
+						this.Friends = dbClient.ReadDataTable("SELECT users.Id,users.username,users.motto,users.look,users.last_online FROM users JOIN messenger_friendships ON users.Id = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + id + "'");
+						this.FriendRequests = dbClient.ReadDataTable("SELECT messenger_requests.Id,messenger_requests.from_id,users.username FROM users JOIN messenger_requests ON users.Id = messenger_requests.from_id WHERE messenger_requests.to_id = '" + id + "'");
+						
+                        dbClient.AddParamWithValue("name", (string)this.UserData["username"]);
+						
+                        this.Rooms = dbClient.ReadDataTable("SELECT * FROM rooms WHERE owner = @name ORDER BY Id ASC LIMIT " + ServerConfiguration.RoomUserLimit);
+                        this.Pets = dbClient.ReadDataTable("SELECT Id, user_id, room_id, name, type, race, color, expirience, energy, nutrition, respect, createstamp, x, y, z FROM user_pets WHERE user_id = " + id + " AND room_id = 0");
+                        this.FriendStream = dbClient.ReadDataTable("SELECT friend_stream.id, friend_stream.type, friend_stream.userid, friend_stream.gender, friend_stream.look, friend_stream.time, friend_stream.data, friend_stream.data_extra FROM friend_stream JOIN messenger_friendships ON friend_stream.userid = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + id + "' ORDER BY friend_stream.time DESC LIMIT 15");
 					}
 				}
 				else
 				{
-					this.bool_0 = false;
+					this.Validated = false;
 				}
 			}
 		}

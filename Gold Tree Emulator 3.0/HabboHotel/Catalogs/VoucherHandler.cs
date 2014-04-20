@@ -53,17 +53,17 @@ namespace GoldTree.Catalogs
 				if (num > 0)
 				{
 					Session.GetHabbo().Credits += num;
-					Session.GetHabbo().method_13(true);
+					Session.GetHabbo().UpdateCredits(true);
 				}
 				if (num2 > 0)
 				{
 					Session.GetHabbo().ActivityPoints += num2;
-					Session.GetHabbo().method_15(true);
+					Session.GetHabbo().UpdateActivityPoints(true);
 				}
 				if (num3 > 0)
 				{
 					Session.GetHabbo().VipPoints += num3;
-					Session.GetHabbo().method_14(false, true);
+					Session.GetHabbo().UpdateVipPoints(false, true);
 				}
 				Session.SendMessage(new ServerMessage(212u));
 			}

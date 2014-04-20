@@ -998,10 +998,10 @@ namespace GoldTree.HabboHotel.Rooms
                             }
                             goto IL_89E;
                         case 7:
-                            result = RoomUser_1.GetClient().GetHabbo().GetBadgeComponent().method_1(string_11);
+                            result = RoomUser_1.GetClient().GetHabbo().GetBadgeComponent().HasBadge(string_11);
                             return result;
                         case 8:
-                            if (!RoomUser_1.GetClient().GetHabbo().GetBadgeComponent().method_1(string_11))
+                            if (!RoomUser_1.GetClient().GetHabbo().GetBadgeComponent().HasBadge(string_11))
                             {
                                 result = true;
                                 return result;
@@ -1428,7 +1428,7 @@ namespace GoldTree.HabboHotel.Rooms
                             if (RoomUser_1.GetClient() != null)
                             {
                                 RoomUser_1.GetClient().GetHabbo().Credits = RoomUser_1.GetClient().GetHabbo().Credits + Convert.ToInt32(string_11);
-                                RoomUser_1.GetClient().GetHabbo().method_13(true);
+                                RoomUser_1.GetClient().GetHabbo().UpdateCredits(true);
                                 return;
                             }
                             return;
@@ -1436,7 +1436,7 @@ namespace GoldTree.HabboHotel.Rooms
                             if (RoomUser_1.GetClient() != null)
                             {
                                 RoomUser_1.GetClient().GetHabbo().ActivityPoints = RoomUser_1.GetClient().GetHabbo().ActivityPoints + Convert.ToInt32(string_11);
-                                RoomUser_1.GetClient().GetHabbo().method_15(true);
+                                RoomUser_1.GetClient().GetHabbo().UpdateActivityPoints(true);
                                 return;
                             }
                             return;
@@ -1444,7 +1444,7 @@ namespace GoldTree.HabboHotel.Rooms
                             if (RoomUser_1.GetClient() != null)
                             {
                                 RoomUser_1.GetClient().GetHabbo().VipPoints = RoomUser_1.GetClient().GetHabbo().VipPoints + Convert.ToInt32(string_11);
-                                RoomUser_1.GetClient().GetHabbo().method_14(false, true);
+                                RoomUser_1.GetClient().GetHabbo().UpdateVipPoints(false, true);
                                 return;
                             }
                             return;
@@ -1520,8 +1520,8 @@ namespace GoldTree.HabboHotel.Rooms
                     }
                     if (RoomUser_1.GetClient() != null)
                     {
-                        RoomUser_1.GetClient().GetHabbo().GetBadgeComponent().method_2(RoomUser_1.GetClient(), GoldTree.FilterString(string_11), true);
-                        RoomUser_1.GetClient().SendMessage(RoomUser_1.GetClient().GetHabbo().GetBadgeComponent().method_7());
+                        RoomUser_1.GetClient().GetHabbo().GetBadgeComponent().SendBadge(RoomUser_1.GetClient(), GoldTree.FilterString(string_11), true);
+                        RoomUser_1.GetClient().SendMessage(RoomUser_1.GetClient().GetHabbo().GetBadgeComponent().ComposeBadgeListMessage());
                     }
                 }
             }
@@ -2052,7 +2052,7 @@ namespace GoldTree.HabboHotel.Rooms
                                         {
                                             if (!RoomUser_1.IsBot)
                                             {
-                                                RoomUser_1.GetClient().GetHabbo().method_28(text2);
+                                                RoomUser_1.GetClient().GetHabbo().Whisper(text2);
                                             }
                                         }
                                         else
@@ -2063,7 +2063,7 @@ namespace GoldTree.HabboHotel.Rooms
                                                 RoomUser class2 = array[i];
                                                 if (class2 != null && !class2.IsBot)
                                                 {
-                                                    class2.GetClient().GetHabbo().method_28(text2);
+                                                    class2.GetClient().GetHabbo().Whisper(text2);
                                                 }
                                             }
                                         }
@@ -4179,7 +4179,7 @@ namespace GoldTree.HabboHotel.Rooms
                 Session.GetHabbo().GetMessenger().method_5(false);
                 Session.GetHabbo().RoomVisits++;
                 Session.GetHabbo().CheckRoomEntryAchievements();
-                Session.GetHabbo().method_10(this.Id);
+                Session.GetHabbo().SendToRoom(this.Id);
                 if (Session.GetHabbo().int_0 > 0)
                 {
                     GroupsManager class3 = Groups.smethod_2(Session.GetHabbo().int_0);
@@ -4420,7 +4420,7 @@ namespace GoldTree.HabboHotel.Rooms
                                     @class.class34_1 = null;
                                     Session.GetHabbo().GetEffectsInventoryComponent().int_0 = -1;
                                 }
-                                Session.GetHabbo().method_11();
+                                Session.GetHabbo().RemoveFromRoom();
                                 this.bool_10 = true;
                                 this.method_51();
                                 List<RoomUser> list = new List<RoomUser>();

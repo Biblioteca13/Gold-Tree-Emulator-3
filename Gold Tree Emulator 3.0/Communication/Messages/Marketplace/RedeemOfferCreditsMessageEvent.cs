@@ -24,7 +24,7 @@ namespace GoldTree.Communication.Messages.Marketplace
 				if (num >= 1)
 				{
 					Session.GetHabbo().Credits += num;
-					Session.GetHabbo().method_13(true);
+					Session.GetHabbo().UpdateCredits(true);
 				}
 				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
 				{

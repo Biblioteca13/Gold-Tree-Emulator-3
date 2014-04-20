@@ -124,7 +124,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 
                 Session.GetHabbo().FireworkPixelLoadedCount += Pixels;
                 Session.GetHabbo().ActivityPoints -= 20;
-                Session.GetHabbo().method_15(true);
+                Session.GetHabbo().UpdateActivityPoints(true);
 
                 using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                 {

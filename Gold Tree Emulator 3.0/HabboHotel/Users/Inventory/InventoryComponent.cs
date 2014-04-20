@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+
 using GoldTree.Core;
 using GoldTree.HabboHotel.Users.UserDataManagement;
 using GoldTree.HabboHotel.GameClients;
@@ -12,254 +13,276 @@ using GoldTree.Messages;
 using GoldTree.Storage;
 using GoldTree.HabboHotel.SoundMachine;
 using GoldTree.Source.HabboHotel.SoundMachine;
+
 namespace GoldTree.HabboHotel.Users.Inventory
 {
 	internal sealed class InventoryComponent
 	{
-        private Hashtable discs;
-		public List<UserItem> list_0;
-		private Hashtable hashtable_0;
+        private Hashtable Discs;
+
+		public List<UserItem> Items;
+
+		private Hashtable Pets;
 		private Hashtable hashtable_1;
+
 		public List<uint> list_1;
+
 		private GameClient Session;
-		public uint uint_0;
-		public int Int32_0
+
+		public uint UserId;
+
+		public int ItemCount
 		{
 			get
 			{
-				return this.list_0.Count;
+				return this.Items.Count;
 			}
 		}
+
 		public int Int32_1
 		{
 			get
 			{
-				return this.hashtable_0.Count;
+				return this.Pets.Count;
 			}
 		}
-		public InventoryComponent(uint uint_1, GameClient class16_1, UserDataFactory class12_0)
+
+		public InventoryComponent(uint userId, GameClient client, UserDataFactory userdata)
 		{
-			this.Session = class16_1;
-			this.uint_0 = uint_1;
-			this.list_0 = new List<UserItem>();
-			this.hashtable_0 = new Hashtable();
+			this.Session = client;
+			this.UserId = userId;
+       
+			this.Items = new List<UserItem>();
+
+			this.Pets = new Hashtable();
 			this.hashtable_1 = new Hashtable();
-            this.discs = new Hashtable();
+
+            this.Discs = new Hashtable();
+
 			this.list_1 = new List<uint>();
-			this.list_0.Clear();
-			DataTable dataTable_ = class12_0.DataTable_6;
-			foreach (DataRow dataRow in dataTable_.Rows)
+			
+			foreach (DataRow row in userdata.GetItems().Rows)
 			{
                 string str;
-                uint id = Convert.ToUInt32(dataRow["Id"]);
-                uint baseItem = Convert.ToUInt32(dataRow["base_item"]);
-                if (!DBNull.Value.Equals(dataRow["extra_data"]))
-                {
-                    str = (string)dataRow["extra_data"];
-                }
-                else
-                {
-                    str = string.Empty;
-                }
 
-                list_0.Add(new UserItem(id, baseItem, str));
+                uint id = Convert.ToUInt32(row["Id"]);
+                uint baseItem = Convert.ToUInt32(row["base_item"]);
+
+                if (!DBNull.Value.Equals(row["extra_data"]))
+                    str = (string)row["extra_data"];
+                else
+                    str = string.Empty;
+
                 UserItem item = new UserItem(id, baseItem, str);
+                Items.Add(item);
 
                 if (item.method_1().InteractionType == "musicdisc")
-                {
-                    this.discs.Add(item.uint_0, item);
-                }
+                    this.Discs.Add(item.uint_0, item);
 			}
 
-			this.hashtable_0.Clear();
-			DataTable dataTable_2 = class12_0.DataTable_11;
-			foreach (DataRow dataRow in dataTable_2.Rows)
+			foreach (DataRow row in userdata.GetPets().Rows)
 			{
-				Pet @class = GoldTree.GetGame().GetCatalog().method_12(dataRow);
-				this.hashtable_0.Add(@class.PetId, @class);
+				Pet pet = GoldTree.GetGame().GetCatalog().method_12(row);
+				this.Pets.Add(pet.PetId, pet);
 			}
 		}
-		public void method_0()
+
+		public void ClearInventory()
 		{
-			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+			using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 			{
-				@class.ExecuteQuery("DELETE FROM items WHERE room_id = 0 AND user_id = '" + this.uint_0 + "';");
+				dbClient.ExecuteQuery("DELETE FROM items WHERE room_id = 0 AND user_id = '" + this.UserId + "';");
 			}
-            this.discs.Clear();
+
+            this.Discs.Clear();
 			this.hashtable_1.Clear();
 			this.list_1.Clear();
-			this.list_0.Clear();
+			this.Items.Clear();
+
 			ServerMessage Message5_ = new ServerMessage(101u);
 			this.GetClient().SendMessage(Message5_);
 		}
-		public void method_1(GameClient class16_1)
+
+		public void ConvertCoinsToCredits()
 		{
 			int num = 0;
+
 			List<UserItem> list = new List<UserItem>();
-			foreach (UserItem current in this.list_0)
+
+			foreach (UserItem item in Items)
 			{
-				if (current != null && (current.method_1().Name.StartsWith("CF_") || current.method_1().Name.StartsWith("CFC_")))
+				if (item != null && (item.method_1().Name.StartsWith("CF_") || item.method_1().Name.StartsWith("CFC_")))
 				{
-					string[] array = current.method_1().Name.Split(new char[]
+					string[] array = item.method_1().Name.Split(new char[]
 					{
 						'_'
 					});
+
 					int num2 = int.Parse(array[1]);
-					if (!this.list_1.Contains(current.uint_0))
+
+					if (!this.list_1.Contains(item.uint_0))
 					{
 						if (num2 > 0)
 						{
 							num += num2;
 						}
-						list.Add(current);
+						list.Add(item);
 					}
 				}
 			}
+
 			foreach (UserItem current in list)
 			{
 				this.method_12(current.uint_0, 0u, false);
 			}
-			class16_1.GetHabbo().Credits += num;
-			class16_1.GetHabbo().method_13(true);
-			class16_1.SendNotification("All coins in your inventory have been converted back into " + num + " credits!");
+
+			Session.GetHabbo().Credits += num;
+			Session.GetHabbo().UpdateCredits(true);
+
+			Session.SendNotification("All coins in your inventory have been converted back into " + num + " credits!");
 		}
-		public void method_2()
+
+		public void RemovePetsFromInventory()
 		{
-			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+			using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 			{
-				@class.ExecuteQuery("DELETE FROM user_pets WHERE user_id = " + this.uint_0 + " AND room_id = 0;");
+				dbClient.ExecuteQuery("DELETE FROM user_pets WHERE user_id = " + this.UserId + " AND room_id = 0;");
 			}
-			foreach (Pet class2 in this.hashtable_0.Values)
+
+			foreach (Pet pet in Pets.Values)
 			{
 				ServerMessage Message = new ServerMessage(604u);
-				Message.AppendUInt(class2.PetId);
+				Message.AppendUInt(pet.PetId);
 				this.GetClient().SendMessage(Message);
 			}
-			this.hashtable_0.Clear();
+
+			this.Pets.Clear();
 		}
+
 		public void method_3(bool bool_0)
 		{
 			if (bool_0)
-			{
-				this.method_8();
-			}
-			this.GetClient().SendMessage(this.method_15());
+				this.ReloadItems();
+
+			this.GetClient().SendMessage(this.ComposePetInventoryListMessage());
 		}
-		public Pet method_4(uint uint_1)
+
+		public Pet GetPetById(uint petId)
 		{
-			return this.hashtable_0[uint_1] as Pet;
+			return Pets[petId] as Pet;
 		}
-		public bool method_5(uint uint_1)
+
+		public void RemovePetById(uint petId)
 		{
 			ServerMessage Message = new ServerMessage(604u);
-			Message.AppendUInt(uint_1);
+			Message.AppendUInt(petId);
 			this.GetClient().SendMessage(Message);
-			this.hashtable_0.Remove(uint_1);
-			return true;
+
+			this.Pets.Remove(petId);
 		}
-		public void method_6(uint uint_1, uint uint_2)
+
+		public void AddPet(Pet pet)
 		{
-			this.method_5(uint_1);
+            try
+            {
+                if (pet != null)
+                {
+                    pet.PlacedInRoom = false;
+
+                    if (!Pets.ContainsKey(pet.PetId))
+                        Pets.Add(pet.PetId, pet);
+
+                    ServerMessage message = new ServerMessage(603u);
+                    pet.SerializeInventory(message);
+                    this.GetClient().SendMessage(message);
+                }
+            }
+            catch { }
 		}
-		public void method_7(Pet class15_0)
+
+		public void ReloadItems()
 		{
-			try
+			using (TimedLock.Lock(this.Items))
 			{
-				if (class15_0 != null)
-				{
-					class15_0.PlacedInRoom = false;
-					if (!this.hashtable_0.ContainsKey(class15_0.PetId))
-					{
-						this.hashtable_0.Add(class15_0.PetId, class15_0);
-					}
-					ServerMessage Message5_ = new ServerMessage(603u);
-					class15_0.SerializeInventory(Message5_);
-					this.GetClient().SendMessage(Message5_);
-				}
-			}
-			catch
-			{
-			}
-		}
-		public void method_8()
-		{
-			using (TimedLock.Lock(this.list_0))
-			{
-				this.list_0.Clear();
-				this.hashtable_1.Clear();
-				this.list_1.Clear();
+				Items.Clear();
+
+				hashtable_1.Clear();
+				list_1.Clear();
+
 				DataTable dataTable;
-				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+
+				using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 				{
-                    dataTable = @class.ReadDataTable("SELECT items.Id,items.base_item,items_extra_data.extra_data FROM items LEFT JOIN items_extra_data ON items_extra_data.item_id = items.Id WHERE room_id = 0 AND user_id = " + this.uint_0);
+                    dataTable = dbClient.ReadDataTable("SELECT items.Id,items.base_item,items_extra_data.extra_data FROM items LEFT JOIN items_extra_data ON items_extra_data.item_id = items.Id WHERE room_id = 0 AND user_id = " + this.UserId);
 				}
+
 				if (dataTable != null)
 				{
-					foreach (DataRow dataRow in dataTable.Rows)
+					foreach (DataRow row in dataTable.Rows)
 					{
-                        string ExtraData = (dataRow["extra_data"] == DBNull.Value) ? string.Empty : (string)dataRow["extra_data"];
-                        if (ExtraData != null && !DBNull.Value.Equals(ExtraData) && !string.IsNullOrEmpty(ExtraData))
-                        {
-                            this.list_0.Add(new UserItem((uint)dataRow["Id"], (uint)dataRow["base_item"], ExtraData));
-                        }
+                        string extraData = (row["extra_data"] == DBNull.Value) ? string.Empty : (string)row["extra_data"];
+
+                        if (extraData != null && !DBNull.Value.Equals(extraData) && !string.IsNullOrEmpty(extraData))
+                            Items.Add(new UserItem((uint)row["Id"], (uint)row["base_item"], extraData));
                         else
-                        {
-                            this.list_0.Add(new UserItem((uint)dataRow["Id"], (uint)dataRow["base_item"], ""));
-                        }
+                            Items.Add(new UserItem((uint)row["Id"], (uint)row["base_item"], ""));
 					}
 				}
-				using (TimedLock.Lock(this.hashtable_0))
+
+				using (TimedLock.Lock(Pets))
 				{
-					this.hashtable_0.Clear();
-					DataTable dataTable2;
-					using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+                    Pets.Clear();
+
+					using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 					{
-						@class.AddParamWithValue("userid", this.uint_0);
-						dataTable2 = @class.ReadDataTable("SELECT Id, user_id, room_id, name, type, race, color, expirience, energy, nutrition, respect, createstamp, x, y, z FROM user_pets WHERE user_id = @userid AND room_id <= 0");
+						dbClient.AddParamWithValue("userid", this.UserId);
+						dataTable = dbClient.ReadDataTable("SELECT Id, user_id, room_id, name, type, race, color, expirience, energy, nutrition, respect, createstamp, x, y, z FROM user_pets WHERE user_id = @userid AND room_id <= 0");
 					}
-					if (dataTable2 != null)
+
+					if (dataTable != null)
 					{
-						foreach (DataRow dataRow in dataTable2.Rows)
+						foreach (DataRow row in dataTable.Rows)
 						{
-							Pet class2 = GoldTree.GetGame().GetCatalog().method_12(dataRow);
-							this.hashtable_0.Add(class2.PetId, class2);
+							Pet pet = GoldTree.GetGame().GetCatalog().method_12(row);
+
+							this.Pets.Add(pet.PetId, pet);
 						}
 					}
 				}
 			}
 		}
+
 		public void method_9(bool bool_0)
 		{
 			if (bool_0)
 			{
-				this.method_8();
-				this.method_18();
+				this.ReloadItems();
+				this.SavePets();
 			}
+
 			if (this.GetClient() != null)
-			{
 				this.GetClient().SendMessage(new ServerMessage(101u));
-			}
 		}
-		public UserItem method_10(uint uint_1)
+
+		public UserItem GetItemById(uint itemId)
 		{
-			List<UserItem>.Enumerator enumerator = this.list_0.GetEnumerator();
-			UserItem result;
+			List<UserItem>.Enumerator enumerator = this.Items.GetEnumerator();
+
 			while (enumerator.MoveNext())
 			{
 				UserItem current = enumerator.Current;
-				if (current.uint_0 == uint_1)
-				{
-					result = current;
-					return result;
-				}
+
+				if (current.uint_0 == itemId)
+                    return current;
 			}
-			result = null;
-			return result;
+
+            return null;
 		}
+
 		public void method_11(uint uint_1, uint uint_2, string string_0, bool bool_0)
 		{
 			UserItem item = new UserItem(uint_1, uint_2, string_0);
-			this.list_0.Add(item);
+			this.Items.Add(item);
 			if (this.list_1.Contains(uint_1))
 			{
 				this.list_1.Remove(uint_1);
@@ -275,7 +298,7 @@ namespace GoldTree.HabboHotel.Users.Inventory
 							"INSERT INTO items (Id,user_id,base_item,wall_pos) VALUES ('",
 							uint_1,
 							"','",
-							this.uint_0,
+							this.UserId,
 							"','",
 							uint_2,
 							"', '')"
@@ -303,9 +326,9 @@ namespace GoldTree.HabboHotel.Users.Inventory
 
                 if (item.method_1().InteractionType == "musicdisc")
                 {
-                    if (this.discs.ContainsKey(item.uint_0))
+                    if (this.Discs.ContainsKey(item.uint_0))
                     {
-                        this.discs.Add(item.uint_0, item);
+                        this.Discs.Add(item.uint_0, item);
                     }
                 }
 
@@ -314,7 +337,7 @@ namespace GoldTree.HabboHotel.Users.Inventory
 					@class.ExecuteQuery(string.Concat(new object[]
 					{
 						"UPDATE items SET room_id = 0, user_id = '",
-						this.uint_0,
+						this.UserId,
 						"' WHERE Id = '",
 						uint_1,
 						"'"
@@ -335,9 +358,9 @@ namespace GoldTree.HabboHotel.Users.Inventory
                 }
                 if (!this.list_1.Contains(uint_1))
                 {
-                    this.list_0.Remove(this.method_10(uint_1));
+                    this.Items.Remove(this.GetItemById(uint_1));
                     this.list_1.Add(uint_1);
-                    this.discs.Remove(uint_1);
+                    this.Discs.Remove(uint_1);
                     if (bool_0)
                     {
                         using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
@@ -363,42 +386,58 @@ namespace GoldTree.HabboHotel.Users.Inventory
                 }
             }
         }
+
 		public ServerMessage method_13()
 		{
 			ServerMessage Message = new ServerMessage(140u);
+
 			Message.AppendStringWithBreak("S");
+
 			Message.AppendInt32(1);
 			Message.AppendInt32(1);
-			Message.AppendInt32(this.Int32_0);
-			List<UserItem>.Enumerator enumerator = this.list_0.GetEnumerator();
+
+			Message.AppendInt32(this.ItemCount);
+
+			List<UserItem>.Enumerator enumerator = this.Items.GetEnumerator();
+
 			while (enumerator.MoveNext())
 			{
 				enumerator.Current.method_0(Message, true);
 			}
 			return Message;
 		}
+
 		public ServerMessage method_14()
 		{
 			ServerMessage Message = new ServerMessage(140u);
+
 			Message.AppendStringWithBreak("I");
 			Message.AppendString("II");
+
 			Message.AppendInt32(0);
+
 			return Message;
 		}
-		public ServerMessage method_15()
+
+		public ServerMessage ComposePetInventoryListMessage()
 		{
 			ServerMessage Message = new ServerMessage(600u);
-			Message.AppendInt32(this.hashtable_0.Count);
-			foreach (Pet @class in this.hashtable_0.Values)
+
+			Message.AppendInt32(Pets.Count);
+
+			foreach (Pet pet in Pets.Values)
 			{
-				@class.SerializeInventory(Message);
+				pet.SerializeInventory(Message);
 			}
+
 			return Message;
 		}
+
 		private GameClient GetClient()
 		{
-			return GoldTree.GetGame().GetClientManager().method_2(this.uint_0);
+			return GoldTree.GetGame().GetClientManager().method_2(this.UserId);
 		}
+
 		public void method_17(List<RoomItem> list_2)
 		{
 			foreach (RoomItem current in list_2)
@@ -406,98 +445,105 @@ namespace GoldTree.HabboHotel.Users.Inventory
 				this.method_11(current.uint_0, current.uint_2, current.ExtraData, false);
 			}
 		}
-		internal void method_18()
+
+		internal void SavePets()
 		{
-			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+			using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 			{
-				this.method_19(@class, false);
+				this.SavePets(dbClient, false);
 			}
 		}
-		internal void method_19(DatabaseClient class6_0, bool bool_0)
+
+		internal void SavePets(DatabaseClient dbClient, bool consoleOutput)
 		{
 			try
 			{
-				if (this.list_1.Count > 0 || this.hashtable_1.Count > 0 || this.hashtable_0.Count > 0)
+				if (this.list_1.Count > 0 || this.hashtable_1.Count > 0 || this.Pets.Count > 0)
 				{
 					StringBuilder stringBuilder = new StringBuilder();
-					foreach (Pet @class in this.hashtable_0.Values)
+
+					foreach (Pet pet in Pets.Values)
 					{
-						if (@class.DBState == DatabaseUpdateState.NeedsInsert)
+						if (pet.DBState == DatabaseUpdateState.NeedsInsert)
 						{
-							class6_0.AddParamWithValue("petname" + @class.PetId, @class.Name);
-							class6_0.AddParamWithValue("petcolor" + @class.PetId, @class.Color);
-							class6_0.AddParamWithValue("petrace" + @class.PetId, @class.Race);
+							dbClient.AddParamWithValue("petname" + pet.PetId, pet.Name);
+							dbClient.AddParamWithValue("petcolor" + pet.PetId, pet.Color);
+							dbClient.AddParamWithValue("petrace" + pet.PetId, pet.Race);
+
 							stringBuilder.Append(string.Concat(new object[]
 							{
 								"INSERT INTO `user_pets` VALUES ('",
-								@class.PetId,
+								pet.PetId,
 								"', '",
-								@class.OwnerId,
+								pet.OwnerId,
 								"', '",
-								@class.RoomId,
+								pet.RoomId,
 								"', @petname",
-								@class.PetId,
+								pet.PetId,
 								", @petrace",
-								@class.PetId,
+								pet.PetId,
 								", @petcolor",
-								@class.PetId,
+								pet.PetId,
 								", '",
-								@class.Type,
+								pet.Type,
 								"', '",
-								@class.Expirience,
+								pet.Expirience,
 								"', '",
-								@class.Energy,
+								pet.Energy,
 								"', '",
-								@class.Nutrition,
+								pet.Nutrition,
 								"', '",
-								@class.Respect,
+								pet.Respect,
 								"', '",
-								@class.CreationStamp,
+								pet.CreationStamp,
 								"', '",
-								@class.X,
+								pet.X,
 								"', '",
-								@class.Y,
+								pet.Y,
 								"', '",
-								@class.Z,
+								pet.Z,
 								"');"
 							}));
 						}
 						else
 						{
-							if (@class.DBState == DatabaseUpdateState.NeedsUpdate)
+							if (pet.DBState == DatabaseUpdateState.NeedsUpdate)
 							{
 								stringBuilder.Append(string.Concat(new object[]
 								{
 									"UPDATE user_pets SET room_id = '",
-									@class.RoomId,
+									pet.RoomId,
 									"', expirience = '",
-									@class.Expirience,
+									pet.Expirience,
 									"', energy = '",
-									@class.Energy,
+									pet.Energy,
 									"', nutrition = '",
-									@class.Nutrition,
+									pet.Nutrition,
 									"', respect = '",
-									@class.Respect,
+									pet.Respect,
 									"', x = '",
-									@class.X,
+									pet.X,
 									"', y = '",
-									@class.Y,
+									pet.Y,
 									"', z = '",
-									@class.Z,
+									pet.Z,
 									"' WHERE Id = '",
-									@class.PetId,
+									pet.PetId,
 									"' LIMIT 1; "
 								}));
 							}
 						}
-						@class.DBState = DatabaseUpdateState.Updated;
+
+						pet.DBState = DatabaseUpdateState.Updated;
 					}
+
 					if (stringBuilder.Length > 0)
 					{
-						class6_0.ExecuteQuery(stringBuilder.ToString());
+						dbClient.ExecuteQuery(stringBuilder.ToString());
 					}
 				}
-				if (bool_0)
+
+				if (consoleOutput)
 				{
 					Console.WriteLine("Inventory for user: " + this.GetClient().GetHabbo().Username + " saved.");
 				}
@@ -512,15 +558,17 @@ namespace GoldTree.HabboHotel.Users.Inventory
         {
             get
             {
-                return this.discs;
+                return this.Discs;
             }
         }
 
-        public void RedeemPixel(GameClient class16_1)
+        public void RedeemPixel(GameClient client)
         {
             int num = 0;
+
             List<UserItem> list = new List<UserItem>();
-            foreach (UserItem current in this.list_0)
+
+            foreach (UserItem current in this.Items)
             {
                 if (current != null && (current.method_1().Name.StartsWith("PixEx_")))
                 {
@@ -528,31 +576,37 @@ namespace GoldTree.HabboHotel.Users.Inventory
 					{
 						'_'
 					});
+
                     int num2 = int.Parse(array[1]);
+
                     if (!this.list_1.Contains(current.uint_0))
                     {
                         if (num2 > 0)
-                        {
                             num += num2;
-                        }
+
                         list.Add(current);
                     }
                 }
             }
+
             foreach (UserItem current in list)
             {
                 this.method_12(current.uint_0, 0u, false);
             }
-            class16_1.GetHabbo().ActivityPoints += num;
-            class16_1.GetHabbo().method_15(true);
-            class16_1.SendNotification("All pixels in your inventory have been converted back into " + num + " pixels!");
+
+            client.GetHabbo().ActivityPoints += num;
+            client.GetHabbo().UpdateActivityPoints(true);
+
+            client.SendNotification("All pixels in your inventory have been converted back into " + num + " pixels!");
         }
 
-        public void RedeemShell(GameClient class16_1)
+        public void RedeemShell(GameClient client)
         {
             int num = 0;
+
             List<UserItem> list = new List<UserItem>();
-            foreach (UserItem current in this.list_0)
+
+            foreach (UserItem current in this.Items)
             {
                 if (current != null && (current.method_1().Name.StartsWith("PntEx_")))
                 {
@@ -560,24 +614,28 @@ namespace GoldTree.HabboHotel.Users.Inventory
 					{
 						'_'
 					});
+
                     int num2 = int.Parse(array[1]);
+
                     if (!this.list_1.Contains(current.uint_0))
                     {
                         if (num2 > 0)
-                        {
                             num += num2;
-                        }
+
                         list.Add(current);
                     }
                 }
             }
+
             foreach (UserItem current in list)
             {
                 this.method_12(current.uint_0, 0u, false);
             }
-            class16_1.GetHabbo().VipPoints += num;
-            class16_1.GetHabbo().method_14(false, true);
-            class16_1.SendNotification("All shells in your inventory have been converted back into " + num + " shells!");
+
+            client.GetHabbo().VipPoints += num;
+            client.GetHabbo().UpdateVipPoints(false, true);
+
+            client.SendNotification("All shells in your inventory have been converted back into " + num + " shells!");
         }
 	}
 }

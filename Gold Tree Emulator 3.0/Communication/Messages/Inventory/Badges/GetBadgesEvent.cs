@@ -7,7 +7,7 @@ namespace GoldTree.Communication.Messages.Inventory.Badges
 	{
         public void Handle(GameClient Session, ClientMessage Event)
         {
-            Session.SendMessage(Session.GetHabbo().GetBadgeComponent().method_7());
+            Session.SendMessage(Session.GetHabbo().GetBadgeComponent().ComposeBadgeListMessage());
         }
 	}
 }

@@ -29,7 +29,7 @@ namespace GoldTree.HabboHotel.Catalogs
 		}
 		public void method_1(GameClient Session, uint uint_0, int int_0)
 		{
-			UserItem @class = Session.GetHabbo().GetInventoryComponent().method_10(uint_0);
+			UserItem @class = Session.GetHabbo().GetInventoryComponent().GetItemById(uint_0);
 			if (@class == null || int_0 > ServerConfiguration.MarketplacePriceLimit || !this.method_0(@class))
 			{
 				ServerMessage Message = new ServerMessage(610u);

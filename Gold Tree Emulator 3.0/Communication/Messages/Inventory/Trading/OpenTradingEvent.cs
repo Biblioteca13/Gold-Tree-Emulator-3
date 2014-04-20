@@ -13,7 +13,7 @@ namespace GoldTree.Communication.Messages.Inventory.Trading
 			{
 				if (!@class.CanTrade)
 				{
-					Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("trade_error_roomdisabled"));
+					Session.GetHabbo().Whisper(GoldTreeEnvironment.GetExternalText("trade_error_roomdisabled"));
 				}
 				else
 				{
@@ -25,7 +25,7 @@ namespace GoldTree.Communication.Messages.Inventory.Trading
 					}
 					else
 					{
-						Session.GetHabbo().method_28(GoldTreeEnvironment.GetExternalText("trade_error_targetdisabled"));
+						Session.GetHabbo().Whisper(GoldTreeEnvironment.GetExternalText("trade_error_targetdisabled"));
 					}
 				}
 			}

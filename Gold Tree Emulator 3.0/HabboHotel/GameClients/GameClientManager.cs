@@ -406,7 +406,7 @@ namespace GoldTree.HabboHotel.GameClients
                         if (NoBug <= 2147483647 || -2147483648 >= NoBug)
                         {
                             @class.GetHabbo().Credits += int_0;
-                            @class.GetHabbo().method_13(true);
+                            @class.GetHabbo().UpdateCredits(true);
                             @class.SendNotification("You just received " + int_0 + " credits from staff!");
                         }
                         else
@@ -414,13 +414,13 @@ namespace GoldTree.HabboHotel.GameClients
                             if (int_0 > 0)
                             {
                                 @class.GetHabbo().Credits = 2147483647;
-                                @class.GetHabbo().method_13(true);
+                                @class.GetHabbo().UpdateCredits(true);
                                 @class.SendNotification("You just received max credits from staff!");
                             }
                             else if (int_0 < 0)
                             {
                                 @class.GetHabbo().Credits = -2147483648;
-                                @class.GetHabbo().method_13(true);
+                                @class.GetHabbo().UpdateCredits(true);
                                 @class.SendNotification("You just received max negative credits from staff!");
                             }
                         }
@@ -446,7 +446,7 @@ namespace GoldTree.HabboHotel.GameClients
                         if (NoBug <= 2147483647 || -2147483648 >= NoBug)
                         {
                             @class.GetHabbo().ActivityPoints += int_0;
-                            @class.GetHabbo().method_15(bool_0);
+                            @class.GetHabbo().UpdateActivityPoints(bool_0);
                             @class.SendNotification("You just received " + int_0 + " pixels from staff!");
                         }
                         else
@@ -454,13 +454,13 @@ namespace GoldTree.HabboHotel.GameClients
                             if (int_0 > 0)
                             {
                                 @class.GetHabbo().Credits = 2147483647;
-                                @class.GetHabbo().method_13(true);
+                                @class.GetHabbo().UpdateCredits(true);
                                 @class.SendNotification("You just received max pixels from staff!");
                             }
                             else if (int_0 < 0)
                             {
                                 @class.GetHabbo().Credits = -2147483648;
-                                @class.GetHabbo().method_13(true);
+                                @class.GetHabbo().UpdateCredits(true);
                                 @class.SendNotification("You just received max negative pixels from staff!");
                             }
                         }
@@ -486,7 +486,7 @@ namespace GoldTree.HabboHotel.GameClients
                         if (NoBug <= 2147483647 || -2147483648 >= NoBug)
                         {
                             @class.GetHabbo().VipPoints += int_0;
-                            @class.GetHabbo().method_14(false, bool_0);
+                            @class.GetHabbo().UpdateVipPoints(false, bool_0);
                             @class.SendNotification("You just received " + int_0 + " points from staff!");
                         }
                         else
@@ -494,13 +494,13 @@ namespace GoldTree.HabboHotel.GameClients
                             if (int_0 > 0)
                             {
                                 @class.GetHabbo().Credits = 2147483647;
-                                @class.GetHabbo().method_13(true);
+                                @class.GetHabbo().UpdateCredits(true);
                                 @class.SendNotification("You just received max points from staff!");
                             }
                             else if (int_0 < 0)
                             {
                                 @class.GetHabbo().Credits = -2147483648;
-                                @class.GetHabbo().method_13(true);
+                                @class.GetHabbo().UpdateCredits(true);
                                 @class.SendNotification("You just received max negative points from staff!");
                             }
                         }
@@ -520,7 +520,7 @@ namespace GoldTree.HabboHotel.GameClients
 				{
 					try
 					{
-						@class.GetHabbo().GetBadgeComponent().method_2(@class, string_0, true);
+						@class.GetHabbo().GetBadgeComponent().SendBadge(@class, string_0, true);
 						@class.SendNotification("You just received a badge from hotel staff!");
 					}
 					catch
@@ -563,39 +563,43 @@ namespace GoldTree.HabboHotel.GameClients
 		internal void CloseAll()
 		{
 			StringBuilder stringBuilder = new StringBuilder();
+
 			bool flag = false;
-			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+
+			using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 			{
-				for (int i = 0; i < this.Clients.Length; i++)
+				for (int i = 0; i < Clients.Length; i++)
 				{
-					GameClient class2 = this.Clients[i];
-					if (class2 != null && class2.GetHabbo() != null)
+					GameClient client = Clients[i];
+
+					if (client != null && client.GetHabbo() != null)
 					{
-						try
-						{
-							class2.GetHabbo().GetInventoryComponent().method_19(@class, true);
-							stringBuilder.Append(class2.GetHabbo().UpdateQuery);
-							flag = true;
-						}
-						catch
-						{
-						}
+                        try
+                        {
+                            client.GetHabbo().GetInventoryComponent().SavePets(dbClient, true);
+                            stringBuilder.Append(client.GetHabbo().UpdateQuery);
+                            flag = true;
+                        }
+                        catch { }
 					}
 				}
+
 				if (flag)
 				{
 					try
 					{
-						@class.ExecuteQuery(stringBuilder.ToString());
+						dbClient.ExecuteQuery(stringBuilder.ToString());
 					}
 					catch (Exception ex)
 					{
-						Logging.smethod_8(ex.ToString());
+						Logging.HandleException(ex.ToString());
 					}
 				}
 			}
+
 			Console.WriteLine("Done saving users inventory!");
 			Console.WriteLine("Closing server connections...");
+
 			try
 			{
 				for (int i = 0; i < this.Clients.Length; i++)
@@ -605,7 +609,7 @@ namespace GoldTree.HabboHotel.GameClients
 					{
 						try
 						{
-							class2.GetConnection().Dispose();
+							class2.GetConnection().Close();
 						}
 						catch
 						{
@@ -615,11 +619,14 @@ namespace GoldTree.HabboHotel.GameClients
 			}
 			catch (Exception ex)
 			{
-				Logging.smethod_8(ex.ToString());
+				Logging.HandleException(ex.ToString());
 			}
+
 			Array.Clear(this.Clients, 0, this.Clients.Length);
+
 			Console.WriteLine("Connections closed!");
 		}
+
 		public void method_25(uint uint_0)
 		{
 			for (int i = 0; i < this.Clients.Length; i++)

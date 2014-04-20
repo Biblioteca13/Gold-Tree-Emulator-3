@@ -14,10 +14,10 @@ namespace GoldTree.Communication.Messages.Rooms.Pets
 			{
 				uint uint_ = Event.PopWiredUInt();
 				RoomUser class2 = @class.method_48(uint_);
-				if (class2 != null && class2.PetData != null && Session.GetHabbo().int_22 > 0)
+				if (class2 != null && class2.PetData != null && Session.GetHabbo().PetRespectPoints > 0)
 				{
 					class2.PetData.OnRespect();
-					Session.GetHabbo().int_22--;
+					Session.GetHabbo().PetRespectPoints--;
 					using (DatabaseClient class3 = GoldTree.GetDatabase().GetClient())
 					{
 						class3.AddParamWithValue("userid", Session.GetHabbo().Id);

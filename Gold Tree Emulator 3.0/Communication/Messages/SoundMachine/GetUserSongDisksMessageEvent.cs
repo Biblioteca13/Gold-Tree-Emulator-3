@@ -12,7 +12,7 @@ namespace GoldTree.Communication.Messages.SoundMachine
         public void Handle(GameClient Session, ClientMessage Event)
         {
             List<UserItem> list = new List<UserItem>();
-            foreach (UserItem current in Session.GetHabbo().GetInventoryComponent().list_0)
+            foreach (UserItem current in Session.GetHabbo().GetInventoryComponent().Items)
             {
                 if (current != null && !(current.method_1().Name != "song_disk") && !Session.GetHabbo().GetInventoryComponent().list_1.Contains(current.uint_0))
                 {

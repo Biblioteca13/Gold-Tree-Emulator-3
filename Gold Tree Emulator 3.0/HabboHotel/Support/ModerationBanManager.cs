@@ -48,7 +48,7 @@ namespace GoldTree.HabboHotel.Support
 			{
 				if (!current.Expired)
 				{
-                    if (Session != null && Session.GetHabbo() != null && current.Type == ModerationBanType.IP && Session.GetConnection().String_0 == current.Variable)
+                    if (Session != null && Session.GetHabbo() != null && current.Type == ModerationBanType.IP && Session.GetConnection().Address == current.Variable)
                     //if (Session != null && Session.GetHabbo() != null && current.Type == ModerationBanType.IP && Session.GetConnection().getIp() == current.Variable)
 					{
 						throw new ModerationBanException(current.ReasonMessage);
@@ -76,7 +76,7 @@ namespace GoldTree.HabboHotel.Support
 					enum4_ = ModerationBanType.IP;
 
 					if (!ServerConfiguration.IPLastBan)
-                        text = Session.GetConnection().String_0;
+                        text = Session.GetConnection().Address;
 					else
 					{
 						using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())

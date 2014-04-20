@@ -29,7 +29,7 @@ namespace GoldTree.HabboHotel.Users.Inventory
 			this.uint_0 = uint_1;
 			this.int_0 = -1;
 			this.list_0.Clear();
-			DataTable dataTable_ = class12_0.DataTable_7;
+			DataTable dataTable_ = class12_0.GetEffects();
 			StringBuilder stringBuilder = new StringBuilder();
 			foreach (DataRow dataRow in dataTable_.Rows)
 			{

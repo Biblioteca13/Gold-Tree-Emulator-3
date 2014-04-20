@@ -19,7 +19,7 @@ namespace GoldTree.Net
             {
                 if (this.Message1_0[i] != null)
                 {
-                    this.Message1_0[i].Dispose();
+                    this.Message1_0[i].Close();
                 }
             }
             this.Message1_0 = null;
@@ -54,7 +54,7 @@ namespace GoldTree.Net
                                 ">> Connection [",
                                 int_0,
                                 "] from [",
-                                Message.String_0,
+                                Message.Address,
                                 "]"
                             }));
             }
@@ -70,7 +70,7 @@ namespace GoldTree.Net
             {
                 if (this.Message1_0[i] != null)
                 {
-                    this.Message1_0[i].Dispose();
+                    this.Message1_0[i].Close();
                 }
             }
         }

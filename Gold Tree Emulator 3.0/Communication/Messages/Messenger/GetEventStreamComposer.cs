@@ -7,58 +7,71 @@ namespace GoldTree.Communication.Messages.Messenger
 {
     internal sealed class GetEventStreamComposer : Interface
 	{
-		public void Handle(GameClient Session, ClientMessage Event)
+		public void Handle(GameClient session, ClientMessage message)
 		{
-            ServerMessage Message = new ServerMessage(950u);
-            int StreamCount = 0;
-            foreach (DataRow dRow in Session.GetHabbo().GetUserDataFactory().DataTable_12.Rows)
+            ServerMessage response = new ServerMessage(950u);
+
+            int streamCount = session.GetHabbo().GetUserDataFactory().GetFriendStream().Rows.Count;
+
+            DataTable dataTable_ = session.GetHabbo().GetUserDataFactory().GetFriendStream();
+
+            foreach (DataRow row in dataTable_.Rows)
             {
-                StreamCount = StreamCount + 1;
-            }
-            DataTable dataTable_ = Session.GetHabbo().GetUserDataFactory().DataTable_12;
-            foreach (DataRow dataRow in dataTable_.Rows)
-            {
-                int type = (int)dataRow["type"];
+                int type = (int)row["type"];
+
                 if (type == 1)
                 {
-                    DataRow[] DataRow_ = Session.GetHabbo().GetUserDataFactory().DataTable_8.Select("id = " + (uint)dataRow["userid"]);
-                    uint userid = (uint)dataRow["userid"];
-                    string username = (string)DataRow_[0]["username"];
-                    string gender = (string)dataRow["gender"].ToString().ToLower();
-                    string look = (string)dataRow["look"];
-                    int time = (int)((GoldTree.GetUnixTimestamp() - (double)dataRow["time"]) / 60);
-                    string data = (string)dataRow["data"];
+                    DataRow[] tmpRow = session.GetHabbo().GetUserDataFactory().GetFriends().Select("id = " + (uint)row["userid"]);
 
-                    Message.AppendInt32(StreamCount);
-                    Message.AppendUInt(1u);
-                    Message.AppendInt32(type);
-                    Message.AppendStringWithBreak(userid.ToString());
-                    Message.AppendStringWithBreak(username);
-                    Message.AppendStringWithBreak(gender);
-                    Message.AppendStringWithBreak("http://127.0.0.1/retro/r63/c_images/friendstream/index.gif?figure=" + look + ".gif");
-                    Message.AppendInt32WithBreak(time);
-                    Message.AppendInt32WithBreak(type + 1);
+                    uint userid = (uint)row["userid"];
+                    string username = (string)tmpRow[0]["username"];
 
-                    uint RoomID;
+                    string gender = (string)row["gender"].ToString().ToLower();
+                    string look = (string)row["look"];
+
+                    int time = (int)((GoldTree.GetUnixTimestamp() - (double)row["time"]) / 60);
+
+                    string data = (string)row["data"];
+
+                    response.AppendInt32(streamCount);
+
+                    response.AppendUInt(1u);
+
+                    response.AppendInt32(type);
+
+                    response.AppendStringWithBreak(userid.ToString());
+                    response.AppendStringWithBreak(username);
+
+                    response.AppendStringWithBreak(gender);
+                    response.AppendStringWithBreak("http://127.0.0.1/retro/r63/c_images/friendstream/index.gif?figure=" + look + ".gif");
+
+                    response.AppendInt32WithBreak(time);
+
+                    response.AppendInt32WithBreak(type + 1);
+
+                    uint roomId;
+
                     RoomData RoomData;
-                    if (uint.TryParse(data, out RoomID))
-                        RoomData = GoldTree.GetGame().GetRoomManager().method_12(RoomID);
+
+                    if (uint.TryParse(data, out roomId))
+                        RoomData = GoldTree.GetGame().GetRoomManager().method_12(roomId);
                     else
                         RoomData = GoldTree.GetGame().GetRoomManager().method_12(0);
 
                     if (RoomData != null)
                     {
-                        Message.AppendStringWithBreak(RoomData.Id.ToString()); //data
-                        Message.AppendStringWithBreak(RoomData.Name); //extra data
+                        response.AppendStringWithBreak(RoomData.Id.ToString()); //data
+                        response.AppendStringWithBreak(RoomData.Name); //extra data
                     }
                     else
                     {
-                        Message.AppendStringWithBreak("");
-                        Message.AppendStringWithBreak("Room deleted");
+                        response.AppendStringWithBreak("");
+                        response.AppendStringWithBreak("Room deleted");
                     }
                 }
             }
-            Session.SendMessage(Message);
+
+            session.SendMessage(response);
 		}
 	}
 }

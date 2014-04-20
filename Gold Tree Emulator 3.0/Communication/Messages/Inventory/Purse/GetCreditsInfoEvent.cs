@@ -7,8 +7,8 @@ namespace GoldTree.Communication.Messages.Inventory.Purse
 	{
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
-			Session.GetHabbo().method_13(false);
-			Session.GetHabbo().method_15(false);
+			Session.GetHabbo().UpdateCredits(false);
+			Session.GetHabbo().UpdateActivityPoints(false);
 		}
 	}
 }

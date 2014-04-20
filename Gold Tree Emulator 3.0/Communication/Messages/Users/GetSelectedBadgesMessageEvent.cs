@@ -7,22 +7,26 @@ namespace GoldTree.Communication.Messages.Users
 {
 	internal sealed class GetSelectedBadgesMessageEvent : Interface
 	{
-		public void Handle(GameClient Session, ClientMessage Event)
+		public void Handle(GameClient session, ClientMessage message)
 		{
-			if (Session != null && Session.GetHabbo() != null)
+			if (session != null && session.GetHabbo() != null)
 			{
-				Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
-				if (@class != null)
+				Room room = GoldTree.GetGame().GetRoomManager().GetRoom(session.GetHabbo().CurrentRoomId);
+
+				if (room != null)
 				{
-					RoomUser class2 = @class.GetRoomUserByHabbo(Event.PopWiredUInt());
-					if (class2 != null && !class2.IsBot && class2.GetClient() != null)
+					RoomUser targetUser = room.GetRoomUserByHabbo(message.PopWiredUInt());
+
+					if (targetUser != null && !targetUser.IsBot && targetUser.GetClient() != null)
 					{
 						ServerMessage Message = new ServerMessage(228u);
-						Message.AppendUInt(class2.GetClient().GetHabbo().Id);
-						Message.AppendInt32(class2.GetClient().GetHabbo().GetBadgeComponent().Int32_1);
-						using (TimedLock.Lock(class2.GetClient().GetHabbo().GetBadgeComponent().List_0))
+
+						Message.AppendUInt(targetUser.GetClient().GetHabbo().Id);
+						Message.AppendInt32(targetUser.GetClient().GetHabbo().GetBadgeComponent().VisibleBadges);
+
+						using (TimedLock.Lock(targetUser.GetClient().GetHabbo().GetBadgeComponent().GetBadges()))
 						{
-							foreach (Badge current in class2.GetClient().GetHabbo().GetBadgeComponent().List_0)
+							foreach (Badge current in targetUser.GetClient().GetHabbo().GetBadgeComponent().GetBadges())
 							{
 								if (current.Slot > 0)
 								{
@@ -31,7 +35,8 @@ namespace GoldTree.Communication.Messages.Users
 								}
 							}
 						}
-						Session.SendMessage(Message);
+
+						session.SendMessage(Message);
 					}
 				}
 			}

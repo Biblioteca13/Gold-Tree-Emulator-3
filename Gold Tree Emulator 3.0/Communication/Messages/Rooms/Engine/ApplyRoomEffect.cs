@@ -13,7 +13,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 			Room @class = GoldTree.GetGame().GetRoomManager().GetRoom(Session.GetHabbo().CurrentRoomId);
             if (@class != null && @class.CheckRights(Session, true))
 			{
-				UserItem class2 = Session.GetHabbo().GetInventoryComponent().method_10(Event.PopWiredUInt());
+				UserItem class2 = Session.GetHabbo().GetInventoryComponent().GetItemById(Event.PopWiredUInt());
 				if (class2 != null)
 				{
 					string text = "floor";

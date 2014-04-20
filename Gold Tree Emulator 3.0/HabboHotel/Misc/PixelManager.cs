@@ -68,12 +68,12 @@ namespace GoldTree.HabboHotel.Misc
 							{
 								Session.GetHabbo().Credits += ServerConfiguration.CreditingAmount;
 							}
-							Session.GetHabbo().method_13(true);
+							Session.GetHabbo().UpdateCredits(true);
 						}
 						if (ServerConfiguration.PixelingAmount > 0 && (Session.GetHabbo().VipPoints < ServerConfiguration.PointLimit || ServerConfiguration.PointLimit == 0))
 						{
 							Session.GetHabbo().VipPoints += ServerConfiguration.PixelingAmount;
-							Session.GetHabbo().method_14(false, true);
+							Session.GetHabbo().UpdateVipPoints(false, true);
 						}
 					}
 				}

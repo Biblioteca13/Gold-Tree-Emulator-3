@@ -86,7 +86,7 @@ namespace GoldTree.HabboHotel.GameClients
 			{
                 this.bool_0 = true;
                 SocketConnection.GDelegate0 gdelegate0_ = new SocketConnection.GDelegate0(this.ParsePacket);
-                this.Connection.method_0(gdelegate0_);
+                this.Connection.Initialise(gdelegate0_);
 
                 //SocketConnection.RouteReceivedDataCallback dataRouter = new SocketConnection.RouteReceivedDataCallback(this.method_13);
                 //this.Message1_0.Start(dataRouter);
@@ -132,20 +132,20 @@ namespace GoldTree.HabboHotel.GameClients
             try
             {
                 //string ip = GetConnection().getIp();
-                UserDataFactory @class = new UserDataFactory(string_0, this.GetConnection().String_0, true);
-                if (this.GetConnection().String_0 == "127.0.0.1" && !@class.Boolean_0)
+                UserDataFactory @class = new UserDataFactory(string_0, this.GetConnection().Address, true);
+                if (this.GetConnection().Address == "127.0.0.1" && !@class.Validated)
                 //UserDataFactory @class = new UserDataFactory(string_0, ip, true);
                 //if (ip == "127.0.0.1" && !@class.Boolean_0)
                 {
                     @class = new UserDataFactory(string_0, "::1", true);
                 }
-                if (!@class.Boolean_0)
+                if (!@class.Validated)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     string str = "";
                     if (ServerConfiguration.EnableSSO)
                     {
-                        str = GoldTreeEnvironment.GetExternalText("emu_sso_wrong_secure") + "(" + this.GetConnection().String_0 + ")";
+                        str = GoldTreeEnvironment.GetExternalText("emu_sso_wrong_secure") + "(" + this.GetConnection().Address + ")";
                         //str = GoldTreeEnvironment.smethod_1("emu_sso_wrong_secure") + "(" + ip + ")";
                     }
                     ServerMessage Message = new ServerMessage(161u);
@@ -155,7 +155,7 @@ namespace GoldTree.HabboHotel.GameClients
                     this.method_12();
                     return;
                 }
-                Habbo class2 = Authenticator.smethod_0(string_0, this, @class, @class);
+                Habbo class2 = Authenticator.CreateHabbo(string_0, this, @class, @class);
                 GoldTree.GetGame().GetClientManager().method_25(class2.Id);
                 this.Habbo = class2;
                 this.Habbo.method_2(@class);
@@ -378,15 +378,15 @@ namespace GoldTree.HabboHotel.GameClients
 			{
 				if (GoldTree.GetGame().GetRoleManager().method_8(num).Length > 0)
 				{
-					if (!this.GetHabbo().GetBadgeComponent().method_1(GoldTree.GetGame().GetRoleManager().method_8(num)) && this.GetHabbo().Rank == num)
+					if (!this.GetHabbo().GetBadgeComponent().HasBadge(GoldTree.GetGame().GetRoleManager().method_8(num)) && this.GetHabbo().Rank == num)
 					{
-						this.GetHabbo().GetBadgeComponent().method_2(this, GoldTree.GetGame().GetRoleManager().method_8(num), true);
+						this.GetHabbo().GetBadgeComponent().SendBadge(this, GoldTree.GetGame().GetRoleManager().method_8(num), true);
 					}
 					else
 					{
-						if (this.GetHabbo().GetBadgeComponent().method_1(GoldTree.GetGame().GetRoleManager().method_8(num)) && this.GetHabbo().Rank < num)
+						if (this.GetHabbo().GetBadgeComponent().HasBadge(GoldTree.GetGame().GetRoleManager().method_8(num)) && this.GetHabbo().Rank < num)
 						{
-							this.GetHabbo().GetBadgeComponent().method_6(GoldTree.GetGame().GetRoleManager().method_8(num));
+							this.GetHabbo().GetBadgeComponent().RemoveBadge(GoldTree.GetGame().GetRoleManager().method_8(num));
 						}
 					}
 				}
@@ -395,15 +395,15 @@ namespace GoldTree.HabboHotel.GameClients
 			{
                 this.GetHabbo().CheckHCAchievements();
 			}
-			if (this.GetHabbo().IsVIP && !this.GetHabbo().GetBadgeComponent().method_1("VIP"))
+			if (this.GetHabbo().IsVIP && !this.GetHabbo().GetBadgeComponent().HasBadge("VIP"))
 			{
-				this.GetHabbo().GetBadgeComponent().method_2(this, "VIP", true);
+				this.GetHabbo().GetBadgeComponent().SendBadge(this, "VIP", true);
 			}
 			else
 			{
-				if (!this.GetHabbo().IsVIP && this.GetHabbo().GetBadgeComponent().method_1("VIP"))
+				if (!this.GetHabbo().IsVIP && this.GetHabbo().GetBadgeComponent().HasBadge("VIP"))
 				{
-					this.GetHabbo().GetBadgeComponent().method_6("VIP");
+					this.GetHabbo().GetBadgeComponent().RemoveBadge("VIP");
 				}
 			}
 			if (this.GetHabbo().CurrentQuestId > 0u)
@@ -492,12 +492,12 @@ namespace GoldTree.HabboHotel.GameClients
 		{
 			if (this.Connection != null)
 			{
-				this.Connection.Dispose();
+				this.Connection.Close();
 				this.Connection = null;
 			}
 			if (this.GetHabbo() != null)
 			{
-				this.Habbo.method_9();
+				this.Habbo.Dispose();
 				this.Habbo = null;
 			}
 			if (this.GetClientMessageHandler() != null)
@@ -598,9 +598,9 @@ namespace GoldTree.HabboHotel.GameClients
 			{
 				if (true)//Class13.Boolean_7)
 				{
-                    this.Connection.method_4(CrossdomainPolicy.GetXmlPolicy());
+                    this.Connection.SendMessage(CrossdomainPolicy.GetXmlPolicy());
                     //this.Message1_0.SendData(GoldTree.GetDefaultEncoding().GetBytes(CrossdomainPolicy.GetXmlPolicy()));
-				    this.Connection.Dispose();
+				    this.Connection.Close();
 				}
 			}
 		}

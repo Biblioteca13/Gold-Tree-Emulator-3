@@ -26,7 +26,9 @@ namespace GoldTree.HabboHotel.Users.Messenger
 		internal void method_0(UserDataFactory class12_0)
 		{
 			this.hashtable_0 = new Hashtable();
-			DataTable dataTable_ = class12_0.DataTable_8;
+
+			DataTable dataTable_ = class12_0.GetFriends();
+
 			if (dataTable_ != null)
 			{
 				foreach (DataRow dataRow in dataTable_.Rows)
@@ -51,7 +53,7 @@ namespace GoldTree.HabboHotel.Users.Messenger
 		internal void method_1(UserDataFactory class12_0)
 		{
 			this.hashtable_1 = new Hashtable();
-			DataTable dataTable_ = class12_0.DataTable_9;
+			DataTable dataTable_ = class12_0.GetFriendRequests();
 			if (dataTable_ != null)
 			{
 				foreach (DataRow dataRow in dataTable_.Rows)
@@ -63,6 +65,7 @@ namespace GoldTree.HabboHotel.Users.Messenger
 				}
 			}
 		}
+
 		internal void method_2()
 		{
 			this.hashtable_0.Clear();

@@ -7,121 +7,139 @@ namespace GoldTree.HabboHotel.Users.Subscriptions
 {
 	internal class SubscriptionManager
 	{
-		private uint uint_0;
-		private Dictionary<string, Subscription> dictionary_0;
-		public List<string> List_0
+		public uint UserId;
+
+		private Dictionary<string, Subscription> Subscriptions;
+
+        public Dictionary<string, Subscription> GetSubscriptions() { return Subscriptions; }
+
+		public List<string> SubscriptionTypes
 		{
 			get
 			{
 				List<string> list = new List<string>();
-				using (TimedLock.Lock(this.dictionary_0.Values))
+
+				using (TimedLock.Lock(this.Subscriptions.Values))
 				{
-					foreach (Subscription current in this.dictionary_0.Values)
+					foreach (Subscription current in this.Subscriptions.Values)
 					{
-						list.Add(current.String_0);
+						list.Add(current.Type);
 					}
 				}
+
 				return list;
 			}
 		}
-		public SubscriptionManager(uint uint_1, UserDataFactory class12_0)
+
+		public SubscriptionManager(uint userId, UserDataFactory userdata)
 		{
-			this.uint_0 = uint_1;
-			this.dictionary_0 = new Dictionary<string, Subscription>();
-			DataTable dataTable_ = class12_0.DataTable_4;
+			this.UserId = userId;
+			
+            this.Subscriptions = new Dictionary<string, Subscription>();
+
+			DataTable dataTable_ = userdata.GetSubscriptions();
+
 			if (dataTable_ != null)
 			{
 				foreach (DataRow dataRow in dataTable_.Rows)
 				{
-					this.dictionary_0.Add((string)dataRow["subscription_id"], new Subscription((string)dataRow["subscription_id"], (int)dataRow["timestamp_activated"], (int)dataRow["timestamp_expire"]));
+					this.Subscriptions.Add((string)dataRow["subscription_id"], new Subscription((string)dataRow["subscription_id"], (int)dataRow["timestamp_activated"], (int)dataRow["timestamp_expire"]));
 				}
 			}
 		}
-		public void method_0()
+
+		public Subscription GetSubscriptionByType(string type)
 		{
-			this.dictionary_0.Clear();
-		}
-		public Subscription method_1(string string_0)
-		{
-			if (this.dictionary_0.ContainsKey(string_0))
+			if (this.Subscriptions.ContainsKey(type))
 			{
-				return dictionary_0[string_0];
+				return Subscriptions[type];
 			}
 			else
 			{
 				return null;
 			}
 		}
-        public bool HasSubscription(string string_0)
+
+        public bool HasSubscription(string type)
 		{
-			if (!this.dictionary_0.ContainsKey(string_0))
+			if (!this.Subscriptions.ContainsKey(type))
 			{
 				return false;
 			}
 			else
 			{
-				Subscription @class = this.dictionary_0[string_0];
-				return @class.method_0();
+				Subscription subscription = this.Subscriptions[type];
+				return subscription.HasExpired();
 			}
 		}
-		public void method_3(string string_0, int int_0)
+
+		public void method_3(string type, int time)
 		{
-			string_0 = string_0.ToLower();
-			if (this.dictionary_0.ContainsKey(string_0))
+			type = type.ToLower();
+
+			if (this.Subscriptions.ContainsKey(type))
 			{
-				Subscription @class = this.dictionary_0[string_0];
-				@class.method_1(int_0);
-				if (@class.Int32_0 <= 0 || @class.Int32_0 >= 2147483647)
-				{
+				Subscription subscription = this.Subscriptions[type];
+
+				subscription.AppendTime(time);
+
+				if (subscription.ExpirationTime <= 0 || subscription.ExpirationTime >= 2147483647)
 					return;
-				}
-				using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
+
+				using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 				{
-					class2.AddParamWithValue("subcrbr", string_0);
-					class2.ExecuteQuery(string.Concat(new object[]
+					dbClient.AddParamWithValue("subcrbr", type);
+
+					dbClient.ExecuteQuery(string.Concat(new object[]
 					{
 						"UPDATE user_subscriptions SET timestamp_expire = '",
-						@class.Int32_0,
+						subscription.ExpirationTime,
 						"' WHERE user_id = '",
-						this.uint_0,
+						this.UserId,
 						"' AND subscription_id = @subcrbr LIMIT 1"
 					}));
 					return;
 				}
 			}
-			if (!this.dictionary_0.ContainsKey("habbo_vip"))
+
+			if (!this.Subscriptions.ContainsKey("habbo_vip"))
 			{
-				int num = (int)GoldTree.GetUnixTimestamp();
-				int num2 = (int)GoldTree.GetUnixTimestamp() + int_0;
-				Subscription class3 = new Subscription(string_0, num, num2);
-				using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
+				int now = (int)GoldTree.GetUnixTimestamp();
+				int expiration = (int)GoldTree.GetUnixTimestamp() + time;
+
+				Subscription subscription = new Subscription(type, now, expiration);
+
+				using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 				{
-					class2.AddParamWithValue("subcrbr", string_0);
-					class2.ExecuteQuery(string.Concat(new object[]
+					dbClient.AddParamWithValue("subcrbr", type);
+
+					dbClient.ExecuteQuery(string.Concat(new object[]
 					{
 						"INSERT INTO user_subscriptions (user_id,subscription_id,timestamp_activated,timestamp_expire) VALUES ('",
-						this.uint_0,
+						this.UserId,
 						"',@subcrbr,'",
-						num,
+						now,
 						"','",
-						num2,
+						expiration,
 						"')"
 					}));
 				}
-				this.dictionary_0.Add(class3.String_0.ToLower(), class3);
+
+				this.Subscriptions.Add(subscription.Type.ToLower(), subscription);
 			}
 		}
 
-        public int CalculateHCSubscription(Users.Habbo Habbo)
+        public int CalculateHCSubscription(Habbo habbo)
         {
-            if (Habbo.GetSubscriptionManager().HasSubscription("habbo_club"))
+            if (habbo.GetSubscriptionManager().HasSubscription("habbo_club"))
             {
-                return ((int)GoldTree.GetUnixTimestamp() - Habbo.GetSubscriptionManager().method_1("habbo_club").Int32_1) / 2678400;
+                return ((int)GoldTree.GetUnixTimestamp() - habbo.GetSubscriptionManager().GetSubscriptionByType("habbo_club").StartingTime) / 2678400;
             }
             else
             {
-                if (Habbo.GetSubscriptionManager().method_1(Habbo.Id.ToString()) != null)
-                    return (Habbo.GetSubscriptionManager().method_1("habbo_club").Int32_0 - Habbo.GetSubscriptionManager().method_1("habbo_club").Int32_1) / 2678400;
+                if (habbo.GetSubscriptionManager().GetSubscriptionByType(habbo.Id.ToString()) != null)
+                    return (habbo.GetSubscriptionManager().GetSubscriptionByType("habbo_club").ExpirationTime - habbo.GetSubscriptionManager().GetSubscriptionByType("habbo_club").StartingTime) / 2678400;
+                
                 return 0;
             }
         }

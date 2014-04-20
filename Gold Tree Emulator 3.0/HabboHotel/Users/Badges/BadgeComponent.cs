@@ -9,151 +9,172 @@ namespace GoldTree.HabboHotel.Users.Badges
 {
 	internal sealed class BadgeComponent
 	{
-		private List<Badge> list_0;
-		private uint uint_0;
-		public int Int32_0
+		private List<Badge> Badges;
+
+		public uint UserId;
+
+		public int BadgeCount
 		{
 			get
 			{
-				return this.list_0.Count;
+				return this.Badges.Count;
 			}
 		}
-		public int Int32_1
+
+		public int VisibleBadges
 		{
 			get
 			{
 				int num = 0;
-				foreach (Badge current in this.list_0)
+
+				foreach (Badge current in this.Badges)
 				{
 					if (current.Slot > 0)
-					{
 						num++;
-					}
 				}
+
 				return num;
 			}
 		}
-		public List<Badge> List_0
+
+        public List<Badge> GetBadges()
+        {
+            return Badges;
+        }
+
+		public BadgeComponent(uint userId, UserDataFactory userdata)
 		{
-			get
-			{
-				return this.list_0;
-			}
-		}
-		public BadgeComponent(uint uint_1, UserDataFactory class12_0)
-		{
-			this.list_0 = new List<Badge>();
-			this.uint_0 = uint_1;
-			DataTable dataTable_ = class12_0.DataTable_5;
+			this.Badges = new List<Badge>();
+
+			this.UserId = userId;
+
+			DataTable dataTable_ = userdata.GetBadges();
+
 			if (dataTable_ != null)
 			{
 				foreach (DataRow dataRow in dataTable_.Rows)
 				{
-					this.list_0.Add(new Badge((string)dataRow["badge_id"], (int)dataRow["badge_slot"]));
+					this.Badges.Add(new Badge((string)dataRow["badge_id"], (int)dataRow["badge_slot"]));
 				}
 			}
 		}
-		public Badge method_0(string string_0)
+
+		public Badge GetBadgeByCode(string code)
 		{
-			Badge result;
-			foreach (Badge current in this.list_0)
+			foreach (Badge badge in Badges)
 			{
-				if (string_0.ToLower() == current.Code.ToLower())
-				{
-					result = current;
-					return result;
-				}
+				if (code.ToLower() == badge.Code.ToLower())
+                    return badge;
 			}
-			result = null;
-			return result;
+
+            return null;
 		}
-		public bool method_1(string string_0)
+
+		public bool HasBadge(string code)
 		{
-			return this.method_0(string_0) != null;
+			return this.GetBadgeByCode(code) != null;
 		}
-		public void method_2(GameClient Session, string string_0, bool bool_0)
+
+		public void SendBadge(GameClient session, string code, bool addToDatabase)
 		{
-            if (Session != null && Session.GetHabbo() != null)
+            if (session != null && session.GetHabbo() != null)
             {
-                this.method_3(string_0, 0, bool_0);
+                AddBadge(code, 0, addToDatabase);
+
                 ServerMessage Message = new ServerMessage(832u);
+
                 Message.AppendInt32(1);
                 Message.AppendInt32(4);
                 Message.AppendInt32(1);
-                Message.AppendUInt(GoldTree.GetGame().GetAchievementManager().method_0(string_0));
-                Session.SendMessage(Message);
-                Session.SendMessage(Session.GetHabbo().GetBadgeComponent().method_7());
+
+                Message.AppendUInt(GoldTree.GetGame().GetAchievementManager().method_0(code));
+
+                session.SendMessage(Message);
+                
+                session.SendMessage(session.GetHabbo().GetBadgeComponent().ComposeBadgeListMessage());
             }
 		}
-		public void method_3(string string_0, int int_0, bool bool_0)
+
+		public void AddBadge(string code, int slotId, bool addToDatabase)
 		{
-			if (!this.method_1(string_0))
+            if (this.HasBadge(code))
+                return;
+
+			if (addToDatabase)
 			{
-				if (bool_0)
+				using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 				{
-					using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+					dbClient.AddParamWithValue("badge", code);
+
+					dbClient.ExecuteQuery(string.Concat(new object[]
 					{
-						@class.AddParamWithValue("badge", string_0);
-						@class.ExecuteQuery(string.Concat(new object[]
-						{
-							"INSERT INTO user_badges (user_id,badge_id,badge_slot) VALUES ('",
-							this.uint_0,
-							"',@badge,'",
-							int_0,
-							"')"
-						}));
-					}
+						"INSERT INTO user_badges (user_id,badge_id,badge_slot) VALUES ('",
+						this.UserId,
+						"',@badge,'",
+						slotId,
+						"')"
+					}));
 				}
-				this.list_0.Add(new Badge(string_0, int_0));
 			}
+
+			this.Badges.Add(new Badge(code, slotId));
 		}
-		public void method_4(string string_0, int int_0)
+
+		public void ResetSlot(string code, int slot)
 		{
-			Badge @class = this.method_0(string_0);
-			if (@class != null)
-			{
-				@class.Slot = int_0;
-			}
+			Badge badge = this.GetBadgeByCode(code);
+
+			if (badge != null)
+				badge.Slot = slot;
 		}
-		public void method_5()
+
+		public void ResetBadgeSlots()
 		{
-			foreach (Badge current in this.list_0)
+			foreach (Badge current in this.Badges)
 			{
 				current.Slot = 0;
 			}
 		}
-		public void method_6(string string_0)
+
+		public void RemoveBadge(string code)
 		{
-			if (this.method_1(string_0))
+			if (this.HasBadge(code))
 			{
-				using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+				using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 				{
-					@class.AddParamWithValue("badge", string_0);
-					@class.ExecuteQuery("DELETE FROM user_badges WHERE badge_id = @badge AND user_id = '" + this.uint_0 + "' LIMIT 1");
+					dbClient.AddParamWithValue("badge", code);
+					dbClient.ExecuteQuery("DELETE FROM user_badges WHERE badge_id = @badge AND user_id = '" + this.UserId + "' LIMIT 1");
 				}
-				this.list_0.Remove(this.method_0(string_0));
+
+				this.Badges.Remove(this.GetBadgeByCode(code));
 			}
 		}
-		public ServerMessage method_7()
+
+		public ServerMessage ComposeBadgeListMessage()
 		{
 			List<Badge> list = new List<Badge>();
+
 			ServerMessage Message = new ServerMessage(229u);
-			Message.AppendInt32(this.Int32_0);
-			foreach (Badge current in this.list_0)
+
+			Message.AppendInt32(this.BadgeCount);
+
+			foreach (Badge current in this.Badges)
 			{
 				Message.AppendUInt(GoldTree.GetGame().GetAchievementManager().method_0(current.Code));
 				Message.AppendStringWithBreak(current.Code);
+
 				if (current.Slot > 0)
-				{
 					list.Add(current);
-				}
 			}
+
 			Message.AppendInt32(list.Count);
+
 			foreach (Badge current in list)
 			{
 				Message.AppendInt32(current.Slot);
 				Message.AppendStringWithBreak(current.Code);
 			}
+
 			return Message;
 		}
 	}

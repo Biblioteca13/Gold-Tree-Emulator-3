@@ -484,16 +484,22 @@ namespace GoldTree.HabboHotel.Rooms
 					else
 					{
 						uint uint_ = 0u;
-						using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+
+						using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 						{
-							@class.AddParamWithValue("caption", string_0);
-							@class.AddParamWithValue("model", string_1);
-							@class.AddParamWithValue("username", Session.GetHabbo().Username);
-							@class.ExecuteQuery("INSERT INTO rooms (roomtype,caption,owner,model_name) VALUES ('private',@caption,@username,@model)");
-							Session.GetHabbo().GetUserDataFactory().DataTable_10 = @class.ReadDataTable("SELECT * FROM rooms WHERE owner = @username ORDER BY Id ASC");
-							uint_ = (uint)@class.ReadDataRow("SELECT Id FROM rooms WHERE owner = @username AND caption = @caption ORDER BY Id DESC")[0];
-							Session.GetHabbo().method_1(@class);
+							dbClient.AddParamWithValue("caption", string_0);
+							dbClient.AddParamWithValue("model", string_1);
+							dbClient.AddParamWithValue("username", Session.GetHabbo().Username);
+
+							dbClient.ExecuteQuery("INSERT INTO rooms (roomtype,caption,owner,model_name) VALUES ('private',@caption,@username,@model)");
+
+                            Session.GetHabbo().GetUserDataFactory().SetRooms(dbClient.ReadDataTable("SELECT * FROM rooms WHERE owner = @username ORDER BY Id ASC"));
+
+							uint_ = (uint)dbClient.ReadDataRow("SELECT Id FROM rooms WHERE owner = @username AND caption = @caption ORDER BY Id DESC")[0];
+
+							Session.GetHabbo().method_1(dbClient);
 						}
+
 						result = this.method_12(uint_);
 					}
 				}
