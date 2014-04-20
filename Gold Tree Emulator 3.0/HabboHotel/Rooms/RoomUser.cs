@@ -175,7 +175,7 @@ namespace GoldTree.HabboHotel.Rooms
 		{
 			string object_ = str;
 
-            string linkRegex = @"((http|https):\/\/|www.)?[a-zA-Z0-9\-\.]+\b(com|co\.uk|org|net|eu|cf|info|ml|nl|ca|es|fi|co\.nf)";
+            string linkRegex = @"((http|https):\/\/|www.)?[a-zA-Z0-9\-\.]+\b(com|co\.uk|org|net|eu|cf|info|ml|nl|ca|es|fi)\b";
 
 			if (Session == null || (Session.GetHabbo().HasFuse("ignore_roommute") || !this.GetRoom().bool_4))
 			{
