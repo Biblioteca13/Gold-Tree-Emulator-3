@@ -9,8 +9,10 @@ namespace GoldTree.HabboHotel.Misc
 {
     public sealed class LowPriorityWorker
     {
-        public static void smethod_0()
+        public static void Initialise()
         {
+            double lastDatabaseUpdate = GoldTree.GetUnixTimestamp();
+
             while (true)
             {
                 try
@@ -23,17 +25,6 @@ namespace GoldTree.HabboHotel.Misc
                     int UsersOnline = GoldTree.GetGame().GetClientManager().ClientCount;
                     int RoomsLoaded = GoldTree.GetGame().GetRoomManager().LoadedRoomsCount;
 
-                    bool flag = true;
-                    try
-                    {
-                        if (int.Parse(GoldTree.GetConfig().data["debug"]) == 1)
-                        {
-                            flag = false;
-                        }
-                    }
-                    catch
-                    {
-                    }
                     try
                     {
                         if (GoldTree.GetConfig().data["shutdown-server"] != null)
@@ -90,28 +81,35 @@ namespace GoldTree.HabboHotel.Misc
                     catch
                     {
                     }
-                    if (flag)
+
+                    double timestamp = GoldTree.GetUnixTimestamp() - lastDatabaseUpdate;
+
+                    if (timestamp >= 30)
                     {
-                        using (DatabaseClient adapter = GoldTree.GetDatabase().GetClient())
+                        using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                         {
-                            adapter.ExecuteQuery(string.Concat(new object[]
-							{
-								"UPDATE server_status SET stamp = UNIX_TIMESTAMP(), status = '", Status, "', users_online = '",	UsersOnline, "', rooms_loaded = '",	RoomsLoaded, "', server_ver = '", GoldTree.PrettyVersion,	"' LIMIT 1" 	}));
-                            uint num3 = (uint)adapter.ReadInt32("SELECT users FROM system_stats ORDER BY ID DESC LIMIT 1");
-                            if ((long)UsersOnline > (long)((ulong)num3))
-                            {
-                                adapter.ExecuteQuery(string.Concat(new object[]
-								{
-									"UPDATE system_stats SET users = '",
-									UsersOnline,
-									"', rooms = '",
-									RoomsLoaded,
-									"' ORDER BY ID DESC LIMIT 1"
-								}));
+                            dbClient.ExecuteQuery(string.Concat(new object[]
+						    {
+							    "UPDATE server_status SET stamp = UNIX_TIMESTAMP(), status = '", Status, "', users_online = '",	UsersOnline, "', rooms_loaded = '",	RoomsLoaded, "', server_ver = '", GoldTree.PrettyVersion,	"' LIMIT 1" 	}));
+                                uint num3 = (uint)dbClient.ReadInt32("SELECT users FROM system_stats ORDER BY ID DESC LIMIT 1");
+                                if ((long)UsersOnline > (long)((ulong)num3))
+                                {
+                                    dbClient.ExecuteQuery(string.Concat(new object[]
+							    {
+								    "UPDATE system_stats SET users = '",
+								    UsersOnline,
+								    "', rooms = '",
+								    RoomsLoaded,
+								    "' ORDER BY ID DESC LIMIT 1"
+							    }));
                             }
                         }
+
+                        lastDatabaseUpdate = timestamp;
                     }
+
                     GoldTree.GetGame().GetClientManager().method_23();
+
                     Console.Title = string.Concat(new object[]
 					{
 						"GTE 3.0 | Online Users: ",

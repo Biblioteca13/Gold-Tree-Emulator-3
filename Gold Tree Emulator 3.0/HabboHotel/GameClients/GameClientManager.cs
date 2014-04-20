@@ -18,6 +18,7 @@ namespace GoldTree.HabboHotel.GameClients
 	internal sealed class GameClientManager
 	{
 		private Task task_0;
+
 		private GameClient[] Clients;
 
 		private Hashtable hashtable_0;

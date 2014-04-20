@@ -122,7 +122,7 @@ namespace GoldTree.HabboHotel
                 return;
             }
 
-			this.task_0 = new Task(new Action(LowPriorityWorker.smethod_0));
+			this.task_0 = new Task(new Action(LowPriorityWorker.Initialise));
 			this.task_0.Start();
 
             StartGameLoop();
