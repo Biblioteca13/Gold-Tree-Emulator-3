@@ -43,7 +43,7 @@ namespace GoldTree.HabboHotel
 
         private Task GameLoop;
         private bool GameLoopActive;
-        private bool GameLoopEnded;
+        private bool GameLoopEnded = true;
         private const int GameLoopSleepTime = 25;
 
 		public Game(int conns)
