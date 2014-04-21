@@ -11,6 +11,8 @@ namespace GoldTree.HabboHotel.Misc
     {
         public static void Initialise()
         {
+            double lastDatabaseUpdate = GoldTree.GetUnixTimestamp();
+
             while (true)
             {
                 try
