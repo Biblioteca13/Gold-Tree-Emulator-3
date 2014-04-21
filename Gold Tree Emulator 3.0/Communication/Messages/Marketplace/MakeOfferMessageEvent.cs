@@ -24,9 +24,9 @@ namespace GoldTree.Communication.Messages.Marketplace
 				Event.PopWiredInt32();
 				uint uint_ = Event.PopWiredUInt();
 				UserItem class2 = Session.GetHabbo().GetInventoryComponent().GetItemById(uint_);
-				if (class2 != null && class2.method_1().AllowTrade)
+				if (class2 != null && class2.GetBaseItem().AllowTrade)
 				{
-					GoldTree.GetGame().GetCatalog().method_22().method_1(Session, class2.uint_0, int_);
+					GoldTree.GetGame().GetCatalog().method_22().method_1(Session, class2.Id, int_);
 				}
 			}
 		}

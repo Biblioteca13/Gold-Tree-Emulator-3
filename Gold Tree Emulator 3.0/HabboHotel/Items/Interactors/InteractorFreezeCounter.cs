@@ -54,21 +54,21 @@ namespace GoldTree.HabboHotel.Items.Interactors
 					{
                         if (Request == 1)
 						{
-                            if (!Item.method_8().frzTimer)
+                            if (!Item.GetRoom().frzTimer)
 							{
-                                Item.method_8().frzTimer = true;
+                                Item.GetRoom().frzTimer = true;
                                 Item.ReqUpdate(1);
 								if (Session != null)
 								{
 									RoomUser RoomUser_ = Session.GetHabbo().CurrentRoom.GetRoomUserByHabbo(Session.GetHabbo().Id);
-                                    Item.method_8().method_14(RoomUser_);
-                                    Item.method_8().GetFreeze().StartGame();
+                                    Item.GetRoom().method_14(RoomUser_);
+                                    Item.GetRoom().GetFreeze().StartGame();
 								}
 							}
 							else
 							{
-								Item.method_8().frzTimer = false;
-                                Item.method_8().GetFreeze().StopGame();
+								Item.GetRoom().frzTimer = false;
+                                Item.GetRoom().GetFreeze().StopGame();
 							}
 						}
 						else

@@ -54,8 +54,8 @@ namespace GoldTree.Communication.Messages.Wired
                                     bool flag7 = false;
                                     if (class2.string_3 != "" && class3 != null)
                                     {
-                                        int int_ = class3.Int32_0;
-                                        int int_2 = class3.Int32_1;
+                                        int int_ = class3.X;
+                                        int int_2 = class3.Y;
                                         if (class2.string_3.StartsWith("I"))
                                         {
                                             class3.ExtraData = list9[4];
@@ -74,7 +74,7 @@ namespace GoldTree.Communication.Messages.Wired
                                         }
                                         if (flag6)
                                         {
-                                            @class.method_40(class3, int_, int_2, class2.uint_0, class3.Double_0);
+                                            @class.method_40(class3, int_, int_2, class2.uint_0, class3.Z);
                                         }
                                         if (flag7)
                                         {

@@ -256,7 +256,7 @@ namespace GoldTree.Net
 					case 0:
 						using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 						{
-							GoldTree.GetGame().GetItemManager().method_0(class2);
+							GoldTree.GetGame().GetItemManager().Initialise(class2);
 							goto IL_C70;
 						}
 					case 1:
@@ -487,9 +487,9 @@ namespace GoldTree.Net
 					}
 					using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 					{
-						GoldTree.GetGame().GetCatalog().method_0(class2);
+						GoldTree.GetGame().GetCatalog().Initialise(class2);
 					}
-					GoldTree.GetGame().GetCatalog().method_1();
+					GoldTree.GetGame().GetCatalog().CacheCatalogue();
 					GoldTree.GetGame().GetClientManager().BroadcastMessage(new ServerMessage(441u));
 					goto IL_C70;
 					IL_34E:

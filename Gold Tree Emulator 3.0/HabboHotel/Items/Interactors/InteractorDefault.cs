@@ -35,7 +35,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 					{
 						if (@class.bool_0)
 						{
-							@class.MoveTo(RoomItem_0.GStruct1_0);
+							@class.MoveTo(RoomItem_0.Position);
 							return;
 						}
 						return;
@@ -89,26 +89,26 @@ namespace GoldTree.HabboHotel.Items.Interactors
                 //    }
                 //    RoomItem_0.method_8().SendMessage(Message, null);
                 //}
-				double double_ = RoomItem_0.Double_1;
+				double double_ = RoomItem_0.TopZ;
 				RoomItem_0.ExtraData = num2.ToString();
 				RoomItem_0.method_4();
-				if (double_ != RoomItem_0.Double_1)
+				if (double_ != RoomItem_0.TopZ)
 				{
 					Dictionary<int, AffectedTile> dictionary = RoomItem_0.Dictionary_0;
 					if (dictionary == null)
 					{
 						dictionary = new Dictionary<int, AffectedTile>();
 					}
-					RoomItem_0.method_8().method_87(RoomItem_0.method_8().method_43(RoomItem_0.Int32_0, RoomItem_0.Int32_1), true, false);
+					RoomItem_0.GetRoom().method_87(RoomItem_0.GetRoom().method_43(RoomItem_0.X, RoomItem_0.Y), true, false);
 					foreach (AffectedTile current in dictionary.Values)
 					{
-						RoomItem_0.method_8().method_87(RoomItem_0.method_8().method_43(current.Int32_0, current.Int32_1), true, false);
+						RoomItem_0.GetRoom().method_87(RoomItem_0.GetRoom().method_43(current.Int32_0, current.Int32_1), true, false);
 					}
 				}
 				if (Session != null)
 				{
 					RoomUser RoomUser_ = Session.GetHabbo().CurrentRoom.GetRoomUserByHabbo(Session.GetHabbo().Id);
-					RoomItem_0.method_8().method_10(RoomUser_, RoomItem_0);
+					RoomItem_0.GetRoom().method_10(RoomUser_, RoomItem_0);
 				}
 			}
 		}

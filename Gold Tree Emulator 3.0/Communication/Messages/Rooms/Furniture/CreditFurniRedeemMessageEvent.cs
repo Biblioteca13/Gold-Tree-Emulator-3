@@ -24,7 +24,7 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
 						{
 							if (class3 != null)
 							{
-								@class.method_29(null, class3.uint_0, true, true);
+								@class.method_29(null, class3.Id, true, true);
 							}
 							else
 							{

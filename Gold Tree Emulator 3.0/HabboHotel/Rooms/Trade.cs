@@ -89,7 +89,7 @@ namespace GoldTree.HabboHotel.Rooms
 		public void method_2(uint uint_3, UserItem class39_0)
 		{
 			TradeUser @class = this.method_1(uint_3);
-			if (@class != null && class39_0 != null && class39_0.method_1().AllowTrade && !@class.Boolean_0 && this.int_0 == 1)
+			if (@class != null && class39_0 != null && class39_0.GetBaseItem().AllowTrade && !@class.Boolean_0 && this.int_0 == 1)
 			{
 				this.method_8();
 				@class.OfferedItems.Add(class39_0);
@@ -194,17 +194,17 @@ namespace GoldTree.HabboHotel.Rooms
 						{
 							foreach (UserItem current in @class.OfferedItems)
 							{
-								Message.AppendUInt(current.uint_0);
-								Message.AppendStringWithBreak(current.method_1().Type.ToString().ToLower());
-								Message.AppendUInt(current.uint_0);
-								Message.AppendInt32(current.method_1().Sprite);
+								Message.AppendUInt(current.Id);
+								Message.AppendStringWithBreak(current.GetBaseItem().Type.ToString().ToLower());
+								Message.AppendUInt(current.Id);
+								Message.AppendInt32(current.GetBaseItem().Sprite);
 								Message.AppendBoolean(true);
 								Message.AppendBoolean(true);
 								Message.AppendStringWithBreak("");
 								Message.AppendBoolean(false);
 								Message.AppendBoolean(false);
 								Message.AppendBoolean(false);
-								if (current.method_1().Type == 's')
+								if (current.GetBaseItem().Type == 's')
 								{
 									Message.AppendInt32(-1);
 								}
@@ -221,7 +221,7 @@ namespace GoldTree.HabboHotel.Rooms
 			List<UserItem> list_2 = this.method_1(this.uint_2).OfferedItems;
 			foreach (UserItem current in list_)
 			{
-				if (this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().GetItemById(current.uint_0) == null)
+				if (this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().GetItemById(current.Id) == null)
 				{
 					this.method_1(this.uint_1).method_1().SendNotification("Trade failed.");
 					this.method_1(this.uint_2).method_1().SendNotification("Trade failed.");
@@ -230,7 +230,7 @@ namespace GoldTree.HabboHotel.Rooms
 			}
 			foreach (UserItem current in list_2)
 			{
-				if (this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().GetItemById(current.uint_0) == null)
+				if (this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().GetItemById(current.Id) == null)
 				{
 					this.method_1(this.uint_1).method_1().SendNotification("Trade failed.");
 					this.method_1(this.uint_2).method_1().SendNotification("Trade failed.");
@@ -248,12 +248,12 @@ namespace GoldTree.HabboHotel.Rooms
 						"UPDATE items SET room_id = '0', user_id = '",
 						this.method_1(this.uint_2).method_1().GetHabbo().Id,
 						"' WHERE Id = '",
-						current.uint_0,
+						current.Id,
 						"' LIMIT 1"
 					}));
 				}
-                this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().method_12(current.uint_0, this.method_1(this.uint_2).method_1().GetHabbo().Id, true);
-				this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().method_11(current.uint_0, current.uint_1, current.string_0, false);
+                this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().ChangeItemOwner(current.Id, this.method_1(this.uint_2).method_1().GetHabbo().Id, true);
+				this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().AddItem(current.Id, current.BaseItem, current.ExtraData, false);
 			}
 			foreach (UserItem current in list_2)
 			{
@@ -264,15 +264,15 @@ namespace GoldTree.HabboHotel.Rooms
 						"UPDATE items SET room_id = '0', user_id = '",
 						this.method_1(this.uint_1).method_1().GetHabbo().Id,
 						"' WHERE Id = '",
-						current.uint_0,
+						current.Id,
 						"' LIMIT 1"
 					}));
 				}
-                this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().method_12(current.uint_0, this.method_1(this.uint_1).method_1().GetHabbo().Id, true);
-				this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().method_11(current.uint_0, current.uint_1, current.string_0, false);
+                this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().ChangeItemOwner(current.Id, this.method_1(this.uint_1).method_1().GetHabbo().Id, true);
+				this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().AddItem(current.Id, current.BaseItem, current.ExtraData, false);
 			}
-			this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().method_9(true);
-			this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().method_9(true);
+			this.method_1(this.uint_1).method_1().GetHabbo().GetInventoryComponent().RefreshInventory(true);
+			this.method_1(this.uint_2).method_1().GetHabbo().GetInventoryComponent().RefreshInventory(true);
 
 		}
 		public void method_11()

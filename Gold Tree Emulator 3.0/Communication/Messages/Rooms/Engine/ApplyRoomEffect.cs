@@ -17,13 +17,13 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 				if (class2 != null)
 				{
 					string text = "floor";
-					if (class2.method_1().Name.ToLower().Contains("wallpaper"))
+					if (class2.GetBaseItem().Name.ToLower().Contains("wallpaper"))
 					{
 						text = "wallpaper";
 					}
 					else
 					{
-						if (class2.method_1().Name.ToLower().Contains("landscape"))
+						if (class2.GetBaseItem().Name.ToLower().Contains("landscape"))
 						{
 							text = "landscape";
 						}
@@ -37,12 +37,12 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 							{
 								if (text2 == "landscape")
 								{
-									@class.Landscape = class2.string_0;
+									@class.Landscape = class2.ExtraData;
 								}
 							}
 							else
 							{
-								@class.Wallpaper = class2.string_0;
+								@class.Wallpaper = class2.ExtraData;
                                 if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "PLACEWALLPAPER")
 								{
                                     GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
@@ -51,7 +51,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 						}
 						else
 						{
-							@class.Floor = class2.string_0;
+							@class.Floor = class2.ExtraData;
                             if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "PLACEFLOOR")
 							{
                                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
@@ -60,7 +60,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 					}
 					using (DatabaseClient class3 = GoldTree.GetDatabase().GetClient())
 					{
-						class3.AddParamWithValue("extradata", class2.string_0);
+						class3.AddParamWithValue("extradata", class2.ExtraData);
 						class3.ExecuteQuery(string.Concat(new object[]
 						{
 							"UPDATE rooms SET ",
@@ -70,10 +70,10 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 							"' LIMIT 1"
 						}));
 					}
-                    Session.GetHabbo().GetInventoryComponent().method_12(class2.uint_0, 0u, false);
+                    Session.GetHabbo().GetInventoryComponent().ChangeItemOwner(class2.Id, 0u, false);
 					ServerMessage Message = new ServerMessage(46u);
 					Message.AppendStringWithBreak(text);
-					Message.AppendStringWithBreak(class2.string_0);
+					Message.AppendStringWithBreak(class2.ExtraData);
 					@class.SendMessage(Message, null);
 					GoldTree.GetGame().GetRoomManager().method_18(@class.Id);
 				}

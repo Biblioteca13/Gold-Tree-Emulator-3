@@ -1,0 +1,8 @@
+21/04/2014 17:58:38: Error: System.NullReferenceException: Object reference not set to an instance of an object.
+   at GoldTree.HabboHotel.Rooms.RoomUser.HandleSpeech(GameClient Session, String str, Boolean bool_13) in c:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3-Real\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 228
+   at GoldTree.HabboHotel.RoomBots.PetBot.OnUserSay(RoomUser RoomUser_0, String string_0) in c:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3-Real\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\HabboHotel\RoomBots\PetBot.cs:line 197
+   at GoldTree.HabboHotel.Rooms.Room.method_7(RoomUser RoomUser_1, String string_10, Boolean bool_13) in c:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3-Real\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\HabboHotel\Rooms\Room.cs:line 576
+   at GoldTree.HabboHotel.Rooms.RoomUser.HandleSpeech(GameClient Session, String str, Boolean bool_13) in c:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3-Real\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\HabboHotel\Rooms\RoomUser.cs:line 320
+   at GoldTree.Communication.Messages.Rooms.Chat.ChatMessageEvent.Handle(GameClient Session, ClientMessage Event) in c:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3-Real\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\Communication\Messages\Rooms\Chat\ChatMessageEvent.cs:line 20
+   at GoldTree.HabboHotel.GameClients.GameClient.ParsePacket(Byte[]& bytes) in c:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3-Real\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\HabboHotel\GameClients\GameClient.cs:line 579
+

@@ -18,11 +18,11 @@ namespace GoldTree.Communication.Messages.Recycler
 					for (int i = 0; i < num; i++)
 					{
 						UserItem @class = Session.GetHabbo().GetInventoryComponent().GetItemById(Event.PopWiredUInt());
-						if (@class == null || !@class.method_1().AllowRecycle)
+						if (@class == null || !@class.GetBaseItem().AllowRecycle)
 						{
 							return;
 						}
-                        Session.GetHabbo().GetInventoryComponent().method_12(@class.uint_0, 0u, false);
+                        Session.GetHabbo().GetInventoryComponent().ChangeItemOwner(@class.Id, 0u, false);
 					}
 					uint num2 = GoldTree.GetGame().GetCatalog().method_14();
 					EcotronReward class2 = GoldTree.GetGame().GetCatalog().method_15();
@@ -53,7 +53,7 @@ namespace GoldTree.Communication.Messages.Recycler
 							"','1','')"
 						}));
 					}
-					Session.GetHabbo().GetInventoryComponent().method_9(true);
+					Session.GetHabbo().GetInventoryComponent().RefreshInventory(true);
 					ServerMessage Message = new ServerMessage(508u);
 					Message.AppendBoolean(true);
 					Message.AppendUInt(num2);

@@ -73,7 +73,7 @@ namespace GoldTree.HabboHotel.Users.Subscriptions
 			}
 		}
 
-		public void method_3(string type, int time)
+		public void AppendSubscription(string type, int time)
 		{
 			type = type.ToLower();
 
@@ -98,6 +98,7 @@ namespace GoldTree.HabboHotel.Users.Subscriptions
 						this.UserId,
 						"' AND subscription_id = @subcrbr LIMIT 1"
 					}));
+
 					return;
 				}
 			}

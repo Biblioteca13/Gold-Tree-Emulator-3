@@ -48,8 +48,8 @@ namespace GoldTree.HabboHotel.Items.Interactors
 								if (Session != null)
 								{
 									RoomUser RoomUser_ = Session.GetHabbo().CurrentRoom.GetRoomUserByHabbo(Session.GetHabbo().Id);
-									RoomItem_0.method_8().method_14(RoomUser_);
-                                    foreach (RoomItem Item in RoomItem_0.method_8().Hashtable_0.Values)
+									RoomItem_0.GetRoom().method_14(RoomUser_);
+                                    foreach (RoomItem Item in RoomItem_0.GetRoom().Hashtable_0.Values)
                                     {
                                         if (Item.GetBaseItem().Name == "bb_apparatus")
                                         {
@@ -64,7 +64,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 							{
 								RoomItem_0.bool_0 = false;
 
-                                foreach (RoomItem Item in RoomItem_0.method_8().Hashtable_0.Values)
+                                foreach (RoomItem Item in RoomItem_0.GetRoom().Hashtable_0.Values)
                                 {
                                     if (Item.GetBaseItem().Name == "bb_apparatus")
                                     {

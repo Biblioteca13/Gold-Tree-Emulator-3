@@ -17,12 +17,12 @@ namespace GoldTree.HabboHotel.Items.Interactors
 			if (Session != null)
 			{
 				RoomUser @class = Session.GetHabbo().CurrentRoom.GetRoomUserByHabbo(Session.GetHabbo().Id);
-				Room class2 = RoomItem_0.method_8();
-				if (RoomItem_0.method_8().method_99(RoomItem_0.Int32_0, RoomItem_0.Int32_1, @class.int_3, @class.int_4))
+				Room class2 = RoomItem_0.GetRoom();
+				if (RoomItem_0.GetRoom().method_99(RoomItem_0.X, RoomItem_0.Y, @class.int_3, @class.int_4))
 				{
-					RoomItem_0.method_8().method_10(@class, RoomItem_0);
-					int num = RoomItem_0.Int32_0;
-					int num2 = RoomItem_0.Int32_1;
+					RoomItem_0.GetRoom().method_10(@class, RoomItem_0);
+					int num = RoomItem_0.X;
+					int num2 = RoomItem_0.Y;
 					RoomItem_0.ExtraData = "11";
 					if (@class.int_8 == 4)
 					{
@@ -81,7 +81,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 							}
 						}
 					}
-					@class.MoveTo(RoomItem_0.Int32_0, RoomItem_0.Int32_1);
+					@class.MoveTo(RoomItem_0.X, RoomItem_0.Y);
 					class2.method_79(null, RoomItem_0, num, num2, 0, false, true, true);
 				}
 			}

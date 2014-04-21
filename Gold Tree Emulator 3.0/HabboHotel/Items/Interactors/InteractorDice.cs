@@ -17,13 +17,13 @@ namespace GoldTree.HabboHotel.Items.Interactors
 			RoomUser @class = null;
 			if (Session != null)
 			{
-				@class = RoomItem_0.method_8().GetRoomUserByHabbo(Session.GetHabbo().Id);
+				@class = RoomItem_0.GetRoom().GetRoomUserByHabbo(Session.GetHabbo().Id);
 				if (@class == null)
 				{
 					return;
 				}
 			}
-			if (Session == null || RoomItem_0.method_8().method_99(RoomItem_0.Int32_0, RoomItem_0.Int32_1, @class.int_3, @class.int_4))
+			if (Session == null || RoomItem_0.GetRoom().method_99(RoomItem_0.X, RoomItem_0.Y, @class.int_3, @class.int_4))
 			{
 				if (RoomItem_0.ExtraData != "-1")
 				{

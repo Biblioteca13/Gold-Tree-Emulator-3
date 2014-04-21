@@ -153,7 +153,7 @@ namespace GoldTree.HabboHotel.Rooms.Games
                 case "freeze_red_gate":
                 case "freeze_green_gate":
                 case "freeze_yellow_gate":
-                    item.method_8().method_39(item.Int32_0, item.Int32_1);
+                    item.GetRoom().method_39(item.X, item.Y);
                     break;
             }
         }
@@ -174,7 +174,7 @@ namespace GoldTree.HabboHotel.Rooms.Games
                 case "freeze_red_gate":
                 case "freeze_green_gate":
                 case "freeze_yellow_gate":
-                    item.method_8().method_38(item.Int32_0, item.Int32_1);
+                    item.GetRoom().method_38(item.X, item.Y);
                     break;
             }
         }

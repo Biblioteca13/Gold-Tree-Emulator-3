@@ -8,7 +8,7 @@ namespace GoldTree.Communication.Messages.Catalog
 	{
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
-			CatalogPage @class = GoldTree.GetGame().GetCatalog().method_5(Event.PopWiredInt32());
+			CatalogPage @class = GoldTree.GetGame().GetCatalog().GetPageById(Event.PopWiredInt32());
 			if (@class != null && @class.bool_1 && @class.bool_0 && @class.uint_0 <= Session.GetHabbo().Rank)
 			{
                 if (@class.bool_2 && !Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))

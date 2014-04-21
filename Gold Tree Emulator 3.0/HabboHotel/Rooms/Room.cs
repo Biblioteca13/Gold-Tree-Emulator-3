@@ -344,7 +344,7 @@ namespace GoldTree.HabboHotel.Rooms
                 int songID = (int)row["songid"];
                 uint num2 = (uint)row["itemid"];
                 int baseItem = (int)row["baseitem"];
-                SongItem diskItem = new SongItem((int)num2, songID, baseItem);
+                SongItem diskItem = new SongItem(num2, songID, baseItem);
                 diskItem.RemoveFromDatabase();
                 diskItem.SaveToDatabase(this.GetRoomMusicController().LinkedItemId);
                 this.GetRoomMusicController().AddDisk(diskItem);
@@ -355,7 +355,7 @@ namespace GoldTree.HabboHotel.Rooms
                 int songID = (int)row["songid"];
                 uint num2 = (uint)row["itemid"];
                 int baseItem = (int)row["baseitem"];
-                SongItem diskItem = new SongItem((int)num2, songID, baseItem);
+                SongItem diskItem = new SongItem(num2, songID, baseItem);
                 this.GetRoomMusicController().AddDisk(diskItem);
             }
         }
@@ -1697,7 +1697,7 @@ namespace GoldTree.HabboHotel.Rooms
                     }
                     try
                     {
-                        List<RoomItem> list3 = this.method_93(RoomItem_0.Int32_0, RoomItem_0.Int32_1);
+                        List<RoomItem> list3 = this.method_93(RoomItem_0.X, RoomItem_0.Y);
                         if (list3 == null)
                         {
                             result = false;
@@ -1779,8 +1779,8 @@ namespace GoldTree.HabboHotel.Rooms
                                                         {
                                                             dictionary = new Dictionary<int, AffectedTile>();
                                                         }
-                                                        RoomItem TopItem = this.GetTopItem(current4.Int32_0, current4.Int32_1);
-                                                        if (TopItem != null && TopItem != current4 && TopItem.Double_0 >= current4.Double_0 && num4 + 1 != num2)
+                                                        RoomItem TopItem = this.GetTopItem(current4.X, current4.Y);
+                                                        if (TopItem != null && TopItem != current4 && TopItem.Z >= current4.Z && num4 + 1 != num2)
                                                         {
                                                             num2++;
                                                             break;
@@ -1788,7 +1788,7 @@ namespace GoldTree.HabboHotel.Rooms
                                                         foreach (AffectedTile current5 in dictionary.Values)
                                                         {
                                                             TopItem = this.GetTopItem(current5.Int32_0, current5.Int32_1);
-                                                            if (TopItem != null && TopItem != current4 && TopItem.Double_0 >= current4.Double_0 && num4 + 1 != num2)
+                                                            if (TopItem != null && TopItem != current4 && TopItem.Z >= current4.Z && num4 + 1 != num2)
                                                             {
                                                                 num2++;
                                                                 break;
@@ -1830,7 +1830,7 @@ namespace GoldTree.HabboHotel.Rooms
                                                 {
                                                     dictionary = new Dictionary<int, AffectedTile>();
                                                 }
-                                                if (this.method_96(current4.Int32_0, current4.Int32_1))
+                                                if (this.method_96(current4.X, current4.Y))
                                                 {
                                                     flag4 = true;
                                                 }
@@ -1893,7 +1893,7 @@ namespace GoldTree.HabboHotel.Rooms
                                                     {
                                                         dictionary = new Dictionary<int, AffectedTile>();
                                                     }
-                                                    if (RoomUser_1.int_3 == current4.Int32_0 && RoomUser_1.int_4 == current4.Int32_1 && num4 + 1 != num2)
+                                                    if (RoomUser_1.int_3 == current4.X && RoomUser_1.int_4 == current4.Y && num4 + 1 != num2)
                                                     {
                                                         num2++;
                                                         break;
@@ -1964,7 +1964,7 @@ namespace GoldTree.HabboHotel.Rooms
                         RoomItem_0.ExtraData = "1";
                         RoomItem_0.UpdateState(false, true);
                         RoomItem_0.ReqUpdate(1);
-                        List<RoomItem> list6 = this.method_93(RoomItem_0.Int32_0, RoomItem_0.Int32_1);
+                        List<RoomItem> list6 = this.method_93(RoomItem_0.X, RoomItem_0.Y);
                         if (list6 == null)
                         {
                             result = false;
@@ -2091,12 +2091,12 @@ namespace GoldTree.HabboHotel.Rooms
                                             {
                                                 this.byte_0[RoomUser_1.int_3, RoomUser_1.int_4] = 1;
                                                 this.byte_0[RoomUser_1.int_12, RoomUser_1.int_13] = 1;
-                                                this.byte_0[class3.Int32_0, class3.Int32_1] = 1;
+                                                this.byte_0[class3.X, class3.Y] = 1;
                                                 RoomUser_1.bool_6 = false;
-                                                RoomUser_1.int_12 = class3.Int32_0;
-                                                RoomUser_1.int_13 = class3.Int32_1;
-                                                RoomUser_1.double_1 = class3.Double_0;
-                                                RoomUser_1.method_7(class3.Int32_0, class3.Int32_1, class3.Double_0);
+                                                RoomUser_1.int_12 = class3.X;
+                                                RoomUser_1.int_13 = class3.Y;
+                                                RoomUser_1.double_1 = class3.Z;
+                                                RoomUser_1.method_7(class3.X, class3.Y, class3.Z);
                                                 RoomUser_1.UpdateNeeded = true;
                                                 if (!current2.dictionary_1.ContainsKey(RoomUser_1))
                                                 {
@@ -2119,8 +2119,8 @@ namespace GoldTree.HabboHotel.Rooms
                                                     if (class2 != null)
                                                     {
                                                         this.byte_0[class2.int_3, class2.int_4] = 1;
-                                                        this.byte_0[class3.Int32_0, class3.Int32_1] = 1;
-                                                        class2.method_7(class3.Int32_0, class3.Int32_1, class3.Double_0);
+                                                        this.byte_0[class3.X, class3.Y] = 1;
+                                                        class2.method_7(class3.X, class3.Y, class3.Z);
                                                         class2.UpdateNeeded = true;
                                                         if (!current2.dictionary_1.ContainsKey(class2))
                                                         {
@@ -2150,7 +2150,7 @@ namespace GoldTree.HabboHotel.Rooms
                                             RoomItem class3 = this.method_28(Convert.ToUInt32(current));
                                             if (class3 != null)
                                             {
-                                                class3.Class69_0.OnTrigger(null, class3, 0, true);
+                                                class3.GetInteractor().OnTrigger(null, class3, 0, true);
                                             }
                                             else
                                             {
@@ -2371,7 +2371,7 @@ namespace GoldTree.HabboHotel.Rooms
                                                             }
                                                         }
                                                     }
-                                                    if (current2.method_8().method_79(null, class3, class3.Int32_0, class3.Int32_1, num5, false, false, false))
+                                                    if (current2.GetRoom().method_79(null, class3, class3.X, class3.Y, num5, false, false, false))
                                                     {
                                                         flag2 = true;
                                                     }
@@ -2413,8 +2413,8 @@ namespace GoldTree.HabboHotel.Rooms
                                                 bool flag7 = false;
                                                 if (current2.string_3 != "" && class3 != null)
                                                 {
-                                                    int int_ = class3.Int32_0;
-                                                    int int_2 = class3.Int32_1;
+                                                    int int_ = class3.X;
+                                                    int int_2 = class3.Y;
                                                     if (current2.string_3.StartsWith("I"))
                                                     {
                                                         class3.ExtraData = list9[4];
@@ -2433,7 +2433,7 @@ namespace GoldTree.HabboHotel.Rooms
                                                     }
                                                     if (flag6)
                                                     {
-                                                        this.method_40(class3, int_, int_2, current2.uint_0, class3.Double_0);
+                                                        this.method_40(class3, int_, int_2, current2.uint_0, class3.Z);
                                                     }
                                                     if (flag7)
                                                     {
@@ -2505,83 +2505,83 @@ namespace GoldTree.HabboHotel.Rooms
                 {
                     if (@class.GetBaseItem().Type == 's')
                     {
-                        if (@class.Int32_0 >= this.RoomModel.int_4 || @class.Int32_1 >= this.RoomModel.int_5 || @class.Int32_1 < 0 || @class.Int32_0 < 0)
+                        if (@class.X >= this.RoomModel.int_4 || @class.Y >= this.RoomModel.int_5 || @class.Y < 0 || @class.X < 0)
                         {
                             this.method_29(null, @class.uint_0, true, false);
                             GameClient class2 = GoldTree.GetGame().GetClientManager().GetClientByHabbo(this.Owner);
                             if (class2 != null)
                             {
-                                class2.GetHabbo().GetInventoryComponent().method_11(@class.uint_0, @class.uint_2, @class.ExtraData, true);
+                                class2.GetHabbo().GetInventoryComponent().AddItem(@class.uint_0, @class.BaseItemId, @class.ExtraData, true);
                             }
                         }
                         else
                         {
-                            if (@class.Double_1 > this.double_1[@class.Int32_0, @class.Int32_1])
+                            if (@class.TopZ > this.double_1[@class.X, @class.Y])
                             {
-                                this.double_1[@class.Int32_0, @class.Int32_1] = @class.Double_1;
+                                this.double_1[@class.X, @class.Y] = @class.TopZ;
                             }
                             if (@class.GetBaseItem().IsSeat)
                             {
-                                this.double_2[@class.Int32_0, @class.Int32_1] = @class.Double_1;
+                                this.double_2[@class.X, @class.Y] = @class.TopZ;
                             }
                             if (@class.GetBaseItem().HeightOverride)
                             {
-                                this.HeightOverride[@class.Int32_0, @class.Int32_1] = true;
+                                this.HeightOverride[@class.X, @class.Y] = true;
                             }
                             if (@class.GetBaseItem().Height > 0.0 || @class.GetBaseItem().EffectF != 0 || @class.GetBaseItem().EffectM != 0 || @class.GetBaseItem().IsSeat || !(@class.GetBaseItem().InteractionType.ToLower() != "bed"))
                             {
-                                if (this.double_0[@class.Int32_0, @class.Int32_1] <= @class.Double_0)
+                                if (this.double_0[@class.X, @class.Y] <= @class.Z)
                                 {
-                                    this.double_0[@class.Int32_0, @class.Int32_1] = @class.Double_0;
+                                    this.double_0[@class.X, @class.Y] = @class.Z;
                                     if (@class.GetBaseItem().EffectF > 0)
                                     {
-                                        this.byte_2[@class.Int32_0, @class.Int32_1] = @class.GetBaseItem().EffectF;
+                                        this.byte_2[@class.X, @class.Y] = @class.GetBaseItem().EffectF;
                                     }
                                     else
                                     {
-                                        if (this.byte_1[@class.Int32_0, @class.Int32_1] != 0)
+                                        if (this.byte_1[@class.X, @class.Y] != 0)
                                         {
-                                            this.byte_2[@class.Int32_0, @class.Int32_1] = 0;
+                                            this.byte_2[@class.X, @class.Y] = 0;
                                         }
                                     }
                                     if (@class.GetBaseItem().EffectM > 0)
                                     {
-                                        this.byte_1[@class.Int32_0, @class.Int32_1] = @class.GetBaseItem().EffectM;
+                                        this.byte_1[@class.X, @class.Y] = @class.GetBaseItem().EffectM;
                                     }
                                     else
                                     {
-                                        if (this.byte_1[@class.Int32_0, @class.Int32_1] != 0)
+                                        if (this.byte_1[@class.X, @class.Y] != 0)
                                         {
-                                            this.byte_1[@class.Int32_0, @class.Int32_1] = 0;
+                                            this.byte_1[@class.X, @class.Y] = 0;
                                         }
                                     }
                                     if (@class.GetBaseItem().Walkable)
                                     {
-                                        if (this.byte_0[@class.Int32_0, @class.Int32_1] != 3)
+                                        if (this.byte_0[@class.X, @class.Y] != 3)
                                         {
-                                            this.byte_0[@class.Int32_0, @class.Int32_1] = 1;
+                                            this.byte_0[@class.X, @class.Y] = 1;
                                         }
                                     }
                                     else
                                     {
-                                        if (@class.Double_0 <= this.RoomModel.double_1[@class.Int32_0, @class.Int32_1] + 0.1 && @class.GetBaseItem().InteractionType.ToLower() == "gate" && @class.ExtraData == "1")
+                                        if (@class.Z <= this.RoomModel.double_1[@class.X, @class.Y] + 0.1 && @class.GetBaseItem().InteractionType.ToLower() == "gate" && @class.ExtraData == "1")
                                         {
-                                            if (this.byte_0[@class.Int32_0, @class.Int32_1] != 3)
+                                            if (this.byte_0[@class.X, @class.Y] != 3)
                                             {
-                                                this.byte_0[@class.Int32_0, @class.Int32_1] = 1;
+                                                this.byte_0[@class.X, @class.Y] = 1;
                                             }
                                         }
                                         else
                                         {
                                             if (@class.GetBaseItem().IsSeat || @class.GetBaseItem().InteractionType.ToLower() == "bed")
                                             {
-                                                this.byte_0[@class.Int32_0, @class.Int32_1] = 3;
+                                                this.byte_0[@class.X, @class.Y] = 3;
                                             }
                                             else
                                             {
-                                                if (this.byte_0[@class.Int32_0, @class.Int32_1] != 3)
+                                                if (this.byte_0[@class.X, @class.Y] != 3)
                                                 {
-                                                    this.byte_0[@class.Int32_0, @class.Int32_1] = 0;
+                                                    this.byte_0[@class.X, @class.Y] = 0;
                                                 }
                                             }
                                         }
@@ -2589,7 +2589,7 @@ namespace GoldTree.HabboHotel.Rooms
                                 }
                                 if (@class.GetBaseItem().IsSeat || @class.GetBaseItem().InteractionType.ToLower() == "bed")
                                 {
-                                    this.byte_0[@class.Int32_0, @class.Int32_1] = 3;
+                                    this.byte_0[@class.X, @class.Y] = 3;
                                 }
                                 Dictionary<int, AffectedTile> dictionary = @class.Dictionary_0;
                                 if (dictionary == null)
@@ -2598,21 +2598,21 @@ namespace GoldTree.HabboHotel.Rooms
                                 }
                                 foreach (AffectedTile current in dictionary.Values)
                                 {
-                                    if (@class.Double_1 > this.double_1[current.Int32_0, current.Int32_1])
+                                    if (@class.TopZ > this.double_1[current.Int32_0, current.Int32_1])
                                     {
-                                        this.double_1[current.Int32_0, current.Int32_1] = @class.Double_1;
+                                        this.double_1[current.Int32_0, current.Int32_1] = @class.TopZ;
                                     }
                                     if (@class.GetBaseItem().IsSeat)
                                     {
-                                        this.double_2[current.Int32_0, current.Int32_1] = @class.Double_1;
+                                        this.double_2[current.Int32_0, current.Int32_1] = @class.TopZ;
                                     }
                                     if (@class.GetBaseItem().HeightOverride)
                                     {
                                         this.HeightOverride[current.Int32_0, current.Int32_1] = true;
                                     }
-                                    if (this.double_0[current.Int32_0, current.Int32_1] <= @class.Double_0)
+                                    if (this.double_0[current.Int32_0, current.Int32_1] <= @class.Z)
                                     {
-                                        this.double_0[current.Int32_0, current.Int32_1] = @class.Double_0;
+                                        this.double_0[current.Int32_0, current.Int32_1] = @class.Z;
                                         if (@class.GetBaseItem().EffectF > 0)
                                         {
                                             this.byte_2[current.Int32_0, current.Int32_1] = @class.GetBaseItem().EffectF;
@@ -2645,7 +2645,7 @@ namespace GoldTree.HabboHotel.Rooms
                                                 }
                                                 else
                                                 {
-                                                    if (@class.Double_0 <= this.RoomModel.double_1[@class.Int32_0, @class.Int32_1] + 0.1 && @class.GetBaseItem().InteractionType.ToLower() == "gate" && @class.ExtraData == "1")
+                                                    if (@class.Z <= this.RoomModel.double_1[@class.X, @class.Y] + 0.1 && @class.GetBaseItem().InteractionType.ToLower() == "gate" && @class.ExtraData == "1")
                                                     {
                                                         if (this.byte_0[current.Int32_0, current.Int32_1] != 3)
                                                         {
@@ -2679,11 +2679,11 @@ namespace GoldTree.HabboHotel.Rooms
                                         this.byte_0[current.Int32_0, current.Int32_1] = 3;
                                         if (@class.int_3 == 0 || @class.int_3 == 4)
                                         {
-                                            this.gstruct1_0[current.Int32_0, current.Int32_1].y = @class.Int32_1;
+                                            this.gstruct1_0[current.Int32_0, current.Int32_1].y = @class.Y;
                                         }
                                         if (@class.int_3 == 2 || @class.int_3 == 6)
                                         {
-                                            this.gstruct1_0[current.Int32_0, current.Int32_1].x = @class.Int32_0;
+                                            this.gstruct1_0[current.Int32_0, current.Int32_1].x = @class.X;
                                         }
                                     }
                                 }
@@ -2692,11 +2692,11 @@ namespace GoldTree.HabboHotel.Rooms
 
                         if (@class.GetBaseItem().InteractionType.ToLower() == "freeze_ice_block" && (@class.ExtraData == "0" || string.IsNullOrEmpty(@class.ExtraData)))
                         {
-                            @class.method_8().method_39(@class.Int32_0, @class.Int32_1);
+                            @class.GetRoom().method_39(@class.X, @class.Y);
                         }
                         else if (@class.GetBaseItem().InteractionType.ToLower() == "freeze_ice_block")
                         {
-                            @class.method_8().method_38(@class.Int32_0, @class.Int32_1);
+                            @class.GetRoom().method_38(@class.X, @class.Y);
                         }
                         else if (@class.GetBaseItem().InteractionType.ToLower() == "freeze_tile")
                         {
@@ -2710,7 +2710,7 @@ namespace GoldTree.HabboHotel.Rooms
                     GameClient class2 = GoldTree.GetGame().GetClientManager().GetClientByHabbo(this.Owner);
                     if (class2 != null)
                     {
-                        class2.GetHabbo().GetInventoryComponent().method_11(@class.uint_0, @class.uint_2, @class.ExtraData, true);
+                        class2.GetHabbo().GetInventoryComponent().AddItem(@class.uint_0, @class.BaseItemId, @class.ExtraData, true);
                     }
                 }
             }
@@ -2748,7 +2748,7 @@ namespace GoldTree.HabboHotel.Rooms
             List<RoomItem> list = new List<RoomItem>();
             foreach (RoomItem @class in this.Hashtable_0.Values)
             {
-                @class.Class69_0.OnRemove(Session, @class);
+                @class.GetInteractor().OnRemove(Session, @class);
                 ServerMessage Message = new ServerMessage(94u);
                 Message.AppendRawUInt(@class.uint_0);
                 Message.AppendStringWithBreak("");
@@ -2758,7 +2758,7 @@ namespace GoldTree.HabboHotel.Rooms
             }
             foreach (RoomItem @class in this.Hashtable_1.Values)
             {
-                @class.Class69_0.OnRemove(Session, @class);
+                @class.GetInteractor().OnRemove(Session, @class);
                 ServerMessage Message = new ServerMessage(84u);
                 Message.AppendRawUInt(@class.uint_0);
                 Message.AppendStringWithBreak("");
@@ -3123,8 +3123,8 @@ namespace GoldTree.HabboHotel.Rooms
             RoomItem @class = this.method_28(uint_2);
             if (@class != null)
             {
-                Dictionary<int, AffectedTile> dictionary = this.method_94(@class.GetBaseItem().Length, @class.GetBaseItem().Width, @class.Int32_0, @class.Int32_1, @class.int_3);
-                @class.Class69_0.OnRemove(Session, @class);
+                Dictionary<int, AffectedTile> dictionary = this.method_94(@class.GetBaseItem().Length, @class.GetBaseItem().Width, @class.X, @class.Y, @class.int_3);
+                @class.GetInteractor().OnRemove(Session, @class);
                 if (@class.Boolean_1)
                 {
                     ServerMessage Message = new ServerMessage(84u);
@@ -3296,7 +3296,7 @@ namespace GoldTree.HabboHotel.Rooms
                 {
                     this.method_22();
                 }
-                this.method_87(this.method_43(@class.Int32_0, @class.Int32_1), true, true);
+                this.method_87(this.method_43(@class.X, @class.Y), true, true);
                 foreach (AffectedTile current in dictionary.Values)
                 {
                     this.method_87(this.method_43(current.Int32_0, current.Int32_1), true, true);
@@ -3769,8 +3769,8 @@ namespace GoldTree.HabboHotel.Rooms
                             {
                                 return;
                             }
-                            List<RoomItem> list3 = this.method_45(@class.Int32_0, @class.Int32_1);
-                            RoomUser class2 = this.method_43(@class.Int32_0, @class.Int32_1);
+                            List<RoomItem> list3 = this.method_45(@class.X, @class.Y);
+                            RoomUser class2 = this.method_43(@class.X, @class.Y);
                             if (list3.Count > 0 || class2 != null)
                             {
                                 List<RoomItem> list4 = this.method_45(gStruct1_.x, gStruct1_.y);
@@ -3780,9 +3780,9 @@ namespace GoldTree.HabboHotel.Rooms
                                 bool flag = false;
                                 foreach (RoomItem current in list4)
                                 {
-                                    if (current.Double_1 > num)
+                                    if (current.TopZ > num)
                                     {
-                                        num = current.Double_1;
+                                        num = current.TopZ;
                                     }
                                     if (!current.Boolean_0)
                                     {
@@ -3806,16 +3806,16 @@ namespace GoldTree.HabboHotel.Rooms
                                 foreach (RoomItem current in list3)
                                 {
                                     bool flag4 = current.GetBaseItem().InteractionType.ToLower() == "wf_trg_timer";
-                                    if (!current.Boolean_0 && !list.Contains(current.uint_0) && this.method_36(gStruct1_.x, gStruct1_.y) && (!flag2 || !flag3) && @class.Double_0 < current.Double_0 && this.method_43(gStruct1_.x, gStruct1_.y) == null && (!flag4 || !flag))
+                                    if (!current.Boolean_0 && !list.Contains(current.uint_0) && this.method_36(gStruct1_.x, gStruct1_.y) && (!flag2 || !flag3) && @class.Z < current.Z && this.method_43(gStruct1_.x, gStruct1_.y) == null && (!flag4 || !flag))
                                     {
                                         double double_;
                                         if (flag3)
                                         {
-                                            double_ = current.Double_0;
+                                            double_ = current.Z;
                                         }
                                         else
                                         {
-                                            double_ = current.Double_0 - @class.Double_1 + this.RoomModel.double_1[gStruct1_.x, gStruct1_.y];
+                                            double_ = current.Z - @class.TopZ + this.RoomModel.double_1[gStruct1_.x, gStruct1_.y];
                                         }
                                         this.method_41(current, gStruct1_, @class.uint_0, double_);
                                         list.Add(current.uint_0);
@@ -4027,13 +4027,13 @@ namespace GoldTree.HabboHotel.Rooms
         {
             ServerMessage Message = new ServerMessage();
             Message.Init(230u);
-            Message.AppendInt32(RoomItem_0.Int32_0);
-            Message.AppendInt32(RoomItem_0.Int32_1);
+            Message.AppendInt32(RoomItem_0.X);
+            Message.AppendInt32(RoomItem_0.Y);
             Message.AppendInt32(int_17);
             Message.AppendInt32(int_18);
             Message.AppendInt32(1);
             Message.AppendUInt(RoomItem_0.uint_0);
-            Message.AppendStringWithBreak(RoomItem_0.Double_0.ToString().Replace(',', '.'));
+            Message.AppendStringWithBreak(RoomItem_0.Z.ToString().Replace(',', '.'));
             Message.AppendStringWithBreak(double_3.ToString().Replace(',', '.'));
             Message.AppendUInt(uint_2);
             this.SendMessage(Message, null);
@@ -4118,7 +4118,7 @@ namespace GoldTree.HabboHotel.Rooms
             List<RoomItem> list = new List<RoomItem>();
             foreach (RoomItem @class in this.Hashtable_0.Values)
             {
-                if (@class.Int32_0 == int_17 && @class.Int32_1 == int_18)
+                if (@class.X == int_17 && @class.Y == int_18)
                 {
                     list.Add(@class);
                 }
@@ -4154,7 +4154,7 @@ namespace GoldTree.HabboHotel.Rooms
                         RoomItem class2 = this.method_28(@class.GetClient().GetHabbo().uint_5);
                         if (class2 != null)
                         {
-                            @class.method_7(class2.Int32_0, class2.Int32_1, class2.Double_0);
+                            @class.method_7(class2.X, class2.Y, class2.Z);
                             @class.method_9(class2.int_3);
                             class2.uint_4 = Session.GetHabbo().Id;
                             class2.ExtraData = "2";
@@ -4907,13 +4907,13 @@ namespace GoldTree.HabboHotel.Rooms
 												"UPDATE items SET room_id = '",
 												this.Id,
 												"', base_item = '",
-												class2.uint_2,
+												class2.BaseItemId,
 												"', x = '",
-												class2.Int32_0,
+												class2.X,
 												"', y = '",
-												class2.Int32_1,
+												class2.Y,
 												"', z = '",
-												class2.Double_0.ToString().Replace(",", "."),
+												class2.Z.ToString().Replace(",", "."),
 												"', rot = '",
 												class2.int_3,
 												"', wall_pos = '' WHERE Id = '",
@@ -4952,7 +4952,7 @@ namespace GoldTree.HabboHotel.Rooms
 												"UPDATE items SET room_id = '",
 												this.Id,
 												"', base_item = '",
-												class2.uint_2,
+												class2.BaseItemId,
 												"', x = '0', y = '0', z = '0', rot = '0', wall_pos = @pos",
 												class2.uint_0,
 												" WHERE Id = '",
@@ -4989,11 +4989,11 @@ namespace GoldTree.HabboHotel.Rooms
                                 stringBuilder.Append(string.Concat(new object[]
 								{
 									"UPDATE items SET x = '",
-									class2.Int32_0,
+									class2.X,
 									"', y = '",
-									class2.Int32_1,
+									class2.Y,
 									"', z = '",
-									class2.Double_0.ToString().Replace(",", "."),
+									class2.Z.ToString().Replace(",", "."),
 									"', rot = '",
 									class2.int_3,
 									"', wall_pos = '",
@@ -5328,13 +5328,13 @@ namespace GoldTree.HabboHotel.Rooms
 											"UPDATE items SET room_id = '",
 											this.Id,
 											"', base_item = '",
-											@class.uint_2,
+											@class.BaseItemId,
 											", x = '",
-											@class.Int32_0,
+											@class.X,
 											"', y = '",
-											@class.Int32_1,
+											@class.Y,
 											"', z = '",
-											@class.Double_0.ToString().Replace(",", "."),
+											@class.Z.ToString().Replace(",", "."),
 											"', rot = '",
 											@class.int_3,
 											"', wall_pos = '' WHERE Id = '",
@@ -5386,7 +5386,7 @@ namespace GoldTree.HabboHotel.Rooms
 											"UPDATE items SET room_id = '",
 											this.Id,
 											"', base_item = '",
-											@class.uint_2,
+											@class.BaseItemId,
 											", x = '0', y = '0', z = '0', rot = '0', wall_pos = @pos",
 											@class.uint_0,
 											" WHERE Id = '",
@@ -5433,11 +5433,11 @@ namespace GoldTree.HabboHotel.Rooms
                             stringBuilder.Append(string.Concat(new object[]
 							{
 								"UPDATE items SET x = '",
-								@class.Int32_0,
+								@class.X,
 								"', y = '",
-								@class.Int32_1,
+								@class.Y,
 								"', z = '",
-								@class.Double_0.ToString().Replace(",", "."),
+								@class.Z.ToString().Replace(",", "."),
 								"', rot = '",
 								@class.int_3,
 								"', wall_pos = '' WHERE Id = '",
@@ -5795,7 +5795,7 @@ namespace GoldTree.HabboHotel.Rooms
                 double num = this.RoomModel.double_1[int_17, int_18];
                 if (!bool_14)
                 {
-                    if (RoomItem_0.int_3 == int_19 && RoomItem_0.Int32_0 == int_17 && RoomItem_0.Int32_1 == int_18 && RoomItem_0.Double_0 != num)
+                    if (RoomItem_0.int_3 == int_19 && RoomItem_0.X == int_17 && RoomItem_0.Y == int_18 && RoomItem_0.Z != num)
                     {
                         result = false;
                         return result;
@@ -5887,20 +5887,18 @@ namespace GoldTree.HabboHotel.Rooms
                             result = false;
                             return result;
                         }
+
                         if (RoomItem_0.GetBaseItem().InteractionType.ToLower() == "ball")
                         {
                             if (current2.GetBaseItem().InteractionType.ToLower() == "blue_goal")
-                            {
                                 num2 = 11;
-                            }
+
                             if (current2.GetBaseItem().InteractionType.ToLower() == "red_goal")
-                            {
                                 num2 = 5;
-                            }
+
                             if (current2.GetBaseItem().InteractionType.ToLower() == "yellow_goal")
-                            {
                                 num2 = 14;
-                            }
+
                             if (current2.GetBaseItem().InteractionType.ToLower() == "green_goal")
                             {
                                 num2 = 8;
@@ -5937,43 +5935,46 @@ namespace GoldTree.HabboHotel.Rooms
                         }
                     }
                 }
+
                 if (num2 > 0)
-                {
                     this.method_89(num2, RoomItem_0, false);
-                }
+
                 if (!RoomItem_0.Boolean_0)
                 {
-                    if (RoomItem_0.int_3 != int_19 && RoomItem_0.Int32_0 == int_17 && RoomItem_0.Int32_1 == int_18)
-                    {
-                        num = RoomItem_0.Double_0;
-                    }
+                    if (RoomItem_0.int_3 != int_19 && RoomItem_0.X == int_17 && RoomItem_0.Y == int_18)
+                        num = RoomItem_0.Z;
+
                     foreach (RoomItem current2 in list3)
                     {
-                        if (current2.uint_0 != RoomItem_0.uint_0 && current2.Double_1 > num)
-                        {
-                            num = current2.Double_1;
-                        }
+                        if (current2.uint_0 != RoomItem_0.uint_0 && current2.TopZ > num)
+                            num = current2.TopZ;
                     }
                 }
+
                 if (int_19 != 0 && int_19 != 2 && int_19 != 4 && int_19 != 6 && int_19 != 8)
                 {
                     int_19 = 0;
                 }
+
                 Dictionary<int, AffectedTile> dictionary2 = new Dictionary<int, AffectedTile>();
-                dictionary2 = this.method_94(RoomItem_0.GetBaseItem().Length, RoomItem_0.GetBaseItem().Width, RoomItem_0.Int32_0, RoomItem_0.Int32_1, RoomItem_0.int_3);
+
+                dictionary2 = this.method_94(RoomItem_0.GetBaseItem().Length, RoomItem_0.GetBaseItem().Width, RoomItem_0.X, RoomItem_0.Y, RoomItem_0.int_3);
+
                 int num3 = 0;
                 int num4 = 0;
+
                 if (!bool_13)
                 {
-                    num3 = RoomItem_0.Int32_0;
-                    num4 = RoomItem_0.Int32_1;
+                    num3 = RoomItem_0.X;
+                    num4 = RoomItem_0.Y;
                 }
+
                 RoomItem_0.int_3 = int_19;
-                RoomItem_0.method_0(int_17, int_18, num);
+                RoomItem_0.SetPosition(int_17, int_18, num);
+
                 if (!bool_14 && Session != null)
-                {
-                    RoomItem_0.Class69_0.OnPlace(Session, RoomItem_0);
-                }
+                    RoomItem_0.GetInteractor().OnPlace(Session, RoomItem_0);
+
                 if (bool_13)
                 {
                     if (this.hashtable_1.Contains(RoomItem_0.uint_0))
@@ -6215,7 +6216,7 @@ namespace GoldTree.HabboHotel.Rooms
         public bool method_81(RoomItem RoomItem_0, int int_17, int int_18, double double_3)
         {
             Dictionary<int, AffectedTile> dictionary = this.method_94(RoomItem_0.GetBaseItem().Length, RoomItem_0.GetBaseItem().Width, int_17, int_18, RoomItem_0.int_3);
-            RoomItem_0.method_0(int_17, int_18, double_3);
+            RoomItem_0.SetPosition(int_17, int_18, double_3);
             if (!this.hashtable_2.Contains(RoomItem_0.uint_0))
             {
                 this.hashtable_2.Add(RoomItem_0.uint_0, RoomItem_0);
@@ -6232,7 +6233,7 @@ namespace GoldTree.HabboHotel.Rooms
         {
             if (bool_13)
             {
-                RoomItem_0.Class69_0.OnPlace(Session, RoomItem_0);
+                RoomItem_0.GetInteractor().OnPlace(Session, RoomItem_0);
                 string text = RoomItem_0.GetBaseItem().InteractionType.ToLower();
                 if (text != null && text == "dimmer" && this.MoodlightData == null)
                 {
@@ -6308,16 +6309,16 @@ namespace GoldTree.HabboHotel.Rooms
                     {
                         if ((current.GetBaseItem().IsSeat || current.GetBaseItem().InteractionType.ToLower() == "bed") && flag)
                         {
-                            result = current.Double_0;
+                            result = current.Z;
                             return result;
                         }
-                        if (current.Double_1 > num)
+                        if (current.TopZ > num)
                         {
                             if (current.GetBaseItem().IsSeat || current.GetBaseItem().InteractionType.ToLower() == "bed")
                             {
                                 if (flag)
                                 {
-                                    result = current.Double_0;
+                                    result = current.Z;
                                     return result;
                                 }
                                 flag2 = true;
@@ -6327,7 +6328,7 @@ namespace GoldTree.HabboHotel.Rooms
                             {
                                 flag2 = false;
                             }
-                            num = current.Double_1;
+                            num = current.TopZ;
                         }
                     }
                 }
@@ -6375,7 +6376,7 @@ namespace GoldTree.HabboHotel.Rooms
                     {
                         if (text == "fbgate" && (!string.IsNullOrEmpty(current.string_2) || !string.IsNullOrEmpty(current.string_3)))
                         {
-                            RoomUser_1 = this.method_43(current.GStruct1_0.x, current.GStruct1_0.y);
+                            RoomUser_1 = this.method_43(current.Position.x, current.Position.y);
                             if (RoomUser_1 != null && !RoomUser_1.IsBot && current.string_2 != null && current.string_3 != null)
                             {
                                 string a = RoomUser_1.GetClient().GetHabbo().Gender;
@@ -6572,7 +6573,7 @@ namespace GoldTree.HabboHotel.Rooms
                                             goto IL_51B;
                                         }
                                     IL_55D:
-                                        User.double_0 = Item.Double_0;
+                                        User.double_0 = Item.Z;
                                         User.int_7 = Item.int_3;
                                         User.int_8 = Item.int_3;
                                         if (User.IsBot && User.RoomBot.RoomUser_0 != null)
@@ -6621,7 +6622,7 @@ namespace GoldTree.HabboHotel.Rooms
                                                 User.byte_1 = 0;
                                             }
                                         }
-                                        User.double_0 = Item.Double_0;
+                                        User.double_0 = Item.Z;
                                         User.int_7 = Item.int_3;
                                         User.int_8 = Item.int_3;
                                         if (User.IsBot && User.RoomBot.RoomUser_0 != null)
@@ -6637,7 +6638,7 @@ namespace GoldTree.HabboHotel.Rooms
                                     {
                                         if (User.team != Team.None)
                                         {
-                                            if (Item.method_8().frzTimer == true)
+                                            if (Item.GetRoom().frzTimer == true)
                                             {
                                                 if (Item.GetBaseItem().Name == "es_box")
                                                 {
@@ -6651,7 +6652,7 @@ namespace GoldTree.HabboHotel.Rooms
                                     }
 
                                     TeamManager roomTeamManager;
-                                    roomTeamManager = Item.method_8().GetRoomTeamManager();
+                                    roomTeamManager = Item.GetRoom().GetRoomTeamManager();
 
                                     if (!User.IsBot && !User.IsPet && (Item.GetBaseItem().InteractionType.ToLower() == "freeze_blue_gate" || Item.GetBaseItem().InteractionType.ToLower() == "freeze_red_gate" || Item.GetBaseItem().InteractionType.ToLower() == "freeze_green_gate" || Item.GetBaseItem().InteractionType.ToLower() == "freeze_yellow_gate"))
                                     {
@@ -6776,7 +6777,7 @@ namespace GoldTree.HabboHotel.Rooms
                                         {
                                             this.method_91(Item, User);
                                         }
-                                        if (Item.GetBaseItem().InteractionType.ToLower() == "bb_patch" && this.GetTopItem(Item.Int32_0, Item.Int32_1) == Item && User.team != Team.None && User.game == Rooms.Games.Game.BattleBanzai && User.bool_6 && Item.ExtraData != "14" && Item.ExtraData != "5" && Item.ExtraData != "8" && Item.ExtraData != "11" && Item.ExtraData != "1")
+                                        if (Item.GetBaseItem().InteractionType.ToLower() == "bb_patch" && this.GetTopItem(Item.X, Item.Y) == Item && User.team != Team.None && User.game == Rooms.Games.Game.BattleBanzai && User.bool_6 && Item.ExtraData != "14" && Item.ExtraData != "5" && Item.ExtraData != "8" && Item.ExtraData != "11" && Item.ExtraData != "1")
                                         {
                                             if (Item.ExtraData == "0" || Item.ExtraData == "")
                                             {
@@ -6904,7 +6905,7 @@ namespace GoldTree.HabboHotel.Rooms
                         {
                             foreach (RoomItem current in list2)
                             {
-                                if (this.double_0[current.Int32_0, current.Int32_1] <= current.Double_0)
+                                if (this.double_0[current.X, current.Y] <= current.Z)
                                 {
                                     if (bool_14)
                                     {
@@ -6956,8 +6957,8 @@ namespace GoldTree.HabboHotel.Rooms
                                     num = 16;
                                     if (current.GetBaseItem().InteractionType.ToLower() == "ball")
                                     {
-                                        int num6 = current.Int32_0;
-                                        int num7 = current.Int32_1;
+                                        int num6 = current.X;
+                                        int num7 = current.Y;
                                         current.ExtraData = "11";
                                         if (User != null && User.GetClient() != null && User.GetClient().GetHabbo() != null)
                                         {
@@ -7321,8 +7322,8 @@ namespace GoldTree.HabboHotel.Rooms
                 list[index].UpdateState(false, true);
                 list[index].ReqUpdate(1);
                 this.byte_0[RoomUser_1.int_3, RoomUser_1.int_4] = 1;
-                this.byte_0[list[index].Int32_0, list[index].Int32_1] = 1;
-                RoomUser_1.method_7(list[index].Int32_0, list[index].Int32_1, list[index].Double_0);
+                this.byte_0[list[index].X, list[index].Y] = 1;
+                RoomUser_1.method_7(list[index].X, list[index].Y, list[index].Z);
                 RoomUser_1.UpdateNeeded = true;
             }
         }
@@ -7338,11 +7339,11 @@ namespace GoldTree.HabboHotel.Rooms
             {
                 foreach (RoomItem @class in this.Hashtable_0.Values)
                 {
-                    if (@class.Int32_0 == int_17 && @class.Int32_1 == int_18)
+                    if (@class.X == int_17 && @class.Y == int_18)
                     {
                         list.Add(@class);
                     }
-                    Dictionary<int, AffectedTile> dictionary = this.method_94(@class.GetBaseItem().Length, @class.GetBaseItem().Width, @class.Int32_0, @class.Int32_1, @class.int_3);
+                    Dictionary<int, AffectedTile> dictionary = this.method_94(@class.GetBaseItem().Length, @class.GetBaseItem().Width, @class.X, @class.Y, @class.int_3);
                     foreach (AffectedTile current in dictionary.Values)
                     {
                         if (current.Int32_0 == int_17 && current.Int32_1 == int_18)
@@ -7570,9 +7571,9 @@ namespace GoldTree.HabboHotel.Rooms
             {
                 if (@class != null)
                 {
-                    if (@class.Int32_0 == X && @class.Int32_1 == Y)
+                    if (@class.X == X && @class.Y == Y)
                     {
-                        if (this.double_1[X, Y] == @class.Double_1)
+                        if (this.double_1[X, Y] == @class.TopZ)
                         {
                             Item = @class;
                         }
@@ -7587,9 +7588,9 @@ namespace GoldTree.HabboHotel.Rooms
             double Height = 0.0;
             foreach (RoomItem @class in this.Hashtable_0.Values)
             {
-                if (@class.Int32_0 == X && @class.Int32_1 == Y)
+                if (@class.X == X && @class.Y == Y)
                 {
-                    Height = @class.Double_1;
+                    Height = @class.TopZ;
                 }
             }
             return Height;

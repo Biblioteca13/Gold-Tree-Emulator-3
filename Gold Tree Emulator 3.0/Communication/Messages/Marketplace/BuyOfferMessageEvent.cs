@@ -22,7 +22,7 @@ namespace GoldTree.Communication.Messages.Marketplace
 			}
 			else
 			{
-				Item class2 = GoldTree.GetGame().GetItemManager().method_2((uint)dataRow["item_id"]);
+				Item class2 = GoldTree.GetGame().GetItemManager().GetBaseItemById((uint)dataRow["item_id"]);
 				if (class2 != null)
 				{
 					if ((int)dataRow["total_price"] >= 1)

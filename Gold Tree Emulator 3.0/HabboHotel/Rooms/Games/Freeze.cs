@@ -118,8 +118,8 @@ namespace GoldTree.HabboHotel.Rooms.Games
                         if (this.exitTeleport != null)
                         {
                             //this.room.GetGameMap().TeleportToItem(user, this.exitTeleport);
-                            user.int_3 = this.exitTeleport.Int32_0;
-                            user.int_4 = this.exitTeleport.Int32_1;
+                            user.int_3 = this.exitTeleport.X;
+                            user.int_4 = this.exitTeleport.Y;
                             user.UpdateNeeded = true;
                         }
                         /*foreach (RoomItem Item in user.GetClient().GetHabbo().CurrentRoom.Hashtable_0.Values)
@@ -270,7 +270,7 @@ namespace GoldTree.HabboHotel.Rooms.Games
             {
                 item.ExtraData = "";
                 item.UpdateState(false, true);
-                item.method_8().method_39(item.Int32_0, item.Int32_1);
+                item.GetRoom().method_39(item.X, item.Y);
             }
 
             foreach (RoomItem item in this.freezeTiles.Values)
@@ -286,21 +286,21 @@ namespace GoldTree.HabboHotel.Rooms.Games
             {
                 if (item.freezePowerUp == FreezePowerUp.None && (!string.IsNullOrEmpty(item.ExtraData)))
                 {
-                    item.method_8().method_38(item.Int32_0, item.Int32_1);
+                    item.GetRoom().method_38(item.X, item.Y);
                 }
                 else if (item.freezePowerUp != FreezePowerUp.None)
                 {
                     item.freezePowerUp = FreezePowerUp.None;
                     item.ExtraData = "1" + item.ExtraData;
                     item.UpdateState(true, true);
-                    item.method_8().method_38(item.Int32_0, item.Int32_1);
+                    item.GetRoom().method_38(item.X, item.Y);
                 }
                 else
                 {
                     item.freezePowerUp = FreezePowerUp.None;
                     item.ExtraData = "";
                     item.UpdateState(true, true);
-                    item.method_8().method_39(item.Int32_0, item.Int32_1);
+                    item.GetRoom().method_39(item.X, item.Y);
                 }
             }
 
@@ -352,7 +352,7 @@ namespace GoldTree.HabboHotel.Rooms.Games
                         item.freezePowerUp = FreezePowerUp.None;
                         break;
                 }
-                item.method_8().method_38(item.Int32_0, item.Int32_1);
+                item.GetRoom().method_38(item.X, item.Y);
                 item.UpdateState(false, true);
             }
         }

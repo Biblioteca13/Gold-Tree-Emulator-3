@@ -53,18 +53,18 @@ namespace GoldTree.HabboHotel.Items.Interactors
 				}
 				if (num2 == 0)
 				{
-					if (RoomItem_0.method_8().method_97(RoomItem_0.Int32_0, RoomItem_0.Int32_1))
+					if (RoomItem_0.GetRoom().method_97(RoomItem_0.X, RoomItem_0.Y))
 					{
 						return;
 					}
-					Dictionary<int, AffectedTile> dictionary = RoomItem_0.method_8().method_94(RoomItem_0.GetBaseItem().Length, RoomItem_0.GetBaseItem().Width, RoomItem_0.Int32_0, RoomItem_0.Int32_1, RoomItem_0.int_3);
+					Dictionary<int, AffectedTile> dictionary = RoomItem_0.GetRoom().method_94(RoomItem_0.GetBaseItem().Length, RoomItem_0.GetBaseItem().Width, RoomItem_0.X, RoomItem_0.Y, RoomItem_0.int_3);
 					if (dictionary == null)
 					{
 						dictionary = new Dictionary<int, AffectedTile>();
 					}
 					foreach (AffectedTile current in dictionary.Values)
 					{
-						if (RoomItem_0.method_8().method_97(current.Int32_0, current.Int32_1))
+						if (RoomItem_0.GetRoom().method_97(current.Int32_0, current.Int32_1))
 						{
 							return;
 						}
@@ -72,7 +72,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 				}
 				RoomItem_0.ExtraData = num2.ToString();
 				RoomItem_0.method_4();
-				RoomItem_0.method_8().method_22();
+				RoomItem_0.GetRoom().method_22();
 			}
 		}
 	}

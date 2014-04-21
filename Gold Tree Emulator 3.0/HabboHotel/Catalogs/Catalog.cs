@@ -15,37 +15,52 @@ namespace GoldTree.HabboHotel.Catalogs
 {
 	internal sealed class Catalog
 	{
-		public Dictionary<int, CatalogPage> dictionary_0;
-		public List<EcotronReward> list_0;
-		private VoucherHandler VoucherHandler_0;
-		private Marketplace class43_0;
+		public Dictionary<int, CatalogPage> Pages;
+
+		public List<EcotronReward> EcotronRewards;
+
+		private VoucherHandler VoucherHandler;
+
+		private Marketplace Marketplace;
+
 		private ServerMessage[] Message5_0;
+
 		private uint uint_0 = 0u;
+
 		private readonly object object_0 = new object();
+
 		public Catalog()
 		{
-			this.VoucherHandler_0 = new VoucherHandler();
-			this.class43_0 = new Marketplace();
+			this.VoucherHandler = new VoucherHandler();
+			this.Marketplace = new Marketplace();
 		}
-		public void method_0(DatabaseClient class6_0)
+
+		public void Initialise(DatabaseClient dbClient)
 		{
 			Logging.Write("Loading Catalogue..");
-			this.dictionary_0 = new Dictionary<int, CatalogPage>();
-			this.list_0 = new List<EcotronReward>();
-            DataTable dataTable = class6_0.ReadDataTable("SELECT * FROM catalog_pages WHERE order_num >= '0' ORDER BY order_num ASC");
-			DataTable dataTable2 = class6_0.ReadDataTable("SELECT * FROM ecotron_rewards ORDER BY item_id");
-            DataTable dataTable4 = class6_0.ReadDataTable("SELECT * FROM catalog_pages WHERE order_num = '-1' ORDER BY caption ASC");
+
+            this.Pages = new Dictionary<int, CatalogPage>();
+			this.EcotronRewards = new List<EcotronReward>();
+
+            DataTable dataTable = dbClient.ReadDataTable("SELECT * FROM catalog_pages WHERE order_num >= '0' ORDER BY order_num ASC");
+			DataTable dataTable2 = dbClient.ReadDataTable("SELECT * FROM ecotron_rewards ORDER BY item_id");
+            DataTable dataTable4 = dbClient.ReadDataTable("SELECT * FROM catalog_pages WHERE order_num = '-1' ORDER BY caption ASC");
+
 			try
 			{
-				this.uint_0 = (uint)class6_0.ReadDataRow("SELECT ID FROM items ORDER BY ID DESC LIMIT 1")[0];
+				this.uint_0 = (uint)dbClient.ReadDataRow("SELECT ID FROM items ORDER BY ID DESC LIMIT 1")[0];
 			}
 			catch
 			{
 				this.uint_0 = 0u;
 			}
+
 			this.uint_0 += 1u;
+
 			Hashtable hashtable = new Hashtable();
-			DataTable dataTable3 = class6_0.ReadDataTable("SELECT * FROM catalog_items");
+
+			DataTable dataTable3 = dbClient.ReadDataTable("SELECT * FROM catalog_items");
+
 			if (dataTable3 != null)
 			{
 				foreach (DataRow dataRow in dataTable3.Rows)
@@ -58,23 +73,23 @@ namespace GoldTree.HabboHotel.Catalogs
 					}
 				}
 			}
+
 			if (dataTable != null)
 			{
-				foreach (DataRow dataRow in dataTable.Rows)
+				foreach (DataRow row in dataTable.Rows)
 				{
 					bool bool_ = false;
 					bool bool_2 = false;
-					if (dataRow["visible"].ToString() == "1")
-					{
+
+					if (row["visible"].ToString() == "1")
 						bool_ = true;
-					}
-					if (dataRow["enabled"].ToString() == "1")
-					{
+					if (row["enabled"].ToString() == "1")
 						bool_2 = true;
-					}
-					this.dictionary_0.Add((int)dataRow["Id"], new CatalogPage((int)dataRow["Id"], (int)dataRow["parent_id"], (string)dataRow["caption"], bool_, bool_2, (uint)dataRow["min_rank"], GoldTree.StringToBoolean(dataRow["club_only"].ToString()), (int)dataRow["icon_color"], (int)dataRow["icon_image"], (string)dataRow["page_layout"], (string)dataRow["page_headline"], (string)dataRow["page_teaser"], (string)dataRow["page_special"], (string)dataRow["page_text1"], (string)dataRow["page_text2"], (string)dataRow["page_text_details"], (string)dataRow["page_text_teaser"], (string)dataRow["page_link_description"], (string)dataRow["page_link_pagename"], ref hashtable));
+
+					this.Pages.Add((int)row["Id"], new CatalogPage((int)row["Id"], (int)row["parent_id"], (string)row["caption"], bool_, bool_2, (uint)row["min_rank"], GoldTree.StringToBoolean(row["club_only"].ToString()), (int)row["icon_color"], (int)row["icon_image"], (string)row["page_layout"], (string)row["page_headline"], (string)row["page_teaser"], (string)row["page_special"], (string)row["page_text1"], (string)row["page_text2"], (string)row["page_text_details"], (string)row["page_text_teaser"], (string)row["page_link_description"], (string)row["page_link_pagename"], ref hashtable));
 				}
 			}
+
             if (dataTable4 != null)
             {
                 foreach (DataRow dataRow in dataTable4.Rows)
@@ -89,60 +104,71 @@ namespace GoldTree.HabboHotel.Catalogs
                     {
                         bool_2 = true;
                     }
-                    this.dictionary_0.Add((int)dataRow["Id"], new CatalogPage((int)dataRow["Id"], (int)dataRow["parent_id"], (string)dataRow["caption"], bool_, bool_2, (uint)dataRow["min_rank"], GoldTree.StringToBoolean(dataRow["club_only"].ToString()), (int)dataRow["icon_color"], (int)dataRow["icon_image"], (string)dataRow["page_layout"], (string)dataRow["page_headline"], (string)dataRow["page_teaser"], (string)dataRow["page_special"], (string)dataRow["page_text1"], (string)dataRow["page_text2"], (string)dataRow["page_text_details"], (string)dataRow["page_text_teaser"], (string)dataRow["page_link_description"], (string)dataRow["page_link_pagename"], ref hashtable));
+                    this.Pages.Add((int)dataRow["Id"], new CatalogPage((int)dataRow["Id"], (int)dataRow["parent_id"], (string)dataRow["caption"], bool_, bool_2, (uint)dataRow["min_rank"], GoldTree.StringToBoolean(dataRow["club_only"].ToString()), (int)dataRow["icon_color"], (int)dataRow["icon_image"], (string)dataRow["page_layout"], (string)dataRow["page_headline"], (string)dataRow["page_teaser"], (string)dataRow["page_special"], (string)dataRow["page_text1"], (string)dataRow["page_text2"], (string)dataRow["page_text_details"], (string)dataRow["page_text_teaser"], (string)dataRow["page_link_description"], (string)dataRow["page_link_pagename"], ref hashtable));
                 }
             }
+
 			if (dataTable2 != null)
 			{
 				foreach (DataRow dataRow in dataTable2.Rows)
 				{
-					this.list_0.Add(new EcotronReward((uint)dataRow["Id"], (uint)dataRow["display_id"], (uint)dataRow["item_id"], (uint)dataRow["reward_level"]));
+					this.EcotronRewards.Add(new EcotronReward((uint)dataRow["Id"], (uint)dataRow["display_id"], (uint)dataRow["item_id"], (uint)dataRow["reward_level"]));
 				}
 			}
+
 			Logging.WriteLine("completed!", ConsoleColor.Green);
 		}
-		internal void method_1()
+
+		internal void CacheCatalogue()
 		{
-			Logging.Write("Loading Catalogue Cache..");
-			int num = GoldTree.GetGame().GetRoleManager().dictionary_2.Count + 1;
+            Logging.Write("Loading Catalogue Cache..");
+
+			int num = GoldTree.GetGame().GetRoleManager().RoleBadges.Count + 1;
+
 			this.Message5_0 = new ServerMessage[num];
+
 			for (int i = 1; i < num; i++)
 			{
-				this.Message5_0[i] = this.method_17(i);
+				this.Message5_0[i] = this.SerializePage(i);
 			}
-			foreach (CatalogPage current in this.dictionary_0.Values)
+
+			foreach (CatalogPage current in this.Pages.Values)
 			{
 				current.method_0();
 			}
+
 			Logging.WriteLine("completed!", ConsoleColor.Green);
 		}
-		public CatalogItem method_2(uint uint_1)
+
+		public CatalogItem GetItemById(uint itemId)
 		{
-			foreach (CatalogPage current in this.dictionary_0.Values)
+			foreach (CatalogPage current in this.Pages.Values)
 			{
-				foreach (CatalogItem current2 in current.list_0)
+				foreach (CatalogItem current2 in current.Items)
 				{
-					if (current2.uint_0 == uint_1)
-					{
+					if (current2.uint_0 == itemId)
 						return current2;
-					}
 				}
 			}
+
 			return null;
 		}
-		public bool method_3(uint uint_1)
+
+		public bool ItemExists(uint itemId)
 		{
 			DataRow dataRow = null;
-			using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
+			using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
 			{
-				dataRow = @class.ReadDataRow("SELECT Id FROM catalog_items WHERE item_ids = '" + uint_1 + "' LIMIT 1");
+				dataRow = dbClient.ReadDataRow("SELECT Id FROM catalog_items WHERE item_ids = '" + itemId + "' LIMIT 1");
 			}
+
 			return dataRow != null;
 		}
+
 		public int method_4(int int_0, int int_1)
 		{
 			int num = 0;
-			foreach (CatalogPage current in this.dictionary_0.Values)
+			foreach (CatalogPage current in this.Pages.Values)
 			{
 				if ((ulong)current.uint_0 <= (ulong)((long)int_0) && current.int_1 == int_1)
 				{
@@ -151,34 +177,34 @@ namespace GoldTree.HabboHotel.Catalogs
 			}
 			return num;
 		}
-		public CatalogPage method_5(int int_0)
+
+		public CatalogPage GetPageById(int pageId)
 		{
-			if (!this.dictionary_0.ContainsKey(int_0))
-			{
-				return null;
-			}
-			else
-			{
-				return this.dictionary_0[int_0];
-			}
+            if (Pages.ContainsKey(pageId))
+                return Pages[pageId];
+
+            return null;
 		}
-		public bool method_6(GameClient Session, int int_0, uint uint_1, string string_0, bool bool_0, string string_1, string string_2, bool bool_1)
+
+		public bool method_6(GameClient Session, int pageId, uint itemId, string string_0, bool bool_0, string string_1, string string_2, bool bool_1)
 		{
-			CatalogPage @class = this.method_5(int_0);
-			if (@class == null || !@class.bool_1 || !@class.bool_0 || @class.uint_0 > Session.GetHabbo().Rank)
+			CatalogPage page = this.GetPageById(pageId);
+
+			if (page == null || !page.bool_1 || !page.bool_0 || page.uint_0 > Session.GetHabbo().Rank)
 			{
 				return false;
 			}
 			else
 			{
-                if (@class.bool_2 && (!Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club") || !Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_vip")))
+                if (page.bool_2 && (!Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club") || !Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_vip")))
 				{
 					return false;
 				}
 				else
 				{
-					CatalogItem class2 = @class.method_1(uint_1);
-					if (class2 == null)
+					CatalogItem item = page.GetItemById(itemId);
+
+					if (item == null)
 					{
 						return false;
 					}
@@ -187,7 +213,7 @@ namespace GoldTree.HabboHotel.Catalogs
 						uint num = 0u;
 						if (bool_0)
 						{
-							if (!class2.method_0().AllowGift)
+							if (!item.method_0().AllowGift)
 							{
 								return false;
 							}
@@ -233,12 +259,12 @@ namespace GoldTree.HabboHotel.Catalogs
 						}
 						bool flag = false;
 						bool flag2 = false;
-						int int_ = class2.int_2;
-						if (Session.GetHabbo().Credits < class2.int_0)
+						int int_ = item.int_2;
+						if (Session.GetHabbo().Credits < item.int_0)
 						{
 							flag = true;
 						}
-						if ((int_ == 0 && Session.GetHabbo().ActivityPoints < class2.int_1) || (int_ > 0 && Session.GetHabbo().VipPoints < class2.int_1))
+						if ((int_ == 0 && Session.GetHabbo().ActivityPoints < item.int_1) || (int_ > 0 && Session.GetHabbo().VipPoints < item.int_1))
 						{
 							flag2 = true;
 						}
@@ -252,14 +278,14 @@ namespace GoldTree.HabboHotel.Catalogs
 						}
 						else
 						{
-							if (bool_0 && class2.method_0().Type == 'e')
+							if (bool_0 && item.method_0().Type == 'e')
 							{
 								Session.SendNotification("You can not send this item as a gift.");
 								return false;
 							}
 							else
 							{
-								string text = class2.method_0().InteractionType.ToLower();
+								string text = item.method_0().InteractionType.ToLower();
 								if (text != null)
 								{
 									if (!(text == "pet"))
@@ -305,7 +331,7 @@ namespace GoldTree.HabboHotel.Catalogs
 										}
                                         if (text == "musicdisc")
                                         {
-                                            string_0 = class2.song_id.ToString();
+                                            string_0 = item.song_id.ToString();
                                             goto IL_4FC;
                                         }
 									}
@@ -341,9 +367,9 @@ namespace GoldTree.HabboHotel.Catalogs
 										}
 									}
 								}
-								if (class2.string_0.StartsWith("disc_"))
+								if (item.string_0.StartsWith("disc_"))
 								{
-									string_0 = class2.string_0.Split(new char[]
+									string_0 = item.string_0.Split(new char[]
 									{
 										'_'
 									})[1];
@@ -353,31 +379,31 @@ namespace GoldTree.HabboHotel.Catalogs
 									string_0 = "";
 								}
 								IL_4FC:
-								if (class2.int_0 > 0)
+								if (item.int_0 > 0)
 								{
-									Session.GetHabbo().Credits -= class2.int_0;
+									Session.GetHabbo().Credits -= item.int_0;
 									Session.GetHabbo().UpdateCredits(true);
 								}
-								if (class2.int_1 > 0 && int_ == 0)
+								if (item.int_1 > 0 && int_ == 0)
 								{
-									Session.GetHabbo().ActivityPoints -= class2.int_1;
+									Session.GetHabbo().ActivityPoints -= item.int_1;
 									Session.GetHabbo().UpdateActivityPoints(true);
 								}
 								else
 								{
-									if (class2.int_1 > 0 && int_ > 0)
+									if (item.int_1 > 0 && int_ > 0)
 									{
-										Session.GetHabbo().VipPoints -= class2.int_1;
+										Session.GetHabbo().VipPoints -= item.int_1;
 										Session.GetHabbo().method_16(0);
 										Session.GetHabbo().UpdateVipPoints(false, true);
 									}
 								}
 								ServerMessage Message3 = new ServerMessage(67u);
-								Message3.AppendUInt(class2.method_0().UInt32_0);
-								Message3.AppendStringWithBreak(class2.method_0().Name);
-								Message3.AppendInt32(class2.int_0);
-								Message3.AppendInt32(class2.int_1);
-								Message3.AppendInt32(class2.int_2);
+								Message3.AppendUInt(item.method_0().UInt32_0);
+								Message3.AppendStringWithBreak(item.method_0().Name);
+								Message3.AppendInt32(item.int_0);
+								Message3.AppendInt32(item.int_1);
+								Message3.AppendInt32(item.int_2);
 								if (bool_1)
 								{
 									Message3.AppendInt32(1);
@@ -386,8 +412,8 @@ namespace GoldTree.HabboHotel.Catalogs
 								{
 									Message3.AppendInt32(0);
 								}
-								Message3.AppendStringWithBreak(class2.method_0().Type.ToString());
-								Message3.AppendInt32(class2.method_0().Sprite);
+								Message3.AppendStringWithBreak(item.method_0().Type.ToString());
+								Message3.AppendInt32(item.method_0().Sprite);
 								Message3.AppendStringWithBreak("");
 								Message3.AppendInt32(1);
 								Message3.AppendInt32(-1);
@@ -422,9 +448,9 @@ namespace GoldTree.HabboHotel.Catalogs
 											"INSERT INTO user_presents (item_id,base_id,amount,extra_data) VALUES ('",
 											num3,
 											"','",
-											class2.method_0().UInt32_0,
+											item.method_0().UInt32_0,
 											"','",
-											class2.int_3,
+											item.int_3,
 											"',@extra_data)"
 										}));
 									}
@@ -432,7 +458,7 @@ namespace GoldTree.HabboHotel.Catalogs
 									if (class5 != null)
 									{
 										class5.SendNotification("You have received a gift! Check your inventory.");
-										class5.GetHabbo().GetInventoryComponent().method_9(true);
+										class5.GetHabbo().GetInventoryComponent().RefreshInventory(true);
 										class5.GetHabbo().GiftsReceived++;
                                         class5.GetHabbo().CheckGiftReceivedAchievements();
 									}
@@ -443,14 +469,14 @@ namespace GoldTree.HabboHotel.Catalogs
 								}
 								else
 								{
-									this.method_9(Session, class2.method_0(), class2.int_3, string_0, true, 0u);
-									if (class2.uint_2 > 0u)
+									this.method_9(Session, item.method_0(), item.int_3, string_0, true, 0u);
+									if (item.uint_2 > 0u)
 									{
-										GoldTree.GetGame().GetAchievementManager().addAchievement(Session, class2.uint_2, 1);
+										GoldTree.GetGame().GetAchievementManager().addAchievement(Session, item.uint_2, 1);
 									}
-                                    if (!string.IsNullOrEmpty(class2.BadgeID))
+                                    if (!string.IsNullOrEmpty(item.BadgeID))
                                     {
-                                        Session.GetHabbo().GetBadgeComponent().SendBadge(Session, class2.BadgeID, true);
+                                        Session.GetHabbo().GetBadgeComponent().SendBadge(Session, item.BadgeID, true);
                                     }
 									return true;
 								}
@@ -462,8 +488,8 @@ namespace GoldTree.HabboHotel.Catalogs
 		}
 		public void method_7(string string_0, uint uint_1, uint uint_2, int int_0)
 		{
-			CatalogPage @class = this.method_5(int_0);
-			CatalogItem class2 = @class.method_1(uint_2);
+			CatalogPage @class = this.GetPageById(int_0);
+			CatalogItem class2 = @class.GetItemById(uint_2);
 			uint num = this.method_14();
 			Item class3 = this.method_10();
 			using (DatabaseClient class4 = GoldTree.GetDatabase().GetClient())
@@ -500,7 +526,7 @@ namespace GoldTree.HabboHotel.Catalogs
 			if (class5 != null)
 			{
 				class5.SendNotification("You have received a gift! Check your inventory.");
-				class5.GetHabbo().GetInventoryComponent().method_9(true);
+				class5.GetHabbo().GetInventoryComponent().RefreshInventory(true);
 			}
 		}
 		public bool method_8(string string_0)
@@ -545,7 +571,7 @@ namespace GoldTree.HabboHotel.Catalogs
                                     {
                                         @class.ExecuteQuery("INSERT INTO room_items_moodlight (item_id,enabled,current_preset,preset_one,preset_two,preset_three) VALUES ('" + num + "','0','1','#000000,255,0','#000000,255,0','#000000,255,0')");
                                     }
-                                    Session.GetHabbo().GetInventoryComponent().method_11(num, Item.UInt32_0, string_0, bool_0);
+                                    Session.GetHabbo().GetInventoryComponent().AddItem(num, Item.UInt32_0, string_0, bool_0);
                                 }
                                 else
                                 {
@@ -569,8 +595,8 @@ namespace GoldTree.HabboHotel.Catalogs
 										"')"
 									}));
                                     }
-                                    Session.GetHabbo().GetInventoryComponent().method_11(num2, Item.UInt32_0, "0", bool_0);
-                                    Session.GetHabbo().GetInventoryComponent().method_11(num, Item.UInt32_0, "0", bool_0);
+                                    Session.GetHabbo().GetInventoryComponent().AddItem(num2, Item.UInt32_0, "0", bool_0);
+                                    Session.GetHabbo().GetInventoryComponent().AddItem(num, Item.UInt32_0, "0", bool_0);
                                 }
                             }
                             else
@@ -584,7 +610,7 @@ namespace GoldTree.HabboHotel.Catalogs
 								't'
 							})[1]), array[1], array[2]);
                                 Session.GetHabbo().GetInventoryComponent().AddPet(class15_);
-                                Session.GetHabbo().GetInventoryComponent().method_11(num, 320u, "0", bool_0);
+                                Session.GetHabbo().GetInventoryComponent().AddItem(num, 320u, "0", bool_0);
                             }
                         IL_4EA:
                             ServerMessage Message = new ServerMessage(832u);
@@ -612,10 +638,10 @@ namespace GoldTree.HabboHotel.Catalogs
                             i++;
                             continue;
                         IL_4CF:
-                            Session.GetHabbo().GetInventoryComponent().method_11(num, Item.UInt32_0, string_0, bool_0);
+                            Session.GetHabbo().GetInventoryComponent().AddItem(num, Item.UInt32_0, string_0, bool_0);
                             goto IL_4EA;
                         }
-                        Session.GetHabbo().GetInventoryComponent().method_9(false);
+                        Session.GetHabbo().GetInventoryComponent().RefreshInventory(false);
                         return;
                     }
                     if (text == "e")
@@ -630,7 +656,7 @@ namespace GoldTree.HabboHotel.Catalogs
                     {
                         for (int i = 0; i < int_0; i++)
                         {
-                            Session.GetHabbo().GetSubscriptionManager().method_3("habbo_club", 2678400);
+                            Session.GetHabbo().GetSubscriptionManager().AppendSubscription("habbo_club", 2678400);
                             Session.GetHabbo().CheckHCAchievements();
                         }
                         ServerMessage Message2 = new ServerMessage(7u);
@@ -715,31 +741,31 @@ namespace GoldTree.HabboHotel.Catalogs
 			{
 			case 0:
 			{
-                return GoldTree.GetGame().GetItemManager().method_2(164u);
+                return GoldTree.GetGame().GetItemManager().GetBaseItemById(164u);
 			}
 			case 1:
 			{
-				return GoldTree.GetGame().GetItemManager().method_2(165u);
+				return GoldTree.GetGame().GetItemManager().GetBaseItemById(165u);
 			}
 			case 2:
 			{
-				return GoldTree.GetGame().GetItemManager().method_2(166u);
+				return GoldTree.GetGame().GetItemManager().GetBaseItemById(166u);
 			}
 			case 3:
 			{
-				return GoldTree.GetGame().GetItemManager().method_2(167u);
+				return GoldTree.GetGame().GetItemManager().GetBaseItemById(167u);
 			}
 			case 4:
 			{
-                return GoldTree.GetGame().GetItemManager().method_2(168u);
+                return GoldTree.GetGame().GetItemManager().GetBaseItemById(168u);
 			}
 			case 5:
 			{
-                return GoldTree.GetGame().GetItemManager().method_2(169u);
+                return GoldTree.GetGame().GetItemManager().GetBaseItemById(169u);
 			}
 			case 6:
 			{
-                return GoldTree.GetGame().GetItemManager().method_2(170u);
+                return GoldTree.GetGame().GetItemManager().GetBaseItemById(170u);
 			}
             default:
             {
@@ -824,7 +850,7 @@ namespace GoldTree.HabboHotel.Catalogs
 		public List<EcotronReward> method_16(uint uint_1)
 		{
 			List<EcotronReward> list = new List<EcotronReward>();
-			foreach (EcotronReward current in this.list_0)
+			foreach (EcotronReward current in this.EcotronRewards)
 			{
 				if (current.uint_3 == uint_1)
 				{
@@ -833,7 +859,8 @@ namespace GoldTree.HabboHotel.Catalogs
 			}
 			return list;
 		}
-		public ServerMessage method_17(int int_0)
+
+		public ServerMessage SerializePage(int pageId)
 		{
 			ServerMessage Message = new ServerMessage(126u);
 			Message.AppendBoolean(true);
@@ -841,33 +868,34 @@ namespace GoldTree.HabboHotel.Catalogs
 			Message.AppendInt32(0);
 			Message.AppendInt32(-1);
 			Message.AppendStringWithBreak("");
-			Message.AppendInt32(this.method_4(int_0, -1));
+			Message.AppendInt32(this.method_4(pageId, -1));
 			Message.AppendBoolean(true);
-			foreach (CatalogPage current in this.dictionary_0.Values)
+			foreach (CatalogPage current in this.Pages.Values)
 			{
 				if (current.int_1 == -1)
 				{
-					current.method_2(int_0, Message);
-					foreach (CatalogPage current2 in this.dictionary_0.Values)
+					current.method_2(pageId, Message);
+					foreach (CatalogPage current2 in this.Pages.Values)
 					{
 						if (current2.int_1 == current.Int32_0)
 						{
-							current2.method_2(int_0, Message);
+							current2.method_2(pageId, Message);
 						}
 					}
 				}
 			}
 			return Message;
 		}
+
 		internal ServerMessage method_18(uint uint_1)
 		{
 			if (uint_1 < 1u)
 			{
 				uint_1 = 1u;
 			}
-			if ((ulong)uint_1 > (ulong)((long)GoldTree.GetGame().GetRoleManager().dictionary_2.Count))
+			if ((ulong)uint_1 > (ulong)((long)GoldTree.GetGame().GetRoleManager().RoleBadges.Count))
 			{
-				uint_1 = (uint)GoldTree.GetGame().GetRoleManager().dictionary_2.Count;
+				uint_1 = (uint)GoldTree.GetGame().GetRoleManager().RoleBadges.Count;
 			}
 			return this.Message5_0[(int)((UIntPtr)uint_1)];
 		}
@@ -982,8 +1010,8 @@ namespace GoldTree.HabboHotel.Catalogs
 			Message.AppendStringWithBreak(class48_0.string_7);
 			Message.AppendStringWithBreak(class48_0.string_8);
 			IL_47F:
-			Message.AppendInt32(class48_0.list_0.Count);
-			foreach (CatalogItem current in class48_0.list_0)
+			Message.AppendInt32(class48_0.Items.Count);
+			foreach (CatalogItem current in class48_0.Items)
 			{
 				current.method_1(Message);
 			}
@@ -995,11 +1023,11 @@ namespace GoldTree.HabboHotel.Catalogs
 		}
 		public VoucherHandler method_21()
 		{
-			return this.VoucherHandler_0;
+			return this.VoucherHandler;
 		}
 		public Marketplace method_22()
 		{
-			return this.class43_0;
+			return this.Marketplace;
 		}
 	}
 }

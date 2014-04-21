@@ -40,12 +40,12 @@ namespace GoldTree.HabboHotel.Items.Interactors
                     return;
                 }
 
-                if (Item == null || Item.method_8() == null)
+                if (Item == null || Item.GetRoom() == null)
                 {
                     return;
                 }
 
-                Room @class = Item.method_8();
+                Room @class = Item.GetRoom();
 
                 if (@class == null)
                 {
@@ -58,11 +58,11 @@ namespace GoldTree.HabboHotel.Items.Interactors
                 {
                     if (User.team != Rooms.Games.Team.None)
                     {
-                        if (Item.method_8().frzTimer == true)
+                        if (Item.GetRoom().frzTimer == true)
                         {
-                            if (Item.Int32_0 == User.int_3 || Item.Int32_0 - 1 == User.int_3 || Item.Int32_0 + 1 == User.int_3)
+                            if (Item.X == User.int_3 || Item.X - 1 == User.int_3 || Item.X + 1 == User.int_3)
                             {
-                                if (Item.Int32_1 == User.int_4 || Item.Int32_1 - 1 == User.int_4 || Item.Int32_1 + 1 == User.int_4)
+                                if (Item.Y == User.int_4 || Item.Y - 1 == User.int_4 || Item.Y + 1 == User.int_4)
                                 {
                                     if (User.FreezeBalls > 0)
                                     {
@@ -99,12 +99,12 @@ namespace GoldTree.HabboHotel.Items.Interactors
                                                 if (User.FreezeRange >= i)
                                                 {
                                                     await Task.Delay(200);
-                                                    foreach (RoomItem Item2 in Item.method_8().GetFreeze().freezeTiles.Values)
+                                                    foreach (RoomItem Item2 in Item.GetRoom().GetFreeze().freezeTiles.Values)
                                                     {
-                                                        if (Item2.Int32_0 == Item.Int32_0 && Item2.Int32_1 == Item.Int32_1 + i && !pX) { pX = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 && Item2.Int32_1 == Item.Int32_1 - i && !pY) { pY = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 + i && Item2.Int32_1 == Item.Int32_1 && !nX) { nX = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 - i && Item2.Int32_1 == Item.Int32_1 && !nY) { nY = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X && Item2.Y == Item.Y + i && !pX) { pX = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X && Item2.Y == Item.Y - i && !pY) { pY = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X + i && Item2.Y == Item.Y && !nX) { nX = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X - i && Item2.Y == Item.Y && !nY) { nY = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
                                                     }
                                                 }
                                             }
@@ -118,12 +118,12 @@ namespace GoldTree.HabboHotel.Items.Interactors
                                                 if (User.FreezeRange >= i)
                                                 {
                                                     await Task.Delay(200);
-                                                    foreach (RoomItem Item2 in Item.method_8().GetFreeze().freezeTiles.Values)
+                                                    foreach (RoomItem Item2 in Item.GetRoom().GetFreeze().freezeTiles.Values)
                                                     {
-                                                        if (Item2.Int32_0 == Item.Int32_0 + i && Item2.Int32_1 == Item.Int32_1 + i && !pD1) { pD1 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 + i && Item2.Int32_1 == Item.Int32_1 - i && !nD1) { nD1 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 - i && Item2.Int32_1 == Item.Int32_1 + i && !pD2) { pD2 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 - i && Item2.Int32_1 == Item.Int32_1 - i && !nD2) { nD2 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X + i && Item2.Y == Item.Y + i && !pD1) { pD1 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X + i && Item2.Y == Item.Y - i && !nD1) { nD1 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X - i && Item2.Y == Item.Y + i && !pD2) { pD2 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X - i && Item2.Y == Item.Y - i && !nD2) { nD2 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
                                                     }
                                                 }
                                             }
@@ -137,16 +137,16 @@ namespace GoldTree.HabboHotel.Items.Interactors
                                                 if (User.FreezeRange >= i)
                                                 {
                                                     await Task.Delay(200);
-                                                    foreach (RoomItem Item2 in Item.method_8().GetFreeze().freezeTiles.Values)
+                                                    foreach (RoomItem Item2 in Item.GetRoom().GetFreeze().freezeTiles.Values)
                                                     {
-                                                        if (Item2.Int32_0 == Item.Int32_0 && Item2.Int32_1 == Item.Int32_1 + i && !pX) { pX = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 && Item2.Int32_1 == Item.Int32_1 - i && !pY) { pY = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 + i && Item2.Int32_1 == Item.Int32_1 && !nX) { nX = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 - i && Item2.Int32_1 == Item.Int32_1 && !nY) { nY = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 + i && Item2.Int32_1 == Item.Int32_1 + i && !pD1) { pD1 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 + i && Item2.Int32_1 == Item.Int32_1 - i && !nD1) { nD1 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 - i && Item2.Int32_1 == Item.Int32_1 + i && !pD2) { pD2 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
-                                                        if (Item2.Int32_0 == Item.Int32_0 - i && Item2.Int32_1 == Item.Int32_1 - i && !nD2) { nD2 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X && Item2.Y == Item.Y + i && !pX) { pX = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X && Item2.Y == Item.Y - i && !pY) { pY = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X + i && Item2.Y == Item.Y && !nX) { nX = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X - i && Item2.Y == Item.Y && !nY) { nY = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X + i && Item2.Y == Item.Y + i && !pD1) { pD1 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X + i && Item2.Y == Item.Y - i && !nD1) { nD1 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X - i && Item2.Y == Item.Y + i && !pD2) { pD2 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
+                                                        if (Item2.X == Item.X - i && Item2.Y == Item.Y - i && !nD2) { nD2 = BreakIceBlock(Item, Item2); FreezeUser(Item, Item2); }
                                                     }
                                                 }
                                             }
@@ -168,18 +168,18 @@ namespace GoldTree.HabboHotel.Items.Interactors
 
         public bool BreakIceBlock(RoomItem Item, RoomItem Item2)
         {
-            if (Item.method_8().frzTimer == true)
+            if (Item.GetRoom().frzTimer == true)
             {
                 Item2.ExtraData = "11200";
                 Item2.UpdateState(false, true);
 
-                foreach (RoomItem Item3 in Item.method_8().GetFreeze().freezeBlocks.Values)
+                foreach (RoomItem Item3 in Item.GetRoom().GetFreeze().freezeBlocks.Values)
                 {
-                    if (Item2.Int32_0 == Item3.Int32_0 && Item2.Int32_1 == Item3.Int32_1)
+                    if (Item2.X == Item3.X && Item2.Y == Item3.Y)
                     {
                         if (string.IsNullOrEmpty(Item3.ExtraData))
                         {
-                            Item3.method_8().GetFreeze().SetRandomPowerUp(Item3);
+                            Item3.GetRoom().GetFreeze().SetRandomPowerUp(Item3);
                             return true;
                         }
                     }
@@ -190,16 +190,16 @@ namespace GoldTree.HabboHotel.Items.Interactors
 
         public void FreezeUser(RoomItem Item, RoomItem Item2)
         {
-            if (Item.method_8().frzTimer == true)
+            if (Item.GetRoom().frzTimer == true)
             {
-                for (int i = 0; i < Item.method_8().RoomUsers.Length; i++)
+                for (int i = 0; i < Item.GetRoom().RoomUsers.Length; i++)
                 {
-                    RoomUser User2 = Item.method_8().RoomUsers[i];
+                    RoomUser User2 = Item.GetRoom().RoomUsers[i];
                     if (User2 != null)
                     {
-                        if (User2.int_3 == Item2.Int32_0 && User2.int_4 == Item2.Int32_1)
+                        if (User2.int_3 == Item2.X && User2.int_4 == Item2.Y)
                         {
-                            Item.method_8().GetFreeze().FreezeUser(User2);
+                            Item.GetRoom().GetFreeze().FreezeUser(User2);
                         }
                     }
                 }

@@ -225,12 +225,15 @@ namespace GoldTree.HabboHotel.Rooms
 
                             if (GoldTree.GetConfig().data["anti.ads.enable"] == "1")
                             {
-                                if (Session.GetHabbo().Rank <= uint.Parse(GoldTree.GetConfig().data["anti.ads.rank"]))
+                                if (Session.GetHabbo() != null)
                                 {
-                                    if (System.Text.RegularExpressions.Regex.IsMatch(str, linkRegex, System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                    if (Session.GetHabbo().Rank <= uint.Parse(GoldTree.GetConfig().data["anti.ads.rank"]))
                                     {
-                                        Session.SendNotification(GoldTree.GetConfig().data["anti.ads.msg"]);
-                                        return;
+                                        if (System.Text.RegularExpressions.Regex.IsMatch(str, linkRegex, System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                        {
+                                            Session.SendNotification(GoldTree.GetConfig().data["anti.ads.msg"]);
+                                            return;
+                                        }
                                     }
                                 }
                             }

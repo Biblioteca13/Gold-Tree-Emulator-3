@@ -22,7 +22,7 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
 						{
 							bool_ = true;
 						}
-                        class2.Class69_0.OnTrigger(Session, class2, Event.PopWiredInt32(), bool_);
+                        class2.GetInteractor().OnTrigger(Session, class2, Event.PopWiredInt32(), bool_);
                         if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "SWITCHSTATE")
 						{
                             GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);

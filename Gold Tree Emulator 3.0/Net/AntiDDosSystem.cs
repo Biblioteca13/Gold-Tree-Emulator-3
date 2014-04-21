@@ -18,10 +18,12 @@ namespace GoldTree.Net
 
         private static string[] mConnectionStorage;
         private static string mLastIpBlocked;
+
         internal static void SetupTcpAuthorization(int ConnectionCount)
 		{
             AntiDDosSystem.mConnectionStorage = new string[ConnectionCount];
 		}
+
         internal static bool CheckConnection(Socket Sock)
 		{
             string text = Sock.RemoteEndPoint.ToString().Split(new char[]
@@ -34,7 +36,7 @@ namespace GoldTree.Net
 			}
 			else
 			{
-                if (AntiDDosSystem.GetConnectionAmount(text) > 10 && text != "127.0.0.1" && text != ServerConfiguration.ProxyIP && !ServerConfiguration.DDoSProtectionEnabled)
+                if (AntiDDosSystem.GetConnectionAmount(text) > 10 && text != "127.0.0.1" && text != ServerConfiguration.ProxyIP && ServerConfiguration.DDoSProtectionEnabled)
 				{
                     Process[] peerblockrunning = Process.GetProcessesByName("peerblock");
                     if (peerblockrunning.Length == 0)
@@ -74,6 +76,7 @@ namespace GoldTree.Net
 				}
 			}
 		}
+
         private static int GetConnectionAmount(string IP)
 		{
 			int num = 0;
@@ -86,6 +89,7 @@ namespace GoldTree.Net
 			}
 			return num;
 		}
+
         internal static void FreeConnection(string IP)
 		{
             for (int i = 0; i < AntiDDosSystem.mConnectionStorage.Length; i++)
@@ -97,6 +101,7 @@ namespace GoldTree.Net
 				}
 			}
 		}
+
         private static int GetFreeConnectionID()
 		{
             for (int i = 0; i < AntiDDosSystem.mConnectionStorage.Length; i++)

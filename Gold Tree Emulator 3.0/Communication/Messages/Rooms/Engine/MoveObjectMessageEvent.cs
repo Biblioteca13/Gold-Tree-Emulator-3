@@ -19,7 +19,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 					int num2 = Event.PopWiredInt32();
 					int num3 = Event.PopWiredInt32();
 					Event.PopWiredInt32();
-                    if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "MOVE_ITEM" && (num != class2.Int32_0 || num2 != class2.Int32_1))
+                    if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "MOVE_ITEM" && (num != class2.X || num2 != class2.Y))
 					{
                         GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 					}
@@ -31,7 +31,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 						}
 						else
 						{
-                            if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "STACKITEM" && class2.Double_0 > 0.0)
+                            if (Session.GetHabbo().CurrentQuestId > 0 && GoldTree.GetGame().GetQuestManager().GetQuestAction(Session.GetHabbo().CurrentQuestId) == "STACKITEM" && class2.Z > 0.0)
 							{
                                 GoldTree.GetGame().GetQuestManager().ProgressUserQuest(Session.GetHabbo().CurrentQuestId, Session);
 							}

@@ -96,9 +96,9 @@ namespace GoldTree.HabboHotel
 
                     this.ModerationTool.method_1(dbClient);
                     this.ModerationTool.method_2(dbClient);
-                    this.ItemManager.method_0(dbClient);
-                    this.Catalog.method_0(dbClient);
-                    this.Catalog.method_1();
+                    this.ItemManager.Initialise(dbClient);
+                    this.Catalog.Initialise(dbClient);
+                    this.Catalog.CacheCatalogue();
                     this.Navigator.method_0(dbClient);
                     this.RoomManager.method_8(dbClient);
                     this.RoomManager.method_0();
@@ -122,7 +122,7 @@ namespace GoldTree.HabboHotel
                 return;
             }
 
-			this.task_0 = new Task(new Action(LowPriorityWorker.smethod_0));
+			this.task_0 = new Task(new Action(LowPriorityWorker.Initialise));
 			this.task_0.Start();
 
             StartGameLoop();
@@ -131,31 +131,19 @@ namespace GoldTree.HabboHotel
 		public void RestoreStatistics(DatabaseClient dbClient, int status)
 		{
 			Logging.Write(GoldTreeEnvironment.GetExternalText("emu_cleandb"));
-			bool flag = true;
-			try
+
+			dbClient.ExecuteQuery("UPDATE users SET online = '0' WHERE online != '0'");
+			dbClient.ExecuteQuery("UPDATE rooms SET users_now = '0' WHERE users_now != '0'");
+			dbClient.ExecuteQuery("UPDATE user_roomvisits SET exit_timestamp = UNIX_TIMESTAMP() WHERE exit_timestamp <= 0");
+			dbClient.ExecuteQuery(string.Concat(new object[]
 			{
-				if (int.Parse(GoldTree.GetConfig().data["debug"]) == 1)
-				{
-					flag = false;
-				}
-			}
-			catch
-			{
-			}
-			if (flag)
-			{
-				dbClient.ExecuteQuery("UPDATE users SET online = '0' WHERE online != '0'");
-				dbClient.ExecuteQuery("UPDATE rooms SET users_now = '0' WHERE users_now != '0'");
-				dbClient.ExecuteQuery("UPDATE user_roomvisits SET exit_timestamp = UNIX_TIMESTAMP() WHERE exit_timestamp <= 0");
-				dbClient.ExecuteQuery(string.Concat(new object[]
-				{
-					"UPDATE server_status SET status = '",
-					status,
-					"', users_online = '0', rooms_loaded = '0', server_ver = '",
-					GoldTree.PrettyVersion,
-					"', stamp = UNIX_TIMESTAMP() LIMIT 1;"
-				}));
-			}
+				"UPDATE server_status SET status = '",
+				status,
+				"', users_online = '0', rooms_loaded = '0', server_ver = '",
+				GoldTree.PrettyVersion,
+				"', stamp = UNIX_TIMESTAMP() LIMIT 1;"
+			}));
+
 			Logging.WriteLine("completed!", ConsoleColor.Green);
 		}
 

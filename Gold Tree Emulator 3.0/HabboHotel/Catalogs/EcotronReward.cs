@@ -17,7 +17,7 @@ namespace GoldTree.HabboHotel.Catalogs
 		}
 		public Item method_0()
 		{
-			return GoldTree.GetGame().GetItemManager().method_2(this.uint_2);
+			return GoldTree.GetGame().GetItemManager().GetBaseItemById(this.uint_2);
 		}
 	}
 }

@@ -60,7 +60,7 @@ namespace GoldTree.Catalogs
 			}
 			else
 			{
-				return GoldTree.GetGame().GetItemManager().method_2(this.list_0[0]);
+				return GoldTree.GetGame().GetItemManager().GetBaseItemById(this.list_0[0]);
 			}
 		}
 		public void method_1(ServerMessage Message5_0)

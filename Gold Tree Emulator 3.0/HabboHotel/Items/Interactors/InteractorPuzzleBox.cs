@@ -17,50 +17,50 @@ namespace GoldTree.HabboHotel.Items.Interactors
 		}
 		public override void OnTrigger(GameClient Session, RoomItem RoomItem_0, int int_0, bool bool_0)
 		{
-			Room @class = RoomItem_0.method_8();
+			Room @class = RoomItem_0.GetRoom();
 			RoomUser class2 = @class.GetRoomUserByHabbo(Session.GetHabbo().Id);
 			if (class2 != null && @class != null)
 			{
-				ThreeDCoord gstruct1_ = new ThreeDCoord(RoomItem_0.Int32_0 + 1, RoomItem_0.Int32_1);
-				ThreeDCoord gstruct1_2 = new ThreeDCoord(RoomItem_0.Int32_0 - 1, RoomItem_0.Int32_1);
-				ThreeDCoord gstruct1_3 = new ThreeDCoord(RoomItem_0.Int32_0, RoomItem_0.Int32_1 + 1);
-				ThreeDCoord gstruct1_4 = new ThreeDCoord(RoomItem_0.Int32_0, RoomItem_0.Int32_1 - 1);
+				ThreeDCoord gstruct1_ = new ThreeDCoord(RoomItem_0.X + 1, RoomItem_0.Y);
+				ThreeDCoord gstruct1_2 = new ThreeDCoord(RoomItem_0.X - 1, RoomItem_0.Y);
+				ThreeDCoord gstruct1_3 = new ThreeDCoord(RoomItem_0.X, RoomItem_0.Y + 1);
+				ThreeDCoord gstruct1_4 = new ThreeDCoord(RoomItem_0.X, RoomItem_0.Y - 1);
 				if (ThreeDCoord.smethod_1(class2.Position, gstruct1_) && ThreeDCoord.smethod_1(class2.Position, gstruct1_2) && ThreeDCoord.smethod_1(class2.Position, gstruct1_3) && ThreeDCoord.smethod_1(class2.Position, gstruct1_4))
 				{
 					if (class2.bool_0)
 					{
-						class2.MoveTo(RoomItem_0.GStruct1_0);
+						class2.MoveTo(RoomItem_0.Position);
 					}
 				}
 				else
 				{
-					int num = RoomItem_0.Int32_0;
-					int num2 = RoomItem_0.Int32_1;
+					int num = RoomItem_0.X;
+					int num2 = RoomItem_0.Y;
 					if (ThreeDCoord.smethod_0(class2.Position, gstruct1_))
 					{
-						num = RoomItem_0.Int32_0 - 1;
-						num2 = RoomItem_0.Int32_1;
+						num = RoomItem_0.X - 1;
+						num2 = RoomItem_0.Y;
 					}
 					else
 					{
 						if (ThreeDCoord.smethod_0(class2.Position, gstruct1_2))
 						{
-							num = RoomItem_0.Int32_0 + 1;
-							num2 = RoomItem_0.Int32_1;
+							num = RoomItem_0.X + 1;
+							num2 = RoomItem_0.Y;
 						}
 						else
 						{
 							if (ThreeDCoord.smethod_0(class2.Position, gstruct1_3))
 							{
-								num = RoomItem_0.Int32_0;
-								num2 = RoomItem_0.Int32_1 - 1;
+								num = RoomItem_0.X;
+								num2 = RoomItem_0.Y - 1;
 							}
 							else
 							{
 								if (ThreeDCoord.smethod_0(class2.Position, gstruct1_4))
 								{
-									num = RoomItem_0.Int32_0;
-									num2 = RoomItem_0.Int32_1 + 1;
+									num = RoomItem_0.X;
+									num2 = RoomItem_0.Y + 1;
 								}
 							}
 						}
@@ -71,8 +71,8 @@ namespace GoldTree.HabboHotel.Items.Interactors
 						list_ = @class.method_93(num, num2);
 						double double_ = @class.method_84(num, num2, list_);
 						ServerMessage Message = new ServerMessage(230u);
-						Message.AppendInt32(RoomItem_0.Int32_0);
-						Message.AppendInt32(RoomItem_0.Int32_1);
+						Message.AppendInt32(RoomItem_0.X);
+						Message.AppendInt32(RoomItem_0.Y);
 						Message.AppendInt32(num);
 						Message.AppendInt32(num2);
 						Message.AppendInt32(1);
