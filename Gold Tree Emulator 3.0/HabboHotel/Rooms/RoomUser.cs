@@ -222,16 +222,25 @@ namespace GoldTree.HabboHotel.Rooms
 							ServerMessage Message2 = new ServerMessage(num);
 							Message2.AppendInt32(this.VirtualId);
 
-
-                            if (GoldTree.GetConfig().data["anti.ads.enable"] == "1")
+                            if (!this.IsBot && !this.IsPet)
                             {
-                                if (Session.GetHabbo().Rank <= uint.Parse(GoldTree.GetConfig().data["anti.ads.rank"]))
+                                try
                                 {
-                                    if (System.Text.RegularExpressions.Regex.IsMatch(str, linkRegex, System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                    if (GoldTree.GetConfig().data.ContainsKey("anti.ads.enable") && GoldTree.GetConfig().data["anti.ads.enable"] == "1")
                                     {
-                                        Session.SendNotification(GoldTree.GetConfig().data["anti.ads.msg"]);
-                                        return;
+                                        if (Session.GetHabbo().Rank <= uint.Parse(GoldTree.GetConfig().data["anti.ads.rank"]))
+                                        {
+                                            if (System.Text.RegularExpressions.Regex.IsMatch(str, linkRegex, System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                                            {
+                                                Session.SendNotification(GoldTree.GetConfig().data["anti.ads.msg"]);
+                                                return;
+                                            }
+                                        }
                                     }
+                                }
+                                catch
+                                {
+
                                 }
                             }
 
