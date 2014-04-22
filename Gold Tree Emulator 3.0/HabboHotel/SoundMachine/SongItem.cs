@@ -9,44 +9,41 @@ namespace GoldTree.Source.HabboHotel.SoundMachine
 {
     class SongItem
     {
-        public Item BaseItem;
-
-        public uint ItemId;
-        public int SongId;
+        public Item baseItem;
+        public int itemID;
+        public int songID;
 
         public SongItem(UserItem item)
         {
-            this.ItemId = item.Id;
-            this.SongId = Convert.ToInt32(item.ExtraData);
-
-            this.BaseItem = item.GetBaseItem();
+            this.itemID = (int)item.uint_0;
+            this.songID = Convert.ToInt32(item.string_0);
+            this.baseItem = item.method_1();
         }
 
-        public SongItem(uint itemID, int songID, int baseItem)
+        public SongItem(int itemID, int songID, int baseItem)
         {
-            this.ItemId = itemID;
-            this.SongId = songID;
-
-            this.BaseItem = GoldTree.GetGame().GetItemManager().GetBaseItemById((uint)baseItem);
+            this.itemID = itemID;
+            this.songID = songID;
+            this.baseItem = GoldTree.GetGame().GetItemManager().method_2((uint)baseItem);
         }
 
         public void RemoveFromDatabase()
         {
-            using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
+            using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
             {
-                dbClient.ExecuteQuery("DELETE FROM items_rooms_songs WHERE itemid = " + ItemId); // <-- old
-                dbClient.ExecuteQuery("DELETE FROM items_jukebox_songs WHERE itemid = " + ItemId); // <-- new
+                @class.ExecuteQuery("DELETE FROM items_rooms_songs WHERE itemid = " + itemID); // <-- old
+                @class.ExecuteQuery("DELETE FROM items_jukebox_songs WHERE itemid = " + itemID); // <-- new
                 //@class.ExecuteQuery(string.Concat(new object[] { "INSERT INTO items (id, base_item) VALUES ('", itemID, "','", baseItem.UInt32_0, "')" }));
             }
         }
 
         //public void SaveToDatabase(int roomID) // <-- old
-        public void SaveToDatabase(int jukeboxId) // <-- new
+        public void SaveToDatabase(int JukeboxID) // <-- new
         {
-            using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
+            using (DatabaseClient @class = GoldTree.GetDatabase().GetClient())
             {
                 //@class.ExecuteQuery(string.Concat(new object[] { "INSERT INTO items_rooms_songs VALUES (", itemID, ",", roomID, ",", this.songID, ",", this.baseItem.UInt32_0, ")" })); // <-- old
-                dbClient.ExecuteQuery(string.Concat(new object[] { "INSERT INTO items_jukebox_songs VALUES (", ItemId, ",", jukeboxId, ",", this.SongId, ",", this.BaseItem.UInt32_0, ")" })); // <-- new
+                @class.ExecuteQuery(string.Concat(new object[] { "INSERT INTO items_jukebox_songs VALUES (", itemID, ",", JukeboxID, ",", this.songID, ",", this.baseItem.UInt32_0, ")" })); // <-- new
                //@class.ExecuteQuery("DELETE FROM items WHERE id = '" + itemID + "'");
             }
         }

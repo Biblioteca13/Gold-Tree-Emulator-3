@@ -26,7 +26,7 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
 						}
 						if (dataRow != null)
 						{
-							Item class4 = GoldTree.GetGame().GetItemManager().GetBaseItemById((uint)dataRow["base_id"]);
+							Item class4 = GoldTree.GetGame().GetItemManager().method_2((uint)dataRow["base_id"]);
 							if (class4 != null)
 							{
 								@class.method_29(Session, class2.uint_0, true, true);

@@ -18,18 +18,16 @@ namespace GoldTree.Communication.Messages.SoundMachine
             if (((Session != null) && (Session.GetHabbo() != null)) && (Session.GetHabbo().CurrentRoom != null))
             {
                 Room currentRoom = Session.GetHabbo().CurrentRoom;
-
                 if (currentRoom.CheckRights(Session, true) && currentRoom.GotMusicController())
                 {
                     RoomMusicController roomMusicController = currentRoom.GetRoomMusicController();
                     SongItem item = roomMusicController.RemoveDisk(Event.PopWiredInt32());
-
                     if (item != null)
                     {
-                        Session.GetHabbo().GetInventoryComponent().ChangeItemOwner(item.ItemId, Session.GetHabbo().Id, true);
-                        Session.GetHabbo().GetInventoryComponent().RefreshInventory(true);
-
-                        Session.SendMessage(JukeboxDiscksComposer.SerializeSongInventory(Session.GetHabbo().GetInventoryComponent().GetDiscs()));
+                        item.RemoveFromDatabase();
+                        Session.GetHabbo().GetInventoryComponent().method_11((uint)item.itemID, item.baseItem.UInt32_0, item.songID.ToString(), false);
+                        Session.GetHabbo().GetInventoryComponent().method_9(true);
+                        Session.SendMessage(JukeboxDiscksComposer.SerializeSongInventory(Session.GetHabbo().GetInventoryComponent().songDisks));
                         Session.SendMessage(JukeboxDiscksComposer.Compose(roomMusicController.PlaylistCapacity, roomMusicController.Playlist.Values.ToList<SongInstance>()));
                     }
                 }

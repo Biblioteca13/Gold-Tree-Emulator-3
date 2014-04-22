@@ -163,7 +163,7 @@ namespace GoldTree
 
             Console.WriteLine("                  " + PrettyVersion);
             Console.WriteLine();
-            
+
             try
             {
                 UserAdMessage = new List<string>();
@@ -241,7 +241,7 @@ namespace GoldTree
                 }
                 catch
                 {
-                    
+
                 }
             }
             catch
@@ -286,8 +286,8 @@ namespace GoldTree
                                     Console.WriteLine("UPDATING ITEMS POSSIBLY TAKE A LONG TIME! DONT SHUTDOWN EMULATOR! PLEASE WAIT!");
                                     Console.ForegroundColor = ConsoleColor.Gray;
                                     Console.Write("Updating items (Fireworks) ...");
-                                    Dictionary<uint, int> newfwcount = new Dictionary<uint, int>();
 
+                                    dbClient.ExecuteQuery("DROP TABLE IF EXISTS items_firework");
                                     dbClient.ExecuteQuery("CREATE TABLE IF NOT EXISTS `items_firework` (`item_id` int(10) unsigned NOT NULL, `fw_count` int(10) NOT NULL, PRIMARY KEY (`item_id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
 
                                     DataTable dataTable = dbClient.ReadDataTable("SELECT Id, fw_count FROM items;");
@@ -306,7 +306,9 @@ namespace GoldTree
                                                     int wf_count = (int)dataRow["fw_count"];
                                                     if (wf_count > 0)
                                                     {
-                                                        newfwcount.Add(id, wf_count);
+                                                        dbClient.AddParamWithValue("fkey" + id, id);
+                                                        dbClient.AddParamWithValue("fvalue" + id, wf_count);
+                                                        dbClient.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES (@fkey" + id + ", @fvalue" + id + ")");
                                                     }
                                                 }
                                             }
@@ -317,28 +319,6 @@ namespace GoldTree
                                                 fails1++;
                                             }
 
-                                        }
-                                    }
-
-                                    if (newfwcount != null)
-                                    {
-                                        foreach (KeyValuePair<uint, int> current in newfwcount)
-                                        {
-                                            try
-                                            {
-                                                if (!string.IsNullOrEmpty(current.Key.ToString()) && !string.IsNullOrEmpty(current.Value.ToString()) && current.Key > 0 && current.Value > 0)
-                                                {
-                                                    dbClient.AddParamWithValue("fkey" + current.Key, current.Key);
-                                                    dbClient.AddParamWithValue("fvalue" + current.Key, current.Value);
-                                                    dbClient.ExecuteQuery("INSERT INTO items_firework(item_id, fw_count) VALUES (@fkey" + current.Key + ", @fvalue" + current.Key + ")");
-                                                }
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Console.WriteLine("OOPS! Error when updating.. Firework count lost :( Lets continue...");
-                                                Logging.LogItemUpdateError(ex.ToString());
-                                                fails1++;
-                                            }
                                         }
                                     }
 
@@ -353,14 +333,14 @@ namespace GoldTree
                                         return;
                                     }
 
-                                    dbClient.ExecuteQuery("ALTER TABLE items DROP fw_count");
-
-                                    if (newfwcount != null)
+                                    if (dataTable != null)
                                     {
-                                        newfwcount.Clear();
+                                        dataTable.Clear();
                                     }
 
-                                    newfwcount = null;
+                                    dataTable = null;
+
+                                    dbClient.ExecuteQuery("ALTER TABLE items DROP fw_count");
 
                                     Console.WriteLine("completed!");
                                 }
@@ -371,8 +351,8 @@ namespace GoldTree
                                     Console.WriteLine("UPDATING ITEMS POSSIBLY TAKE A LONG TIME! DONT SHUTDOWN EMULATOR! PLEASE WAIT!");
                                     Console.ForegroundColor = ConsoleColor.Gray;
                                     Console.Write("Updating items (Extra data) ...");
-                                    Dictionary<uint, string> newextradata = new Dictionary<uint, string>();
 
+                                    dbClient.ExecuteQuery("DROP TABLE IF EXISTS items_extra_data");
                                     dbClient.ExecuteQuery("CREATE TABLE IF NOT EXISTS `items_extra_data` (`item_id` int(10) unsigned NOT NULL, `extra_data` text NOT NULL, PRIMARY KEY (`item_id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
 
                                     DataTable dataTable2 = dbClient.ReadDataTable("SELECT Id, extra_data FROM items;");
@@ -391,8 +371,11 @@ namespace GoldTree
                                                     string extra_data = (string)dataRow["extra_data"];
                                                     if (!string.IsNullOrEmpty(extra_data))
                                                     {
-                                                        newextradata.Add(id, extra_data);
+                                                        dbClient.AddParamWithValue("ekey" + id, id);
+                                                        dbClient.AddParamWithValue("evalue" + id, extra_data);
+                                                        dbClient.ExecuteQuery("INSERT INTO items_extra_data(item_id, extra_data) VALUES (@ekey" + id + ", @evalue" + id + ")");
                                                     }
+                                                    Console.WriteLine("Step 1 | ID: " + id + " | Extra data: " + extra_data);
                                                 }
                                             }
                                             catch (Exception ex)
@@ -404,27 +387,12 @@ namespace GoldTree
                                         }
                                     }
 
-                                    if (newextradata != null)
+                                    if (dataTable2 != null)
                                     {
-                                        foreach (KeyValuePair<uint, string> current in newextradata)
-                                        {
-                                            try
-                                            {
-                                                if (!string.IsNullOrEmpty(current.Key.ToString()) && !string.IsNullOrEmpty(current.Value.ToString()) && current.Key > 0)
-                                                {
-                                                    dbClient.AddParamWithValue("ekey" + current.Key, current.Key);
-                                                    dbClient.AddParamWithValue("evalue" + current.Key, current.Value);
-                                                    dbClient.ExecuteQuery("INSERT INTO items_extra_data(item_id, extra_data) VALUES (@ekey" + current.Key + ", @evalue" + current.Key + ")");
-                                                }
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                Console.WriteLine("OOPS! Error when updating.. Extra data lost :( Lets continue...");
-                                                Logging.LogItemUpdateError(ex.ToString());
-                                                fails2++;
-                                            }
-                                        }
+                                        dataTable2.Clear();
                                     }
+
+                                    dataTable2 = null;
 
                                     if (fails2 > 0 && !DoYouWantContinue("Failed update " + fails2 + " item extra data. Do you want continue? YOU LOST THEIR ITEMS EXTRA DATA! [Y/N]"))
                                     {
@@ -438,13 +406,6 @@ namespace GoldTree
                                     }
 
                                     dbClient.ExecuteQuery("ALTER TABLE items DROP extra_data");
-
-                                    if (newextradata != null)
-                                    {
-                                        newextradata.Clear();
-                                    }
-
-                                    newextradata = null;
 
                                     Console.WriteLine("completed!");
                                 }
@@ -650,7 +611,7 @@ namespace GoldTree
         {
             Program.DeleteMenu(Program.GetSystemMenu(Program.GetConsoleWindow(), true), Program.SC_CLOSE, Program.MF_BYCOMMAND);
             Logging.WriteLine("Destroying GoldTreeEmu environment...");
-            
+
             if (GoldTree.GetGame() != null)
             {
                 GoldTree.GetGame().ContinueLoading();
@@ -694,7 +655,7 @@ namespace GoldTree
             {
             }
         }
-        
+
         internal static void Close()
         {
             GoldTree.Destroy("", true);
@@ -814,11 +775,11 @@ namespace GoldTree
         public static DateTime TimestampToDate(double timestamp)
         {
             DateTime result = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-           
+
             return result.AddSeconds(timestamp).ToLocalTime();
         }
 
-        
+
         public static int[] IntToArray(string numbers)
         {
             string[] ColorList = numbers.Split(new char[]

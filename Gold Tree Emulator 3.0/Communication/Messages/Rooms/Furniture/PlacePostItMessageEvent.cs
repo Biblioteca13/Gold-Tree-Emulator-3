@@ -40,10 +40,10 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
 									Session.SendMessage(Message);
 									return;
 								}
-								RoomItem RoomItem_ = new RoomItem(class2.Id, @class.Id, class2.BaseItem, class2.ExtraData, 0, 0, 0.0, 0, text2, @class);
+								RoomItem RoomItem_ = new RoomItem(class2.uint_0, @class.Id, class2.uint_1, class2.string_0, 0, 0, 0.0, 0, text2, @class);
 								if (@class.method_82(Session, RoomItem_, true, null))
 								{
-                                    Session.GetHabbo().GetInventoryComponent().ChangeItemOwner(uint_, 1u, false);
+                                    Session.GetHabbo().GetInventoryComponent().method_12(uint_, 1u, false);
 								}
 							}
 							using (DatabaseClient class3 = GoldTree.GetDatabase().GetClient())
@@ -53,7 +53,7 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
 									"UPDATE items SET room_id = '",
 									@class.Id,
 									"' WHERE Id = '",
-									class2.Id,
+									class2.uint_0,
 									"' LIMIT 1"
 								}));
 							}

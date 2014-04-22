@@ -12,7 +12,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 			RoomItem_0.ExtraData = "0";
 			if (RoomItem_0.uint_3 != 0u)
 			{
-				RoomUser @class = RoomItem_0.GetRoom().GetRoomUserByHabbo(RoomItem_0.uint_3);
+				RoomUser @class = RoomItem_0.method_8().GetRoomUserByHabbo(RoomItem_0.uint_3);
 				if (@class != null)
 				{
 					@class.method_3(true);
@@ -26,7 +26,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 			RoomItem_0.ExtraData = "0";
 			if (RoomItem_0.uint_3 != 0u)
 			{
-				RoomUser @class = RoomItem_0.GetRoom().GetRoomUserByHabbo(RoomItem_0.uint_3);
+				RoomUser @class = RoomItem_0.method_8().GetRoomUserByHabbo(RoomItem_0.uint_3);
 				if (@class != null)
 				{
 					@class.method_3(true);
@@ -37,8 +37,8 @@ namespace GoldTree.HabboHotel.Items.Interactors
 		}
 		public override void OnTrigger(GameClient Session, RoomItem RoomItem_0, int int_0, bool bool_0)
 		{
-			RoomUser @class = RoomItem_0.GetRoom().GetRoomUserByHabbo(Session.GetHabbo().Id);
-			if (@class != null && (RoomItem_0.GStruct1_2.x < RoomItem_0.GetRoom().RoomModel.int_4 && RoomItem_0.GStruct1_2.y < RoomItem_0.GetRoom().RoomModel.int_5))
+			RoomUser @class = RoomItem_0.method_8().GetRoomUserByHabbo(Session.GetHabbo().Id);
+			if (@class != null && (RoomItem_0.GStruct1_2.x < RoomItem_0.method_8().RoomModel.int_4 && RoomItem_0.GStruct1_2.y < RoomItem_0.method_8().RoomModel.int_5))
 			{
 				if (ThreeDCoord.smethod_1(@class.Position, RoomItem_0.GStruct1_1) && @class.bool_0)
 				{
@@ -46,7 +46,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 				}
 				else
 				{
-					if (RoomItem_0.GetRoom().method_30(RoomItem_0.GStruct1_2.x, RoomItem_0.GStruct1_2.y, RoomItem_0.Z, true, false) && RoomItem_0.uint_3 == 0u)
+					if (RoomItem_0.method_8().method_30(RoomItem_0.GStruct1_2.x, RoomItem_0.GStruct1_2.y, RoomItem_0.Double_0, true, false) && RoomItem_0.uint_3 == 0u)
 					{
 						RoomItem_0.uint_3 = @class.UId;
 						@class.bool_0 = false;
@@ -55,7 +55,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
 							@class.method_3(true);
 						}
 						@class.bool_1 = true;
-						@class.MoveTo(RoomItem_0.Position);
+						@class.MoveTo(RoomItem_0.GStruct1_0);
 						RoomItem_0.ReqUpdate(3);
 					}
 				}

@@ -16,7 +16,7 @@ namespace GoldTree.HabboHotel.SoundMachine
     {
         private static bool mBroadcastNeeded;
         private bool mIsPlaying;
-        private Dictionary<uint, SongItem> mLoadedDisks = new Dictionary<uint, SongItem>();
+        private Dictionary<int, SongItem> mLoadedDisks = new Dictionary<int, SongItem>();
         private SortedDictionary<int, SongInstance> mPlaylist = new SortedDictionary<int, SongInstance>();
         private RoomItem mRoomOutputItem;
         private SongInstance mSong;
@@ -26,7 +26,7 @@ namespace GoldTree.HabboHotel.SoundMachine
 
         public int AddDisk(SongItem DiskItem)
         {
-            int songID = DiskItem.SongId;
+            int songID = DiskItem.songID;
             if (songID == 0)
             {
                 return -1;
@@ -36,11 +36,11 @@ namespace GoldTree.HabboHotel.SoundMachine
             {
                 return -1;
             }
-            if (this.mLoadedDisks.ContainsKey(DiskItem.ItemId))
+            if (this.mLoadedDisks.ContainsKey(DiskItem.itemID))
             {
                 return -1;
             }
-            this.mLoadedDisks.Add(DiskItem.ItemId, DiskItem);
+            this.mLoadedDisks.Add(DiskItem.itemID, DiskItem);
             int count = this.mPlaylist.Count;
             lock (this.mPlaylist)
             {
@@ -63,7 +63,7 @@ namespace GoldTree.HabboHotel.SoundMachine
             }
             lock (this.mLoadedDisks)
             {
-                this.mLoadedDisks.Remove(instance.DiskItem.ItemId);
+                this.mLoadedDisks.Remove(instance.DiskItem.itemID);
             }
             this.RepairPlaylist();
             if (PlaylistIndex == this.mSongQueuePosition)

@@ -1,46 +1,40 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-
 using GoldTree.Core;
 using GoldTree.Storage;
 using GoldTree.HabboHotel.SoundMachine;
-
 namespace GoldTree.HabboHotel.Items
 {
 	internal sealed class ItemManager
 	{
-		private Dictionary<uint, Item> BaseItems;
-
+		private Dictionary<uint, Item> dictionary_0;
+		//private Dictionary<int, Soundtrack> dictionary_1;
 		public ItemManager()
 		{
-			this.BaseItems = new Dictionary<uint, Item>();
+			this.dictionary_0 = new Dictionary<uint, Item>();
+			//this.dictionary_1 = new Dictionary<int, Soundtrack>();
 		}
-
-		public void Initialise(DatabaseClient dbClient)
+		public void method_0(DatabaseClient class6_0)
 		{
             Logging.Write("Loading Items..");
-
-			this.BaseItems = new Dictionary<uint, Item>();
-
-			DataTable dataTable = dbClient.ReadDataTable("SELECT * FROM furniture;");
-
+			this.dictionary_0 = new Dictionary<uint, Item>();
+			DataTable dataTable = class6_0.ReadDataTable("SELECT * FROM furniture;");
 			if (dataTable != null)
 			{
-				foreach (DataRow row in dataTable.Rows)
+				foreach (DataRow dataRow in dataTable.Rows)
 				{
 					try
 					{
-                        this.BaseItems.Add((uint)row["Id"], new Item((uint)row["Id"], (int)row["sprite_id"], (string)row["public_name"], (string)row["item_name"], (string)row["type"], (int)row["width"], (int)row["length"], (double)row["stack_height"], GoldTree.StringToBoolean(row["can_stack"].ToString()), GoldTree.StringToBoolean(row["is_walkable"].ToString()), GoldTree.StringToBoolean(row["can_sit"].ToString()), GoldTree.StringToBoolean(row["allow_recycle"].ToString()), GoldTree.StringToBoolean(row["allow_trade"].ToString()), GoldTree.StringToBoolean(row["allow_marketplace_sell"].ToString()), GoldTree.StringToBoolean(row["allow_gift"].ToString()), GoldTree.StringToBoolean(row["allow_inventory_stack"].ToString()), (string)row["interaction_type"], (int)row["interaction_modes_count"], (string)row["vending_ids"], row["height_adjustable"].ToString(), Convert.ToByte((int)row["EffectF"]), Convert.ToByte((int)row["EffectM"]), GoldTree.StringToBoolean(row["HeightOverride"].ToString())));
+                        this.dictionary_0.Add((uint)dataRow["Id"], new Item((uint)dataRow["Id"], (int)dataRow["sprite_id"], (string)dataRow["public_name"], (string)dataRow["item_name"], (string)dataRow["type"], (int)dataRow["width"], (int)dataRow["length"], (double)dataRow["stack_height"], GoldTree.StringToBoolean(dataRow["can_stack"].ToString()), GoldTree.StringToBoolean(dataRow["is_walkable"].ToString()), GoldTree.StringToBoolean(dataRow["can_sit"].ToString()), GoldTree.StringToBoolean(dataRow["allow_recycle"].ToString()), GoldTree.StringToBoolean(dataRow["allow_trade"].ToString()), GoldTree.StringToBoolean(dataRow["allow_marketplace_sell"].ToString()), GoldTree.StringToBoolean(dataRow["allow_gift"].ToString()), GoldTree.StringToBoolean(dataRow["allow_inventory_stack"].ToString()), (string)dataRow["interaction_type"], (int)dataRow["interaction_modes_count"], (string)dataRow["vending_ids"], dataRow["height_adjustable"].ToString(), Convert.ToByte((int)dataRow["EffectF"]), Convert.ToByte((int)dataRow["EffectM"]), GoldTree.StringToBoolean(dataRow["HeightOverride"].ToString())));
 					}
 					catch (Exception e)
 					{
-						Logging.WriteLine("Could not load item #" + (uint)row["Id"] + ", please verify the data is okay.");
+						Logging.WriteLine("Could not load item #" + (uint)dataRow["Id"] + ", please verify the data is okay.");
                         Logging.LogItemError(e.Message);
 					}
 				}
 			}
-
 			Logging.WriteLine("completed!", ConsoleColor.Green);
 			/*Logging.smethod_0("Loading Soundtracks.."); //OMA LUOTU :3
 			this.dictionary_1 = new Dictionary<int, Soundtrack>();
@@ -60,25 +54,27 @@ namespace GoldTree.HabboHotel.Items
 				}
 			}
 			Logging.WriteLine("completed!", ConsoleColor.Green);*/
-
             Logging.Write("Loading Soundtracks..");
             SongManager.Initialize();
             Logging.WriteLine("completed!", ConsoleColor.Green);
 		}
-
-		public bool BaseItemExists(uint itemID)
+		public bool method_1(uint uint_0)
 		{
-			return BaseItems.ContainsKey(itemID);
+			return this.dictionary_0.ContainsKey(uint_0);
 		}
-
-		public Item GetBaseItemById(uint itemId)
+		public Item method_2(uint uint_0)
 		{
-            if (this.BaseItemExists(itemId))
-                return BaseItems[itemId];
-
-            return null;
+			Item result;
+			if (this.method_1(uint_0))
+			{
+				result = this.dictionary_0[uint_0];
+			}
+			else
+			{
+				result = null;
+			}
+			return result;
 		}
-
 		/*public bool method_3(int int_0)
 		{
 			return this.dictionary_1.ContainsKey(int_0);

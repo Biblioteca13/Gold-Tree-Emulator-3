@@ -25,7 +25,7 @@ namespace GoldTree.HabboHotel.Catalogs
 		}
 		public bool method_0(UserItem class39_0)
 		{
-			return class39_0.GetBaseItem().AllowTrade && class39_0.GetBaseItem().AllowMarketplaceSell;
+			return class39_0.method_1().AllowTrade && class39_0.method_1().AllowMarketplaceSell;
 		}
 		public void method_1(GameClient Session, uint uint_0, int int_0)
 		{
@@ -41,20 +41,20 @@ namespace GoldTree.HabboHotel.Catalogs
 				int num = this.method_2((float)int_0);
 				int num2 = int_0 + num;
 				int num3 = 1;
-				if (@class.GetBaseItem().Type == 'i')
+				if (@class.method_1().Type == 'i')
 				{
 					num3++;
 				}
 				using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
 				{
-					class2.AddParamWithValue("public_name", @class.GetBaseItem().PublicName);
-					class2.AddParamWithValue("extra_data", @class.ExtraData);
+					class2.AddParamWithValue("public_name", @class.method_1().PublicName);
+					class2.AddParamWithValue("extra_data", @class.string_0);
 					class2.ExecuteQuery(string.Concat(new object[]
 					{
 						"INSERT INTO catalog_marketplace_offers (furni_id, item_id,user_id,asking_price,total_price,public_name,sprite_id,item_type,timestamp,extra_data) VALUES ('",
 						uint_0,
 						"','",
-						@class.BaseItem,
+						@class.uint_1,
 						"','",
 						Session.GetHabbo().Id,
 						"','",
@@ -62,7 +62,7 @@ namespace GoldTree.HabboHotel.Catalogs
 						"','",
 						num2,
 						"',@public_name,'",
-						@class.GetBaseItem().Sprite,
+						@class.method_1().Sprite,
 						"','",
 						num3,
 						"','",
@@ -70,7 +70,7 @@ namespace GoldTree.HabboHotel.Catalogs
 						"',@extra_data)"
 					}));
 				}
-                Session.GetHabbo().GetInventoryComponent().ChangeItemOwner(uint_0, 0u, true);
+                Session.GetHabbo().GetInventoryComponent().method_12(uint_0, 0u, true);
 				ServerMessage Message2 = new ServerMessage(610u);
 				Message2.AppendBoolean(true);
 				Session.SendMessage(Message2);

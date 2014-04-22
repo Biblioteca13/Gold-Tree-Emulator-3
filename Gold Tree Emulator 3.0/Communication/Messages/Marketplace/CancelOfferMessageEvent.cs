@@ -28,7 +28,7 @@ namespace GoldTree.Communication.Messages.Marketplace
 					}
 					if ((uint)dataRow["user_id"] == Session.GetHabbo().Id && num3 != 2)
 					{
-						Item class2 = GoldTree.GetGame().GetItemManager().GetBaseItemById((uint)dataRow["item_id"]);
+						Item class2 = GoldTree.GetGame().GetItemManager().method_2((uint)dataRow["item_id"]);
 						if (class2 != null)
 						{
 							GoldTree.GetGame().GetCatalog().method_9(Session, class2, 1, (string)dataRow["extra_data"], false, (uint)dataRow["furni_id"]);

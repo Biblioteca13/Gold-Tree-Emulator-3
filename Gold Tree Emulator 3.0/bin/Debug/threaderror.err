@@ -345,15 +345,3 @@ System.NullReferenceException: Object reference not set to an instance of an obj
    at GoldTree.HabboHotel.Misc.LowPriorityWorker.smethod_0() in c:\Users\Bustanity\Documents\GitHub\Gold-Tree-Emulator-3\Gold Tree Emulator 3.0\HabboHotel\Misc\LowPriorityWorker.cs:line 23
 
 >>>>>>> 94c6ee8fee8f294259fd7fd57b1638a25f375286
-21/04/2014 18:15:15: Error in thread Server status update task: 
-System.NullReferenceException: Object reference not set to an instance of an object.
-   at GoldTree.HabboHotel.Misc.LowPriorityWorker.Initialise()
-
-21/04/2014 18:15:20: Error in thread Server status update task: 
-System.NullReferenceException: Object reference not set to an instance of an object.
-   at GoldTree.HabboHotel.Misc.LowPriorityWorker.Initialise()
-
-21/04/2014 18:15:20: Error in thread Navigator cache task: 
-System.NullReferenceException: Object reference not set to an instance of an object.
-   at GoldTree.HabboHotel.Navigators.NavigatorCache.method_0()
-

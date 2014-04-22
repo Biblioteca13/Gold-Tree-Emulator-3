@@ -9,7 +9,7 @@ namespace GoldTree.Communication.Messages.Catalog
 		public void Handle(GameClient Session, ClientMessage Event)
 		{
 			uint uint_ = Event.PopWiredUInt();
-			CatalogItem @class = GoldTree.GetGame().GetCatalog().GetItemById(uint_);
+			CatalogItem @class = GoldTree.GetGame().GetCatalog().method_2(uint_);
 			if (@class != null)
 			{
 				ServerMessage Message = new ServerMessage(622u);

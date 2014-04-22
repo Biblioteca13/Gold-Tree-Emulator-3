@@ -41,7 +41,7 @@ namespace GoldTree.Communication.Messages.Rooms.Settings
 						class4.ExecuteQuery("UPDATE user_pets SET room_id = '0' WHERE room_id = '" + num + "'");
 						Session.GetHabbo().method_1(class4);
 					}
-					Session.GetHabbo().GetInventoryComponent().RefreshInventory(true);
+					Session.GetHabbo().GetInventoryComponent().method_9(true);
 					Session.GetHabbo().GetInventoryComponent().method_3(true);
 					Session.SendMessage(GoldTree.GetGame().GetNavigator().method_12(Session, -3));
 				}

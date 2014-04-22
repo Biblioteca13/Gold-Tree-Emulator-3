@@ -9,21 +9,18 @@ namespace GoldTree.HabboHotel.Roles
 {
 	internal sealed class RoleManager
 	{
-		private Dictionary<uint, List<string>> UserPermissions;
-		private Dictionary<uint, List<string>> RolePermissions;
-
-		public Dictionary<uint, string> RoleBadges;
-
+		private Dictionary<uint, List<string>> dictionary_0;
+		private Dictionary<uint, List<string>> dictionary_1;
+		public Dictionary<uint, string> dictionary_2;
 		private Dictionary<uint, int> dictionary_3;
-
 		public Dictionary<string, int> dictionary_4;
 		public Dictionary<string, int> dictionary_5;
 
 		public RoleManager()
 		{
-			this.UserPermissions = new Dictionary<uint, List<string>>();
-			this.RolePermissions = new Dictionary<uint, List<string>>();
-			this.RoleBadges = new Dictionary<uint, string>();
+			this.dictionary_0 = new Dictionary<uint, List<string>>();
+			this.dictionary_1 = new Dictionary<uint, List<string>>();
+			this.dictionary_2 = new Dictionary<uint, string>();
 			this.dictionary_3 = new Dictionary<uint, int>();
 			this.dictionary_4 = new Dictionary<string, int>();
 			this.dictionary_5 = new Dictionary<string, int>();
@@ -32,18 +29,15 @@ namespace GoldTree.HabboHotel.Roles
 		public void method_0(DatabaseClient class6_0)
 		{
 			Logging.Write(GoldTreeEnvironment.GetExternalText("emu_loadroles"));
-
 			this.method_10();
-
 			DataTable dataTable = class6_0.ReadDataTable("SELECT * FROM ranks ORDER BY Id ASC;");
 			if (dataTable != null)
 			{
 				foreach (DataRow dataRow in dataTable.Rows)
 				{
-					this.RoleBadges.Add((uint)dataRow["Id"], dataRow["badgeid"].ToString());
+					this.dictionary_2.Add((uint)dataRow["Id"], dataRow["badgeid"].ToString());
 				}
 			}
-
 			dataTable = class6_0.ReadDataTable("SELECT * FROM permissions_users ORDER BY userid ASC;");
             if (dataTable != null)
             {
@@ -498,7 +492,7 @@ namespace GoldTree.HabboHotel.Roles
                     {
                         list.Add("acc_moveotheruserstodoor");
                     }
-                    this.UserPermissions.Add((uint)dataRow["userid"], list);
+                    this.dictionary_0.Add((uint)dataRow["userid"], list);
                 }
             }
 			dataTable = class6_0.ReadDataTable("SELECT * FROM permissions_ranks ORDER BY rank ASC;");
@@ -959,7 +953,7 @@ namespace GoldTree.HabboHotel.Roles
                     {
                         list.Add("acc_moveotheruserstodoor");
                     }
-					this.RolePermissions.Add((uint)dataRow["rank"], list);
+					this.dictionary_1.Add((uint)dataRow["rank"], list);
 				}
 			}
 
@@ -1116,7 +1110,7 @@ namespace GoldTree.HabboHotel.Roles
 				}
 				else
 				{
-					List<string> list = this.RolePermissions[uint_0];
+					List<string> list = this.dictionary_1[uint_0];
 					result = list.Contains(string_0);
 				}
 			}
@@ -1139,7 +1133,7 @@ namespace GoldTree.HabboHotel.Roles
 			}
 			else
 			{
-				List<string> list = this.UserPermissions[uint_0];
+				List<string> list = this.dictionary_0[uint_0];
 				result = list.Contains(string_0);
 			}
 			return result;
@@ -1149,27 +1143,27 @@ namespace GoldTree.HabboHotel.Roles
 			List<string> result = new List<string>();
 			if (this.method_6(uint_0))
 			{
-				result = this.UserPermissions[uint_0];
+				result = this.dictionary_0[uint_0];
 			}
 			else
 			{
-				result = this.RolePermissions[uint_1];
+				result = this.dictionary_1[uint_1];
 			}
 			return result;
 		}
 		public bool method_6(uint uint_0)
 		{
-			return this.UserPermissions.ContainsKey(uint_0);
+			return this.dictionary_0.ContainsKey(uint_0);
 		}
 		public bool method_7(uint uint_0)
 		{
-			return this.RolePermissions.ContainsKey(uint_0);
+			return this.dictionary_1.ContainsKey(uint_0);
 		}
 		public string method_8(uint uint_0)
 		{
-            if (this.RoleBadges.ContainsKey(uint_0))
+            if (this.dictionary_2.ContainsKey(uint_0))
             {
-                return this.RoleBadges[uint_0];
+                return this.dictionary_2[uint_0];
             }
             else
             {
@@ -1181,13 +1175,13 @@ namespace GoldTree.HabboHotel.Roles
 		}
 		public int method_9()
 		{
-			return this.RoleBadges.Count;
+			return this.dictionary_2.Count;
 		}
 		public void method_10()
 		{
-			this.RoleBadges.Clear();
-			this.UserPermissions.Clear();
-			this.RolePermissions.Clear();
+			this.dictionary_2.Clear();
+			this.dictionary_0.Clear();
+			this.dictionary_1.Clear();
 			this.dictionary_3.Clear();
 		}
 		public bool method_11(string string_0, GameClient Session)

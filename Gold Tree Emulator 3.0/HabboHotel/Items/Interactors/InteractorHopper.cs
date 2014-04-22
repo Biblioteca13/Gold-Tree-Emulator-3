@@ -12,7 +12,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
             RoomItem_0.ExtraData = "0";
             if (RoomItem_0.uint_3 != 0u)
             {
-                RoomUser @class = RoomItem_0.GetRoom().GetRoomUserByHabbo(RoomItem_0.uint_3);
+                RoomUser @class = RoomItem_0.method_8().GetRoomUserByHabbo(RoomItem_0.uint_3);
                 if (@class != null)
                 {
                     @class.method_3(true);
@@ -23,7 +23,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
             }
             if (RoomItem_0.uint_4 != 0u)
             {
-                RoomUser @class = RoomItem_0.GetRoom().GetRoomUserByHabbo(RoomItem_0.uint_4);
+                RoomUser @class = RoomItem_0.method_8().GetRoomUserByHabbo(RoomItem_0.uint_4);
                 if (@class != null)
                 {
                     @class.method_3(true);
@@ -38,7 +38,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
             RoomItem_0.ExtraData = "0";
             if (RoomItem_0.uint_3 != 0u)
             {
-                RoomUser @class = RoomItem_0.GetRoom().GetRoomUserByHabbo(RoomItem_0.uint_3);
+                RoomUser @class = RoomItem_0.method_8().GetRoomUserByHabbo(RoomItem_0.uint_3);
                 if (@class != null)
                 {
                     @class.method_6();
@@ -47,7 +47,7 @@ namespace GoldTree.HabboHotel.Items.Interactors
             }
             if (RoomItem_0.uint_4 != 0u)
             {
-                RoomUser @class = RoomItem_0.GetRoom().GetRoomUserByHabbo(RoomItem_0.uint_4);
+                RoomUser @class = RoomItem_0.method_8().GetRoomUserByHabbo(RoomItem_0.uint_4);
                 if (@class != null)
                 {
                     @class.method_6();
@@ -57,10 +57,10 @@ namespace GoldTree.HabboHotel.Items.Interactors
         }
         public override void OnTrigger(GameClient Session, RoomItem RoomItem_0, int int_0, bool bool_0)
         {
-            RoomUser @class = RoomItem_0.GetRoom().GetRoomUserByHabbo(Session.GetHabbo().Id);
+            RoomUser @class = RoomItem_0.method_8().GetRoomUserByHabbo(Session.GetHabbo().Id);
             if (@class != null && @class.class34_1 == null)
             {
-                if (ThreeDCoord.smethod_0(@class.Position, RoomItem_0.Position) || ThreeDCoord.smethod_0(@class.Position, RoomItem_0.GStruct1_1))
+                if (ThreeDCoord.smethod_0(@class.Position, RoomItem_0.GStruct1_0) || ThreeDCoord.smethod_0(@class.Position, RoomItem_0.GStruct1_1))
                 {
                     if (RoomItem_0.uint_3 == 0u)
                     {

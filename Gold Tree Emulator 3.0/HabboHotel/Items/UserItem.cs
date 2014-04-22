@@ -5,36 +5,27 @@ namespace GoldTree.HabboHotel.Items
 {
 	internal sealed class UserItem
 	{
-		internal uint Id;
-		internal uint BaseItem;
-
-		internal string ExtraData;
-
+		internal uint uint_0;
+		internal uint uint_1;
+		internal string string_0;
 		private Item Item;
-
-		internal UserItem(uint id, uint baseItem, string extraData)
+		internal UserItem(uint Id, uint BaseItem, string ExtraData)
 		{
-			this.Id = id;
-			this.BaseItem = baseItem;
-			this.ExtraData = extraData;
-			this.Item = this.GetBaseItem();
+			this.uint_0 = Id;
+			this.uint_1 = BaseItem;
+			this.string_0 = ExtraData;
+			this.Item = this.method_1();
 		}
-
-		internal void SerializeMessage(ServerMessage Message, bool bool_0)
+		internal void method_0(ServerMessage Message, bool bool_0)
 		{
 			if (this.Item == null)
 			{
-                Logging.LogException("Unknown base: " + this.BaseItem);
+                Logging.LogException("Unknown base: " + this.uint_1);
 			}
-
-			Message.AppendUInt(this.Id);
-
+			Message.AppendUInt(this.uint_0);
 			Message.AppendStringWithBreak(this.Item.Type.ToString().ToUpper());
-
-			Message.AppendUInt(this.Id);
-
+			Message.AppendUInt(this.uint_0);
 			Message.AppendInt32(this.Item.Sprite);
-
 			if (this.Item.Name.Contains("a2 "))
 			{
 				Message.AppendInt32(3);
@@ -53,13 +44,13 @@ namespace GoldTree.HabboHotel.Items
 					}
 					else
 					{
-						if (this.GetBaseItem().Name == "poster")
+						if (this.method_1().Name == "poster")
 						{
 							Message.AppendInt32(6);
 						}
 						else
 						{
-							if (this.GetBaseItem().Name == "song_disk")
+							if (this.method_1().Name == "song_disk")
 							{
 								Message.AppendInt32(8);
 							}
@@ -71,16 +62,16 @@ namespace GoldTree.HabboHotel.Items
 					}
 				}
 			}
-			if (this.GetBaseItem().Name == "song_disk")
+			if (this.method_1().Name == "song_disk")
 			{
 				Message.AppendInt32(0);
 				Message.AppendStringWithBreak("");
 			}
 			else
 			{
-				if (this.GetBaseItem().Name.StartsWith("poster_"))
+				if (this.method_1().Name.StartsWith("poster_"))
 				{
-					Message.AppendStringWithBreak(this.GetBaseItem().Name.Split(new char[]
+					Message.AppendStringWithBreak(this.method_1().Name.Split(new char[]
 					{
 						'_'
 					})[1]);
@@ -88,24 +79,20 @@ namespace GoldTree.HabboHotel.Items
 				else
 				{
 					Message.AppendInt32(0);
-					Message.AppendStringWithBreak(this.ExtraData);
+					Message.AppendStringWithBreak(this.string_0);
 				}
 			}
-
 			Message.AppendBoolean(this.Item.AllowRecycle);
 			Message.AppendBoolean(this.Item.AllowTrade);
 			Message.AppendBoolean(this.Item.AllowInventoryStack);
-
 			Message.AppendBoolean(GoldTree.GetGame().GetCatalog().method_22().method_0(this));
-
 			Message.AppendInt32(-1);
-
 			if (this.Item.Type == 's')
 			{
 				Message.AppendStringWithBreak("");
-				if (this.GetBaseItem().Name == "song_disk" && this.ExtraData.Length > 0)
+				if (this.method_1().Name == "song_disk" && this.string_0.Length > 0)
 				{
-					Message.AppendInt32(Convert.ToInt32(this.ExtraData));
+					Message.AppendInt32(Convert.ToInt32(this.string_0));
 				}
 				else
 				{
@@ -113,10 +100,9 @@ namespace GoldTree.HabboHotel.Items
 				}
 			}
 		}
-
-		internal Item GetBaseItem()
+		internal Item method_1()
 		{
-			return GoldTree.GetGame().GetItemManager().GetBaseItemById(this.BaseItem);
+			return GoldTree.GetGame().GetItemManager().method_2(this.uint_1);
 		}
 	}
 }

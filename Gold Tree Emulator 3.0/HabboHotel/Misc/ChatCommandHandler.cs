@@ -178,7 +178,7 @@ namespace GoldTree.HabboHotel.Misc
                                 {
                                     List<RoomItem> list = class2.method_24(Session);
                                     Session.GetHabbo().GetInventoryComponent().method_17(list);
-                                    Session.GetHabbo().GetInventoryComponent().RefreshInventory(true);
+                                    Session.GetHabbo().GetInventoryComponent().method_9(true);
                                     GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input + " " + Session.GetHabbo().CurrentRoomId);
                                     return true;
                                 }
@@ -1250,9 +1250,9 @@ namespace GoldTree.HabboHotel.Misc
                             {
                                 using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    GoldTree.GetGame().GetCatalog().Initialise(dbClient);
+                                    GoldTree.GetGame().GetCatalog().method_0(dbClient);
                                 }
-                                GoldTree.GetGame().GetCatalog().CacheCatalogue();
+                                GoldTree.GetGame().GetCatalog().method_1();
                                 GoldTree.GetGame().GetClientManager().BroadcastMessage(new ServerMessage(441u));
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);
                                 return true;
@@ -1274,7 +1274,7 @@ namespace GoldTree.HabboHotel.Misc
                             {
                                 using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
                                 {
-                                    GoldTree.GetGame().GetItemManager().Initialise(dbClient);
+                                    GoldTree.GetGame().GetItemManager().method_0(dbClient);
                                 }
                                 Session.SendNotification("Item defenitions reloaded successfully.");
                                 GoldTree.GetGame().GetClientManager().method_31(Session, Params[0].ToLower(), Input);

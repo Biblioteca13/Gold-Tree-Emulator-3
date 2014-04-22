@@ -38,7 +38,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
                     UserItem class2 = Session.GetHabbo().GetInventoryComponent().GetItemById(uint_);
                     if (class2 != null)
                     {
-                        string text2 = class2.GetBaseItem().InteractionType.ToLower();
+                        string text2 = class2.method_1().InteractionType.ToLower();
                         if (text2 != null && text2 == "dimmer" && @class.method_72("dimmer") >= 1)
                         {
                             Session.SendNotification("You can only have one moodlight in a room.");
@@ -63,12 +63,12 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
                                     Session.SendMessage(Message);
                                     return;
                                 }
-                                RoomItem_ = new RoomItem(class2.Id, @class.Id, class2.BaseItem, class2.ExtraData, 0, 0, 0.0, 0, text3, @class);
+                                RoomItem_ = new RoomItem(class2.uint_0, @class.Id, class2.uint_1, class2.string_0, 0, 0, 0.0, 0, text3, @class);
                                 if (!@class.method_82(Session, RoomItem_, true, null))
                                 {
                                     goto IL_32C;
                                 }
-                                Session.GetHabbo().GetInventoryComponent().ChangeItemOwner(uint_, 1u, false);
+                                Session.GetHabbo().GetInventoryComponent().method_12(uint_, 1u, false);
                                 using (DatabaseClient class3 = GoldTree.GetDatabase().GetClient())
                                 {
                                     class3.ExecuteQuery(string.Concat(new object[]
@@ -76,7 +76,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 									"UPDATE items SET room_id = '",
 									@class.Id,
 									"' WHERE Id = '",
-									class2.Id,
+									class2.uint_0,
 									"' LIMIT 1"
 								}));
                                     goto IL_32C;
@@ -85,10 +85,10 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
                             int int_ = int.Parse(array[1]);
                             int int_2 = int.Parse(array[2]);
                             int int_3 = int.Parse(array[3]);
-                            RoomItem_ = new RoomItem(class2.Id, @class.Id, class2.BaseItem, class2.ExtraData, 0, 0, 0.0, 0, "", @class);
+                            RoomItem_ = new RoomItem(class2.uint_0, @class.Id, class2.uint_1, class2.string_0, 0, 0, 0.0, 0, "", @class);
                             if (@class.method_79(Session, RoomItem_, int_, int_2, int_3, true, false, false))
                             {
-                                Session.GetHabbo().GetInventoryComponent().ChangeItemOwner(uint_, 1u, false);
+                                Session.GetHabbo().GetInventoryComponent().method_12(uint_, 1u, false);
                                 using (DatabaseClient class3 = GoldTree.GetDatabase().GetClient())
                                 {
                                     class3.ExecuteQuery(string.Concat(new object[]
@@ -96,7 +96,7 @@ namespace GoldTree.Communication.Messages.Rooms.Engine
 									"UPDATE items SET room_id = '",
 									@class.Id,
 									"' WHERE Id = '",
-									class2.Id,
+									class2.uint_0,
 									"' LIMIT 1"
 								}));
                                 }

@@ -22,7 +22,7 @@ namespace GoldTree.Communication.Messages.Rooms.Furniture
 						{
 							bool_ = true;
 						}
-						class2.GetInteractor().OnTrigger(Session, class2, -1, bool_);
+						class2.Class69_0.OnTrigger(Session, class2, -1, bool_);
 					}
 				}
 			}

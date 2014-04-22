@@ -16,10 +16,9 @@ namespace GoldTree.HabboHotel.SoundMachine
             ServerMessage message = new ServerMessage(334u);
             message.AppendInt32(PlaylistCapacity);
             message.AppendInt32(Playlist.Count);
-
             foreach (SongInstance instance in Playlist)
             {
-                message.AppendInt32((int)instance.DiskItem.ItemId);
+                message.AppendInt32(instance.DiskItem.itemID);
                 message.AppendInt32(instance.SongData.Id);
             }
             return message;
@@ -51,8 +50,8 @@ namespace GoldTree.HabboHotel.SoundMachine
             message.AppendInt32(songs.Count);
             foreach (UserItem item in songs.Values)
             {
-                int i = Convert.ToInt32(item.ExtraData);
-                message.AppendInt32((int)item.Id);
+                int i = Convert.ToInt32(item.string_0);
+                message.AppendInt32((int)item.uint_0);
                 message.AppendInt32(i);
             }
             return message;
