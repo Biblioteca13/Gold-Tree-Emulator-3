@@ -298,6 +298,7 @@
     <Compile Include="Core\Logging.cs" />
     <Compile Include="Core\Quick.cs" />
     <Compile Include="Core\RandomCore.cs" />
+    <Compile Include="CustomCulture.cs" />
     <Compile Include="HabboHotel\Achievements\Achievement.cs" />
     <Compile Include="HabboHotel\Achievements\AchievementManager.cs" />
     <Compile Include="HabboHotel\Advertisements\AdvertisementManager.cs" />
@@ -512,7 +513,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_StartDate="2013/10/21" BuildVersion_BuildVersioningStyle="None.None.Increment.None" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.None" BuildVersion_StartDate="2013/10/21" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
