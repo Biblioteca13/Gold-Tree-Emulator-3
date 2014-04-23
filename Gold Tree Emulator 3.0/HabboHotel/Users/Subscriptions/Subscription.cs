@@ -18,7 +18,7 @@ namespace GoldTree.HabboHotel.Users.Subscriptions
 
 		public bool HasExpired()
 		{
-			return (double)this.ExpirationTime < GoldTree.GetUnixTimestamp();
+			return (double)this.ExpirationTime > GoldTree.GetUnixTimestamp();
 		}
 
 		public void AppendTime(int seconds)

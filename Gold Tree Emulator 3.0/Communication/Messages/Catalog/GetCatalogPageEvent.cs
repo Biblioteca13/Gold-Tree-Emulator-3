@@ -11,7 +11,7 @@ namespace GoldTree.Communication.Messages.Catalog
 			CatalogPage @class = GoldTree.GetGame().GetCatalog().method_5(Event.PopWiredInt32());
 			if (@class != null && @class.bool_1 && @class.bool_0 && @class.uint_0 <= Session.GetHabbo().Rank)
 			{
-                if (@class.bool_2 && !Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club"))
+                if (@class.bool_2 && (!Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club") || Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_vip")))
 				{
 					Session.SendNotification("This page is for GoldTree Club members only!");
 				}
