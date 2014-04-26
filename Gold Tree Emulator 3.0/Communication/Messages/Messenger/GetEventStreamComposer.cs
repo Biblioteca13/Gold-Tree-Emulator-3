@@ -11,6 +11,8 @@ namespace GoldTree.Communication.Messages.Messenger
 		{
             ServerMessage response = new ServerMessage(950u);
 
+            session.GetHabbo().GetUserDataFactory().UpdateFriendStream();
+
             int streamCount = session.GetHabbo().GetUserDataFactory().GetFriendStream().Rows.Count;
 
             DataTable dataTable_ = session.GetHabbo().GetUserDataFactory().GetFriendStream();
