@@ -42,6 +42,8 @@ namespace GoldTree
         [SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.ControlAppDomain)]
         public static void Main(string[] args)
         {
+            CustomCultureInfo.SetupCustomCultureInfo();
+
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += new UnhandledExceptionEventHandler(Program.smethod_0);
 

@@ -469,7 +469,7 @@ namespace GoldTree.HabboHotel.Rooms
 			}
 			else
 			{
-                if (this.Models[string_1].bool_0 && (!Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club") || !Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_vip")))
+                if (this.Models[string_1].bool_0 && !Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_club") && !Session.GetHabbo().GetSubscriptionManager().HasSubscription("habbo_vip"))
 				{
 					Session.SendNotification("You must be an GoldTree Club member to use that room layout.");
 					result = null;

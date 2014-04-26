@@ -91,7 +91,7 @@ namespace GoldTree.HabboHotel.Users.Messenger
 			this.string_1 = string_5;
 			this.string_2 = string_6;
             double timestamp;
-            if (double.TryParse(string_7, NumberStyles.Any, CustomCulture.GetCustomCultureInfo(), out timestamp))
+            if (double.TryParse(string_7, NumberStyles.Any, CustomCultureInfo.GetCustomCultureInfo(), out timestamp))
             {
                 this.string_3 = GoldTree.TimestampToDate(timestamp).ToString();
             }
