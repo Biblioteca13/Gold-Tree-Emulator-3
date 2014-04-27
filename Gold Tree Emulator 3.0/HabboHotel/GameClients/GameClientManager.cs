@@ -665,6 +665,46 @@ namespace GoldTree.HabboHotel.GameClients
 			}
 			return result;
 		}
+        public string GetDataById(uint uint_0, string data)
+        {
+            string result = "";
+
+            if (data != "gender" || data != "look")
+            {
+                return result;
+            }
+
+            GameClient @class = this.method_2(uint_0);
+            if (@class != null)
+            {
+                if (data == "gender")
+                {
+                    result = @class.GetHabbo().Gender;
+                }
+                else if (data == "look")
+                {
+                    result = @class.GetHabbo().Figure;
+                }
+            }
+            else
+            {
+                DataRow dataRow = null;
+                using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
+                {
+                    dataRow = class2.ReadDataRow("SELECT " + data + " FROM users WHERE Id = '" + uint_0 + "' LIMIT 1");
+                }
+                if (dataRow == null)
+                {
+                    result = "Unknown data";
+                }
+                else
+                {
+                    result = (string)dataRow[0];
+                }
+            }
+            return result;
+        }
+
 		public uint method_27(string string_0)
 		{
 			GameClient @class = this.GetClientByHabbo(string_0);

@@ -144,13 +144,13 @@ namespace GoldTree.HabboHotel.Users.UserDataManagement
                             this.Items = dbClient.ReadDataTable("SELECT items.Id,items.base_item,items_extra_data.extra_data FROM items LEFT JOIN items_extra_data ON items_extra_data.item_id = items.Id WHERE room_id = 0 AND user_id = " + id);
                             this.Effects = dbClient.ReadDataTable("SELECT user_effects.effect_id,user_effects.total_duration,user_effects.is_activated,user_effects.activated_stamp FROM user_effects WHERE user_id =  " + id);
                             this.Friends = dbClient.ReadDataTable("SELECT users.Id,users.username,users.motto,users.look,users.last_online FROM users JOIN messenger_friendships ON users.Id = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + id + "'");
-                            this.FriendRequests = dbClient.ReadDataTable("SELECT messenger_requests.Id,messenger_requests.from_id,users.username FROM users JOIN messenger_requests ON users.Id = messenger_requests.from_id WHERE messenger_requests.to_id = '" + id + "'");
+                            this.FriendRequests = dbClient.ReadDataTable("SELECT messenger_requests.Id,messenger_requests.from_id,users.username,users.gender,users.look FROM users JOIN messenger_requests ON users.Id = messenger_requests.from_id WHERE messenger_requests.to_id = '" + id + "'");
 
                             dbClient.AddParamWithValue("name", (string)this.UserData["username"]);
 
                             this.Rooms = dbClient.ReadDataTable("SELECT * FROM rooms WHERE owner = @name ORDER BY Id ASC LIMIT " + ServerConfiguration.RoomUserLimit);
                             this.Pets = dbClient.ReadDataTable("SELECT Id, user_id, room_id, name, type, race, color, expirience, energy, nutrition, respect, createstamp, x, y, z FROM user_pets WHERE user_id = " + id + " AND room_id = 0");
-                            this.FriendStream = dbClient.ReadDataTable("SELECT friend_stream.id, friend_stream.type, friend_stream.userid, friend_stream.gender, friend_stream.look, friend_stream.time, friend_stream.data, friend_stream.data_extra FROM friend_stream JOIN messenger_friendships ON friend_stream.userid = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + id + "' ORDER BY friend_stream.time DESC LIMIT 15");
+                            this.FriendStream = dbClient.ReadDataTable("SELECT friend_stream.id, friend_stream.type, friend_stream.userid, friend_stream.gender, friend_stream.look, friend_stream.time, friend_stream.data, friend_stream.data_extra FROM friend_stream JOIN messenger_friendships ON friend_stream.userid = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + id + "' ORDER BY friend_stream.id DESC LIMIT 15");
 
                             dbClient.ExecuteQuery(string.Concat(new object[]
                             {
@@ -207,13 +207,13 @@ namespace GoldTree.HabboHotel.Users.UserDataManagement
                         this.Items = dbClient.ReadDataTable("SELECT items.Id,items.base_item,items_extra_data.extra_data FROM items LEFT JOIN items_extra_data ON items_extra_data.item_id = items.Id WHERE room_id = 0 AND user_id = " + id);
                         this.Effects = dbClient.ReadDataTable("SELECT user_effects.effect_id,user_effects.total_duration,user_effects.is_activated,user_effects.activated_stamp FROM user_effects WHERE user_id =  " + id);
                         this.Friends = dbClient.ReadDataTable("SELECT users.Id,users.username,users.motto,users.look,users.last_online FROM users JOIN messenger_friendships ON users.Id = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + id + "'");
-                        this.FriendRequests = dbClient.ReadDataTable("SELECT messenger_requests.Id,messenger_requests.from_id,users.username FROM users JOIN messenger_requests ON users.Id = messenger_requests.from_id WHERE messenger_requests.to_id = '" + id + "'");
+                        this.FriendRequests = dbClient.ReadDataTable("SELECT messenger_requests.Id,messenger_requests.from_id,users.username,users.gender,users.look FROM users JOIN messenger_requests ON users.Id = messenger_requests.from_id WHERE messenger_requests.to_id = '" + id + "'");
 
                         dbClient.AddParamWithValue("name", (string)this.UserData["username"]);
 
                         this.Rooms = dbClient.ReadDataTable("SELECT * FROM rooms WHERE owner = @name ORDER BY Id ASC LIMIT " + ServerConfiguration.RoomUserLimit);
                         this.Pets = dbClient.ReadDataTable("SELECT Id, user_id, room_id, name, type, race, color, expirience, energy, nutrition, respect, createstamp, x, y, z FROM user_pets WHERE user_id = " + id + " AND room_id = 0");
-                        this.FriendStream = dbClient.ReadDataTable("SELECT friend_stream.id, friend_stream.type, friend_stream.userid, friend_stream.gender, friend_stream.look, friend_stream.time, friend_stream.data, friend_stream.data_extra FROM friend_stream JOIN messenger_friendships ON friend_stream.userid = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + id + "' ORDER BY friend_stream.time DESC LIMIT 15");
+                        this.FriendStream = dbClient.ReadDataTable("SELECT friend_stream.id, friend_stream.type, friend_stream.userid, friend_stream.gender, friend_stream.look, friend_stream.time, friend_stream.data, friend_stream.data_extra FROM friend_stream JOIN messenger_friendships ON friend_stream.userid = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + id + "' ORDER BY friend_stream.id DESC LIMIT 15");
                     }
                 }
                 else
@@ -228,7 +228,7 @@ namespace GoldTree.HabboHotel.Users.UserDataManagement
             using (DatabaseClient dbClient = GoldTree.GetDatabase().GetClient())
             {
                 uint id = (uint)this.UserData["Id"];
-                this.FriendStream = dbClient.ReadDataTable("SELECT friend_stream.id, friend_stream.type, friend_stream.userid, friend_stream.gender, friend_stream.look, friend_stream.time, friend_stream.data, friend_stream.data_extra FROM friend_stream JOIN messenger_friendships ON friend_stream.userid = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + id + "' ORDER BY friend_stream.time DESC LIMIT 15");
+                this.FriendStream = dbClient.ReadDataTable("SELECT friend_stream.id, friend_stream.type, friend_stream.userid, friend_stream.gender, friend_stream.look, friend_stream.time, friend_stream.data, friend_stream.data_extra FROM friend_stream JOIN messenger_friendships ON friend_stream.userid = messenger_friendships.user_two_id WHERE messenger_friendships.user_one_id = '" + id + "' ORDER BY friend_stream.id DESC LIMIT 15");
             }
         }
     }

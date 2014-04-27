@@ -96,7 +96,7 @@ namespace GoldTree
         {
             try
             {
-                if (int.Parse(GoldTree.GetConfig().data["disable.autoupdate"]) == 0)
+                if (!GoldTree.GetConfig().data.ContainsKey("gte.update.noticy.disable") || int.Parse(GoldTree.GetConfig().data["gte.update.noticy.disable"]) == 0)
                 {
 
                     WebClient client2 = new WebClient();
@@ -115,7 +115,7 @@ namespace GoldTree
                             if (line.Contains(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build.ToString()))
                             {
                                 PossibleUpdate = true;
-                                if (int.Parse(GoldTree.GetConfig().data["autoupdate"]) == 0)
+                                if (int.Parse(GoldTree.GetConfig().data["gte.update.autoupdate"]) == 0)
                                 {
                                     Console.WriteLine("New version available! Download new version? [Y/N]");
                                     ConsoleKeyInfo = Console.ReadKey();

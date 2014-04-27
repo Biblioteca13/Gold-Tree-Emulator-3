@@ -60,7 +60,7 @@ namespace GoldTree.HabboHotel.Users.Messenger
 				{
                     if (!this.hashtable_1.ContainsKey((uint)dataRow["from_id"]))
                     {
-                        this.hashtable_1.Add((uint)dataRow["from_id"], new MessengerRequest((uint)dataRow["Id"], this.uint_0, (uint)dataRow["from_id"], dataRow["username"] as string));
+                        this.hashtable_1.Add((uint)dataRow["from_id"], new MessengerRequest((uint)dataRow["Id"], this.uint_0, (uint)dataRow["from_id"], dataRow["username"] as string, dataRow["gender"] as string, dataRow["look"] as string));
                     }
 				}
 			}
@@ -310,21 +310,29 @@ namespace GoldTree.HabboHotel.Users.Messenger
 								@class.AddParamWithValue("userid", this.uint_0);
 								num2 = @class.ReadUInt32("SELECT Id FROM messenger_requests WHERE to_id = @toid AND from_id = @userid ORDER BY Id DESC LIMIT 1");
 							}
-							MessengerRequest class3 = new MessengerRequest(num2, num, this.uint_0, GoldTree.GetGame().GetClientManager().GetNameById(this.uint_0));
-							class2.GetHabbo().GetMessenger().method_17(num2, num, this.uint_0);
-							ServerMessage Message5_ = new ServerMessage(132u);
-							class3.method_0(Message5_);
-							class2.SendMessage(Message5_);
+
+                            string gender = GoldTree.GetGame().GetClientManager().GetDataById(this.uint_0, "gender");
+                            string look = GoldTree.GetGame().GetClientManager().GetDataById(this.uint_0, "look");
+                            string username = GoldTree.GetGame().GetClientManager().GetNameById(this.uint_0);
+
+                            if (!(string.IsNullOrEmpty(gender) && string.IsNullOrEmpty(look) && string.IsNullOrEmpty(username)))
+                            {
+                                MessengerRequest class3 = new MessengerRequest(num2, num, this.uint_0, username, gender, look);
+                                class2.GetHabbo().GetMessenger().method_17(num2, num, this.uint_0, username, look, gender);
+                                ServerMessage Message5_ = new ServerMessage(132u);
+                                class3.method_0(Message5_);
+                                class2.SendMessage(Message5_);
+                            }
 						}
 					}
 				}
 			}
 		}
-		internal void method_17(uint uint_1, uint uint_2, uint uint_3)
+		internal void method_17(uint uint_1, uint uint_2, uint uint_3, string username, string gender, string look)
 		{
 			if (!this.hashtable_1.ContainsKey(uint_3))
 			{
-				this.hashtable_1.Add(uint_3, new MessengerRequest(uint_1, uint_2, uint_3, GoldTree.GetGame().GetClientManager().GetNameById(uint_3)));
+				this.hashtable_1.Add(uint_3, new MessengerRequest(uint_1, uint_2, uint_3, username, gender, look));
 			}
 		}
 		internal void method_18(uint uint_1, string string_0)
@@ -517,5 +525,10 @@ namespace GoldTree.HabboHotel.Users.Messenger
 		{
 			return this.hashtable_0.Clone() as Hashtable;
 		}
+
+        internal bool UserInFriends(uint id)
+        {
+            return this.hashtable_0.ContainsKey(id);
+        }
 	}
 }

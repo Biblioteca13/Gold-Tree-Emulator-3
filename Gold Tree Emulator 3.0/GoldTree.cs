@@ -61,7 +61,7 @@ namespace GoldTree
         {
             get
             {
-                return "Gold Tree Emulator v3.19.0 ALPHA 6 (Build " + build + ")";
+                return "Gold Tree Emulator v3.19.0 ALPHA 7 (Build " + build + ")";
             }
         }
 
@@ -375,7 +375,6 @@ namespace GoldTree
                                                         dbClient.AddParamWithValue("evalue" + id, extra_data);
                                                         dbClient.ExecuteQuery("INSERT INTO items_extra_data(item_id, extra_data) VALUES (@ekey" + id + ", @evalue" + id + ")");
                                                     }
-                                                    Console.WriteLine("Step 1 | ID: " + id + " | Extra data: " + extra_data);
                                                 }
                                             }
                                             catch (Exception ex)
@@ -472,6 +471,8 @@ namespace GoldTree
                 GoldTree.PacketManager.Wired();
 
                 GoldTree.PacketManager.Jukebox();
+
+                GoldTree.PacketManager.FriendStream();
 
                 GoldTree.MusListener = new MusListener(GoldTree.GetConfig().data["mus.tcp.bindip"], int.Parse(GoldTree.GetConfig().data["mus.tcp.port"]), GoldTree.GetConfig().data["mus.tcp.allowedaddr"].Split(new char[] { ';' }), 20);
                 GoldTree.SocketsManager = new SocketsManager(GoldTree.GetConfig().data["game.tcp.bindip"], int.Parse(GoldTree.GetConfig().data["game.tcp.port"]), int.Parse(GoldTree.GetConfig().data["game.tcp.conlimit"]));

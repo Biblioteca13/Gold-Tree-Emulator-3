@@ -8,6 +8,8 @@ namespace GoldTree.HabboHotel.Users.Messenger
 		private uint ToUser;
 		private uint FromUser;
 		private string SenderUsername;
+        private string Gender;
+        private string Figure;
 		internal uint RequestId
 		{
 			get
@@ -36,12 +38,28 @@ namespace GoldTree.HabboHotel.Users.Messenger
 				return this.SenderUsername;
 			}
 		}
-		public MessengerRequest(uint RequestId, uint ToUser, uint FromUser, string SenderUsername)
+        internal string SenderGender
+        {
+            get
+            {
+                return this.Gender;
+            }
+        }
+        internal string SenderFigure
+        {
+            get
+            {
+                return this.Figure;
+            }
+        }
+		public MessengerRequest(uint RequestId, uint ToUser, uint FromUser, string SenderUsername, string Gender, string Figure)
 		{
 			this.xRequestId = RequestId;
 			this.ToUser = ToUser;
 			this.FromUser = FromUser;
 			this.SenderUsername = SenderUsername;
+            this.Gender = Gender;
+            this.Figure = Figure;
 		}
 		public void method_0(ServerMessage Message5_0)
 		{

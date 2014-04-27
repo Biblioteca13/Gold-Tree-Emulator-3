@@ -48,7 +48,19 @@ namespace GoldTree.Communication.Messages.Avatar
 					Message2.AppendStringWithBreak("");
 					class14_.SendMessage(Message2, null);
 				}
+
                 Session.GetHabbo().MottoAchievementsCompleted();
+
+                if (Session.GetHabbo().FriendStreamEnabled)
+                {
+                    using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
+                    {
+                        class2.AddParamWithValue("motto", text);
+                        string look = GoldTree.FilterString(Session.GetHabbo().Figure);
+                        class2.AddParamWithValue("look", look);
+                        class2.ExecuteQuery("INSERT INTO `friend_stream` (`id`, `type`, `userid`, `gender`, `look`, `time`, `data`) VALUES (NULL, '3', '" + Session.GetHabbo().Id + "', '" + Session.GetHabbo().Gender + "', @look, UNIX_TIMESTAMP(), @motto);");
+                    }
+                }
 			}
 		}
 	}

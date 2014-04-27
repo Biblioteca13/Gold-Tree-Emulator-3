@@ -106,6 +106,7 @@
     <Compile Include="Communication\Messages\Catalog\PurchaseVipMembershipExtensionEvent.cs" />
     <Compile Include="Communication\Messages\Catalog\RedeemVoucherMessageEvent.cs" />
     <Compile Include="Communication\Messages\Catalog\SelectClubGiftEvent.cs" />
+    <Compile Include="Communication\Messages\FriendStream\EventStreamingLikeButton.cs" />
     <Compile Include="Communication\Messages\Handshake\DisconnectMessageEvent.cs" />
     <Compile Include="Communication\Messages\Handshake\GenerateSecretKeyMessageEvent.cs" />
     <Compile Include="Communication\Messages\Handshake\GetSessionParametersMessageEvent.cs" />
@@ -176,8 +177,8 @@
     <Compile Include="Communication\Messages\Messenger\RequestBuddyMessageEvent.cs" />
     <Compile Include="Communication\Messages\Messenger\SendMsgMessageEvent.cs" />
     <Compile Include="Communication\Messages\Messenger\SendRoomInviteMessageEvent.cs" />
-    <Compile Include="Communication\Messages\Messenger\GetEventStreamComposer.cs" />
-    <Compile Include="Communication\Messages\Messenger\SetEventStreamingAllowedComposer.cs" />
+    <Compile Include="Communication\Messages\FriendStream\GetEventStreamComposer.cs" />
+    <Compile Include="Communication\Messages\FriendStream\SetEventStreamingAllowedComposer.cs" />
     <Compile Include="Communication\Messages\Navigator\AddFavouriteRoomMessageEvent.cs" />
     <Compile Include="Communication\Messages\Navigator\CancelEventMessageEvent.cs" />
     <Compile Include="Communication\Messages\Navigator\CanCreateEventMessageEvent.cs" />
@@ -459,9 +460,6 @@
     <Compile Include="Net\Butterfly Sockets\LoggingSystem\MessageLoggerManager.cs" />
     <Compile Include="Net\Butterfly Sockets\PacketMalformedException.cs" />
     <Compile Include="Net\Butterfly Sockets\Socket Exceptions\SocketInitializationException.cs" />
-    <Compile Include="Net\NEW Phoenix Sockets\SocketsConnection.cs" />
-    <Compile Include="Net\NEW Phoenix Sockets\SocketsListener.cs" />
-    <Compile Include="Net\NEW Phoenix Sockets\SocketsManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Messages\ClientMessage.cs" />
@@ -513,7 +511,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_StartDate="2013/10/21" BuildVersion_BuildVersioningStyle="None.None.Increment.None" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.None" BuildVersion_StartDate="2013/10/21" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

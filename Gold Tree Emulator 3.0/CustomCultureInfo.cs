@@ -13,7 +13,7 @@ namespace GoldTree
 
         public static void SetupCustomCultureInfo()
         {
-            CultureInfo CustomCulture = (CultureInfo)CultureInfo.InvariantCulture.Clone();
+            CustomCulture = (CultureInfo)CultureInfo.InvariantCulture.Clone();
             CustomCulture.NumberFormat.NumberDecimalSeparator = ".";    
         }
 

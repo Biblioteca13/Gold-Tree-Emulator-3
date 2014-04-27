@@ -85,11 +85,9 @@ namespace GoldTree.HabboHotel.GameClients
 			if (this.Connection != null)
 			{
                 this.bool_0 = true;
-                SocketConnection.GDelegate0 gdelegate0_ = new SocketConnection.GDelegate0(this.ParsePacket);
-                this.Connection.Initialise(gdelegate0_);
 
-                //SocketConnection.RouteReceivedDataCallback dataRouter = new SocketConnection.RouteReceivedDataCallback(this.method_13);
-                //this.Message1_0.Start(dataRouter);
+                SocketConnection.RouteReceivedDataCallback dataRouter = new SocketConnection.RouteReceivedDataCallback(this.ParsePacket);
+                this.Connection.Start(dataRouter);
 
                 //(this.Message1_0.parser as InitialPacketParser).PolicyRequest += new InitialPacketParser.NoParamDelegate(PolicyRequest);
                 //(this.Message1_0.parser as InitialPacketParser).SwitchParserRequest += new InitialPacketParser.NoParamDelegate(SwitchParserRequest);
@@ -132,8 +130,8 @@ namespace GoldTree.HabboHotel.GameClients
             try
             {
                 //string ip = GetConnection().getIp();
-                UserDataFactory @class = new UserDataFactory(string_0, this.GetConnection().Address, true);
-                if (this.GetConnection().Address == "127.0.0.1" && !@class.Validated)
+                UserDataFactory @class = new UserDataFactory(string_0, this.GetConnection().String_0, true);
+                if (this.GetConnection().String_0 == "127.0.0.1" && !@class.Validated)
                 //UserDataFactory @class = new UserDataFactory(string_0, ip, true);
                 //if (ip == "127.0.0.1" && !@class.Boolean_0)
                 {
@@ -145,7 +143,7 @@ namespace GoldTree.HabboHotel.GameClients
                     string str = "";
                     if (ServerConfiguration.EnableSSO)
                     {
-                        str = GoldTreeEnvironment.GetExternalText("emu_sso_wrong_secure") + "(" + this.GetConnection().Address + ")";
+                        str = GoldTreeEnvironment.GetExternalText("emu_sso_wrong_secure") + "(" + this.GetConnection().String_0 + ")";
                         //str = GoldTreeEnvironment.smethod_1("emu_sso_wrong_secure") + "(" + ip + ")";
                     }
                     ServerMessage Message = new ServerMessage(161u);

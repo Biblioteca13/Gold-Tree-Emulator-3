@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using GoldTree.Util;
+using System.IO;
 namespace GoldTree.Messages
 {
 	public sealed class ServerMessage
@@ -88,16 +89,6 @@ namespace GoldTree.Messages
 		{
 			this.AppendBytes(WireEncoding.EncodeInt32(i));
 		}
-        public void AppendInt32WithBreak(int i)
-        {
-            this.AppendBytes(WireEncoding.EncodeInt32(i));
-            this.AppendByte(2);
-        }
-        public void AppendInt32WithBreak(int i, byte BreakChar)
-        {
-            this.AppendBytes(WireEncoding.EncodeInt32(i));
-            this.AppendByte(BreakChar);
-        }
 		public void AppendRawInt32(int i)
 		{
 			this.AppendString(i.ToString(), Encoding.ASCII);
@@ -121,18 +112,18 @@ namespace GoldTree.Messages
 				this.Body.Add(72);
 			}
 		}
-		public byte[] GetBytes()
-		{
-			byte[] Data = new byte[this.Length + 3];
-			byte[] Header = Base64Encoding.Encodeuint(this.MessageId, 2);
-			Data[0] = Header[0];
-			Data[1] = Header[1];
-			for (int i = 0; i < this.Length; i++)
-			{
-				Data[i + 2] = this.Body[i];
-			}
-			Data[Data.Length - 1] = 1;
-			return Data;
-		}
+        public byte[] GetBytes()
+        {
+            byte[] Data = new byte[this.Length + 3];
+            byte[] Header = Base64Encoding.Encodeuint(this.MessageId, 2);
+            Data[0] = Header[0];
+            Data[1] = Header[1];
+            for (int i = 0; i < this.Length; i++)
+            {
+                Data[i + 2] = this.Body[i];
+            }
+            Data[Data.Length - 1] = 1;
+            return Data;
+        }
 	}
 }

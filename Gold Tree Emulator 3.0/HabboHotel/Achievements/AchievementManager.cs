@@ -128,43 +128,43 @@ namespace GoldTree.HabboHotel.Achievements
 				}
 			}
 		}
-		public void addAchievement(GameClient Session, uint uint_0, int int_0)
-		{
-			if (!AchievementManager.dictionary_0.ContainsKey(uint_0))
-			{
-				Console.ForegroundColor = ConsoleColor.Blue;
-				Console.WriteLine("AchievementID: " + uint_0 + " does not exist in our database!");
-				Console.ForegroundColor = ConsoleColor.White;
-			}
-			else
-			{
-				Achievement @class = AchievementManager.dictionary_0[uint_0];
-				if (@class != null && !this.method_1(Session, @class.Id, int_0) && int_0 >= 1 && int_0 <= @class.Levels)
-				{
-					int num = AchievementManager.smethod_2(@class.Dynamic_badgelevel, @class.PixelMultiplier, int_0);
-					int num2 = AchievementManager.smethod_2(@class.ScoreBase, @class.PixelMultiplier, int_0);
-					using (TimedLock.Lock(Session.GetHabbo().GetBadgeComponent().GetBadges()))
-					{
-						List<string> list = new List<string>();
-						foreach (Badge current in Session.GetHabbo().GetBadgeComponent().GetBadges())
-						{
-							if (current.Code.StartsWith(@class.BadgeCode))
-							{
-								list.Add(current.Code);
-							}
-						}
-						foreach (string current2 in list)
-						{
-							Session.GetHabbo().GetBadgeComponent().RemoveBadge(current2);
-						}
-					}
-					Session.GetHabbo().GetBadgeComponent().SendBadge(Session, AchievementManager.smethod_3(@class.BadgeCode, int_0, @class.DynamicBadgeLevel), true);
-					if (Session.GetHabbo().dictionary_0.ContainsKey(@class.Id))
-					{
-						Session.GetHabbo().dictionary_0[@class.Id] = int_0;
-						using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
-						{
-							class2.ExecuteQuery(string.Concat(new object[]
+        public void addAchievement(GameClient Session, uint uint_0, int int_0)
+        {
+            if (!AchievementManager.dictionary_0.ContainsKey(uint_0))
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("AchievementID: " + uint_0 + " does not exist in our database!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Achievement @class = AchievementManager.dictionary_0[uint_0];
+                if (@class != null && !this.method_1(Session, @class.Id, int_0) && int_0 >= 1 && int_0 <= @class.Levels)
+                {
+                    int num = AchievementManager.smethod_2(@class.Dynamic_badgelevel, @class.PixelMultiplier, int_0);
+                    int num2 = AchievementManager.smethod_2(@class.ScoreBase, @class.PixelMultiplier, int_0);
+                    using (TimedLock.Lock(Session.GetHabbo().GetBadgeComponent().GetBadges()))
+                    {
+                        List<string> list = new List<string>();
+                        foreach (Badge current in Session.GetHabbo().GetBadgeComponent().GetBadges())
+                        {
+                            if (current.Code.StartsWith(@class.BadgeCode))
+                            {
+                                list.Add(current.Code);
+                            }
+                        }
+                        foreach (string current2 in list)
+                        {
+                            Session.GetHabbo().GetBadgeComponent().RemoveBadge(current2);
+                        }
+                    }
+                    Session.GetHabbo().GetBadgeComponent().SendBadge(Session, AchievementManager.smethod_3(@class.BadgeCode, int_0, @class.DynamicBadgeLevel), true);
+                    if (Session.GetHabbo().dictionary_0.ContainsKey(@class.Id))
+                    {
+                        Session.GetHabbo().dictionary_0[@class.Id] = int_0;
+                        using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
+                        {
+                            class2.ExecuteQuery(string.Concat(new object[]
 							{
 								"UPDATE user_achievements SET achievement_level = '",
 								int_0,
@@ -178,13 +178,13 @@ namespace GoldTree.HabboHotel.Achievements
 								Session.GetHabbo().Id,
 								"' LIMIT 1; "
 							}));
-							goto IL_346;
-						}
-					}
-					Session.GetHabbo().dictionary_0.Add(@class.Id, int_0);
-					using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
-					{
-						class2.ExecuteQuery(string.Concat(new object[]
+                            goto IL_346;
+                        }
+                    }
+                    Session.GetHabbo().dictionary_0.Add(@class.Id, int_0);
+                    using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
+                    {
+                        class2.ExecuteQuery(string.Concat(new object[]
 						{
 							"INSERT INTO user_achievements (user_id,achievement_id,achievement_level) VALUES ('",
 							Session.GetHabbo().Id,
@@ -198,34 +198,57 @@ namespace GoldTree.HabboHotel.Achievements
 							Session.GetHabbo().Id,
 							"' LIMIT 1; "
 						}));
-					}
-					IL_346:
-					ServerMessage Message = new ServerMessage(437u);
-					Message.AppendUInt(@class.Id);
-					Message.AppendInt32(int_0);
-					Message.AppendInt32(1337);
-					Message.AppendStringWithBreak(AchievementManager.smethod_3(@class.BadgeCode, int_0, @class.DynamicBadgeLevel));
-					Message.AppendInt32(num2);
-					Message.AppendInt32(num);
-					Message.AppendInt32(0);
-					Message.AppendInt32(0);
-					Message.AppendInt32(0);
-					if (int_0 > 1)
-					{
-						Message.AppendStringWithBreak(AchievementManager.smethod_3(@class.BadgeCode, int_0 - 1, @class.DynamicBadgeLevel));
-					}
-					else
-					{
-						Message.AppendStringWithBreak("");
-					}
-					Message.AppendStringWithBreak(@class.Type);
-					Session.SendMessage(Message);
-					Session.GetHabbo().AchievementScore += num2;
-					Session.GetHabbo().ActivityPoints += num;
-					Session.GetHabbo().method_16(num);
-				}
-			}
-		}
+                    }
+                IL_346:
+                    ServerMessage Message = new ServerMessage(437u);
+                    Message.AppendUInt(@class.Id);
+                    Message.AppendInt32(int_0);
+                    Message.AppendInt32(1337);
+                    Message.AppendStringWithBreak(AchievementManager.smethod_3(@class.BadgeCode, int_0, @class.DynamicBadgeLevel));
+                    Message.AppendInt32(num2);
+                    Message.AppendInt32(num);
+                    Message.AppendInt32(0);
+                    Message.AppendInt32(0);
+                    Message.AppendInt32(0);
+                    if (int_0 > 1)
+                    {
+                        Message.AppendStringWithBreak(AchievementManager.smethod_3(@class.BadgeCode, int_0 - 1, @class.DynamicBadgeLevel));
+                    }
+                    else
+                    {
+                        Message.AppendStringWithBreak("");
+                    }
+                    Message.AppendStringWithBreak(@class.Type);
+                    Session.SendMessage(Message);
+                    Session.GetHabbo().AchievementScore += num2;
+                    Session.GetHabbo().ActivityPoints += num;
+                    Session.GetHabbo().method_16(num);
+
+                    if (Session.GetHabbo().FriendStreamEnabled)
+                    {
+                        using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
+                        {
+                            string BadgeCode = "";
+                            if (@class.DynamicBadgeLevel)
+                            {
+                                BadgeCode = @class.BadgeCode + int_0.ToString();
+                            }
+                            else
+                            {
+                                BadgeCode = @class.BadgeCode;
+                            }
+
+                            if (!string.IsNullOrEmpty(BadgeCode))
+                            {
+                                string look = GoldTree.FilterString(Session.GetHabbo().Figure);
+                                class2.AddParamWithValue("look", look);
+                                class2.ExecuteQuery("INSERT INTO `friend_stream` (`id`, `type`, `userid`, `gender`, `look`, `time`, `data`) VALUES (NULL, '2', '" + Session.GetHabbo().Id + "', '" + Session.GetHabbo().Gender + "', @look, UNIX_TIMESTAMP(), '" + BadgeCode + "');");
+                            }
+                        }
+                    }
+                }
+            }
+        }
 		public static int smethod_2(int int_0, double double_0, int int_1)
 		{
 			return (int)((double)int_0 * ((double)int_1 * double_0));

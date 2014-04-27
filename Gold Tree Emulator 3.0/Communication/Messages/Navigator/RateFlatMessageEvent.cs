@@ -25,7 +25,9 @@ namespace GoldTree.Communication.Messages.Navigator
                     {
                         using (DatabaseClient class2 = GoldTree.GetDatabase().GetClient())
                         {
-                            class2.ExecuteQuery("INSERT INTO `friend_stream` (`id`, `type`, `userid`, `gender`, `look`, `time`, `data`) VALUES (NULL, '1', '" + Session.GetHabbo().Id + "', '" + Session.GetHabbo().Gender + "', '" + Session.GetHabbo().Figure + "', UNIX_TIMESTAMP(), '" + Session.GetHabbo().CurrentRoomId + "');");
+                            string look = GoldTree.FilterString(Session.GetHabbo().Figure);
+                            class2.AddParamWithValue("look", look);
+                            class2.ExecuteQuery("INSERT INTO `friend_stream` (`id`, `type`, `userid`, `gender`, `look`, `time`, `data`) VALUES (NULL, '1', '" + Session.GetHabbo().Id + "', '" + Session.GetHabbo().Gender + "', @look, UNIX_TIMESTAMP(), '" + Session.GetHabbo().CurrentRoomId + "');");
                         }
                     }
 					break;

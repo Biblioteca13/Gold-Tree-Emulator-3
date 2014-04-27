@@ -29,6 +29,7 @@ using GoldTree.Communication.Messages.Inventory.Achievements;
 using GoldTree.Communication.Messages.Quest;
 using GoldTree.Communication.Messages.Rooms.Polls;
 using GoldTree.Communication.Messages.SoundMachine;
+using GoldTree.Communication.Messages.FriendStream;
 namespace GoldTree.Communication
 {
 	internal sealed class PacketManager
@@ -82,8 +83,6 @@ namespace GoldTree.Communication
 			this.RequestHandlers.Add(39, new RequestBuddyMessageEvent());
 			this.RequestHandlers.Add(33, new SendMsgMessageEvent());
 			this.RequestHandlers.Add(34, new SendRoomInviteMessageEvent());
-            this.RequestHandlers.Add(500, new GetEventStreamComposer());
-            this.RequestHandlers.Add(501, new SetEventStreamingAllowedComposer());
 			this.RequestHandlers.Add(490, new FindNewFriendsMessageEvent());
 		}
 		public void Navigator()
@@ -355,6 +354,14 @@ namespace GoldTree.Communication
 			this.RequestHandlers.Add(3052, new UpdateConditionMessageEvent());
             this.RequestHandlers.Add(3054, new ApplyFurniToSetConditions());
 		}
+
+        public void FriendStream()
+        {
+            this.RequestHandlers.Add(500, new GetEventStreamComposer());
+            this.RequestHandlers.Add(501, new SetEventStreamingAllowedComposer());
+            this.RequestHandlers.Add(502, new EventStreamingLikeButton());
+        }
+
 		public void Clear()
 		{
 			this.RequestHandlers.Clear();
